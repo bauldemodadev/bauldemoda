@@ -106,7 +106,7 @@ const Header = () => {
                 {/* Imagen - Derecha */}
                 <div className="w-full lg:w-3/5 flex justify-center">
                   <div className="relative w-full max-w-xl lg:max-w-3xl xl:max-w-4xl">
-                    <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
                         src={banners[indiceActual].imagenUrl}
                         alt={banners[indiceActual].titulo}
@@ -115,12 +115,8 @@ const Header = () => {
                         priority={indiceActual === 0}
                       />
                       {/* Overlay decorativo */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-purple-500/10" />
+                      <div className="absolute inset-0" />
                     </div>
-                    
-                    {/* Elementos decorativos */}
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-pink-400 rounded-full animate-pulse"></div>
-                    <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-400 rounded-full animate-pulse delay-1000"></div>
                   </div>
                 </div>
               </div>

@@ -1,61 +1,96 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const UbicacionSkeleton = () => {
-  // Generar 2 skeletons para simular las ubicaciones
-  const ubicacionSkeletons = Array.from({ length: 2 }, (_, index) => (
+const UbicacionPairSkeleton = () => {
+  return (
     <motion.div
-      key={index}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.2, duration: 0.8 }}
-      className={`flex flex-col lg:flex-row items-center gap-4 lg:gap-6 justify-around ${
-        index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-      }`}
+      transition={{ duration: 0.8 }}
+      className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12"
     >
-      {/* Texto skeleton */}
+      {/* Sección izquierda - Ciudad Jardín (Rosa) */}
       <motion.div
-        initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+        initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full lg:w-auto space-y-4"
+        className="relative w-full max-w-md lg:max-w-lg"
       >
-        <div>
-          {/* Título skeleton */}
-          <div className="w-48 h-7 bg-gray-200 rounded mb-3" />
-          <div className="space-y-2">
-            {/* Dirección skeleton */}
-            <div className="w-64 h-6 bg-gray-200 rounded" />
-            {/* Ciudad y provincia skeleton */}
-            <div className="w-40 h-6 bg-gray-200 rounded" />
+        {/* Fondo con forma orgánica - Rosa */}
+        <div className="absolute inset-0 rounded-3xl bg-pink-100 opacity-60" 
+        style={{
+          clipPath: 'polygon(0% 0%, 100% 0%, 95% 20%, 100% 40%, 90% 60%, 100% 80%, 95% 100%, 0% 100%, 5% 80%, 0% 60%, 10% 40%, 0% 20%)'
+        }} />
+        
+        <div className="relative p-8 lg:p-10 space-y-6">
+          {/* Título skeleton con fuente script */}
+          <div className="text-center">
+            <div className="w-40 h-8 bg-gray-300 rounded-full mx-auto mb-6" />
+          </div>
+          
+          {/* Ilustración skeleton */}
+          <div className="w-full h-48 bg-gray-200 rounded-2xl flex items-center justify-center">
+            <div className="w-32 h-32 bg-gray-300 rounded-full" />
+          </div>
+          
+          {/* Dirección skeleton */}
+          <div className="text-center space-y-2">
+            <div className="w-56 h-5 bg-gray-300 rounded mx-auto" />
+            <div className="w-48 h-5 bg-gray-300 rounded mx-auto" />
+            <div className="w-40 h-5 bg-gray-300 rounded mx-auto" />
+          </div>
+          
+          {/* Botones skeleton */}
+          <div className="space-y-3">
+            <div className="w-full h-10 bg-gray-300 rounded-lg" />
+            <div className="w-full h-10 bg-gray-300 rounded-lg" />
           </div>
         </div>
-        
-        {/* Enlace skeleton */}
-        <div className="w-24 h-5 bg-gray-200 rounded" />
       </motion.div>
 
-      {/* Mapa skeleton */}
+      {/* Sección derecha - Almagro (Amarillo) */}
       <motion.div
-        initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
+        initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="w-full lg:w-auto relative"
+        className="relative w-full max-w-md lg:max-w-lg"
       >
-        <div className="relative w-full sm:w-80 md:w-96 lg:w-[500px] xl:w-[600px] h-64 sm:h-72 md:h-80 lg:h-96 rounded-2xl overflow-hidden bg-gray-200">
-          {/* Degradado solo en el lado donde se conecta con el texto */}
-          {index % 2 === 0 ? (
-            // Primera ubicación: degradado en el lado izquierdo (donde se conecta con el texto)
-            <div className="absolute top-0 bottom-0 left-0 w-8 sm:w-12 lg:w-16 bg-gradient-to-r from-gray-100 via-gray-100/80 to-transparent" />
-          ) : (
-            // Segunda ubicación: degradado en el lado derecho (donde se conecta con el texto)
-            <div className="absolute top-0 bottom-0 right-0 w-8 sm:w-12 lg:w-16 bg-gradient-to-l from-gray-100 via-gray-100/80 to-transparent" />
-          )}
+        {/* Fondo con forma orgánica - Amarillo */}
+        <div className="absolute inset-0 rounded-3xl bg-yellow-100 opacity-60" 
+        style={{
+          clipPath: 'polygon(5% 0%, 100% 0%, 100% 20%, 90% 40%, 100% 60%, 95% 80%, 100% 100%, 5% 100%, 0% 80%, 5% 60%, 0% 40%, 10% 20%)'
+        }} />
+        
+        <div className="relative p-8 lg:p-10 space-y-6">
+          {/* Título skeleton con fuente script */}
+          <div className="text-center">
+            <div className="w-32 h-8 bg-gray-300 rounded-full mx-auto mb-6" />
+          </div>
+          
+          {/* Ilustración skeleton */}
+          <div className="w-full h-48 bg-gray-200 rounded-2xl flex items-center justify-center">
+            <div className="w-32 h-32 bg-gray-300 rounded-full" />
+          </div>
+          
+          {/* Dirección skeleton */}
+          <div className="text-center space-y-2">
+            <div className="w-48 h-5 bg-gray-300 rounded mx-auto" />
+            <div className="w-36 h-5 bg-gray-300 rounded mx-auto" />
+            <div className="w-44 h-5 bg-gray-300 rounded mx-auto" />
+          </div>
+          
+          {/* Botones skeleton */}
+          <div className="space-y-3">
+            <div className="w-full h-10 bg-gray-300 rounded-lg" />
+            <div className="w-full h-10 bg-gray-300 rounded-lg" />
+          </div>
         </div>
       </motion.div>
     </motion.div>
-  ));
+  );
+};
 
+const UbicacionSkeleton = () => {
   return (
     <div className="px-4 xl:px-0">
       <section className="max-w-frame mx-auto px-4 md:px-6 py-16 md:py-24">
@@ -82,7 +117,7 @@ const UbicacionSkeleton = () => {
 
         {/* Ubicaciones skeleton */}
         <div className="space-y-20 md:space-y-24">
-          {ubicacionSkeletons}
+          <UbicacionPairSkeleton />
         </div>
       </section>
     </div>

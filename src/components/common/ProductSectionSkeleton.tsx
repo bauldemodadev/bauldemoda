@@ -72,13 +72,23 @@ const ProductSectionSkeleton: React.FC<ProductSectionSkeletonProps> = ({
         animate={{ y: "0", opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
+        className="text-2xl font-bold text-left mb-8 md:mb-12 ml-8 md:ml-0"
+      >
+        {title}
+      </motion.h2>
+
+      {/* <motion.h2
+        initial={{ y: "100px", opacity: 0 }}
+        animate={{ y: "0", opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         className={cn([
           integralCF.className,
           "text-2xl font-bold text-left mb-8 md:mb-12 ml-8 md:ml-0",
         ])}
       >
         {title}
-      </motion.h2>
+      </motion.h2> */}
       
       <motion.div
         initial={{ y: "100px", opacity: 0 }}

@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { integralCF } from "@/styles/fonts";
 // import { useEffect, useState } from "react";
 // import ProductListSec from "@/components/common/ProductListSec";
 import ProductSectionSkeleton from "@/components/common/ProductSectionSkeleton";
@@ -61,27 +64,39 @@ export default function Home() {
     <>
       <Header />
       <DressStyleSkeleton />
-      
-      {/* OFERTAS ESPECIALES - Ahora va primero */}
-      <main className="my-[50px] sm:my-[72px]">
-        <ProductSectionSkeleton title="OFERTAS ESPECIALES" />
-      </main>
 
-      {/* NUEVOS PRODUCTOS + DESTACADOS - Ahora van juntos */}
-      <main className="my-[50px] sm:my-[72px]">
-        <ProductSectionSkeleton title="NUEVOS PRODUCTOS" />
-        <div className="max-w-frame mx-auto px-4 xl:px-0">
-          <hr className="h-[1px] border-t-black/10 my-10 sm:my-16" />
-        </div>
-        <DestacadosSkeleton />
+      
+      <main
+        className="my-[50px] sm:my-[72px] mt-5"
+        style={{ backgroundColor: "#F5F0D7" }}
+      >
+        <section className="max-w-frame mx-auto">  
+        <motion.h2
+          initial={{ y: "100px", opacity: 0 }}
+          animate={{ y: "0", opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className={cn([
+            integralCF.className,
+            "text-2xl font-bold text-left mb-8 md:mb-12 ml-8 md:ml-0 pt-5",
+          ])}
+        >
+          CURSOS PRESENCIALES
+        </motion.h2>
+        </section>
+        
+        <ProductSectionSkeleton title="Ciudad Jardín" />
+
+        <ProductSectionSkeleton title="Almagro" />
       </main>
+      {/* <DestacadosSkeleton /> */}
 
       {/* Resto de secciones en el orden solicitado */}
-      <QuienesSomosSkeleton />
-      <ObrasSkeleton />
+      {/* <QuienesSomosSkeleton /> */}
       <AtencionPersonalizadaSkeleton />
+      <ObrasSkeleton />
       <UbicacionSkeleton />
-      
+ 
       {/* <AnimatePresence>
         <OfferPopup />
       </AnimatePresence> */}
