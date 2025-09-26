@@ -1,6 +1,6 @@
 "use client"
 
-import TopBanner from "@/components/layout/Banner/TopBanner";
+// import TopBanner from "@/components/layout/Banner/TopBanner";
 import TopNavbar from "@/components/layout/Navbar/TopNavbar";
 import Footer from "@/components/layout/Footer";
 import { FilterProvider } from "@/context/FilterContext";
@@ -20,7 +20,7 @@ export default function RootLayoutClient({
         <FilterProvider>
           <ToastProvider>
             <ServiceWorkerRegistration />
-            <TopBanner />
+            {/* <TopBanner /> */}
             <TopNavbar />
             <main className="min-h-screen">
               {children}
