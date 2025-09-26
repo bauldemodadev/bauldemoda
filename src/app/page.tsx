@@ -15,7 +15,7 @@ import ObrasSkeleton from "@/components/homepage/Obras/ObrasSkeleton";
 import UbicacionSkeleton from "@/components/homepage/Ubicacion/UbicacionSkeleton";
 // import AtencionPersonalizada from "@/components/homepage/AtencionPersonalizada";
 import AtencionPersonalizadaSkeleton from "@/components/homepage/AtencionPersonalizada/AtencionPersonalizadaSkeleton";
-// import Header from "@/components/homepage/Header";
+import Header from "@/components/homepage/Header";
 // import { api } from "@/lib/api";
 // import { Product } from "@/types/product";
 // import OfferPopup from "@/components/common/OfferPopup";
@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <DressStyleSkeleton />
       
       {/* OFERTAS ESPECIALES - Ahora va primero */}
