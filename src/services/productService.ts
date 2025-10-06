@@ -37,8 +37,10 @@ function mapPrecioToProduct(item: any): Product {
 
 export async function getProductById(productId: string): Promise<Product | null> {
   try {
-    const precio = await api.get<any>(`/precios?id=${encodeURIComponent(productId)}`);
-    return precio ? mapPrecioToProduct(precio) : null;
+    const data = await api.post<any>(`/precios`, { items: [{ id: productId, cantidad: 1 }] });
+    const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
+    if (!items.length) return null;
+    return mapPrecioToProduct(items[0]);
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;

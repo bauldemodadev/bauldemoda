@@ -7,8 +7,9 @@ export const revalidate = 0;
 
 function isTiendaActivo(item: any): boolean {
   const p = item?.producto ?? item;
-  const estadoTienda = p?.estadoTienda ?? item?.estadoTienda;
-  return estadoTienda === 'Activo';
+  // La API externa usa 'publicado' en lugar de 'estadoTienda'
+  const publicado = p?.publicado ?? item?.publicado;
+  return publicado === true;
 }
 
 function mapPrecioToProduct(item: any): Product {
@@ -23,24 +24,17 @@ function mapPrecioToProduct(item: any): Product {
     : [];
   const images: string[] = rawImgs.length > 0 ? rawImgs : (p?.srcUrl ? [p.srcUrl] : []);
 
-  // Precios y descuentos
-  const precioBase = Number(
-    pr?.precioUnitarioBase ?? p?.precioLista ?? p?.precioBase ?? p?.valorVenta ?? 0
-  );
-  const precioFinal = Number(
-    pr?.precioUnitarioFinal ?? p?.valorVenta ?? pr?.precioUnitarioBase ?? 0
-  );
+  // Determinar precios base y final (adaptado a la estructura real de la API)
+  const precioNormal = Number(p?.precio?.normal ?? 0);
+  const precioRebajado = Number(p?.precio?.rebajado ?? 0);
+  const precioUnitario = Number(pr?.precioUnitario ?? 0);
+  
+  // Usar precio unitario del pricing si está disponible, sino precio normal
+  const precioFinal = precioUnitario > 0 ? precioUnitario : precioNormal;
 
-  const discountAmountRaw = p?.discount?.amount;
-  const discountPercentageRaw = p?.discount?.percentage;
-  const calculatedAmount = Math.max(0, precioBase - precioFinal);
-  const calculatedPercentage = precioBase > 0 ? Math.round((calculatedAmount / precioBase) * 100) : 0;
-  const discountAmount = Number(
-    typeof discountAmountRaw === 'number' ? discountAmountRaw : calculatedAmount
-  );
-  const discountPercentage = Number(
-    typeof discountPercentageRaw === 'number' ? discountPercentageRaw : calculatedPercentage
-  );
+  // Descuentos: calcular basado en diferencia entre normal y rebajado
+  const discountAmount = Math.max(0, precioNormal - precioRebajado);
+  const discountPercentage = precioNormal > 0 ? Math.round((discountAmount / precioNormal) * 100) : 0;
 
   const resolvedName = (typeof p?.nombre === 'string' && p.nombre.trim().length > 0)
     ? p.nombre
@@ -54,9 +48,9 @@ function mapPrecioToProduct(item: any): Product {
     price: Math.round(Number(precioFinal) || 0),
     images,
     srcUrl: images[0] || p?.srcUrl || '/placeholder.png',
-    category: p?.categoria ?? pr?.categoria ?? '',
-    subcategory: p?.subCategoria ?? p?.subcategoria ?? pr?.unidad ?? p?.unidadMedida ?? '',
-    stock: Number(p?.stockDisponible ?? p?.stock ?? 0),
+    category: Array.isArray(p?.categorias) ? p.categorias[0] : (p?.categoria ?? pr?.categoria ?? ''),
+    subcategory: Array.isArray(p?.categorias) && p.categorias.length > 1 ? p.categorias[1] : (p?.subCategoria ?? p?.subcategoria ?? pr?.unidad ?? p?.unidadMedida ?? ''),
+    stock: Number(p?.inventario ?? p?.stockDisponible ?? p?.stock ?? 0),
     discount: { amount: Math.max(0, Number(discountAmount) || 0), percentage: Math.max(0, Number(discountPercentage) || 0) },
     freeShipping: false,
     createdAt: new Date(),
@@ -77,29 +71,14 @@ export async function GET(
 ) {
   try {
     const productId = params.id;
-    let precio: any | null = null;
-    try {
-      precio = await api.get<any>(`/precios?id=${encodeURIComponent(productId)}`);
-    } catch (e) {
-      // ignore and try fallback by codigo
-    }
-
-    // Fallback: algunos documentos usan "codigo" como identificador público
-    if (!precio || !isTiendaActivo(precio)) {
-      try {
-        const byCodigo = await api.get<any>(`/precios?codigo=${encodeURIComponent(productId)}`);
-        if (byCodigo && isTiendaActivo(byCodigo)) {
-          precio = byCodigo;
-        }
-      } catch (e) {
-        // no-op
-      }
-    }
-
-    if (!precio || !isTiendaActivo(precio)) {
+    // Nuevo contrato: POST /precios con body { items: [{ id, cantidad }] }
+    const data = await api.post<any>(`/precios`, { items: [{ id: productId, cantidad: 1 }] });
+    const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
+    const activos = items.filter(isTiendaActivo);
+    if (activos.length === 0) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
-    return NextResponse.json(mapPrecioToProduct(precio));
+    return NextResponse.json(mapPrecioToProduct(activos[0]));
   } catch (error) {
     console.error('Error fetching product:', error);
     return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });

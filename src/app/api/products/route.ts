@@ -8,8 +8,9 @@ export const revalidate = 0;
 
 function isTiendaActivo(item: any): boolean {
   const p = item?.producto ?? item;
-  const estadoTienda = p?.estadoTienda ?? item?.estadoTienda;
-  return estadoTienda === 'Activo';
+  // La API externa usa 'publicado' en lugar de 'estadoTienda'
+  const publicado = p?.publicado ?? item?.publicado;
+  return publicado === true;
 }
 
 function mapPrecioToProduct(item: any): Product {
@@ -24,26 +25,17 @@ function mapPrecioToProduct(item: any): Product {
     : [];
   const images: string[] = rawImgs.length > 0 ? rawImgs : (p?.srcUrl ? [p.srcUrl] : []);
 
-  // Determinar precios base y final (con múltiples fuentes posibles)
-  const precioBase = Number(
-    pr?.precioUnitarioBase ?? p?.precioLista ?? p?.precioBase ?? p?.valorVenta ?? 0
-  );
-  const precioFinal = Number(
-    pr?.precioUnitarioFinal ?? p?.valorVenta ?? pr?.precioUnitarioBase ?? 0
-  );
+  // Determinar precios base y final (adaptado a la estructura real de la API)
+  const precioNormal = Number(p?.precio?.normal ?? 0);
+  const precioRebajado = Number(p?.precio?.rebajado ?? 0);
+  const precioUnitario = Number(pr?.precioUnitario ?? 0);
+  
+  // Usar precio unitario del pricing si está disponible, sino precio normal
+  const precioFinal = precioUnitario > 0 ? precioUnitario : precioNormal;
 
-  // Descuentos: usar los provistos si existen, si no calcular
-  const discountAmountRaw = p?.discount?.amount;
-  const discountPercentageRaw = p?.discount?.percentage;
-  const calculatedAmount = Math.max(0, precioBase - precioFinal);
-  const calculatedPercentage = precioBase > 0 ? Math.round((calculatedAmount / precioBase) * 100) : 0;
-
-  const discountAmount = Number(
-    typeof discountAmountRaw === 'number' ? discountAmountRaw : calculatedAmount
-  );
-  const discountPercentage = Number(
-    typeof discountPercentageRaw === 'number' ? discountPercentageRaw : calculatedPercentage
-  );
+  // Descuentos: calcular basado en diferencia entre normal y rebajado
+  const discountAmount = Math.max(0, precioNormal - precioRebajado);
+  const discountPercentage = precioNormal > 0 ? Math.round((discountAmount / precioNormal) * 100) : 0;
 
   const resolvedName =
     typeof p?.nombre === 'string' && p.nombre.trim().length > 0
@@ -60,10 +52,10 @@ function mapPrecioToProduct(item: any): Product {
     price: Math.round(Number(precioFinal) || 0), // Mostrar precio final en el front
     images,
     srcUrl: images[0] || p?.srcUrl || '/placeholder.png',
-    category: p?.categoria ?? pr?.categoria ?? '',
-    subcategory: p?.subCategoria ?? p?.subcategoria ?? pr?.unidad ?? p?.unidadMedida ?? '',
+    category: Array.isArray(p?.categorias) ? p.categorias[0] : (p?.categoria ?? pr?.categoria ?? ''),
+    subcategory: Array.isArray(p?.categorias) && p.categorias.length > 1 ? p.categorias[1] : (p?.subCategoria ?? p?.subcategoria ?? pr?.unidad ?? p?.unidadMedida ?? ''),
     tipoMadera: p?.tipoMadera ?? p?.tipoMadera?.toString?.() ?? '',
-    stock: Number(p?.stockDisponible ?? p?.stock ?? 0),
+    stock: Number(p?.inventario ?? p?.stockDisponible ?? p?.stock ?? 0),
     discount: {
       amount: Math.max(0, Number(discountAmount) || 0),
       percentage: Math.max(0, Number(discountPercentage) || 0),
@@ -93,31 +85,53 @@ export async function GET(request: Request) {
     const cepillado = url.searchParams.get('cepillado') ?? 'false';
     const redondear = url.searchParams.get('redondear') ?? 'true';
 
-    // 1) Listado completo soportado por tu API (items[])
+    // 1) Listado completo -> preferir POST /precios con body { items } si el backend lo soporta
     if (all === '1' || all === 'true') {
-      const data = await api.get<any>(`/precios?all=1`);
+      // Paso A: obtener todos para extraer ids
+      const allData = await api.get<any>(`/precios?all=1`);
+      const allItems = Array.isArray(allData?.items) ? allData.items : Array.isArray(allData) ? allData : [];
+      const active = allItems.filter(isTiendaActivo);
+      const ids = active
+        .map((it: any) => (it?.producto?.id ?? it?.id ?? it?.producto?.codigo ?? it?.codigo))
+        .filter(Boolean);
+
+      if (ids.length === 0) return NextResponse.json([]);
+
+      // Paso B: reconsultar con POST y cantidades uniformes
+      const payload = {
+        items: ids.map((idVal: string) => ({ id: String(idVal), cantidad: Number(cantidad) || 1 })),
+      } as any;
+      const data = await api.post<any>(`/precios`, payload);
       const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
       const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
       return NextResponse.json(filtered);
     }
 
-    // 2) Batch por ids
+    // 2) Batch por ids -> nuevo contrato: POST /precios con body { items: [{ id, cantidad }] }
     if (ids) {
       const list = ids.split(',').map(s => s.trim()).filter(Boolean);
       if (list.length === 0) return NextResponse.json([], { status: 200 });
-      const results = await Promise.all(
-        list.map(async (oneId) => {
-          const data = await api.get<any>(`/precios?id=${encodeURIComponent(oneId)}&cantidad=${cantidad}&cepillado=${cepillado}&redondear=${redondear}`);
-          return isTiendaActivo(data) ? mapPrecioToProduct(data) : null;
-        })
-      );
-      return NextResponse.json(results.filter(Boolean));
+      const payload = {
+        items: list.map((oneId) => ({ id: oneId, cantidad: Number(cantidad) || 1 })),
+      } as any;
+      const data = await api.post<any>(`/precios`, payload);
+      const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
+      const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
+      return NextResponse.json(filtered);
     }
 
-    // 3) Individual por id/codigo/nombre
-    if (id || codigo || nombre) {
+    // 3) Individual por id -> nuevo contrato: POST /precios con body { items: [{ id, cantidad }] }
+    if (id) {
+      const payload = { items: [{ id, cantidad: Number(cantidad) || 1 }] } as any;
+      const data = await api.post<any>(`/precios`, payload);
+      const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
+      const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
+      return NextResponse.json(filtered);
+    }
+
+    // 3b) Compatibilidad: por codigo/nombre (fallback a contrato anterior si el backend aún lo soporta)
+    if (codigo || nombre) {
       const qs = new URLSearchParams();
-      if (id) qs.set('id', id);
       if (codigo) qs.set('codigo', codigo);
       if (nombre) qs.set('nombre', nombre);
       qs.set('cantidad', cantidad);
