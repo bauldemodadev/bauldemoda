@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types/product";
@@ -39,6 +38,16 @@ const DressStyle = () => {
         const fetchedCourses = await response.json() as Product[];
         console.log('📦 Cursos obtenidos:', fetchedCourses);
         console.log('📊 Cantidad de cursos:', fetchedCourses.length);
+        
+        // Debug: verificar las imágenes
+        fetchedCourses.forEach((course, index) => {
+          if (course.images && course.images.length > 0) {
+            console.log(`🖼️ Curso ${index + 1} (${course.name}):`, {
+              original: course.images[0],
+              firstImage: course.images[0].split(',')[0].trim()
+            });
+          }
+        });
         
         setCourses(fetchedCourses);
         setError(null);
@@ -131,10 +140,10 @@ const DressStyle = () => {
               className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
             >
               {/* Imagen del curso */}
-              <div className="relative h-64 bg-gradient-to-br from-pink-100 to-purple-100"></div>
+              <div className="relative h-64 bg-gradient-to-br from-pink-100 to-purple-100">
                 {course.images && course.images.length > 0 ? (
                   <Image
-                    src={course.images[0]}
+                    src={course.images[0].split(',')[0].trim()}
                     alt={course.name}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
