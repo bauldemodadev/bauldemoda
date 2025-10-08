@@ -94,7 +94,7 @@ const DressStyle = () => {
   if (error) {
     return (
       <div className="px-4 xl:px-0">
-        <section className="max-w-frame mx-auto px-4 md:px-6 py-12 md:py-16" style={{ backgroundColor: "#F8F5E8" }}>
+        <section className="max-w-frame mx-auto">
           <div className="text-center">
             <p className="text-red-600">{error}</p>
           </div>
@@ -105,7 +105,7 @@ const DressStyle = () => {
 
   return (
     <div className="px-4 xl:px-0">
-      <section className="max-w-frame mx-auto px-4 md:px-6 py-12 md:py-16" style={{ backgroundColor: "#F8F5E8" }}>
+      <section className="max-w-frame mx-auto">
         {/* Título de la sección */}
         <div className="text-left mb-8">
           <motion.h2
