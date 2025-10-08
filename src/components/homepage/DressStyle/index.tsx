@@ -65,7 +65,7 @@ const DressStyle = () => {
   if (loading) {
     return (
       <div className="px-4 xl:px-0">
-        <section className="max-w-frame mx-auto px-4 md:px-6 py-12 md:py-16" style={{ backgroundColor: "#F8F5E8" }}>
+        <section className="max-w-frame mx-auto">
           <div className="text-center mb-8">
             <h2 className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", integralCF.className)}>
               CURSOS ONLINE

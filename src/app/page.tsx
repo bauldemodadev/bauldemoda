@@ -1,29 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
-// import { useEffect, useState } from "react";
-// import ProductListSec from "@/components/common/ProductListSec";
-import ProductSectionSkeleton from "@/components/common/ProductSectionSkeleton";
+import ProductListSec from "@/components/common/ProductListSec";
 import DressStyle from "@/components/homepage/DressStyle";
-// import DressStyleSkeleton from "@/components/homepage/DressStyleSkeleton";
-// import Destacados from "@/components/homepage/Destacados";
-import DestacadosSkeleton from "@/components/homepage/Destacados/DestacadosSkeleton";
-// import QuienesSomos from "@/components/homepage/QuienesSomos";
-import QuienesSomosSkeleton from "@/components/homepage/QuienesSomos/QuienesSomosSkeleton";
-// import Obras from "@/components/homepage/Obras";
-import ObrasSkeleton from "@/components/homepage/Obras/ObrasSkeleton";
-// import Ubicacion from "@/components/homepage/Ubicacion";
-import UbicacionSkeleton from "@/components/homepage/Ubicacion/UbicacionSkeleton";
-// import AtencionPersonalizada from "@/components/homepage/AtencionPersonalizada";
 import AtencionPersonalizadaSkeleton from "@/components/homepage/AtencionPersonalizada/AtencionPersonalizadaSkeleton";
+import ObrasSkeleton from "@/components/homepage/Obras/ObrasSkeleton";
+import UbicacionSkeleton from "@/components/homepage/Ubicacion/UbicacionSkeleton";
 import Header from "@/components/homepage/Header";
-// import { api } from "@/lib/api";
-// import { Product } from "@/types/product";
-// import OfferPopup from "@/components/common/OfferPopup";
-// import { AnimatePresence } from "framer-motion";
-// import WhatsAppButton from "@/components/common/WhatsAppButton";
 
 export default function Home() {
   // const [products, setProducts] = useState<Product[]>([]);
@@ -70,24 +52,15 @@ export default function Home() {
         className="my-[50px] sm:my-[72px] mt-5 lg:pt-32 lg:-mt-32"
         style={{ backgroundColor: "#F5F0D7" }}
       >
-        <section className="max-w-frame mx-auto">  
-        <motion.h2
-          initial={{ y: "100px", opacity: 0 }}
-          animate={{ y: "0", opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className={cn([
-            integralCF.className,
-            "text-2xl font-bold text-left mb-8 md:mb-12 ml-8 md:ml-0 pt-5",
-          ])}
-        >
-          CURSOS PRESENCIALES
-        </motion.h2>
-        </section>
-        
-        <ProductSectionSkeleton title="Ciudad Jardín" />
+        <ProductListSec 
+          title="Ciudad Jardín" 
+          productIds={["M2eaBFE4haP9wNZlU2VH", "O1gikBervfIpQjDiCNwL", "Ojq1RVHKUKdb4mQ0gLNr", "WX8IIznI7dGaYVROMUXa"]} 
+        />
 
-        <ProductSectionSkeleton title="Almagro" />
+        <ProductListSec 
+          title="Almagro" 
+          productIds={["findiO6O15Vr6kZdZnrG", "mtNpT3XBRwGtTPe5rYU4", "11VBGCw2AoAgYHUSL76p", "Ojq1RVHKUKdb4mQ0gLNr", "O1gikBervfIpQjDiCNwL"]} 
+        />
       </main>
       {/* <DestacadosSkeleton /> */}
 
