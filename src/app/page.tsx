@@ -67,7 +67,7 @@ export default function Home() {
 
       
       <main
-        className="my-[50px] sm:my-[72px] mt-5"
+        className="my-[50px] sm:my-[72px] mt-5 lg:pt-32 lg:-mt-32"
         style={{ backgroundColor: "#F5F0D7" }}
       >
         <section className="max-w-frame mx-auto">  

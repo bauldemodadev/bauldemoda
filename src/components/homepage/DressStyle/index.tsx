@@ -113,7 +113,7 @@ const DressStyle = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", integralCF.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-2", integralCF.className)}
           >
             CURSOS ONLINE
           </motion.h2>
@@ -140,13 +140,13 @@ const DressStyle = () => {
               className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
             >
               {/* Imagen del curso */}
-              <div className="relative h-64 bg-gradient-to-br from-pink-100 to-purple-100">
+              <div className="relative h-80">
                 {course.images && course.images.length > 0 ? (
                   <Image
                     src={course.images[0].split(',')[0].trim()}
                     alt={course.name}
                     fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-contain transition-transform duration-300 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   />
                 ) : (
