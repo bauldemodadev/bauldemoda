@@ -67,11 +67,13 @@ const DressStyle = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-white p-6 animate-pulse">
-                <div className="h-48 bg-gray-200 mb-4"></div>
-                <div className="h-4 bg-gray-200 mb-2"></div>
-                <div className="h-3 bg-gray-200 mb-4"></div>
-                <div className="h-10 bg-gray-200"></div>
+              <div key={i} className="bg-white animate-pulse flex flex-col">
+                <div className="flex-1 h-48 bg-gray-200"></div>
+                <div className="px-4 py-3">
+                  <div className="h-4 bg-gray-200 mb-1"></div>
+                  <div className="h-3 bg-gray-200 mb-3"></div>
+                </div>
+                <div className="h-12 bg-gray-200"></div>
               </div>
             ))}
           </div>
@@ -126,10 +128,10 @@ const DressStyle = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white overflow-hidden transition-all duration-300 group"
+              className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
             >
               {/* Imagen del curso */}
-              <div className="relative h-48 bg-gradient-to-br from-pink-100 to-purple-100">
+              <div className="relative flex-1 bg-gradient-to-br from-pink-100 to-purple-100">
                 {course.images && course.images.length > 0 ? (
                   <Image
                     src={course.images[0]}
@@ -165,21 +167,21 @@ const DressStyle = () => {
               </div>
 
               {/* Contenido del curso */}
-              <div className="p-6">
-                <h3 className="font-bold text-gray-900 text-sm mb-2 leading-tight uppercase">
+              <div className="px-4 py-3">
+                <h3 className="font-bold text-gray-900 text-sm mb-1 leading-tight uppercase text-center">
                   {course.name}
                 </h3>
-                <p className="text-gray-600 text-sm mb-4">
+                <p className="text-gray-600 text-sm mb-3 text-center">
                   Cursos Online
                 </p>
-                
-                {/* Botón MÁS INFO */}
-                <Link href={`/shop/${course.id}`}>
-                  <Button className="w-full text-white text-sm font-medium py-2 transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
-                    MÁS INFO
-                  </Button>
-                </Link>
               </div>
+              
+              {/* Botón MÁS INFO */}
+              <Link href={`/shop/${course.id}`}>
+                <Button className="w-full text-white text-sm font-medium py-3 transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
+                  MÁS INFO
+                </Button>
+              </Link>
             </motion.div>
           ))}
         </div>
