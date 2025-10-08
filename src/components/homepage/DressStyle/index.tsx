@@ -68,7 +68,7 @@ const DressStyle = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="bg-white animate-pulse flex flex-col">
-                <div className="flex-1 h-48 bg-gray-200"></div>
+                <div className="h-64 bg-gray-200"></div>
                 <div className="px-4 py-3">
                   <div className="h-4 bg-gray-200 mb-1"></div>
                   <div className="h-3 bg-gray-200 mb-3"></div>
@@ -131,7 +131,7 @@ const DressStyle = () => {
               className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
             >
               {/* Imagen del curso */}
-              <div className="relative flex-1 bg-gradient-to-br from-pink-100 to-purple-100">
+              <div className="relative h-64 bg-gradient-to-br from-pink-100 to-purple-100"></div>
                 {course.images && course.images.length > 0 ? (
                   <Image
                     src={course.images[0]}
@@ -178,9 +178,9 @@ const DressStyle = () => {
               
               {/* Botón MÁS INFO */}
               <Link href={`/shop/${course.id}`}>
-                <Button className="w-full text-white text-sm font-medium py-3 transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
+                <button className="w-full text-white text-sm font-medium py-3 transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
                   MÁS INFO
-                </Button>
+                </button>
               </Link>
             </motion.div>
           ))}
@@ -195,9 +195,9 @@ const DressStyle = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <Link href="/shop">
-              <Button className="text-white px-8 py-3 text-lg font-medium transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
+              <button className="text-white px-8 py-3 text-lg font-medium transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
                 VER TODOS
-              </Button>
+              </button>
             </Link>
           </motion.div>
         </div>
