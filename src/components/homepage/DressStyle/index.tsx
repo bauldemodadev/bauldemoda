@@ -67,11 +67,11 @@ const DressStyle = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-white rounded-xl shadow-md p-6 animate-pulse">
-                <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded mb-4"></div>
-                <div className="h-10 bg-gray-200 rounded"></div>
+              <div key={i} className="bg-white p-6 animate-pulse">
+                <div className="h-48 bg-gray-200 mb-4"></div>
+                <div className="h-4 bg-gray-200 mb-2"></div>
+                <div className="h-3 bg-gray-200 mb-4"></div>
+                <div className="h-10 bg-gray-200"></div>
               </div>
             ))}
           </div>
@@ -126,7 +126,7 @@ const DressStyle = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group"
+              className="bg-white overflow-hidden transition-all duration-300 group"
             >
               {/* Imagen del curso */}
               <div className="relative h-48 bg-gradient-to-br from-pink-100 to-purple-100">
@@ -175,7 +175,7 @@ const DressStyle = () => {
                 
                 {/* Botón MÁS INFO */}
                 <Link href={`/shop/${course.id}`}>
-                  <Button className="w-full bg-pink-400 hover:bg-pink-500 text-white text-sm font-medium py-2 rounded-lg transition-colors">
+                  <Button className="w-full text-white text-sm font-medium py-2 transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
                     MÁS INFO
                   </Button>
                 </Link>
@@ -193,7 +193,7 @@ const DressStyle = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
           >
             <Link href="/shop">
-              <Button className="bg-pink-400 hover:bg-pink-500 text-white px-8 py-3 text-lg font-medium rounded-full transition-colors">
+              <Button className="text-white px-8 py-3 text-lg font-medium transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
                 VER TODOS
               </Button>
             </Link>
