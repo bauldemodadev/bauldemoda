@@ -10,15 +10,29 @@ import Image from "next/image";
 
 type ProductListSecProps = {
   title: string;
-  productIds: string[];
+  productIds?: string[];
+  data?: Product[];
 };
 
-const ProductListSec = ({ title, productIds }: ProductListSecProps) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
+  const [products, setProducts] = useState<Product[]>(data || []);
+  const [loading, setLoading] = useState(!data && !!productIds);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Si ya tenemos data, no necesitamos hacer fetch
+    if (data) {
+      setProducts(data);
+      setLoading(false);
+      return;
+    }
+
+    // Si no hay productIds, no hay nada que cargar
+    if (!productIds || productIds.length === 0) {
+      setLoading(false);
+      return;
+    }
+
     const fetchProducts = async () => {
       setLoading(true);
       try {
@@ -44,9 +58,10 @@ const ProductListSec = ({ title, productIds }: ProductListSecProps) => {
 
     fetchProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productIds.join(',')]);
+  }, [productIds?.join(','), data]);
 
   if (loading) {
+    const skeletonCount = productIds?.length || 4;
     return (
       <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
         <div className="text-left mb-8">
@@ -55,8 +70,8 @@ const ProductListSec = ({ title, productIds }: ProductListSecProps) => {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {productIds.map((id, i) => (
-            <div key={id} className="bg-white animate-pulse flex flex-col">
+          {Array.from({ length: skeletonCount }).map((_, i) => (
+            <div key={i} className="bg-white animate-pulse flex flex-col">
               <div className="h-80 bg-gray-200"></div>
               <div className="px-4 py-3">
                 <div className="h-4 bg-gray-200 mb-1"></div>
@@ -78,6 +93,11 @@ const ProductListSec = ({ title, productIds }: ProductListSecProps) => {
         </div>
       </section>
     );
+  }
+
+  // Si no hay productos, no mostrar nada
+  if (!products || products.length === 0) {
+    return null;
   }
 
   return (
