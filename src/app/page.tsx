@@ -6,8 +6,8 @@ import { integralCF } from "@/styles/fonts";
 // import { useEffect, useState } from "react";
 // import ProductListSec from "@/components/common/ProductListSec";
 import ProductSectionSkeleton from "@/components/common/ProductSectionSkeleton";
-// import DressStyle from "@/components/homepage/DressStyle";
-import DressStyleSkeleton from "@/components/homepage/DressStyleSkeleton";
+import DressStyle from "@/components/homepage/DressStyle";
+// import DressStyleSkeleton from "@/components/homepage/DressStyleSkeleton";
 // import Destacados from "@/components/homepage/Destacados";
 import DestacadosSkeleton from "@/components/homepage/Destacados/DestacadosSkeleton";
 // import QuienesSomos from "@/components/homepage/QuienesSomos";
@@ -63,7 +63,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <DressStyleSkeleton />
+      <DressStyle />
 
       
       <main

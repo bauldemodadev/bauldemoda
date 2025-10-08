@@ -1,111 +1,203 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-
-const cursos = [
-  {
-    id: "1",
-    titulo: "PREVENTA DE ARREGLOS DE ROPA",
-    subtitulo: "MODA CIRCULAR",
-    tag: "OFERTA",
-    tagColor: "bg-pink-500",
-    imagen: "/images/curso-moda-circular.jpg",
-    url: "/cursos/moda-circular",
-    color: "bg-pink-100"
-  },
-  {
-    id: "2",
-    titulo: "INTENSIVO MI PRIMER JEAN",
-    subtitulo: "INTENSIVO MI PRIMER JEAN",
-    tag: "CURSO RENOVADO",
-    tagColor: "bg-blue-500",
-    imagen: "/images/curso-jean.jpg",
-    url: "/cursos/mi-primer-jean",
-    color: "bg-blue-100"
-  },
-  {
-    id: "3",
-    titulo: "ABC COSTURA ONLINE",
-    subtitulo: "ABC COSTURA ONLINE",
-    tag: "SÚPER EXPRESS",
-    tagColor: "bg-yellow-500",
-    imagen: "/images/curso-costura.jpg",
-    url: "/cursos/abc-costura",
-    color: "bg-teal-100"
-  },
-  {
-    id: "4",
-    titulo: "INTENSIVO MALLAS",
-    subtitulo: "INTENSIVO MALLAS",
-    imagen: "/images/curso-mallas.jpg",
-    url: "/cursos/intensivo-mallas",
-    color: "bg-yellow-100"
-  }
-];
+import { Product } from "@/types/product";
+import { motion } from "framer-motion";
 
 const DressStyle = () => {
+  const [courses, setCourses] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // IDs específicos de los cursos
+  const courseIds = ["p96oHm22N2E5rzNOeAzJ", "szet9FZ0k4vNWPzlnljJ", "DM9RSF7Kws97w3MaOMB2", "H1BdVSwXwqoc0ZlvnNpE"];
+
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setLoading(true);
+      try {
+        console.log('🔍 Buscando cursos con IDs:', courseIds);
+        const url = `/api/products?ids=${courseIds.join(',')}`;
+        console.log('🌐 URL de la API:', url);
+        
+        const response = await fetch(url, { 
+          cache: 'no-store' 
+        });
+        
+        console.log('📡 Respuesta de la API:', response.status, response.statusText);
+        
+        if (!response.ok) {
+          throw new Error(`Error al cargar los cursos: ${response.status} ${response.statusText}`);
+        }
+        
+        const fetchedCourses = await response.json() as Product[];
+        console.log('📦 Cursos obtenidos:', fetchedCourses);
+        console.log('📊 Cantidad de cursos:', fetchedCourses.length);
+        
+        setCourses(fetchedCourses);
+        setError(null);
+      } catch (err) {
+        console.error('❌ Error fetching courses:', err);
+        setError(`Error al cargar los cursos: ${err instanceof Error ? err.message : 'Error desconocido'}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="px-4 xl:px-0">
+        <section className="max-w-frame mx-auto px-4 md:px-6 py-12 md:py-16" style={{ backgroundColor: "#F8F5E8" }}>
+          <div className="text-center mb-8">
+            <h2 className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", integralCF.className)}>
+              CURSOS ONLINE
+            </h2>
+            <p className="text-lg text-gray-600 italic">
+              hacelos en casa
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="bg-white rounded-xl shadow-md p-6 animate-pulse">
+                <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                <div className="h-3 bg-gray-200 rounded mb-4"></div>
+                <div className="h-10 bg-gray-200 rounded"></div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="px-4 xl:px-0">
+        <section className="max-w-frame mx-auto px-4 md:px-6 py-12 md:py-16" style={{ backgroundColor: "#F8F5E8" }}>
+          <div className="text-center">
+            <p className="text-red-600">{error}</p>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div className="px-4 xl:px-0">
-      <section className="max-w-frame mx-auto px-4 md:px-6 py-12 md:py-16 bg-stone-50">
+      <section className="max-w-frame mx-auto px-4 md:px-6 py-12 md:py-16" style={{ backgroundColor: "#F8F5E8" }}>
         {/* Título de la sección */}
-        <div className="text-center mb-8">
-          <h2 className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", integralCF.className)}>
+        <div className="text-left mb-8">
+          <motion.h2
+            initial={{ y: "100px", opacity: 0 }}
+            animate={{ y: "0", opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", integralCF.className)}
+          >
             CURSOS ONLINE
-          </h2>
-          <p className="text-lg text-gray-600">
+          </motion.h2>
+          <motion.p
+            initial={{ y: "100px", opacity: 0 }}
+            animate={{ y: "0", opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg text-gray-600 italic"
+          >
             hacelos en casa
-          </p>
+          </motion.p>
         </div>
 
         {/* Grid de cursos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {cursos.map((curso) => (
-            <div key={curso.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+          {courses.map((course, index) => (
+            <motion.div
+              key={course.id}
+              initial={{ y: "100px", opacity: 0 }}
+              animate={{ y: "0", opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 group"
+            >
               {/* Imagen del curso */}
               <div className="relative h-48 bg-gradient-to-br from-pink-100 to-purple-100">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {/* Placeholder para la imagen del curso */}
-                  <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
-                    <span className="text-2xl font-bold text-gray-400">📚</span>
+                {course.images && course.images.length > 0 ? (
+                  <Image
+                    src={course.images[0]}
+                    alt={course.name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
+                      <span className="text-2xl font-bold text-gray-400">📚</span>
+                    </div>
                   </div>
-                </div>
+                )}
                 
-                {/* Tag */}
-                {curso.tag && (
-                  <div className={cn("absolute top-3 left-3 px-3 py-1 rounded-full text-white text-xs font-bold", curso.tagColor)}>
-                    {curso.tag}
+                {/* Tags específicos según el curso */}
+                {course.id === "p96oHm22N2E5rzNOeAzJ" && (
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-white text-xs font-bold bg-pink-500">
+                    OFERTA
+                  </div>
+                )}
+                {course.id === "szet9FZ0k4vNWPzlnljJ" && (
+                  <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full text-white text-xs font-bold bg-teal-600">
+                    CURSO RENOVADO
+                  </div>
+                )}
+                {course.id === "DM9RSF7Kws97w3MaOMB2" && (
+                  <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full text-yellow-900 text-xs font-bold bg-yellow-400">
+                    SÚPER EXPRESS
                   </div>
                 )}
               </div>
 
               {/* Contenido del curso */}
               <div className="p-6">
-                <h3 className="font-bold text-gray-900 text-sm mb-2 leading-tight">
-                  {curso.titulo}
+                <h3 className="font-bold text-gray-900 text-sm mb-2 leading-tight uppercase">
+                  {course.name}
                 </h3>
                 <p className="text-gray-600 text-sm mb-4">
                   Cursos Online
                 </p>
                 
                 {/* Botón MÁS INFO */}
-                <Link href={curso.url}>
-                  <Button className="w-full bg-pink-500 hover:bg-pink-600 text-white text-sm font-medium py-2 rounded-lg transition-colors">
+                <Link href={`/shop/${course.id}`}>
+                  <Button className="w-full bg-pink-400 hover:bg-pink-500 text-white text-sm font-medium py-2 rounded-lg transition-colors">
                     MÁS INFO
                   </Button>
                 </Link>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Botón VER TODOS */}
         <div className="text-center">
-          <Button className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 text-lg font-medium rounded-lg transition-colors">
-            VER TODOS
-          </Button>
+          <motion.div
+            initial={{ y: "100px", opacity: 0 }}
+            animate={{ y: "0", opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <Link href="/shop">
+              <Button className="bg-pink-400 hover:bg-pink-500 text-white px-8 py-3 text-lg font-medium rounded-full transition-colors">
+                VER TODOS
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>
