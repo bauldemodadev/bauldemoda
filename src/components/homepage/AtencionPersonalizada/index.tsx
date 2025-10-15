@@ -34,14 +34,14 @@ const AtencionPersonalizada = () => {
           </motion.p>
 
           {/* Tres bloques de contenido */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 max-w-6xl mx-auto">
             {/* Bloque 1: bauleras */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center"
+              className="text-center flex-1 max-w-sm"
             >
               {/* Icono corazón */}
               <div className="mb-6 flex justify-center">
@@ -81,7 +81,7 @@ const AtencionPersonalizada = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-center"
+              className="text-center flex-1 max-w-sm"
             >
               {/* Icono burbujas de chat */}
               <div className="mb-6 flex justify-center">
@@ -125,7 +125,7 @@ const AtencionPersonalizada = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-center"
+              className="text-center flex-1 max-w-sm"
             >
               {/* Icono pulgar arriba */}
               <div className="mb-6 flex justify-center">
