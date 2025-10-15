@@ -3,7 +3,7 @@
 import ProductListSec from "@/components/common/ProductListSec";
 import DressStyle from "@/components/homepage/DressStyle";
 import AtencionPersonalizadaWrapper from "@/components/homepage/AtencionPersonalizada/AtencionPersonalizadaWrapper";
-import ObrasSkeleton from "@/components/homepage/Obras/ObrasSkeleton";
+import RedesWrapper from "@/components/homepage/Redes/RedesWrapper";
 import UbicacionSkeleton from "@/components/homepage/Ubicacion/UbicacionSkeleton";
 import Header from "@/components/homepage/Header";
 
@@ -67,7 +67,7 @@ export default function Home() {
       {/* Resto de secciones en el orden solicitado */}
       {/* <QuienesSomosSkeleton /> */}
       <AtencionPersonalizadaWrapper />
-      <ObrasSkeleton />
+      <RedesWrapper />
       <UbicacionSkeleton />
  
       {/* <AnimatePresence>
