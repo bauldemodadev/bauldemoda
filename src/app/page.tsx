@@ -4,7 +4,7 @@ import ProductListSec from "@/components/common/ProductListSec";
 import DressStyle from "@/components/homepage/DressStyle";
 import AtencionPersonalizadaWrapper from "@/components/homepage/AtencionPersonalizada/AtencionPersonalizadaWrapper";
 import RedesWrapper from "@/components/homepage/Redes/RedesWrapper";
-import UbicacionSkeleton from "@/components/homepage/Ubicacion/UbicacionSkeleton";
+import UbicacionWrapper from "@/components/homepage/Ubicacion/UbicacionWrapper";
 import Header from "@/components/homepage/Header";
 
 export default function Home() {
@@ -68,7 +68,7 @@ export default function Home() {
       {/* <QuienesSomosSkeleton /> */}
       <AtencionPersonalizadaWrapper />
       <RedesWrapper />
-      <UbicacionSkeleton />
+      <UbicacionWrapper />
  
       {/* <AnimatePresence>
         <OfferPopup />

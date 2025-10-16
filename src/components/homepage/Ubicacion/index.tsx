@@ -1,33 +1,12 @@
 import React from "react";
-import { motion } from "framer-motion";
+import * as motion from "framer-motion/client";
 import { integralCF } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
-
-const ubicaciones = [
-  {
-    id: 1,
-    titulo: "Sucursal Principal",
-    direccion: "Av. Dr. Ricardo Balbín 4504",
-    ciudad: "San Miguel",
-    provincia: "Buenos Aires",
-    coordenadas: { lat: -34.5444, lng: -58.7122 },
-    mapaUrl: "https://maps.google.com/maps?q=-34.5444,-58.7122&z=15&output=embed"
-  },
-  {
-    id: 2,
-    titulo: "Sucursal Secundaria",
-    direccion: "Av. Dr. Honorio Pueyrredón 4625",
-    ciudad: "Villa Rosa",
-    provincia: "Buenos Aires",
-    coordenadas: { lat: -34.4567, lng: -58.7890 },
-    mapaUrl: "https://maps.google.com/maps?q=-34.4567,-58.7890&z=15&output=embed"
-  }
-];
 
 const Ubicacion = () => {
   return (
     <div className="px-4 xl:px-0">
-      <section id="ubicacion" className="max-w-frame mx-auto px-4 md:px-6 py-16 md:py-24">
+      <section className="max-w-frame mx-auto px-4 md:px-6 py-16 md:py-24 bg-white">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,108 +22,142 @@ const Ubicacion = () => {
             transition={{ duration: 0.6 }}
             className={cn([
               integralCF.className,
-              "text-2xl font-bold text-center ml-8 md:ml-0",
+              "text-3xl md:text-4xl font-bold text-gray-800 mb-4",
             ])}
           >
-            Donde estamos
+            Nuestras Ubicaciones
           </motion.h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mt-4 sm:mt-6">
-            Encuentra nuestras sucursales en puntos estratégicos de Buenos Aires
-          </p>
         </motion.div>
 
         {/* Ubicaciones */}
-        <div className="space-y-20 md:space-y-24">
-          {ubicaciones.map((ubicacion, index) => (
-            <motion.div
-              key={ubicacion.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className={`flex flex-col lg:flex-row items-center gap-4 lg:gap-6 justify-around ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              }`}
-            >
-              {/* Texto */}
-              <motion.div
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="w-full lg:w-auto space-y-4"
-              >
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                    {ubicacion.titulo}
-                  </h3>
-                  <div className="space-y-2">
-                    <p className="text-lg md:text-xl font-semibold text-gray-800">
-                      {ubicacion.direccion}
-                    </p>
-                    <p className="text-lg md:text-xl font-semibold text-gray-800">
-                      {ubicacion.ciudad}, {ubicacion.provincia}
-                    </p>
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
+          {/* Ciudad Jardín */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative w-full max-w-md lg:max-w-lg"
+          >
+            {/* Fondo con forma orgánica - Rosa */}
+            <div 
+              className="absolute inset-0 rounded-3xl opacity-60" 
+              style={{ 
+                backgroundColor: "#F8BBD9",
+                clipPath: 'polygon(0% 0%, 100% 0%, 95% 20%, 100% 40%, 90% 60%, 100% 80%, 95% 100%, 0% 100%, 5% 80%, 0% 60%, 10% 40%, 0% 20%)'
+              }} 
+            />
+            
+            <div className="relative p-8 lg:p-10 space-y-6">
+              {/* Título */}
+              <div className="text-center">
+                <h3 className={cn([
+                  integralCF.className,
+                  "text-2xl md:text-3xl font-bold text-gray-800 mb-6"
+                ])}>
+                  Ciudad Jardín
+                </h3>
+              </div>
+              
+              {/* Ilustración */}
+              <div className="w-full h-48 bg-white rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="text-center">
+                  <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                    <div className="text-gray-500 text-sm">Ilustración edificio Ciudad Jardín</div>
                   </div>
                 </div>
-                
-                <motion.a
-                  href={`https://maps.google.com/maps?q=${ubicacion.coordenadas.lat},${ubicacion.coordenadas.lng}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              </div>
+              
+              {/* Dirección */}
+              <div className="text-center space-y-2">
+                <p className="text-gray-700 font-medium">Av. Dr. Ricardo Balbín 2950, local 33</p>
+                <p className="text-gray-700 font-medium">Shopping Paradise</p>
+                <p className="text-gray-700 font-medium">Zona Oeste</p>
+              </div>
+              
+              {/* Botones */}
+              <div className="space-y-3">
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-black text-white rounded-xl font-medium text-sm hover:bg-gray-800 transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
                 >
-                  <span>Ver mapa</span>
-                  <svg 
-                    className="w-4 h-4" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
-                    />
-                  </svg>
-                </motion.a>
-              </motion.div>
+                  CONTACTAR
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                >
+                  NEWSLETTER
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
 
-              {/* Mapa */}
-              <motion.div
-                initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="w-full lg:w-auto relative"
-              >
-                <div className="relative w-full sm:w-80 md:w-96 lg:w-[500px] xl:w-[600px] h-64 sm:h-72 md:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg">
-                  {/* Mapa */}
-                  <iframe
-                    src={ubicacion.mapaUrl}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                  
-                  {/* Degradado solo en el lado donde se conecta con el texto */}
-                  {index % 2 === 0 ? (
-                    // Primera ubicación: degradado en el lado izquierdo (donde se conecta con el texto)
-                    <div className="absolute top-0 bottom-0 left-0 w-8 sm:w-12 lg:w-16 bg-gradient-to-r from-white via-white/80 to-transparent" />
-                  ) : (
-                    // Segunda ubicación: degradado en el lado derecho (donde se conecta con el texto)
-                    <div className="absolute top-0 bottom-0 right-0 w-8 sm:w-12 lg:w-16 bg-gradient-to-l from-white via-white/80 to-transparent" />
-                  )}
+          {/* Almagro */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="relative w-full max-w-md lg:max-w-lg"
+          >
+            {/* Fondo con forma orgánica - Amarillo */}
+            <div 
+              className="absolute inset-0 rounded-3xl opacity-60" 
+              style={{ 
+                backgroundColor: "#FFF2CC",
+                clipPath: 'polygon(5% 0%, 100% 0%, 100% 20%, 90% 40%, 100% 60%, 95% 80%, 100% 100%, 5% 100%, 0% 80%, 5% 60%, 0% 40%, 10% 20%)'
+              }} 
+            />
+            
+            <div className="relative p-8 lg:p-10 space-y-6">
+              {/* Título */}
+              <div className="text-center">
+                <h3 className={cn([
+                  integralCF.className,
+                  "text-2xl md:text-3xl font-bold text-gray-800 mb-6"
+                ])}>
+                  Almagro
+                </h3>
+              </div>
+              
+              {/* Ilustración */}
+              <div className="w-full h-48 bg-white rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="text-center">
+                  <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                    <div className="text-gray-500 text-sm">Ilustración edificio Almagro</div>
+                  </div>
                 </div>
-              </motion.div>
-            </motion.div>
-          ))}
+              </div>
+              
+              {/* Dirección */}
+              <div className="text-center space-y-2">
+                <p className="text-gray-700 font-medium">Castro y Agrelo</p>
+                <p className="text-gray-700 font-medium">Almagro</p>
+                <p className="text-gray-700 font-medium">Capital Federal</p>
+              </div>
+              
+              {/* Botones */}
+              <div className="space-y-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                >
+                  CONTACTAR
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                >
+                  NEWSLETTER
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
