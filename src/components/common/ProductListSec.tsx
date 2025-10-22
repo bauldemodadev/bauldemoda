@@ -7,8 +7,6 @@ import { integralCF } from "@/styles/fonts";
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
-import { useCart } from "@/lib/hooks/useCart";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
@@ -20,8 +18,6 @@ type ProductListSecProps = {
 };
 
 const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
-  const { user } = useAuth();
-  const { cart, carritoRemotoId, refrescarCarrito } = useCart();
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>(data || []);
   const [loading, setLoading] = useState(!data && !!productIds);
@@ -85,64 +81,32 @@ const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
       productId: product.id,
     };
 
-    // Verificar disponibilidad del producto antes de agregar
-    const checkAvailability = async () => {
-      try {
-        const response = await fetch(`/api/products/${product.id}`);
-        if (!response.ok) {
-          toast({
-            title: "Error",
-            description: "No se pudo verificar la disponibilidad del producto.",
-            variant: "destructive",
-          });
-          return false;
-        }
-        
-        const productData = await response.json();
-        return productData && productData.active === true && productData.stock > 0;
-      } catch (error) {
-        console.error('Error verificando disponibilidad:', error);
-        return false;
-      }
-    };
+    // Agregar al carrito local
+    const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
+    const indice = carritoLocal.findIndex(
+      (i: any) => i.id === itemCarrito.id
+    );
 
-    checkAvailability().then((isAvailable) => {
-      if (!isAvailable) {
-        toast({
-          title: "Producto no disponible",
-          description: "El producto no está disponible en este momento.",
-          variant: "destructive",
-        });
-        return;
-      }
+    if (indice > -1) {
+      carritoLocal[indice].quantity += 1;
+      carritoLocal[indice].totalPrice =
+        carritoLocal[indice].quantity * itemCarrito.price;
+      toast({
+        title: "¡Cantidad actualizada!",
+        description: `Se ha actualizado la cantidad de ${product.name} en el carrito.`,
+        variant: "cart",
+      });
+    } else {
+      carritoLocal.push(itemCarrito);
+      toast({
+        title: "¡Producto agregado al carrito!",
+        description: `${product.name} ha sido agregado correctamente al carrito.`,
+        variant: "cart",
+      });
+    }
 
-      // Agregar al carrito local
-      const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
-      const indice = carritoLocal.findIndex(
-        (i: any) => i.id === itemCarrito.id
-      );
-
-      if (indice > -1) {
-        carritoLocal[indice].quantity += 1;
-        carritoLocal[indice].totalPrice =
-          carritoLocal[indice].quantity * itemCarrito.price;
-        toast({
-          title: "¡Cantidad actualizada!",
-          description: `Se ha actualizado la cantidad de ${product.name} en el carrito.`,
-          variant: "cart",
-        });
-      } else {
-        carritoLocal.push(itemCarrito);
-        toast({
-          title: "¡Producto agregado al carrito!",
-          description: `${product.name} ha sido agregado correctamente al carrito.`,
-          variant: "cart",
-        });
-      }
-
-      localStorage.setItem("cart", JSON.stringify(carritoLocal));
-      window.dispatchEvent(new Event("cartUpdate"));
-    });
+    localStorage.setItem("cart", JSON.stringify(carritoLocal));
+    window.dispatchEvent(new Event("cartUpdate"));
   };
 
   if (loading) {
