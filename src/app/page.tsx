@@ -63,13 +63,11 @@ export default function Home() {
         />
       </main>
       {/* <DestacadosSkeleton /> */}
-
       {/* Resto de secciones en el orden solicitado */}
       {/* <QuienesSomosSkeleton /> */}
       <AtencionPersonalizadaWrapper />
       <RedesWrapper />
       <UbicacionWrapper />
- 
       {/* <AnimatePresence>
         <OfferPopup />
       </AnimatePresence> */}
