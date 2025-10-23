@@ -27,7 +27,13 @@ const data: NavMenu = [
     type: "MenuItem",
     label: "TIENDA",
     url: "/shop",
-    children: [],
+    children: [
+      { id: 21, label: "CURSOS ONLINE", url: "/shop?categoria=cursos-online" },
+      { id: 22, label: "CURSOS CIUDAD JARDÍN", url: "/shop?categoria=ciudad-jardin" },
+      { id: 23, label: "CURSOS ALMAGRO", url: "/shop?categoria=almagro" },
+      { id: 24, label: "PRODUCTOS Y SERVICIOS", url: "/shop?categoria=productos-servicios" },
+      { id: 25, label: "TODOS", url: "/shop" },
+    ],
   },
   {
     id: 3,
@@ -103,6 +109,40 @@ const TopNavbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-6">
             {data.map((item) => (
+              item.children && item.children.length > 0 ? (
+                <DropdownMenu.Root key={item.id}>
+                  <DropdownMenu.Trigger asChild>
+                    <button
+                      className={cn(
+                        "text-sm font-semibold uppercase tracking-wide transition-colors duration-200 flex items-center gap-1",
+                        pathname === item.url 
+                          ? "text-pink-700" 
+                          : "text-gray-800 hover:text-pink-700"
+                      )}
+                    >
+                      {item.label}
+                      <ChevronDown className="w-4 h-4" />
+                    </button>
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      sideOffset={8}
+                      className="z-40 w-56 rounded-lg bg-white shadow-lg border border-gray-200 p-1 text-sm"
+                    >
+                      {item.children.map((child) => (
+                        <DropdownMenu.Item key={child.id} asChild>
+                          <Link
+                            href={child.url || '/'}
+                            className="flex items-center px-3 py-2 text-pink-600 hover:bg-pink-50 rounded-md transition-colors duration-150 font-medium"
+                          >
+                            {child.label}
+                          </Link>
+                        </DropdownMenu.Item>
+                      ))}
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
+              ) : (
                 <Link
                   key={item.id}
                   href={item.url || '/'}
@@ -114,8 +154,9 @@ const TopNavbar = () => {
                   )}
                 >
                   {item.label}
-                  </Link>
-                ))}
+                </Link>
+              )
+            ))}
               </div>
         </div>
 
