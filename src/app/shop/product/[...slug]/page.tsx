@@ -155,7 +155,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
     const fetchProduct = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://bauldemoda.vercel.app/api/products/${id}`, { 
+        const response = await fetch(`https://bauldemoda.vercel.app/api/products?id=${id}`, { 
           cache: 'no-store' 
         });
         
