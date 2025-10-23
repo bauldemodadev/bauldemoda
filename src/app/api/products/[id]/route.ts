@@ -41,7 +41,7 @@ function mapPrecioToProduct(item: any): Product {
     : ((typeof p?.descripcion === 'string' && p.descripcion.trim().length > 0) ? p.descripcion : 'Sin nombre');
 
   return {
-    id: String(p?.id ?? p?.codigo ?? crypto.randomUUID()),
+    id: String(p?.id ?? crypto.randomUUID()),
     title: resolvedName,
     name: resolvedName,
     description: p?.descripcion ?? '',

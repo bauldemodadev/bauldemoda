@@ -45,7 +45,7 @@ function mapPrecioToProduct(item: any): Product {
       : 'Sin nombre';
 
   return {
-    id: String(p?.id ?? p?.codigo ?? crypto.randomUUID()),
+    id: String(p?.id ?? crypto.randomUUID()),
     title: resolvedName,
     name: resolvedName,
     description: p?.descripcion ?? '',
@@ -92,7 +92,7 @@ export async function GET(request: Request) {
       const allItems = Array.isArray(allData?.items) ? allData.items : Array.isArray(allData) ? allData : [];
       const active = allItems.filter(isTiendaActivo);
       const ids = active
-        .map((it: any) => (it?.producto?.id ?? it?.id ?? it?.producto?.codigo ?? it?.codigo))
+        .map((it: any) => (it?.producto?.id ?? it?.id))
         .filter(Boolean);
 
       if (ids.length === 0) return NextResponse.json([]);
