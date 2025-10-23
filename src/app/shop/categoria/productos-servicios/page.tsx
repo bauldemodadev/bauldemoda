@@ -209,7 +209,7 @@ export default function ProductosYServiciosPage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('https://bauldemoda.vercel.app/api/products?all=1', { 
+        const response = await fetch('https://bauldemoda.vercel.app/api/products', { 
           cache: 'no-store' 
         });
         

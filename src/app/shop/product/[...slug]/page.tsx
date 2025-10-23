@@ -167,7 +167,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         setProduct(productData);
         
         // Cargar productos relacionados
-        const allProductsResponse = await fetch('https://bauldemoda.vercel.app/api/products?all=1', { 
+        const allProductsResponse = await fetch('https://bauldemoda.vercel.app/api/products', { 
           cache: 'no-store' 
         });
         
@@ -223,7 +223,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   }
 
   if (error || !product) {
-    return (
+  return (
       <div className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">

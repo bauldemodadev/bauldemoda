@@ -108,7 +108,7 @@ export const FilterProvider: React.FC<FilterProviderProps> = ({ children, initia
       setLoading(true);
       try {
         // Intento de listado completo
-        let res = await fetch(`/api/products?all=1`, { cache: 'no-store' });
+        let res = await fetch(`/api/products`, { cache: 'no-store' });
         if (!res.ok) {
           // Fallback a lista por ids de ejemplo si no hubiera soporte de "all"
           const exampleIds = ['4GdzfFreqmEadqPeldFG'];
