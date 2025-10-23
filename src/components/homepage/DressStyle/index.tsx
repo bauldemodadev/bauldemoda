@@ -186,7 +186,7 @@ const DressStyle = () => {
               </div>
               
               {/* Botón MÁS INFO */}
-              <Link href={`/shop/${course.id}`}>
+              <Link href={`/shop/product/${course.id}`}>
                 <button className="w-full text-white text-sm font-medium py-3 transition-colors" style={{ backgroundColor: "#E9ABBD" }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}>
                   MÁS INFO
                 </button>

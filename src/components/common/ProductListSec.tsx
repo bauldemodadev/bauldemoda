@@ -223,7 +223,7 @@ const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
             </div>
             
             {/* Botón MÁS INFO */}
-            <Link href={`/shop/${product.id}`}>
+            <Link href={`/shop/product/${product.id}`}>
               <button 
                 className="w-full text-white text-sm font-medium py-3 transition-colors" 
                 style={{ backgroundColor: "#E9ABBD" }} 
