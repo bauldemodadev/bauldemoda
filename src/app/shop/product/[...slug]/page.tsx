@@ -12,16 +12,19 @@ import { Clock, DollarSign, MapPin } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 const manejarAgregarAlCarrito = (product: Product, toast: any) => {
+  const productName = product.name || 'Producto';
+  const productPrice = product.price || 0;
+  
   const itemCarrito = {
     id: product.id,
-    name: product.name,
-    price: product.price,
+    name: productName,
+    price: productPrice,
     quantity: 1,
-    totalPrice: product.price,
+    totalPrice: productPrice,
     srcUrl: product.srcUrl,
     image: product.images?.[0] || product.srcUrl || PLACEHOLDER_IMAGE,
     discount: product.discount || { percentage: 0, amount: 0 },
-    slug: product.name.split(" ").join("-"),
+    slug: productName.split(" ").join("-"),
     productId: product.id,
   };
 
@@ -37,14 +40,14 @@ const manejarAgregarAlCarrito = (product: Product, toast: any) => {
       carritoLocal[indice].quantity * itemCarrito.price;
     toast({
       title: "¡Cantidad actualizada!",
-      description: `Se ha actualizado la cantidad de ${product.name} en el carrito.`,
+      description: `Se ha actualizado la cantidad de ${productName} en el carrito.`,
       variant: "cart",
     });
   } else {
     carritoLocal.push(itemCarrito);
     toast({
       title: "¡Producto agregado al carrito!",
-      description: `${product.name} ha sido agregado correctamente al carrito.`,
+      description: `${productName} ha sido agregado correctamente al carrito.`,
       variant: "cart",
     });
   }
@@ -57,12 +60,13 @@ const getProductFeatures = (product: Product) => {
   const features = [];
   
   // Característica 1: Tipo de producto
-  if (product.category.toLowerCase().includes('revistas')) {
+  const category = product.category?.toLowerCase() || '';
+  if (category.includes('revistas')) {
     features.push({
       icon: Clock,
       text: "Revista impresa con moldes reales. Editorial Arcadia."
     });
-  } else if (product.category.toLowerCase().includes('cursos')) {
+  } else if (category.includes('cursos')) {
     features.push({
       icon: Clock,
       text: "Curso completo con videos, apuntes y asistencia en línea."
@@ -75,11 +79,14 @@ const getProductFeatures = (product: Product) => {
   }
 
   // Característica 2: Precio
-  const precioConDescuento = product.discount.percentage > 0
-    ? product.price - (product.price * product.discount.percentage) / 100
-    : product.discount.amount > 0
-    ? product.price - product.discount.amount
-    : product.price;
+  const price = product.price || 0;
+  const discountPercentage = product.discount?.percentage || 0;
+  const discountAmount = product.discount?.amount || 0;
+  const precioConDescuento = discountPercentage > 0
+    ? price - (price * discountPercentage) / 100
+    : discountAmount > 0
+    ? price - discountAmount
+    : price;
 
   features.push({
     icon: DollarSign,
@@ -97,9 +104,12 @@ const getProductFeatures = (product: Product) => {
 
 const getProductDetails = (product: Product) => {
   // Generar contenido dinámico basado en el tipo de producto
-  if (product.category.toLowerCase().includes('revistas')) {
+  const category = product.category?.toLowerCase() || '';
+  const productName = product.name || 'Producto';
+  
+  if (category.includes('revistas')) {
     return {
-      title: product.name,
+      title: productName,
       subtitle: "UNA REVISTA PARA CREAR PRENDAS CÓMODAS",
       summary: [
         "En esta revista encontrarás todo este sumario:",
@@ -112,9 +122,9 @@ const getProductDetails = (product: Product) => {
       ],
       additionalInfo: "Todos los diseños se encuentran con moldes a tamaño real del Talle 40 al 46."
     };
-  } else if (product.category.toLowerCase().includes('cursos')) {
+  } else if (category.includes('cursos')) {
     return {
-      title: product.name,
+      title: productName,
       subtitle: "UN CURSO COMPLETO PARA APRENDER",
       summary: [
         "En este curso encontrarás:",
@@ -128,7 +138,7 @@ const getProductDetails = (product: Product) => {
     };
   } else {
     return {
-      title: product.name,
+      title: productName,
       subtitle: "UN PRODUCTO DE CALIDAD PREMIUM",
       summary: [
         "Este producto incluye:",
@@ -155,7 +165,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
     const fetchProduct = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://bauldemoda.vercel.app/api/products?id=${id}`, { 
+        const response = await fetch(`/api/products?id=${id}`, { 
           cache: 'no-store' 
         });
         
@@ -167,7 +177,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         setProduct(productData);
         
         // Cargar productos relacionados
-        const allProductsResponse = await fetch('https://bauldemoda.vercel.app/api/products', { 
+        const allProductsResponse = await fetch('/api/products', { 
           cache: 'no-store' 
         });
         
@@ -239,11 +249,17 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
 
   const features = getProductFeatures(product);
   const details = getProductDetails(product);
-  const precioConDescuento = product.discount.percentage > 0
-    ? product.price - (product.price * product.discount.percentage) / 100
-    : product.discount.amount > 0
-    ? product.price - product.discount.amount
-    : product.price;
+  const productName = product.name || 'Producto sin nombre';
+  const productDescription = product.description || `${productName} - Un producto de calidad premium para tu aprendizaje.`;
+  const productImages = product.images || [];
+  const price = product.price || 0;
+  const discountPercentage = product.discount?.percentage || 0;
+  const discountAmount = product.discount?.amount || 0;
+  const precioConDescuento = discountPercentage > 0
+    ? price - (price * discountPercentage) / 100
+    : discountAmount > 0
+    ? price - discountAmount
+    : price;
 
   return (
     <div className="min-h-screen bg-white">
@@ -269,10 +285,10 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
             {/* Título y descripción */}
             <div className="mb-8">
               <h1 className={cn("text-4xl font-bold text-gray-900 mb-4", integralCF.className)}>
-                {product.name.toUpperCase()}
+                {productName.toUpperCase()}
               </h1>
               <p className="text-gray-700 text-lg mb-6">
-                {product.description || `${product.name} - Un producto de calidad premium para tu aprendizaje.`}
+                {productDescription}
               </p>
               
               {/* Botón principal */}
@@ -365,10 +381,10 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
             {/* Imagen principal */}
             <div className="relative mb-6">
               <div className="relative w-full h-96 rounded-full overflow-hidden bg-gradient-to-br from-pink-200 via-yellow-200 to-teal-200">
-                {product.images && product.images.length > 0 ? (
+                {productImages && productImages.length > 0 ? (
                   <Image
-                    src={product.images[0].split(',')[0].trim()}
-                    alt={product.name}
+                    src={productImages[0].split(',')[0].trim()}
+                    alt={productName}
                     fill
                     className="object-contain p-8"
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -384,13 +400,13 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
             </div>
 
             {/* Imágenes secundarias */}
-            {product.images && product.images.length > 1 && (
+            {productImages && productImages.length > 1 && (
               <div className="grid grid-cols-2 gap-4 mb-8">
-                {product.images.slice(1, 3).map((image, index) => (
+                {productImages.slice(1, 3).map((image, index) => (
                   <div key={index} className="relative h-32 rounded-lg overflow-hidden">
                     <Image
                       src={image.split(',')[0].trim()}
-                      alt={`${product.name} - Imagen ${index + 2}`}
+                      alt={`${productName} - Imagen ${index + 2}`}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 50vw, 25vw"

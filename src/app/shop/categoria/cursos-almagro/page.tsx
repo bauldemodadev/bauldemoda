@@ -77,12 +77,15 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
 };
 
 const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
+  const price = product.price || 0;
+  const discountPercentage = product.discount?.percentage || 0;
+  const discountAmount = product.discount?.amount || 0;
   const precioConDescuento =
-    product.discount.percentage > 0
-      ? product.price - (product.price * product.discount.percentage) / 100
-      : product.discount.amount > 0
-      ? product.price - product.discount.amount
-      : product.price;
+    discountPercentage > 0
+      ? price - (price * discountPercentage) / 100
+      : discountAmount > 0
+      ? price - discountAmount
+      : price;
 
   return (
     <motion.div
@@ -140,7 +143,7 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
         
         {/* Precio */}
         <div className="px-4 pb-3">
-          {(product.discount.percentage > 0 || product.discount.amount > 0) && (
+          {(discountPercentage > 0 || discountAmount > 0) && (
             <span className="text-gray-400 line-through text-xs">
               ${product.price.toLocaleString()}
             </span>
@@ -203,7 +206,7 @@ export default function CursosAlmagroPage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('https://bauldemoda.vercel.app/api/products', { 
+        const response = await fetch('/api/products', { 
           cache: 'no-store' 
         });
         

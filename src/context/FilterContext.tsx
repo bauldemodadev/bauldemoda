@@ -254,7 +254,7 @@ export const FilterProvider: React.FC<FilterProviderProps> = ({ children, initia
     }
     
     if (activeFilters.includes('on-sale')) {
-      result = result.filter(product => product.discount.amount > 0);
+      result = result.filter(product => (product.discount?.amount || 0) > 0 || (product.discount?.percentage || 0) > 0);
     }
     
     if (activeFilters.includes('free-shipping')) {
