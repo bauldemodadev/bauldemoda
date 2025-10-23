@@ -86,12 +86,15 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
   const price = product.price || 0;
   const discountPercentage = product.discount?.percentage || 0;
   const discountAmount = product.discount?.amount || 0;
-  const precioConDescuento =
-    discountPercentage > 0
-      ? price - (price * discountPercentage) / 100
-      : discountAmount > 0
-      ? price - discountAmount
-      : price;
+  
+  // Si el descuento es del 100%, mostrar el precio original
+  const precioConDescuento = discountPercentage >= 100 
+    ? price 
+    : discountPercentage > 0
+    ? price - (price * discountPercentage) / 100
+    : discountAmount > 0
+    ? price - discountAmount
+    : price;
 
   return (
     <motion.div
