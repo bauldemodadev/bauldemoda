@@ -2,6 +2,7 @@ import React from "react";
 import * as motion from "framer-motion/client";
 import { integralCF } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const Ubicacion = () => {
   return (
@@ -49,30 +50,15 @@ const Ubicacion = () => {
             />
             
             <div className="relative p-8 lg:p-10 space-y-6">
-              {/* Título */}
-              <div className="text-center">
-                <h3 className={cn([
-                  integralCF.className,
-                  "text-2xl md:text-3xl font-bold text-gray-800 mb-6"
-                ])}>
-                  Ciudad Jardín
-                </h3>
-              </div>
-              
-              {/* Ilustración */}
-              <div className="w-full h-48 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                <div className="text-center">
-                  <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                    <div className="text-gray-500 text-sm">Ilustración edificio Ciudad Jardín</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Dirección */}
-              <div className="text-center space-y-2">
-                <p className="text-gray-700 font-medium">Av. Dr. Ricardo Balbín 2950, local 33</p>
-                <p className="text-gray-700 font-medium">Shopping Paradise</p>
-                <p className="text-gray-700 font-medium">Zona Oeste</p>
+              {/* Imagen Ciudad Jardín */}
+              <div className="w-full flex justify-center">
+                <Image
+                  src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/cjinfo.svg"
+                  alt="Ciudad Jardín - Baúl de Moda"
+                  width={300}
+                  height={400}
+                  className="w-full max-w-sm h-auto"
+                />
               </div>
               
               {/* Botones */}
@@ -113,30 +99,15 @@ const Ubicacion = () => {
             />
             
             <div className="relative p-8 lg:p-10 space-y-6">
-              {/* Título */}
-              <div className="text-center">
-                <h3 className={cn([
-                  integralCF.className,
-                  "text-2xl md:text-3xl font-bold text-gray-800 mb-6"
-                ])}>
-                  Almagro
-                </h3>
-              </div>
-              
-              {/* Ilustración */}
-              <div className="w-full h-48 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                <div className="text-center">
-                  <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                    <div className="text-gray-500 text-sm">Ilustración edificio Almagro</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Dirección */}
-              <div className="text-center space-y-2">
-                <p className="text-gray-700 font-medium">Castro y Agrelo</p>
-                <p className="text-gray-700 font-medium">Almagro</p>
-                <p className="text-gray-700 font-medium">Capital Federal</p>
+              {/* Imagen Almagro */}
+              <div className="w-full flex justify-center">
+                <Image
+                  src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/almagroinfo.svg"
+                  alt="Almagro - Baúl de Moda"
+                  width={300}
+                  height={400}
+                  className="w-full max-w-sm h-auto"
+                />
               </div>
               
               {/* Botones */}
