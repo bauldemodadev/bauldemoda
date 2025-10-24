@@ -98,33 +98,14 @@ const Bauleras = () => {
               {/* Imagen central */}
               <div className="relative z-10 bg-white rounded-lg p-8 shadow-lg">
                 <div className="text-center">
-                  <div className="w-64 h-64 bg-gradient-to-br from-pink-100 to-yellow-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <svg width="200" height="200" viewBox="0 0 200 200" className="text-gray-600">
-                      {/* Juli y Vero */}
-                      <circle cx="80" cy="80" r="20" fill="#8B4513" />
-                      <rect x="60" y="100" width="40" height="50" fill="#4169E1" />
-                      <rect x="70" y="110" width="20" height="30" fill="#87CEEB" />
-                      
-                      <circle cx="120" cy="80" r="20" fill="#8B4513" />
-                      <rect x="100" y="100" width="40" height="50" fill="#E9749B" />
-                      <rect x="110" y="110" width="20" height="30" fill="#FFB6C1" />
-                      
-                      {/* Máquina de coser */}
-                      <rect x="40" y="160" width="40" height="20" fill="#C0C0C0" />
-                      <rect x="45" y="165" width="30" height="10" fill="#000" />
-                      <rect x="50" y="167" width="20" height="6" fill="#87CEEB" />
-                      
-                      {/* Tijeras */}
-                      <path d="M160 40 Q170 50 160 60 Q150 50 160 40" fill="#000" />
-                      
-                      {/* Elementos de costura */}
-                      <circle cx="30" cy="120" r="3" fill="#FFD700" />
-                      <circle cx="170" cy="140" r="3" fill="#E9749B" />
-                      <rect x="25" y="180" width="6" height="6" fill="#20B2AA" />
-                      <rect x="165" y="190" width="6" height="6" fill="#FFD700" />
-                    </svg>
+                  <div className="w-64 h-64 mx-auto mb-4 flex items-center justify-center">
+                    <img
+                      src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/juli-vero.jpg"
+                      alt="Juli y Vero - Fundadoras de Baúl de Moda"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">Juli y Vero</h4>
+                  <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">Juli y Vero</h4>
                   <p className="text-sm text-gray-600">Fundadoras de Baúl de Moda</p>
                 </div>
               </div>
@@ -170,14 +151,19 @@ const Bauleras = () => {
                 </div>
               </div>
               
-              {/* Video placeholder */}
+              {/* Video real */}
               <div className="bg-yellow-300 rounded-lg p-8 relative">
-                <div className="flex items-center justify-center">
-                  <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" className="text-red-600 ml-2">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
+                <div className="aspect-video bg-black rounded-lg overflow-hidden">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    title="Baúl de Moda - Talleres de indumentaria"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  ></iframe>
                 </div>
                 
                 {/* Logo Baúl de Moda */}
@@ -250,40 +236,14 @@ const Bauleras = () => {
               {/* Imagen central */}
               <div className="relative z-10 bg-white rounded-lg p-8 shadow-lg">
                 <div className="text-center">
-                  <div className="w-64 h-64 bg-gradient-to-br from-pink-100 to-yellow-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <svg width="200" height="200" viewBox="0 0 200 200" className="text-gray-600">
-                      {/* Mujeres cosiendo */}
-                      <circle cx="80" cy="80" r="20" fill="#8B4513" />
-                      <rect x="60" y="100" width="40" height="50" fill="#4169E1" />
-                      <rect x="70" y="110" width="20" height="30" fill="#87CEEB" />
-                      
-                      <circle cx="120" cy="80" r="20" fill="#8B4513" />
-                      <rect x="100" y="100" width="40" height="50" fill="#E9749B" />
-                      <rect x="110" y="110" width="20" height="30" fill="#FFB6C1" />
-                      
-                      {/* Máquinas de coser */}
-                      <rect x="40" y="160" width="40" height="20" fill="#C0C0C0" />
-                      <rect x="45" y="165" width="30" height="10" fill="#000" />
-                      <rect x="50" y="167" width="20" height="6" fill="#87CEEB" />
-                      
-                      <rect x="120" y="160" width="40" height="20" fill="#C0C0C0" />
-                      <rect x="125" y="165" width="30" height="10" fill="#000" />
-                      <rect x="130" y="167" width="20" height="6" fill="#87CEEB" />
-                      
-                      {/* Carretes de hilo */}
-                      <circle cx="50" cy="140" r="8" fill="#FFD700" />
-                      <circle cx="50" cy="140" r="4" fill="white" />
-                      <circle cx="150" cy="140" r="8" fill="#E9749B" />
-                      <circle cx="150" cy="140" r="4" fill="white" />
-                      
-                      {/* Alfileres */}
-                      <circle cx="30" cy="120" r="2" fill="#FFD700" />
-                      <circle cx="170" cy="120" r="2" fill="#E9749B" />
-                      <circle cx="30" cy="180" r="2" fill="#20B2AA" />
-                      <circle cx="170" cy="180" r="2" fill="#FFD700" />
-                    </svg>
+                  <div className="w-64 h-64 mx-auto mb-4 flex items-center justify-center">
+                    <img
+                      src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/historia-baul.jpg"
+                      alt="Historia de Baúl de Moda"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2">Historia de Baúl</h4>
+                  <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">Historia de Baúl</h4>
                   <p className="text-sm text-gray-600">Desde 2008</p>
                 </div>
               </div>
@@ -380,24 +340,16 @@ const Bauleras = () => {
               className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               <div className="text-center">
-                {/* Ilustración */}
+                {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-pink-100 rounded-lg flex items-center justify-center">
-                    <svg width="40" height="40" viewBox="0 0 40 40" className="text-pink-500">
-                      {/* Megáfono */}
-                      <path d="M8 20 L12 16 L12 24 Z" fill="currentColor" />
-                      <path d="M12 18 L20 14 L20 22 L12 18 Z" fill="currentColor" />
-                      {/* Corazones */}
-                      <path d="M22 12 Q21 11 22 10 Q23 11 22 12" fill="currentColor" />
-                      <path d="M24 14 Q23 13 24 12 Q25 13 24 14" fill="currentColor" />
-                      {/* Teléfono */}
-                      <rect x="28" y="16" width="8" height="12" rx="2" fill="currentColor" />
-                      <rect x="30" y="18" width="4" height="8" fill="white" />
-                    </svg>
-                  </div>
+                  <img
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-online.jpg"
+                    alt="Baúl en Blogs & Páginas"
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
                 </div>
 
-                <h4 className="text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
                   ONLINE
                 </h4>
 
@@ -425,22 +377,16 @@ const Bauleras = () => {
               className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               <div className="text-center">
-                {/* Ilustración */}
+                {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-pink-100 rounded-lg flex items-center justify-center">
-                    <svg width="40" height="40" viewBox="0 0 40 40" className="text-pink-500">
-                      {/* Revistas */}
-                      <rect x="8" y="12" width="8" height="12" fill="currentColor" />
-                      <rect x="16" y="10" width="8" height="12" fill="currentColor" />
-                      <rect x="24" y="14" width="8" height="12" fill="currentColor" />
-                      {/* Hojas */}
-                      <path d="M6 8 Q8 6 10 8 Q8 10 6 8" fill="#20B2AA" />
-                      <path d="M32 6 Q34 4 36 6 Q34 8 32 6" fill="#8B4513" />
-                    </svg>
-                  </div>
+                  <img
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-revistas.jpg"
+                    alt="Contenido Revistas - Arcadia"
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
                 </div>
 
-                <h4 className="text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
                   CONTENIDO REVISTAS
                 </h4>
 
@@ -468,25 +414,16 @@ const Bauleras = () => {
               className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               <div className="text-center">
-                {/* Ilustración */}
+                {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-pink-100 rounded-lg flex items-center justify-center">
-                    <svg width="40" height="40" viewBox="0 0 40 40" className="text-pink-500">
-                      {/* Mesa circular */}
-                      <circle cx="20" cy="20" r="12" fill="currentColor" />
-                      {/* Mujeres */}
-                      <circle cx="16" cy="16" r="3" fill="#8B4513" />
-                      <rect x="14" y="19" width="4" height="6" fill="#4169E1" />
-                      <circle cx="24" cy="16" r="3" fill="#8B4513" />
-                      <rect x="22" y="19" width="4" height="6" fill="#E9749B" />
-                      {/* Corazones */}
-                      <path d="M12 8 Q11 7 12 6 Q13 7 12 8" fill="#FFD700" />
-                      <path d="M28 8 Q27 7 28 6 Q29 7 28 8" fill="#FFD700" />
-                    </svg>
-                  </div>
+                  <img
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-exposiciones.jpg"
+                    alt="Eventos, Expos y Premios"
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
                 </div>
 
-                <h4 className="text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
                   EXPOSICIONES
                 </h4>
 
@@ -514,28 +451,16 @@ const Bauleras = () => {
               className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               <div className="text-center">
-                {/* Ilustración */}
+                {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-yellow-100 to-pink-100 rounded-lg flex items-center justify-center">
-                    <svg width="40" height="40" viewBox="0 0 40 40" className="text-pink-500">
-                      {/* Periódico */}
-                      <rect x="8" y="10" width="24" height="20" fill="white" stroke="currentColor" strokeWidth="1" />
-                      <rect x="10" y="12" width="20" height="2" fill="currentColor" />
-                      <rect x="10" y="15" width="15" height="1" fill="currentColor" />
-                      <rect x="10" y="17" width="18" height="1" fill="currentColor" />
-                      <rect x="10" y="19" width="12" height="1" fill="currentColor" />
-                      <rect x="10" y="21" width="16" height="1" fill="currentColor" />
-                      <rect x="10" y="23" width="14" height="1" fill="currentColor" />
-                      {/* Clip */}
-                      <rect x="6" y="8" width="2" height="4" fill="currentColor" />
-                      <rect x="32" y="8" width="2" height="4" fill="currentColor" />
-                      {/* Hoja */}
-                      <path d="M6 6 Q8 4 10 6 Q8 8 6 6" fill="#FFD700" />
-                    </svg>
-                  </div>
+                  <img
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-diarios.jpg"
+                    alt="Clarín & La Nación"
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
                 </div>
 
-                <h4 className="text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
                   DIARIOS
                 </h4>
 
