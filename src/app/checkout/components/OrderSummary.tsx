@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
-import { satoshi } from "@/styles/fonts";
+import { futura } from "@/styles/fonts";
 import { Separator } from "@/components/ui/separator";
 import ProductPlaceholder from "./ProductPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -89,7 +89,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
       <div className="bg-white rounded-xl border border-gray-200 p-6 h-fit">
         <h3
           className={cn([
-            satoshi.className,
+            futura.className,
             "text-3xl font-bold text-center mb-6",
           ])}
         >

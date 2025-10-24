@@ -2,7 +2,7 @@
 
 import { ProjectTestimonial } from '@/types/project';
 import { motion } from 'framer-motion';
-import { integralCF } from '@/styles/fonts';
+import { beauty } from '@/styles/fonts';
 import { cn } from '@/lib/utils';
 import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
@@ -55,7 +55,7 @@ const ProjectTestimonials = ({ testimonials }: ProjectTestimonialsProps) => {
           className="text-center mb-16"
         >
           <h2 className={cn([
-            integralCF.className,
+            beauty.className,
             "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-gray-900"
           ])}>
             Lo Que Dicen Nuestros Clientes

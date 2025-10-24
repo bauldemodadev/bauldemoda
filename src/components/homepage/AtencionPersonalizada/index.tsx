@@ -1,6 +1,6 @@
 import React from "react";
 import * as motion from "framer-motion/client";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 
 const AtencionPersonalizada = () => {
@@ -15,7 +15,7 @@ const AtencionPersonalizada = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className={cn([
-              integralCF.className,
+              beauty.className,
               "text-4xl md:text-5xl font-bold text-gray-800 mb-4",
             ])}
           >
@@ -57,7 +57,7 @@ const AtencionPersonalizada = () => {
               
               {/* Título */}
               <h3 className={cn([
-                integralCF.className,
+                beauty.className,
                 "text-2xl md:text-3xl font-bold text-gray-800 mb-4"
               ])}>
                 bauleras
@@ -101,7 +101,7 @@ const AtencionPersonalizada = () => {
               
               {/* Título */}
               <h3 className={cn([
-                integralCF.className,
+                beauty.className,
                 "text-2xl md:text-3xl font-bold text-gray-800 mb-4"
               ])}>
                 comunidad
@@ -146,7 +146,7 @@ const AtencionPersonalizada = () => {
               
               {/* Título */}
               <h3 className={cn([
-                integralCF.className,
+                beauty.className,
                 "text-2xl md:text-3xl font-bold text-gray-800 mb-4"
               ])}>
                 tips

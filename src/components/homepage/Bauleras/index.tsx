@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import UbicacionWrapper from "@/components/homepage/Ubicacion/UbicacionWrapper";
 
 const Bauleras = () => {
@@ -23,7 +23,7 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-6", integralCF.className)}
+                className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-6", beauty.className)}
               >
                 SOMOS<br />
                 BAÚL DE MODA
@@ -297,7 +297,7 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className={cn("text-2xl font-bold text-gray-900 mb-6", integralCF.className)}
+                className={cn("text-2xl font-bold text-gray-900 mb-6", beauty.className)}
               >
                 La Historia
               </motion.h3>
@@ -354,7 +354,7 @@ const Bauleras = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className={cn("text-2xl font-bold text-gray-900 mb-4", integralCF.className)}
+              className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
             >
               PRENSA
             </motion.h3>

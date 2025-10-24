@@ -2,7 +2,7 @@
 
 import { ProjectInfo as ProjectInfoType } from '@/types/project';
 import { motion } from 'framer-motion';
-import { integralCF } from '@/styles/fonts';
+import { beauty } from '@/styles/fonts';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
@@ -46,7 +46,7 @@ const ProjectInfo = ({ info }: ProjectInfoProps) => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className={cn([
-            integralCF.className,
+            beauty.className,
             "text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 uppercase tracking-wide mb-8 leading-tight"
           ])}
         >

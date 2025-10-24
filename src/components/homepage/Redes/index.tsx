@@ -1,6 +1,6 @@
 import React from "react";
 import * as motion from "framer-motion/client";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 
 const Redes = () => {
@@ -24,7 +24,7 @@ const Redes = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className={cn([
-              integralCF.className,
+              beauty.className,
               "text-3xl md:text-4xl font-bold text-gray-800 uppercase tracking-wide mb-4",
             ])}
           >

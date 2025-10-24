@@ -5,7 +5,7 @@ import ProductCard from "@/components/cart-page/ProductCard";
 import { Button } from "@/components/ui/button";
 import InputGroup from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
-import { satoshi } from "@/styles/fonts";
+import { futura } from "@/styles/fonts";
 import { FaArrowRight, FaTrash } from "react-icons/fa6";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { TbBasketExclamation } from "react-icons/tb";
@@ -152,7 +152,7 @@ export default function CartPage() {
             <BreadcrumbCart />
             <h2
               className={cn([
-                satoshi.className,
+                futura.className,
                 "text-2xl font-bold text-center mb-8",
               ])}
             >

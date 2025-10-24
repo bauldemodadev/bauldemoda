@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import InputGroup from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
-import { satoshi } from "@/styles/fonts";
+import { futura } from "@/styles/fonts";
 import Image from "next/image";
 import React from "react";
 
@@ -11,7 +11,7 @@ const NewsLetterSection = () => {
       <div className="flex items-center">
       <p
         className={cn([
-          satoshi.className,
+          futura.className,
           "font-bold text-xl lg:text-3xl text-white",
         ])}
       >

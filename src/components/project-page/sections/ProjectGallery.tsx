@@ -2,7 +2,7 @@
 
 import { ProjectGallery as ProjectGalleryType, ProjectGalleryItem } from '@/types/project';
 import { motion, AnimatePresence } from 'framer-motion';
-import { integralCF } from '@/styles/fonts';
+import { beauty } from '@/styles/fonts';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
@@ -72,7 +72,7 @@ const ProjectGallery = ({ gallery }: ProjectGalleryProps) => {
           className="text-center mb-16"
         >
           <h2 className={cn([
-            integralCF.className,
+            beauty.className,
             "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-gray-900"
           ])}>
             {gallery.title}

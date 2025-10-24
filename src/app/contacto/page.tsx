@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import { ChevronDown, Check } from "lucide-react";
 
 export default function ContactoPage() {
@@ -64,7 +64,7 @@ export default function ContactoPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <h1 className={cn("text-4xl font-bold text-gray-800 mb-4", integralCF.className)}>
+          <h1 className={cn("text-4xl font-bold text-gray-800 mb-4", beauty.className)}>
             CONTACTANOS
           </h1>
           <p className="text-gray-700 text-lg max-w-2xl mx-auto">

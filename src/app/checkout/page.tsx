@@ -25,7 +25,7 @@ import {
   FormData,
 } from "./schema";
 import clsx from "clsx";
-import { satoshi } from "@/styles/fonts";
+import { futura } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 import { FaArrowRight } from "react-icons/fa6";
 import { MdOutlineLocalOffer } from "react-icons/md";
@@ -409,7 +409,7 @@ export default function CheckoutPage() {
         <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 bg-gray-50 rounded-xl border border-gray-200 shadow-sm">
           <h2
             className={cn([
-              satoshi.className,
+              futura.className,
               "text-3xl font-bold text-center mb-6",
             ])}
           >

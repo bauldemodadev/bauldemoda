@@ -15,7 +15,7 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { satoshi } from "@/styles/fonts";
+import { futura } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 
 interface SavedProfile extends Step1Data {
@@ -266,7 +266,7 @@ const StepOne = ({
     >
       <h2
         className={cn([
-          satoshi.className,
+          futura.className,
           "text-3xl font-bold text-center mb-6",
         ])}
       >

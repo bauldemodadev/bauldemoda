@@ -2,7 +2,7 @@
 
 import { ProjectFAQ } from '@/types/project';
 import { motion, AnimatePresence } from 'framer-motion';
-import { integralCF } from '@/styles/fonts';
+import { beauty } from '@/styles/fonts';
 import { cn } from '@/lib/utils';
 import { Plus, Minus } from 'lucide-react';
 import { useState } from 'react';
@@ -52,7 +52,7 @@ const ProjectFAQs = ({ faqs }: ProjectFAQsProps) => {
           className="text-center mb-16"
         >
           <h2 className={cn([
-            integralCF.className,
+            beauty.className,
             "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-gray-900"
           ])}>
             Preguntas Frecuentes

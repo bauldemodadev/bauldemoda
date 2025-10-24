@@ -1,7 +1,7 @@
 import React from "react";
 import PhotoSection from "./PhotoSection";
 import { Product } from "@/types/product";
-import { satoshi } from "@/styles/fonts";
+import { futura } from "@/styles/fonts";
 import { cn, formatPrice } from "@/lib/utils";
 import Rating from "@/components/ui/Rating";
 import ColorSelection from "./ColorSelection";
@@ -51,7 +51,7 @@ const Header = ({ data }: { data: Product }) => {
         <div className="pt-2">
           <h1
             className={cn([
-              satoshi.className,
+              futura.className,
               "text-[34px] sm:text-[38px] md:text-[44px] leading-[1.2] mb-4",
             ])}
           >

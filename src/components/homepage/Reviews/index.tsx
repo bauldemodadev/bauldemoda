@@ -3,7 +3,7 @@
 import React from "react";
 import * as motion from "framer-motion/client";
 import { cn } from "@/lib/utils";
-import { satoshi, integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import {
   Carousel,
   CarouselContent,
@@ -64,7 +64,7 @@ const Reviews = ({ data }: ReviewsProps) => {
               viewport={{ once: true }}
               transition={{ delay: 0.6, duration: 0.6 }}
               className={cn([
-                integralCF.className,
+                beauty.className,
                 "text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12",
               ])}
             >

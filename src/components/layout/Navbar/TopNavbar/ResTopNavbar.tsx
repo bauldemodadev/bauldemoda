@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { satoshi, integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import { NavMenu } from "../navbar.types";
 import {
   Accordion,
@@ -36,7 +36,7 @@ const ResTopNavbar = ({ data }: { data: NavMenu }) => {
         <SheetHeader className="mb-10">
           <SheetTitle asChild>
             <SheetClose asChild>
-              <Link href="/" className={cn([integralCF.className, "text-2xl"])}>
+              <Link href="/" className={cn([beauty.className, "text-2xl"])}>
               Baúl de Moda
               </Link>
             </SheetClose>

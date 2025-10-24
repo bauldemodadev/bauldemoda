@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
@@ -292,7 +292,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
           >
             {/* Título y descripción */}
             <div className="mb-8">
-              <h1 className={cn("text-4xl font-bold text-gray-900 mb-4", integralCF.className)}>
+              <h1 className={cn("text-4xl font-bold text-gray-900 mb-4", beauty.className)}>
                 {productName.toUpperCase()}
               </h1>
               <p className="text-gray-700 text-lg mb-6">
@@ -333,7 +333,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
               <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
                 DETALLES
               </h3>
-              <h4 className={cn("text-2xl font-bold text-gray-900 mb-4", integralCF.className)}>
+              <h4 className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}>
                 {details.title}
               </h4>
               <h5 className="text-xl font-semibold text-gray-800 mb-6">

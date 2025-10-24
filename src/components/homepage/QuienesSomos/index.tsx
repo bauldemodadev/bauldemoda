@@ -1,6 +1,6 @@
 import React from "react";
 import * as motion from "framer-motion/client";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 
 const QuienesSomos = () => {
@@ -14,7 +14,7 @@ const QuienesSomos = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className={cn([
-              integralCF.className,
+              beauty.className,
               "text-2xl font-bold text-center ml-8 md:ml-0",
             ])}
           >

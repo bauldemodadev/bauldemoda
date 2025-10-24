@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import UbicacionWrapper from "@/components/homepage/Ubicacion/UbicacionWrapper";
 
 const ComunidadBaul = () => {
@@ -21,7 +21,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-4", integralCF.className)}
+            className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-4", beauty.className)}
           >
             COMUNIDAD BAÚL
           </motion.h2>
@@ -54,7 +54,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-4", integralCF.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
           >
             NUESTROS BENEFICIOS
           </motion.h3>
@@ -228,7 +228,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 1.0 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-4", integralCF.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
           >
             BAÚL EMPRENDE
           </motion.h3>
@@ -452,7 +452,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 1.7 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-4", integralCF.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
           >
             EVENTOS
           </motion.h3>
@@ -848,7 +848,7 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 2.8 }}
-              className={cn("text-2xl font-bold text-gray-900 mb-6", integralCF.className)}
+              className={cn("text-2xl font-bold text-gray-900 mb-6", beauty.className)}
             >
               CO-WORKING / ALQUILER DE MÁQUINAS
             </motion.h3>

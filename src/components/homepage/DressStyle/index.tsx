@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
+import { beauty } from "@/styles/fonts";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,7 +67,7 @@ const DressStyle = () => {
       <div className="px-4 xl:px-0">
         <section className="max-w-frame mx-auto">
           <div className="text-center mb-8">
-            <h2 className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", integralCF.className)}>
+            <h2 className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", beauty.className)}>
               CURSOS ONLINE
             </h2>
             <p className="text-lg text-gray-600 italic">
@@ -113,7 +113,7 @@ const DressStyle = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-2", integralCF.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-2", beauty.className)}
           >
             CURSOS ONLINE
           </motion.h2>

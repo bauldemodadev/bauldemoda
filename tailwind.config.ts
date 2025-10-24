@@ -10,7 +10,6 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-satoshi)"],
         beauty: ["var(--font-beauty)"],
         futura: ["var(--font-futura)"],
       },

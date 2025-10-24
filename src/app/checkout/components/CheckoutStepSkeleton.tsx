@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { satoshi } from "@/styles/fonts";
+import { futura } from "@/styles/fonts";
 
 interface CheckoutStepSkeletonProps {
   step: number;
@@ -11,7 +11,7 @@ const CheckoutStepSkeleton: React.FC<CheckoutStepSkeletonProps> = ({ step }) => 
     <div className="bg-white rounded-xl border border-gray-200 p-6">
       <h2
         className={cn([
-          satoshi.className,
+          futura.className,
           "text-3xl font-bold text-center mb-6",
         ])}
       >
