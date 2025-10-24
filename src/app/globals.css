@@ -35,6 +35,8 @@ body {
     --input: 220 13% 91%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 0.5rem;
+    --font-beauty: "Beauty", Georgia, serif;
+    --font-futura: "Futura Md BT", Arial, sans-serif;
   }
  
   .dark {
@@ -57,13 +59,6 @@ body {
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 142.4 71.8% 29.2%;
-  }
-}
-
-@layer base {
-  :root {
-    --font-beauty: "Beauty", Georgia, serif;
-    --font-futura: "Futura Md BT", Arial, sans-serif;
   }
 }
 
