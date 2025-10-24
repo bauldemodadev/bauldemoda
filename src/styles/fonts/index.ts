@@ -1,8 +1,24 @@
-// Fuente para títulos importantes y h1 - usando CSS custom properties
-export const beauty = {
+import localFont from "next/font/local";
+
+// Fuente para títulos importantes y h1 - usando archivos locales
+export const beauty = localFont({
+  src: [
+    {
+      path: "../../../public/fonts/beauty/BeautyDemo.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../../public/fonts/beauty/BeautyDemo.otf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
   variable: "--font-beauty",
-  className: "font-beauty",
-};
+  display: "swap",
+  preload: true,
+  fallback: ["Georgia", "serif"],
+});
 
 // Fuente para el resto del contenido - usando CSS custom properties
 export const futura = {
