@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { beauty } from "@/styles/fonts";
 import ProductSkeleton from "./ProductSkeleton";
 
 interface ProductSectionSkeletonProps {
@@ -83,7 +82,7 @@ const ProductSectionSkeleton: React.FC<ProductSectionSkeletonProps> = ({
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
         className={cn([
-          beauty.className,
+          
           "text-2xl font-bold text-left mb-8 md:mb-12 ml-8 md:ml-0",
         ])}
       >

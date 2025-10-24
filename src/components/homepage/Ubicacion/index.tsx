@@ -1,6 +1,5 @@
 import React from "react";
 import * as motion from "framer-motion/client";
-import { beauty } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -22,7 +21,7 @@ const Ubicacion = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className={cn([
-              beauty.className,
+              
               "text-3xl md:text-4xl font-bold text-gray-800 mb-4",
             ])}
           >

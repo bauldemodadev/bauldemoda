@@ -2,7 +2,6 @@
 
 import { Project } from '@/types/project';
 import { motion } from 'framer-motion';
-import { beauty } from '@/styles/fonts';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, Tag } from 'lucide-react';
@@ -61,7 +60,7 @@ const ProjectsListPage = ({ projects }: ProjectsListPageProps) => {
             transition={{ duration: 0.8 }}
           >
             <h1 className={cn([
-              beauty.className,
+              
               "text-5xl lg:text-7xl font-bold mb-8"
             ])}>
               Nuestros Proyectos

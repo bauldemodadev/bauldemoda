@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { beauty } from "@/styles/fonts";
 import { ChevronDown, Check } from "lucide-react";
 
 export default function ContactoPage() {

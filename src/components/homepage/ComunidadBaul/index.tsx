@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { beauty } from "@/styles/fonts";
 import UbicacionWrapper from "@/components/homepage/Ubicacion/UbicacionWrapper";
 
 const ComunidadBaul = () => {

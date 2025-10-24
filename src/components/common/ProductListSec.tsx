@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { beauty } from "@/styles/fonts";
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";

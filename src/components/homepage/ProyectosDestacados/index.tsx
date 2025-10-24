@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { beauty } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ExternalLink } from "lucide-react";
@@ -74,7 +73,7 @@ const ProyectosDestacados = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className={cn([
-              beauty.className,
+              
               "text-4xl lg:text-6xl font-bold mb-8 text-gray-900"
             ])}
           >

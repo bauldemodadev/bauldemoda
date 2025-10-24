@@ -1,7 +1,6 @@
 import React from "react";
 import * as motion from "framer-motion/client";
 import DestacadoCard from "./DestacadoCard";
-import { beauty } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 
 const destacados = [
@@ -89,7 +88,7 @@ const Destacados = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className={cn([
-              beauty.className,
+              
               "text-2xl font-bold text-center ml-8 md:ml-0",
             ])}
           >

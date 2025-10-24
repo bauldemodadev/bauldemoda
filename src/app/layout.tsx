@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { beauty, futura } from "@/styles/fonts";
 import RootLayoutClient from "./root-layout-client";
 import Providers from "./providers";
 import { cn } from "@/lib/utils";
