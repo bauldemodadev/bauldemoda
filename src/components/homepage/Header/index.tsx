@@ -82,7 +82,7 @@ const Header = () => {
                     </div>
                     
                     {/* Título */}
-                    <h1 className="font-beauty text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                    <h1 className="font-beauty text-2xl sm:text-3xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
                       {banners[indiceActual].titulo}
                     </h1>
                     
