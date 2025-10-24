@@ -1,6 +1,5 @@
 import React from "react";
 import * as motion from "framer-motion/client";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 const Ubicacion = () => {
@@ -20,10 +19,7 @@ const Ubicacion = () => {
             whileInView={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={cn([
-              
-              "text-3xl md:text-4xl font-bold text-gray-800 mb-4",
-            ])}
+            className="font-beauty text-3xl md:text-4xl font-bold text-gray-800 mb-4"
           >
             Nuestras Ubicaciones
           </motion.h2>
@@ -39,16 +35,7 @@ const Ubicacion = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative w-full max-w-md lg:max-w-lg"
           >
-            {/* Fondo con forma orgánica - Rosa */}
-            <div 
-              className="absolute inset-0 rounded-3xl opacity-60" 
-              style={{ 
-                backgroundColor: "#F8BBD9",
-                clipPath: 'polygon(0% 0%, 100% 0%, 95% 20%, 100% 40%, 90% 60%, 100% 80%, 95% 100%, 0% 100%, 5% 80%, 0% 60%, 10% 40%, 0% 20%)'
-              }} 
-            />
-            
-            <div className="relative p-8 lg:p-10 space-y-6">
+            <div className="relative space-y-4">
               {/* Imagen Ciudad Jardín */}
               <div className="w-full flex justify-center">
                 <Image
@@ -60,19 +47,19 @@ const Ubicacion = () => {
                 />
               </div>
               
-              {/* Botones */}
-              <div className="space-y-3">
+              {/* Botones pequeños */}
+              <div className="flex gap-2 justify-center">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
                 >
                   CONTACTAR
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
                 >
                   NEWSLETTER
                 </motion.button>
@@ -88,16 +75,7 @@ const Ubicacion = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="relative w-full max-w-md lg:max-w-lg"
           >
-            {/* Fondo con forma orgánica - Amarillo */}
-            <div 
-              className="absolute inset-0 rounded-3xl opacity-60" 
-              style={{ 
-                backgroundColor: "#FFF2CC",
-                clipPath: 'polygon(5% 0%, 100% 0%, 100% 20%, 90% 40%, 100% 60%, 95% 80%, 100% 100%, 5% 100%, 0% 80%, 5% 60%, 0% 40%, 10% 20%)'
-              }} 
-            />
-            
-            <div className="relative p-8 lg:p-10 space-y-6">
+            <div className="relative space-y-4">
               {/* Imagen Almagro */}
               <div className="w-full flex justify-center">
                 <Image
@@ -109,19 +87,19 @@ const Ubicacion = () => {
                 />
               </div>
               
-              {/* Botones */}
-              <div className="space-y-3">
+              {/* Botones pequeños */}
+              <div className="flex gap-2 justify-center">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
                 >
                   CONTACTAR
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 bg-pink-200 text-black font-bold rounded-lg hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
                 >
                   NEWSLETTER
                 </motion.button>
