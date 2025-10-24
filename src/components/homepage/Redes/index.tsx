@@ -41,190 +41,91 @@ const Redes = () => {
         </motion.div>
 
         {/* Grid de Instagram Posts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
-          {/* Post 1 - SOMOS Baúl Moda */}
+        <div className="grid grid-cols-3 gap-4 md:gap-6 mb-16">
+          {/* Primera fila */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative aspect-square bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            {/* Imagen placeholder - puedes reemplazar con imagen real */}
-            <div className="w-full h-full bg-gradient-to-br from-pink-200 to-purple-200 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                <div className="text-gray-500">Imagen de mujeres con teléfonos</div>
-              </div>
-            </div>
-            
-            {/* Overlay de texto */}
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-              <div className="text-black font-bold text-lg mb-2">SOMOS</div>
-              <div className="text-pink-600 font-bold text-xl mb-2" style={{ fontFamily: 'cursive' }}>Baúl Moda</div>
-              <div className="text-black font-bold text-lg">PERO NOS DICEN...</div>
-            </div>
-            
-            {/* Play button */}
-            <div className="absolute top-4 right-4">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-                <svg className="w-4 h-4 text-gray-600 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-            </div>
+            <img 
+              src="https://bauldemoda.com.ar/wp-content/uploads/sb-instagram-feed-images/432769543_372514908989155_7554349959379106455_nfull.jpg" 
+              alt="Post Instagram 1" 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
 
-          {/* Post 2 - RUTA BAULERA */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="relative aspect-square bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            {/* Imagen placeholder */}
-            <div className="w-full h-full bg-gradient-to-br from-yellow-200 to-orange-200 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                <div className="text-gray-500">Ilustración de auto rosa</div>
-              </div>
-            </div>
-            
-            {/* Overlay de texto */}
-            <div className="absolute inset-0 flex flex-col justify-between p-4">
-              <div className="flex justify-end">
-                <div className="bg-yellow-400 text-black font-bold px-3 py-1 rounded-full text-sm">
-                  20% DTO.
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-black font-bold text-lg mb-1">RUTA BAULERA</div>
-                <div className="text-blue-600 text-sm">UN RECORRIDO POR NUESTROS CURSOS ONLINE</div>
-              </div>
-            </div>
+            <img 
+              src="https://bauldemoda.com.ar/wp-content/uploads/sb-instagram-feed-images/430114081_18420937330000669_4907748615478531440_nfull.jpg" 
+              alt="Post Instagram 2" 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
 
-          {/* Post 3 - DÍA DE LA MUJER */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="relative aspect-square bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            {/* Imagen placeholder */}
-            <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 bg-gray-400 rounded-full mx-auto mb-4"></div>
-                <div className="text-gray-500">Foto mujer leyendo periódico</div>
-              </div>
-            </div>
-            
-            {/* Overlay de texto */}
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-              <div className="text-black text-sm mb-2">POR QUÉ SE CONMEMORA EL</div>
-              <div className="text-pink-600 font-bold text-xl">DÍA DE LA MUJER?</div>
-            </div>
-            
-            {/* Calendario overlay */}
-            <div className="absolute top-4 left-4 bg-white rounded-lg p-2 shadow-md">
-              <div className="text-center">
-                <div className="text-xs text-gray-600">MARZO 2024</div>
-                <div className="text-pink-600 font-bold text-lg">8M</div>
-              </div>
-            </div>
+            <img 
+              src="https://bauldemoda.com.ar/wp-content/uploads/sb-instagram-feed-images/430217182_18420363967000669_8389833364916428052_nfull.jpg" 
+              alt="Post Instagram 3" 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
 
-          {/* Post 4 - ÚTILES PARA VENIR A CLASE */}
+          {/* Segunda fila */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="relative aspect-square bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            {/* Imagen placeholder */}
-            <div className="w-full h-full bg-gradient-to-br from-blue-200 to-green-200 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                <div className="text-gray-500">Útiles escolares</div>
-              </div>
-            </div>
-            
-            {/* Overlay de texto */}
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-              <div className="text-pink-600 font-bold text-xl mb-2">ÚTILES</div>
-              <div className="text-black text-sm mb-2">PARA VENIR A</div>
-              <div className="text-white font-bold text-xl bg-gray-800 px-4 py-1 rounded">CLASE</div>
-            </div>
-            
-            {/* Play button */}
-            <div className="absolute top-4 right-4">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-                <svg className="w-4 h-4 text-gray-600 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-            </div>
+            <img 
+              src="https://bauldemoda.com.ar/wp-content/uploads/sb-instagram-feed-images/431575738_370372429249032_8001449903959434025_nfull.jpg" 
+              alt="Post Instagram 4" 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
 
-          {/* Post 5 - BAÚL RODANTE */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="relative aspect-square bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            {/* Imagen placeholder */}
-            <div className="w-full h-full bg-gradient-to-br from-yellow-200 to-pink-200 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                <div className="text-gray-500">Mujeres con kimonos</div>
-              </div>
-            </div>
-            
-            {/* Overlay de texto */}
-            <div className="absolute inset-0 flex flex-col justify-between p-4">
-              <div className="text-center">
-                <div className="text-black font-bold text-lg mb-2">BAÚL RODANTE</div>
-                <div className="bg-white px-3 py-1 rounded-full text-pink-600 font-bold text-sm">
-                  HICIMOS UN KIMONO
-                </div>
-              </div>
-            </div>
-            
-            {/* Play button */}
-            <div className="absolute top-4 right-4">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-                <svg className="w-4 h-4 text-gray-600 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-            </div>
+            <img 
+              src="https://bauldemoda.com.ar/wp-content/uploads/sb-instagram-feed-images/430400315_334959869503171_9137496845119867990_nfull.jpg" 
+              alt="Post Instagram 5" 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
 
-          {/* Post 6 - MARZO */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="relative aspect-square bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="relative aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            {/* Imagen placeholder */}
-            <div className="w-full h-full bg-gradient-to-br from-pink-200 to-purple-200 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                <div className="text-gray-500">Cuaderno abierto</div>
-              </div>
-            </div>
-            
-            {/* Overlay de texto */}
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-4">
-              <div className="text-black font-bold text-xl">MARZO</div>
-            </div>
+            <img 
+              src="https://bauldemoda.com.ar/wp-content/uploads/sb-instagram-feed-images/429661303_18414739462000669_5292242843579676674_nfull.jpg" 
+              alt="Post Instagram 6" 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
         </div>
 

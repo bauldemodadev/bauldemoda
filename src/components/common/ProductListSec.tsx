@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
@@ -113,7 +112,7 @@ const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
     return (
       <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
         <div className="text-left mb-8">
-          <h2 className={cn("text-2xl font-bold text-gray-900 mb-2")}>
+          <h2 className="font-beauty text-2xl font-bold text-gray-900 mb-2">
             {title}
           </h2>
         </div>
@@ -157,7 +156,7 @@ const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
           animate={{ y: "0", opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className={cn("text-2xl font-bold text-gray-900 mb-2")}
+          className="font-beauty text-2xl font-bold text-gray-900 mb-2"
         >
           {title}
         </motion.h2>
