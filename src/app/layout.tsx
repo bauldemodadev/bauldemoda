@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { satoshi } from "@/styles/fonts";
+import { satoshi, beauty, futura } from "@/styles/fonts";
 import RootLayoutClient from "./root-layout-client";
 import Providers from "./providers";
 import { cn } from "@/lib/utils";
@@ -55,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={cn(satoshi.variable)}>
+    <html lang="es" className={cn(satoshi.variable, beauty.variable, futura.variable)}>
       <head>
         <meta name="geo.region" content="AR" />
         <meta name="geo.placename" content="Argentina" />

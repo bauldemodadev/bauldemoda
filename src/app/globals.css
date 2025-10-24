@@ -65,7 +65,17 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-futura;
+  }
+  
+  /* Aplicar fuente Beauty a títulos importantes */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-beauty;
+  }
+  
+  /* Clase específica para títulos de productos */
+  .product-title {
+    @apply font-beauty;
   }
 }
 
