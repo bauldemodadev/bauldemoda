@@ -122,7 +122,7 @@ const DressStyle = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-gray-600 italic"
+            className="text-lg text-gray-600 italic font-beauty"
           >
             hacelos en casa
           </motion.p>

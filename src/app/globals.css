@@ -75,15 +75,15 @@ body {
     @apply bg-background text-foreground;
     font-family: var(--font-futura);
   }
-  
-  /* Aplicar fuente Beauty a títulos importantes */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-beauty);
+}
+
+@layer utilities {
+  .font-beauty {
+    font-family: var(--font-beauty)!important;
   }
   
-  /* Clase específica para títulos de productos */
-  .product-title {
-    font-family: var(--font-beauty);
+  .font-futura {
+    font-family: var(--font-futura)!important;
   }
 }
 
