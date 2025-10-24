@@ -64,7 +64,7 @@ export default function ContactoPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <h1 className={cn("text-4xl font-bold text-gray-800 mb-4", beauty.className)}>
+          <h1 className={cn("text-4xl font-bold text-gray-800 mb-4")}>
             CONTACTANOS
           </h1>
           <p className="text-gray-700 text-lg max-w-2xl mx-auto">

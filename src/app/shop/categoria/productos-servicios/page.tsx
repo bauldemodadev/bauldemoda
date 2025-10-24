@@ -192,7 +192,7 @@ const ProductSection = ({
   return (
     <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
       <div className="text-left mb-8">
-        <h2 className={cn("text-2xl font-bold text-gray-900 mb-2", beauty.className)}>
+        <h2 className={cn("text-2xl font-bold text-gray-900 mb-2")}>
           {title}
         </h2>
       </div>
@@ -302,7 +302,7 @@ export default function ProductosYServiciosPage() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h1 className={cn("text-4xl font-bold text-gray-900 mb-4", beauty.className)}>
+          <h1 className={cn("text-4xl font-bold text-gray-900 mb-4")}>
             Productos y servicios
           </h1>
           <p className="text-gray-700 text-lg max-w-4xl">

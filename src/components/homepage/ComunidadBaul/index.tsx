@@ -21,7 +21,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-4", beauty.className)}
+            className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-4")}
           >
             COMUNIDAD BAÚL
           </motion.h2>
@@ -54,7 +54,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-4")}
           >
             NUESTROS BENEFICIOS
           </motion.h3>
@@ -228,7 +228,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 1.0 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-4")}
           >
             BAÚL EMPRENDE
           </motion.h3>
@@ -452,7 +452,7 @@ const ComunidadBaul = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 1.7 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-4")}
           >
             EVENTOS
           </motion.h3>
@@ -848,7 +848,7 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 2.8 }}
-              className={cn("text-2xl font-bold text-gray-900 mb-6", beauty.className)}
+              className={cn("text-2xl font-bold text-gray-900 mb-6")}
             >
               CO-WORKING / ALQUILER DE MÁQUINAS
             </motion.h3>

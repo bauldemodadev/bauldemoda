@@ -23,7 +23,7 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-6", beauty.className)}
+                className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-6")}
               >
                 SOMOS<br />
                 BAÚL DE MODA
@@ -297,7 +297,7 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className={cn("text-2xl font-bold text-gray-900 mb-6", beauty.className)}
+                className={cn("text-2xl font-bold text-gray-900 mb-6")}
               >
                 La Historia
               </motion.h3>
@@ -354,7 +354,7 @@ const Bauleras = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className={cn("text-2xl font-bold text-gray-900 mb-4", beauty.className)}
+              className={cn("text-2xl font-bold text-gray-900 mb-4")}
             >
               PRENSA
             </motion.h3>

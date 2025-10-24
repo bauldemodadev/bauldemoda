@@ -67,7 +67,7 @@ const DressStyle = () => {
       <div className="px-4 xl:px-0">
         <section className="max-w-frame mx-auto">
           <div className="text-center mb-8">
-            <h2 className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2", beauty.className)}>
+            <h2 className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-2")}>
               CURSOS ONLINE
             </h2>
             <p className="text-lg text-gray-600 italic">
@@ -113,7 +113,7 @@ const DressStyle = () => {
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={cn("text-2xl font-bold text-gray-900 mb-2", beauty.className)}
+            className={cn("text-2xl font-bold text-gray-900 mb-2")}
           >
             CURSOS ONLINE
           </motion.h2>
