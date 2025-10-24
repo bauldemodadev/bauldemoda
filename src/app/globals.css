@@ -61,21 +61,29 @@ body {
 }
 
 @layer base {
+  :root {
+    --font-beauty: "Beauty", Georgia, serif;
+    --font-futura: "Futura Md BT", Arial, sans-serif;
+  }
+}
+
+@layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-futura;
+    @apply bg-background text-foreground;
+    font-family: var(--font-futura);
   }
   
   /* Aplicar fuente Beauty a títulos importantes */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-beauty;
+    font-family: var(--font-beauty);
   }
   
   /* Clase específica para títulos de productos */
   .product-title {
-    @apply font-beauty;
+    font-family: var(--font-beauty);
   }
 }
 

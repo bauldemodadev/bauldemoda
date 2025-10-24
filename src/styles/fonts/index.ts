@@ -59,23 +59,17 @@ export const satoshi = localFont({
   fallback: ["Arial", "Helvetica", "sans-serif"],
 });
 
-// Fuente para títulos importantes y h1
-export const beauty = localFont({
-  src: [],
+// Fuente para títulos importantes y h1 - usando CSS custom properties
+export const beauty = {
   variable: "--font-beauty",
-  display: "swap",
-  preload: true,
-  fallback: ["Beauty", "Georgia", "serif"],
-});
+  className: "font-beauty",
+};
 
-// Fuente para el resto del contenido
-export const futura = localFont({
-  src: [],
+// Fuente para el resto del contenido - usando CSS custom properties
+export const futura = {
   variable: "--font-futura",
-  display: "swap",
-  preload: true,
-  fallback: ["Futura Md BT", "Arial", "sans-serif"],
-});
+  className: "font-futura",
+};
 
 export const integralCF = localFont({
   src: "./integralcf-bold.woff2",
