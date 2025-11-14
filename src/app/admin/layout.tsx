@@ -3,6 +3,7 @@ import { requireAdminAuth } from '@/lib/admin/auth';
 import AdminSidebar from '@/components/admin/Sidebar';
 import AdminHeader from '@/components/admin/Header';
 import { Toaster } from '@/components/ui/toaster';
+import QuillStyles from '@/components/admin/QuillStyles';
 import { headers } from 'next/headers';
 
 export default async function AdminLayout({
@@ -25,6 +26,7 @@ export default async function AdminLayout({
   // Si llegamos aquí, el usuario está autenticado
   return (
     <div className="min-h-screen bg-gray-50">
+      <QuillStyles />
       <AdminHeader />
       <div className="flex">
         <AdminSidebar />
@@ -36,4 +38,3 @@ export default async function AdminLayout({
     </div>
   );
 }
-

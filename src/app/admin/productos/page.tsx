@@ -2,6 +2,7 @@ import { getAdminDb } from '@/lib/firebase/admin';
 import ProductsList from '@/components/admin/products/ProductsList';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
+import { serializeFirestoreData } from '@/lib/admin/serialize';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -19,10 +20,13 @@ async function getProducts(page: number = 1) {
     .orderBy('updatedAt', 'desc')
     .get();
 
-  const allProducts = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as any[];
+  const allProducts = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return serializeFirestoreData({
+      id: doc.id,
+      ...data,
+    });
+  });
 
   // Paginar en memoria
   const startIndex = (page - 1) * ITEMS_PER_PAGE;

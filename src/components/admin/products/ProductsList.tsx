@@ -64,7 +64,15 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
   const formatDate = (timestamp: any) => {
     if (!timestamp) return 'N/A';
     try {
-      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+      // timestamp puede ser un string ISO o un objeto Timestamp
+      const date = typeof timestamp === 'string' 
+        ? new Date(timestamp)
+        : timestamp.toDate 
+        ? timestamp.toDate() 
+        : new Date(timestamp);
+      
+      if (isNaN(date.getTime())) return 'N/A';
+      
       return date.toLocaleDateString('es-AR', {
         year: 'numeric',
         month: 'short',

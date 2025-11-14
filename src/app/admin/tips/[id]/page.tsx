@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import TipEditForm from '@/components/admin/tips/TipEditForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { serializeFirestoreData } from '@/lib/admin/serialize';
 
 async function getTip(id: string) {
   const db = getAdminDb();
@@ -13,10 +14,10 @@ async function getTip(id: string) {
   }
 
   const data = doc.data() as any;
-  return {
+  return serializeFirestoreData({
     id: doc.id,
     ...data,
-  };
+  });
 }
 
 export default async function AdminTipEditPage({

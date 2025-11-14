@@ -13,9 +13,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Token requerido' }, { status: 400 });
     }
 
-    // Guardar token en cookie httpOnly
-    const cookieStore = await cookies();
-    cookieStore.set('firebase-auth-token', token, {
+    // Crear respuesta con cookie
+    const response = NextResponse.json({ success: true });
+    
+    // Guardar token en cookie httpOnly usando la respuesta
+    response.cookies.set('firebase-auth-token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
       path: '/',
     });
 
-    return NextResponse.json({ success: true });
+    return response;
   } catch (error) {
     console.error('Error en /api/admin/auth:', error);
     return NextResponse.json({ error: 'Error al guardar token' }, { status: 500 });

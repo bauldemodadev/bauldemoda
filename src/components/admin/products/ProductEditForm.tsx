@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { Save } from 'lucide-react';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 interface Product {
   id: string;
@@ -288,13 +289,12 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Detalles del Taller (HTML)
+                Detalles del Taller
               </label>
-              <textarea
+              <RichTextEditor
                 value={formData.detailsHtml || ''}
-                onChange={(e) => handleChange('detailsHtml', e.target.value)}
-                rows={8}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 font-mono text-sm"
+                onChange={(value) => handleChange('detailsHtml', value)}
+                placeholder="Escribe los detalles del taller aquí..."
               />
             </div>
           </div>

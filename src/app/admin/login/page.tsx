@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
       }
 
       // Guardar token en cookie
-      await fetch('/api/admin/auth', {
+      const response = await fetch('/api/admin/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,12 +44,17 @@ export default function AdminLoginPage() {
         body: JSON.stringify({ token: idToken }),
       });
 
+      if (!response.ok) {
+        throw new Error('Error al guardar token de autenticación');
+      }
+
       toast({
         title: 'Inicio de sesión exitoso',
         description: 'Bienvenido al panel de administración',
       });
 
-      router.push('/admin');
+      // Usar window.location para forzar recarga completa y que el servidor tenga la cookie
+      window.location.href = '/admin';
     } catch (error: any) {
       console.error('Error en login:', error);
       toast({

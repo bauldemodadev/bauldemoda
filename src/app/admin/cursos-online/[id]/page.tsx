@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import CourseEditForm from '@/components/admin/courses/CourseEditForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { serializeFirestoreData } from '@/lib/admin/serialize';
 
 async function getCourse(id: string) {
   const db = getAdminDb();
@@ -13,10 +14,10 @@ async function getCourse(id: string) {
   }
 
   const data = doc.data() as any;
-  return {
+  return serializeFirestoreData({
     id: doc.id,
     ...data,
-  };
+  });
 }
 
 export default async function AdminCourseEditPage({

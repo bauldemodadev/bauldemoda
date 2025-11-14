@@ -2,6 +2,7 @@ import { getAdminDb } from '@/lib/firebase/admin';
 import CoursesList from '@/components/admin/courses/CoursesList';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
+import { serializeFirestoreData } from '@/lib/admin/serialize';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -16,10 +17,13 @@ async function getCourses(page: number = 1) {
     .orderBy('updatedAt', 'desc')
     .get();
 
-  const allCourses = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as any[];
+  const allCourses = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return serializeFirestoreData({
+      id: doc.id,
+      ...data,
+    });
+  });
 
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;

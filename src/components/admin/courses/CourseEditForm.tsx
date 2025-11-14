@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { Save, Plus, Trash2 } from 'lucide-react';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 interface Lesson {
   index: number;
@@ -302,13 +303,12 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Descripción (HTML)
+                      Descripción
                     </label>
-                    <textarea
+                    <RichTextEditor
                       value={lesson.descriptionHtml}
-                      onChange={(e) => handleLessonChange(index, 'descriptionHtml', e.target.value)}
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 font-mono text-sm"
+                      onChange={(value) => handleLessonChange(index, 'descriptionHtml', value)}
+                      placeholder="Escribe la descripción de la clase aquí..."
                     />
                   </div>
                 </div>
@@ -360,13 +360,12 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Contenido (HTML)
+                      Contenido
                     </label>
-                    <textarea
+                    <RichTextEditor
                       value={block.contentHtml}
-                      onChange={(e) => handleInfoBlockChange(index, 'contentHtml', e.target.value)}
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 font-mono text-sm"
+                      onChange={(value) => handleInfoBlockChange(index, 'contentHtml', value)}
+                      placeholder="Escribe el contenido del bloque aquí..."
                     />
                   </div>
                 </div>
