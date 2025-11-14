@@ -19,6 +19,9 @@ export function middleware(request: NextRequest) {
     response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
+    
+    // Si no es la página de login y no hay cookie de autenticación, 
+    // el layout se encargará de redirigir (no lo hacemos aquí para evitar doble verificación)
   }
 
   return response;

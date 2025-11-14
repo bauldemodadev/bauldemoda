@@ -50,9 +50,18 @@ export async function GET() {
 
 export async function DELETE() {
   try {
-    const cookieStore = await cookies();
-    cookieStore.delete('firebase-auth-token');
-    return NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true });
+    
+    // Eliminar la cookie estableciendo una fecha de expiración pasada
+    response.cookies.set('firebase-auth-token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      expires: new Date(0), // Fecha en el pasado para eliminar la cookie
+      path: '/',
+    });
+    
+    return response;
   } catch (error) {
     console.error('Error al eliminar token:', error);
     return NextResponse.json({ error: 'Error al cerrar sesión' }, { status: 500 });

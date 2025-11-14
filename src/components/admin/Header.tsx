@@ -12,29 +12,24 @@ export default function AdminHeader() {
 
   const handleLogout = async () => {
     try {
+      // Eliminar cookie del servidor primero
+      await fetch('/api/admin/auth', {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
       // Cerrar sesión en Firebase
       if (auth) {
         await signOut(auth);
       }
 
-      // Eliminar cookie del servidor
-      await fetch('/api/admin/auth', {
-        method: 'DELETE',
-      });
-
-      toast({
-        title: 'Sesión cerrada',
-        description: 'Has cerrado sesión correctamente',
-      });
-
-      router.push('/admin/login');
+      // Usar window.location para forzar recarga completa
+      // Esto asegura que el servidor verifique la cookie eliminada
+      window.location.href = '/admin/login';
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Ocurrió un error al cerrar sesión',
-      });
+      // Aún así, redirigir a login
+      window.location.href = '/admin/login';
     }
   };
 

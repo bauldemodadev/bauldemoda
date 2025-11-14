@@ -1,4 +1,4 @@
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 import { requireAdminAuth } from '@/lib/admin/auth';
 import AdminSidebar from '@/components/admin/Sidebar';
 import AdminHeader from '@/components/admin/Header';
@@ -6,27 +6,25 @@ import { Toaster } from '@/components/ui/toaster';
 import QuillStyles from '@/components/admin/QuillStyles';
 import { headers } from 'next/headers';
 
-// Componente de loading
-function AdminLayoutLoading() {
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-12 h-12 border-4 border-[#E9ABBD] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-gray-600">Cargando panel de administración...</p>
-      </div>
-    </div>
-  );
-}
+export default async function AdminLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  // Obtener pathname desde headers (agregado por middleware)
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
 
-// Componente que verifica autenticación
-async function AdminLayoutContent({ children, pathname }: { children: ReactNode; pathname: string }) {
   // Si es la página de login, no verificar autenticación ni mostrar layout admin
+  // Hacer esto ANTES de cualquier otra verificación para evitar renders innecesarios
   if (pathname === '/admin/login' || pathname.startsWith('/admin/login')) {
     return <>{children}</>;
   }
 
   // Para todas las demás rutas admin, verificar autenticación en el servidor
-  // Esto puede redirigir si no está autenticado
+  // Esto redirigirá inmediatamente a /admin/login si no está autenticado
+  // La verificación debe hacerse FUERA de cualquier Suspense para que la redirección
+  // ocurra antes de renderizar cualquier contenido
   await requireAdminAuth();
 
   // Si llegamos aquí, el usuario está autenticado en el servidor
@@ -43,24 +41,5 @@ async function AdminLayoutContent({ children, pathname }: { children: ReactNode;
       </div>
       <Toaster />
     </div>
-  );
-}
-
-export default async function AdminLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  // Obtener pathname desde headers (agregado por middleware)
-  const headersList = await headers();
-  const pathname = headersList.get('x-pathname') || '';
-
-  // Usar Suspense para manejar mejor la carga
-  return (
-    <Suspense fallback={<AdminLayoutLoading />}>
-      <AdminLayoutContent pathname={pathname}>
-        {children}
-      </AdminLayoutContent>
-    </Suspense>
   );
 }
