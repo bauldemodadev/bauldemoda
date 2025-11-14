@@ -2,13 +2,32 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
+
+// Función para filtrar productos basándose en palabras clave del slug
+const filterProductsBySlug = (products: Product[], slug: string): Product[] => {
+  const keywords: Record<string, string[]> = {
+    'cursos-online': ['curso online', 'cursos online', 'online', 'masterclass', 'intensivo', 'pack', 'gift', 'abc costura'],
+    'cursos-ciudad-jardin': ['ciudad jardín', 'ciudad jardin', 'ciudad jardín', 'intensivo', 'regular', 'baul a puertas abiertas', 'overlock', 'collareta'],
+    'cursos-almagro': ['almagro', 'intensivo', 'regular', 'indumentaria', 'carteras', 'lencería', 'lenceria', 'mallas'],
+    'productos-servicios': ['revista', 'ebook', 'insumo', 'herramienta', 'producto', 'servicio'],
+  };
+
+  const searchTerms = keywords[slug] || [];
+  
+  return products.filter(product => {
+    const nameLower = product.name.toLowerCase();
+    const categoryLower = (product.category || '').toLowerCase();
+    const searchText = `${nameLower} ${categoryLower}`;
+    
+    return searchTerms.some(term => searchText.includes(term));
+  });
+};
 
 // Función para segmentar productos por categorías de Ciudad Jardín
 const segmentProducts = (products: Product[]) => {
@@ -19,13 +38,15 @@ const segmentProducts = (products: Product[]) => {
   };
 
   products.forEach(product => {
-    const category = product.category.toLowerCase();
+    const nameLower = product.name.toLowerCase();
+    const categoryLower = (product.category || '').toLowerCase();
+    const searchText = `${nameLower} ${categoryLower}`;
     
-    if (category.includes('intensivos')) {
+    if (searchText.includes('intensivo')) {
       segments.intensivos.push(product);
-    } else if (category.includes('regulares')) {
+    } else if (searchText.includes('regular')) {
       segments.regulares.push(product);
-    } else if (category.includes('baul a puertas abiertas')) {
+    } else if (searchText.includes('baul a puertas abiertas') || searchText.includes('puertas abiertas')) {
       segments.baulAPuertasAbiertas.push(product);
     }
   });
@@ -78,23 +99,11 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
   window.dispatchEvent(new Event("cartUpdate"));
 };
 
+// Card simple sin precio (como en el inicio)
 const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
-  const price = product.price || 0;
-  const discountPercentage = product.discount?.percentage || 0;
-  const discountAmount = product.discount?.amount || 0;
-  
-  // Si el descuento es del 100%, mostrar el precio original
-  const precioConDescuento = discountPercentage >= 100 
-    ? price 
-    : discountPercentage > 0
-    ? price - (price * discountPercentage) / 100
-    : discountAmount > 0
-    ? price - discountAmount
-    : price;
-
   return (
     <motion.div
-      className="bg-white rounded-xl overflow-hidden transition-all duration-300 group flex flex-col"
+      className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
     >
@@ -146,18 +155,6 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
           </p>
         </div>
         
-        {/* Precio */}
-        <div className="px-4 pb-3">
-          {(discountPercentage > 0 || discountAmount > 0) && (
-            <span className="text-gray-400 line-through text-xs">
-              ${product.price.toLocaleString()}
-            </span>
-          )}
-          <div className="font-semibold text-gray-900 text-sm">
-            ${precioConDescuento.toLocaleString()}
-          </div>
-        </div>
-        
         {/* Botón MÁS INFO */}
         <Link href={`/shop/product/${product.id}`}>
           <button 
@@ -186,9 +183,9 @@ const ProductSection = ({
   if (products.length === 0) return null;
 
   return (
-    <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
+    <section className="max-w-7xl mx-auto px-4 md:px-6 mb-12">
       <div className="text-left mb-8">
-        <h2 className={cn("text-2xl font-bold text-gray-900 mb-2")}>
+        <h2 className="font-beauty text-2xl font-bold text-gray-900 mb-2">
           {title}
         </h2>
       </div>
@@ -220,12 +217,10 @@ export default function CursosCiudadJardinPage() {
         }
         
         const allProducts = await response.json() as Product[];
-        // Filtrar solo productos de Cursos Ciudad Jardín
-        const ciudadJardinProducts = allProducts.filter(product => 
-          product.category.toLowerCase().includes('cursos ciudad jardín')
-        );
+        // Filtrar productos basándose en el slug de la URL
+        const filteredProducts = filterProductsBySlug(allProducts, 'cursos-ciudad-jardin');
         
-        setProducts(ciudadJardinProducts);
+        setProducts(filteredProducts);
         setError(null);
       } catch (err) {
         console.error('❌ Error fetching products:', err);
@@ -298,7 +293,7 @@ export default function CursosCiudadJardinPage() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h1 className={cn("text-4xl font-bold text-gray-900 mb-4")}>
+          <h1 className="font-beauty text-4xl font-bold text-gray-900 mb-4">
             Cursos Ciudad Jardín
           </h1>
           <p className="text-gray-700 text-lg max-w-4xl">
