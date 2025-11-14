@@ -133,30 +133,45 @@ export async function POST(request: Request) {
       );
     }
 
+    // Limpiar y validar datos
+    const cleanEmail = (email || '').trim();
+    const cleanNombre = (nombre || '').trim();
+    const cleanTelefono = telefono ? (telefono || '').trim() : undefined;
+    const cleanDni = dni ? (dni || '').trim() : undefined;
+    const cleanUid = uid ? (uid || '').trim() : undefined;
+
+    if (!cleanEmail || !cleanNombre) {
+      console.warn('⚠️ POST /api/customers - Datos incompletos después de limpiar:', { email: cleanEmail, nombre: cleanNombre });
+      return NextResponse.json(
+        { error: 'Email y nombre son requeridos y no pueden estar vacíos' },
+        { status: 400 }
+      );
+    }
+
     console.log('🔄 POST /api/customers - Llamando a upsertCustomer con:', {
-      uid: uid || null,
-      email,
-      name: nombre,
-      phone: telefono,
-      dni: dni || undefined,
+      uid: cleanUid || null,
+      email: cleanEmail,
+      name: cleanNombre,
+      phone: cleanTelefono || undefined,
+      dni: cleanDni || undefined,
     });
 
     // Usar la función upsertCustomer de firestore/customers
     const { upsertCustomer } = await import('@/lib/firestore/customers');
     
     const customer = await upsertCustomer({
-      uid: uid || null,
-      email,
-      name: nombre,
-      phone: telefono || undefined,
-      dni: dni || undefined,
+      uid: cleanUid || undefined,
+      email: cleanEmail,
+      name: cleanNombre,
+      phone: cleanTelefono,
+      dni: cleanDni,
       totalOrders: 0,
       totalSpent: 0,
       tags: [],
       enrolledCourses: [],
     });
 
-    console.log('✅ POST /api/customers - Cliente creado/actualizado:', customer.id);
+    console.log('✅ POST /api/customers - Cliente creado/actualizado exitosamente:', customer.id);
 
     return NextResponse.json({
       success: true,

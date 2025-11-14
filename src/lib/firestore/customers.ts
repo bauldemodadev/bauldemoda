@@ -17,84 +17,122 @@ export async function upsertCustomer(
     const db = getAdminDb();
     const now = Timestamp.now();
 
+    // Validar datos requeridos
+    if (!customerData.email || !customerData.name) {
+      throw new Error('Email y nombre son requeridos para crear/actualizar un cliente');
+    }
+
     // Buscar cliente existente por email o uid
     let existingCustomer: Customer | null = null;
+    let customerId: string | null = null;
 
     if (customerData.uid) {
-      const doc = await db.collection('customers').doc(customerData.uid).get();
-      if (doc.exists) {
-        existingCustomer = { id: doc.id, ...doc.data() } as Customer;
+      try {
+        const doc = await db.collection('customers').doc(customerData.uid).get();
+        if (doc.exists) {
+          existingCustomer = { id: doc.id, ...doc.data() } as Customer;
+          customerId = doc.id;
+        }
+      } catch (error) {
+        console.warn('Error buscando cliente por uid:', error);
       }
     }
 
     if (!existingCustomer) {
       // Buscar por email
-      const snapshot = await db
-        .collection('customers')
-        .where('email', '==', customerData.email)
-        .limit(1)
-        .get();
+      try {
+        const snapshot = await db
+          .collection('customers')
+          .where('email', '==', customerData.email)
+          .limit(1)
+          .get();
 
-      if (!snapshot.empty) {
-        const doc = snapshot.docs[0];
-        existingCustomer = { id: doc.id, ...doc.data() } as Customer;
+        if (!snapshot.empty) {
+          const doc = snapshot.docs[0];
+          existingCustomer = { id: doc.id, ...doc.data() } as Customer;
+          customerId = doc.id;
+        }
+      } catch (error) {
+        console.warn('Error buscando cliente por email:', error);
       }
     }
 
-    if (existingCustomer) {
+    if (existingCustomer && customerId) {
       // Actualizar cliente existente
-      const updates: Partial<Customer> = {
-        ...customerData,
-      };
+      const updates: Record<string, any> = {};
 
-      // No sobrescribir campos que no deben cambiar
-      delete (updates as any).id;
-      delete (updates as any).createdAt;
-      delete (updates as any).totalOrders;
-      delete (updates as any).totalSpent;
+      // Solo actualizar campos que vienen en customerData y no son undefined
+      if (customerData.name !== undefined) updates.name = customerData.name;
+      if (customerData.email !== undefined) updates.email = customerData.email;
+      if (customerData.phone !== undefined && customerData.phone !== null) updates.phone = customerData.phone;
+      if (customerData.dni !== undefined && customerData.dni !== null) updates.dni = customerData.dni;
+      if (customerData.uid !== undefined && customerData.uid !== null) updates.uid = customerData.uid;
 
-      // Filtrar valores undefined (Firestore no acepta undefined)
-      const cleanUpdates: Record<string, any> = {};
-      Object.keys(updates).forEach((key) => {
-        const value = (updates as any)[key];
-        if (value !== undefined) {
-          cleanUpdates[key] = value;
-        }
-      });
+      // No actualizar campos protegidos
+      // (id, createdAt, totalOrders, totalSpent no se incluyen)
 
-      await db.collection('customers').doc(existingCustomer.id).update(cleanUpdates);
+      // Solo actualizar si hay cambios
+      if (Object.keys(updates).length > 0) {
+        await db.collection('customers').doc(customerId).update(updates);
+      }
 
+      // Retornar cliente actualizado
       return {
         ...existingCustomer,
         ...updates,
       } as Customer;
     } else {
-      // Crear nuevo cliente
-      const newCustomer: Omit<Customer, 'id'> = {
-        uid: customerData.uid,
+      // Crear nuevo cliente - construir objeto sin undefined ni null
+      const newCustomerData: Record<string, any> = {
         email: customerData.email,
         name: customerData.name,
-        phone: customerData.phone,
-        dni: customerData.dni,
         createdAt: now,
-        lastOrderAt: undefined,
         totalOrders: 0,
         totalSpent: 0,
         tags: customerData.tags || [],
         enrolledCourses: customerData.enrolledCourses || [],
       };
 
+      // Agregar campos opcionales solo si tienen valor (no undefined ni null)
+      if (customerData.uid !== undefined && customerData.uid !== null) {
+        newCustomerData.uid = customerData.uid;
+      }
+      if (customerData.phone !== undefined && customerData.phone !== null && customerData.phone !== '') {
+        newCustomerData.phone = customerData.phone;
+      }
+      if (customerData.dni !== undefined && customerData.dni !== null && customerData.dni !== '') {
+        newCustomerData.dni = customerData.dni;
+      }
+
       // Usar uid como docId si está disponible, sino generar uno
       const newCustomerId = customerData.uid || db.collection('customers').doc().id;
-      await db.collection('customers').doc(newCustomerId).set(newCustomer);
+      
+      console.log('📝 Creando nuevo cliente con ID:', newCustomerId);
+      console.log('📝 Datos del cliente:', JSON.stringify(newCustomerData, null, 2));
+      
+      await db.collection('customers').doc(newCustomerId).set(newCustomerData);
 
-      return {
+      const createdCustomer: Customer = {
         id: newCustomerId,
-        ...newCustomer,
+        email: newCustomerData.email,
+        name: newCustomerData.name,
+        createdAt: newCustomerData.createdAt,
+        totalOrders: newCustomerData.totalOrders,
+        totalSpent: newCustomerData.totalSpent,
+        tags: newCustomerData.tags,
+        enrolledCourses: newCustomerData.enrolledCourses,
       };
+
+      if (newCustomerData.uid) createdCustomer.uid = newCustomerData.uid;
+      if (newCustomerData.phone) createdCustomer.phone = newCustomerData.phone;
+      if (newCustomerData.dni) createdCustomer.dni = newCustomerData.dni;
+
+      return createdCustomer;
     }
   } catch (error) {
-    console.error('Error upserting cliente:', error);
+    console.error('❌ Error upserting cliente:', error);
+    console.error('❌ Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
+    console.error('❌ Customer data recibido:', JSON.stringify(customerData, null, 2));
     throw error;
   }
 }
