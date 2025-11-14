@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { Save } from 'lucide-react';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import MediaImage from '@/components/admin/MediaImage';
 
 interface Tip {
   id: string;
@@ -136,24 +137,35 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Cover Media ID
+                Imagen de Portada (Media ID)
               </label>
               <input
                 type="number"
                 value={formData.coverMediaId || ''}
                 onChange={(e) => handleChange('coverMediaId', e.target.value ? parseInt(e.target.value) : null)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-2"
               />
+              {formData.coverMediaId && (
+                <MediaImage
+                  mediaId={formData.coverMediaId}
+                  alt="Imagen de portada"
+                  width={200}
+                  height={200}
+                  className="mt-2"
+                  showId={true}
+                />
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Download Media ID
+                Archivo Descargable (Media ID)
               </label>
               <input
                 type="number"
                 value={formData.downloadMediaId || ''}
                 onChange={(e) => handleChange('downloadMediaId', e.target.value ? parseInt(e.target.value) : null)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                placeholder="ID del archivo descargable"
               />
             </div>
           </div>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { Save } from 'lucide-react';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import MediaImage from '@/components/admin/MediaImage';
 
 interface Product {
   id: string;
@@ -257,6 +258,66 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 onChange={(e) => handleChange('tipoMadera', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
               />
+            </div>
+          </div>
+        </section>
+
+        {/* Medios */}
+        <section>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Medios</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Imagen Principal (Media ID)
+              </label>
+              <input
+                type="number"
+                value={formData.thumbnailMediaId || ''}
+                onChange={(e) => handleChange('thumbnailMediaId', e.target.value ? parseInt(e.target.value) : null)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-2"
+              />
+              {formData.thumbnailMediaId && (
+                <MediaImage
+                  mediaId={formData.thumbnailMediaId}
+                  alt="Imagen principal"
+                  width={200}
+                  height={200}
+                  className="mt-2"
+                  showId={true}
+                />
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Galería (Media IDs separados por comas)
+              </label>
+              <input
+                type="text"
+                value={formData.galleryMediaIds?.join(', ') || ''}
+                onChange={(e) => {
+                  const ids = e.target.value
+                    .split(',')
+                    .map((id) => parseInt(id.trim(), 10))
+                    .filter((id) => !isNaN(id) && id > 0);
+                  handleChange('galleryMediaIds', ids);
+                }}
+                placeholder="Ej: 123, 456, 789"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-2"
+              />
+              {formData.galleryMediaIds && formData.galleryMediaIds.length > 0 && (
+                <div className="grid grid-cols-3 gap-2 mt-2">
+                  {formData.galleryMediaIds.map((mediaId, index) => (
+                    <MediaImage
+                      key={index}
+                      mediaId={mediaId}
+                      alt={`Imagen ${index + 1}`}
+                      width={100}
+                      height={100}
+                      showId={true}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>

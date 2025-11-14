@@ -1,18 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
-
 /**
- * Componente para cargar los estilos de Quill solo en el cliente
+ * Componente para cargar los estilos de Quill
+ * Importamos el CSS directamente ya que es un componente cliente
  */
-export default function QuillStyles() {
-  useEffect(() => {
-    // Cargar CSS de Quill dinámicamente
-    if (typeof window !== 'undefined') {
-      import('react-quill/dist/quill.snow.css');
-    }
-  }, []);
+import 'react-quill/dist/quill.snow.css';
 
+export default function QuillStyles() {
+  // No necesitamos hacer nada, el CSS se carga automáticamente
   return null;
 }
 
