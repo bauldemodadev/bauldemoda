@@ -19,13 +19,36 @@ import type { Product } from '@/types/product';
  */
 export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product {
   // Convertir Timestamps a Date/string
-  const createdAt = fsProduct.createdAt instanceof Timestamp
-    ? fsProduct.createdAt.toDate()
-    : new Date();
+  let createdAt: Date;
+  let updatedAt: string;
   
-  const updatedAt = fsProduct.updatedAt instanceof Timestamp
-    ? fsProduct.updatedAt.toDate().toISOString()
-    : new Date().toISOString();
+  try {
+    if (fsProduct.createdAt) {
+      createdAt = fsProduct.createdAt instanceof Timestamp
+        ? fsProduct.createdAt.toDate()
+        : fsProduct.createdAt instanceof Date
+        ? fsProduct.createdAt
+        : new Date();
+    } else {
+      createdAt = new Date();
+    }
+    
+    if (fsProduct.updatedAt) {
+      updatedAt = fsProduct.updatedAt instanceof Timestamp
+        ? fsProduct.updatedAt.toDate().toISOString()
+        : fsProduct.updatedAt instanceof Date
+        ? fsProduct.updatedAt.toISOString()
+        : typeof fsProduct.updatedAt === 'string'
+        ? fsProduct.updatedAt
+        : new Date().toISOString();
+    } else {
+      updatedAt = new Date().toISOString();
+    }
+  } catch (error) {
+    console.error('Error convirtiendo fechas:', error);
+    createdAt = new Date();
+    updatedAt = new Date().toISOString();
+  }
 
   // Calcular precio numérico desde priceText o usar localPriceNumber
   const price = fsProduct.localPriceNumber ?? 0;
@@ -34,7 +57,7 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
   const active = fsProduct.status === 'publish';
 
   // Construir array de imágenes (si no existe, usar placeholder)
-  const images = fsProduct.images && fsProduct.images.length > 0
+  const images = fsProduct.images && Array.isArray(fsProduct.images) && fsProduct.images.length > 0
     ? fsProduct.images
     : fsProduct.thumbnailMediaId
     ? [`/api/media/${fsProduct.thumbnailMediaId}`] // Endpoint para obtener imagen por mediaId
@@ -47,11 +70,11 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
     sku: fsProduct.sku ?? null,
 
     // Información básica
-    name: fsProduct.name,
-    title: fsProduct.name, // Por defecto igual a name
-    slug: fsProduct.slug,
-    description: fsProduct.description ?? fsProduct.shortDescription,
-    shortDescription: fsProduct.shortDescription,
+    name: fsProduct.name || '',
+    title: fsProduct.name || '', // Por defecto igual a name
+    slug: fsProduct.slug || '',
+    description: fsProduct.description ?? fsProduct.shortDescription ?? '',
+    shortDescription: fsProduct.shortDescription ?? '',
 
     // Precios
     price,
@@ -65,10 +88,10 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
     promos: [],
 
     // Categorización
-    category: fsProduct.category,
+    category: fsProduct.category || '',
     subcategory: fsProduct.subcategory ?? '',
-    tipoMadera: fsProduct.tipoMadera,
-    sede: fsProduct.sede,
+    tipoMadera: fsProduct.tipoMadera ?? '',
+    sede: fsProduct.sede ?? null,
 
     // Medios
     images,
@@ -89,9 +112,9 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
     specialOffer: false,
 
     // Contenido adicional
-    durationText: fsProduct.durationText,
-    locationText: fsProduct.locationText,
-    detailsHtml: fsProduct.detailsHtml,
+    durationText: fsProduct.durationText ?? '',
+    locationText: fsProduct.locationText ?? '',
+    detailsHtml: fsProduct.detailsHtml ?? '',
 
     // Relaciones
     relatedCourseId: fsProduct.relatedCourseId ?? null,

@@ -30,11 +30,12 @@ export async function GET(request: Request) {
     // MODO FIRESTORE
     // ============================================
     if (USE_FIRESTORE) {
-      // 1) Listado completo (all=1 o sin params)
-      if (all === '1' || all === 'true' || (!id && !ids && !codigo && !nombre)) {
-        const products = await getAllProductsFromFirestore();
-        return NextResponse.json(products);
-      }
+      try {
+        // 1) Listado completo (all=1 o sin params)
+        if (all === '1' || all === 'true' || (!id && !ids && !codigo && !nombre)) {
+          const products = await getAllProductsFromFirestore();
+          return NextResponse.json(products);
+        }
 
       // 2) Batch por ids
       if (ids) {
@@ -60,9 +61,16 @@ export async function GET(request: Request) {
         return NextResponse.json([], { status: 200 });
       }
 
-      // Fallback: todos los productos
-      const products = await getAllProductsFromFirestore();
-      return NextResponse.json(products);
+        // Fallback: todos los productos
+        const products = await getAllProductsFromFirestore();
+        return NextResponse.json(products);
+      } catch (error) {
+        console.error('Error en modo Firestore:', error);
+        return NextResponse.json(
+          { error: 'Failed to fetch products from Firestore', details: error instanceof Error ? error.message : String(error) },
+          { status: 500 }
+        );
+      }
     }
 
     // ============================================
