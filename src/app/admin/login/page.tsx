@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
 import { useToast } from '@/components/ui/use-toast';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Mail, Lock, Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 const ADMIN_EMAIL = 'admin@admin.com';
 const ADMIN_PASSWORD = 'admin2025+!';
@@ -110,81 +111,133 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Panel de Administración
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Inicia sesión con credenciales de administrador
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-pink-50/30 to-gray-100 p-4">
+      {/* Fondo decorativo */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-[#E9ABBD] opacity-10 blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-[#E9ABBD] opacity-10 blur-3xl"></div>
+      </div>
 
-        {/* Mensaje si había una sesión no admin */}
-        {hasNonAdminSession && nonAdminEmail && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
-            <div className="flex items-start">
-              <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5 mr-3 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-yellow-800">
-                  Sesión de usuario cerrada
-                </p>
-                <p className="mt-1 text-sm text-yellow-700">
-                  Detectamos una sesión activa con <strong>{nonAdminEmail}</strong>. 
-                  El panel de administración requiere credenciales específicas de administrador.
-                </p>
+      <div className="relative w-full max-w-md">
+        {/* Card principal */}
+        <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+          {/* Header con logo */}
+          <div className="bg-gradient-to-br from-[#E9ABBD] to-[#D44D7D] p-8 pb-12 text-center">
+            <div className="flex justify-center mb-6">
+              <div className="relative w-48 h-20">
+                <Image
+                  src="/logo.svg"
+                  alt="Baúl de Moda"
+                  fill
+                  className="object-contain drop-shadow-lg"
+                  style={{ filter: 'brightness(0) invert(1)' }}
+                  priority
+                />
               </div>
             </div>
-          </div>
-        )}
-
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm"
-                placeholder="Email"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm"
-                placeholder="Contraseña"
-              />
-            </div>
+            <h1 className="text-2xl font-bold text-white mb-2">
+              Panel de Administración
+            </h1>
+            <p className="text-white/90 text-sm">
+              Acceso exclusivo para administradores
+            </p>
           </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-            </button>
+          {/* Contenido del formulario */}
+          <div className="p-8 space-y-6">
+            {/* Mensaje si había una sesión no admin */}
+            {hasNonAdminSession && nonAdminEmail && (
+              <div className="bg-amber-50 border-l-4 border-amber-400 rounded-lg p-4 transition-all duration-300 ease-in-out">
+                <div className="flex items-start">
+                  <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 mr-3 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-amber-900">
+                      Sesión de usuario cerrada
+                    </p>
+                    <p className="mt-1 text-sm text-amber-800">
+                      Detectamos una sesión activa con <strong>{nonAdminEmail}</strong>. 
+                      El panel de administración requiere credenciales específicas de administrador.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              {/* Campo Email */}
+              <div className="space-y-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E9ABBD] focus:border-[#E9ABBD] transition-all duration-200 text-gray-900 placeholder-gray-400"
+                    placeholder="admin@admin.com"
+                  />
+                </div>
+              </div>
+
+              {/* Campo Contraseña */}
+              <div className="space-y-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Contraseña
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E9ABBD] focus:border-[#E9ABBD] transition-all duration-200 text-gray-900 placeholder-gray-400"
+                    placeholder="••••••••"
+                  />
+                </div>
+              </div>
+
+              {/* Botón de envío */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                style={{
+                  backgroundColor: isLoading ? '#E9ABBD' : '#E9ABBD',
+                }}
+                className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-lg text-white font-semibold text-base transition-all duration-200 hover:bg-[#D44D7D] focus:outline-none focus:ring-2 focus:ring-[#E9ABBD] focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <span>Iniciando sesión...</span>
+                  </>
+                ) : (
+                  <span>Iniciar sesión</span>
+                )}
+              </button>
+            </form>
+
+            {/* Footer decorativo */}
+            <div className="pt-4 border-t border-gray-100">
+              <p className="text-xs text-center text-gray-500">
+                Protegido por autenticación segura
+              </p>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

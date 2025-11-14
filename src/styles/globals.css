@@ -49,6 +49,9 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    /* Colores de marca */
+    --brand-primary: #E9ABBD;
+    --brand-hover: #D44D7D;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -85,5 +88,52 @@
   } */
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Estilos globales para botones */
+  button:not([class*="bg-"]):not([class*="text-"]):not([disabled]) {
+    background-color: var(--brand-primary);
+    color: white;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  }
+
+  button:not([class*="bg-"]):not([class*="text-"]):not([disabled]):hover {
+    background-color: var(--brand-hover);
+  }
+
+  button:not([class*="bg-"]):not([class*="text-"]):not([disabled]):active {
+    transform: scale(0.98);
+  }
+
+  /* Estilos globales para enlaces */
+  a:not([class*="text-"]):not([class*="bg-"]) {
+    color: var(--brand-primary);
+    transition: color 0.2s ease-in-out;
+    text-decoration: none;
+  }
+
+  a:not([class*="text-"]):not([class*="bg-"]):hover {
+    color: var(--brand-hover);
+  }
+
+  /* Estilos para botones con clases específicas pero sin colores definidos */
+  button[class*="bg-"]:not([class*="bg-white"]):not([class*="bg-gray"]):not([class*="bg-transparent"]) {
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  }
+
+  button[class*="bg-"]:not([class*="bg-white"]):not([class*="bg-gray"]):not([class*="bg-transparent"]):hover {
+    filter: brightness(0.9);
+  }
+
+  /* Enlaces dentro de botones o elementos interactivos */
+  a[role="button"],
+  a[href]:not([class*="text-"]):not([class*="bg-"]) {
+    color: var(--brand-primary);
+    transition: color 0.2s ease-in-out;
+  }
+
+  a[role="button"]:hover,
+  a[href]:not([class*="text-"]):not([class*="bg-"]):hover {
+    color: var(--brand-hover);
   }
 }
