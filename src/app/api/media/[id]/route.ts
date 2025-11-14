@@ -83,20 +83,59 @@ export async function GET(
     const imageUrl = await getWordPressImageUrl(mediaId);
 
     if (!imageUrl) {
-      return NextResponse.json(
-        { error: 'Imagen no encontrada', url: null },
-        { status: 404 }
-      );
+      // Si no se encuentra la imagen, retornar un placeholder
+      return NextResponse.redirect(new URL('/placeholder.png', request.url), 302);
     }
 
-    // Retornar la URL de la imagen
-    return NextResponse.json({ url: imageUrl });
+    // Servir la imagen como proxy (similar a /api/image/[path])
+    // Esto permite que el frontend use /api/media/[id] directamente como src de imagen
+    try {
+      const imageResponse = await fetch(imageUrl, {
+        headers: {
+          'Accept': 'image/*',
+          'Cache-Control': 'no-cache',
+        },
+        // Timeout de 10 segundos
+        signal: AbortSignal.timeout(10000),
+      });
+
+      if (!imageResponse.ok) {
+        console.warn(`Error al obtener imagen desde ${imageUrl}: ${imageResponse.status}`);
+        return NextResponse.redirect(new URL('/placeholder.png', request.url), 302);
+      }
+
+      // Verificar que sea una imagen
+      const contentType = imageResponse.headers.get('content-type');
+      if (!contentType?.startsWith('image/')) {
+        console.warn(`Tipo de contenido inválido para ${imageUrl}: ${contentType}`);
+        return NextResponse.redirect(new URL('/placeholder.png', request.url), 302);
+      }
+
+      // Obtener el buffer de la imagen
+      const buffer = await imageResponse.arrayBuffer();
+
+      // Retornar la imagen con headers apropiados
+      return new NextResponse(buffer, {
+        status: 200,
+        headers: {
+          'Content-Type': contentType,
+          'Content-Disposition': 'inline',
+          'Cache-Control': 'public, max-age=31536000, immutable',
+          'Access-Control-Allow-Origin': '*',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      });
+    } catch (fetchError: any) {
+      if (fetchError.name === 'AbortError') {
+        console.warn(`Timeout al obtener imagen desde ${imageUrl}`);
+      } else {
+        console.error(`Error al obtener imagen desde ${imageUrl}:`, fetchError);
+      }
+      return NextResponse.redirect(new URL('/placeholder.png', request.url), 302);
+    }
   } catch (error) {
     console.error('Error obteniendo imagen:', error);
-    return NextResponse.json(
-      { error: 'Error al obtener imagen' },
-      { status: 500 }
-    );
+    return NextResponse.redirect(new URL('/placeholder.png', request.url), 302);
   }
 }
 

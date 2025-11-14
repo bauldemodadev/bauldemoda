@@ -135,12 +135,36 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
   // Determinar si está activo basado en status
   const active = fsProduct.status === 'publish';
 
-  // Construir array de imágenes (si no existe, usar placeholder)
-  const images = fsProduct.images && Array.isArray(fsProduct.images) && fsProduct.images.length > 0
-    ? fsProduct.images
-    : fsProduct.thumbnailMediaId
-    ? [`/api/media/${fsProduct.thumbnailMediaId}`] // Endpoint para obtener imagen por mediaId
-    : ['/placeholder.png'];
+  // Construir array de imágenes desde mediaIds
+  // Prioridad: images existentes > galleryMediaIds > thumbnailMediaId > placeholder
+  let images: string[] = [];
+
+  // Si ya hay imágenes en el array, usarlas
+  if (fsProduct.images && Array.isArray(fsProduct.images) && fsProduct.images.length > 0) {
+    images = fsProduct.images;
+  } else {
+    // Convertir mediaIds a URLs usando el endpoint /api/media/[id]
+    const mediaUrls: string[] = [];
+
+    // Agregar imagen principal (thumbnail)
+    if (fsProduct.thumbnailMediaId) {
+      mediaUrls.push(`/api/media/${fsProduct.thumbnailMediaId}`);
+    }
+
+    // Agregar imágenes de la galería (evitando duplicar la principal)
+    if (fsProduct.galleryMediaIds && Array.isArray(fsProduct.galleryMediaIds)) {
+      for (const mediaId of fsProduct.galleryMediaIds) {
+        const url = `/api/media/${mediaId}`;
+        // Solo agregar si no es la misma que la principal
+        if (!fsProduct.thumbnailMediaId || mediaId !== fsProduct.thumbnailMediaId) {
+          mediaUrls.push(url);
+        }
+      }
+    }
+
+    // Si hay al menos una imagen, usarla; sino, placeholder
+    images = mediaUrls.length > 0 ? mediaUrls : ['/placeholder.png'];
+  }
 
   return {
     // Identificadores

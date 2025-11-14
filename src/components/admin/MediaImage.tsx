@@ -36,33 +36,11 @@ export default function MediaImage({
       return;
     }
 
-    setLoading(true);
+    // El endpoint /api/media/[id] ahora sirve la imagen directamente
+    // Podemos usarlo directamente como URL de imagen
+    setImageUrl(`/api/media/${mediaId}`);
+    setLoading(false);
     setError(false);
-
-    // Obtener URL de la imagen desde la API
-    fetch(`/api/media/${mediaId}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.url) {
-          setImageUrl(data.url);
-        } else {
-          setImageUrl(fallback);
-          setError(true);
-        }
-      })
-      .catch((err) => {
-        console.error('Error cargando imagen:', err);
-        setImageUrl(fallback);
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
   }, [mediaId, fallback]);
 
   if (loading) {
