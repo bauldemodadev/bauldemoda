@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebase/client";
 import { api } from "@/lib/api";
 
 export interface PerfilCliente {

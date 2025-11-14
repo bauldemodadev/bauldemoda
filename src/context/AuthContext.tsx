@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from '@/lib/firebase'
+import { auth } from '@/lib/firebase/client'
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut as fbSignOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 export interface User { uid: string; email: string | null }

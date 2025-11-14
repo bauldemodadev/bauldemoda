@@ -1,77 +1,18 @@
 import { NextResponse } from 'next/server';
 import { api } from '@/lib/api';
 import { Product } from '@/types/product';
+import { mapExternalPrecioToProduct, isTiendaActivo } from '@/lib/products/transform';
+import {
+  getAllProductsFromFirestore,
+  getProductsByIdsFromFirestore,
+} from '@/lib/firestore/products';
 
 // Evita que Next intente prerender estáticamente esta ruta
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-function isTiendaActivo(item: any): boolean {
-  const p = item?.producto ?? item;
-  // La API externa usa 'publicado' en lugar de 'estadoTienda'
-  const publicado = p?.publicado ?? item?.publicado;
-  return publicado === true;
-}
-
-function mapPrecioToProduct(item: any): Product {
-  const p = item?.producto ?? item;
-  const pr = item?.pricing ?? item;
-
-  // Normalizar imágenes desde varias posibles claves
-  const rawImgs = Array.isArray(p?.imagenes)
-    ? p.imagenes
-    : Array.isArray(p?.images)
-    ? p.images
-    : [];
-  const images: string[] = rawImgs.length > 0 ? rawImgs : (p?.srcUrl ? [p.srcUrl] : []);
-
-  // Determinar precios base y final (adaptado a la estructura real de la API)
-  const precioNormal = Number(p?.precio?.normal ?? 0);
-  const precioRebajado = Number(p?.precio?.rebajado ?? 0);
-  const precioUnitario = Number(pr?.precioUnitario ?? 0);
-  
-  // Usar precio unitario del pricing si está disponible, sino precio normal
-  const precioFinal = precioUnitario > 0 ? precioUnitario : precioNormal;
-
-  // Descuentos: calcular basado en diferencia entre normal y rebajado
-  const discountAmount = Math.max(0, precioNormal - precioRebajado);
-  const discountPercentage = precioNormal > 0 ? Math.round((discountAmount / precioNormal) * 100) : 0;
-
-  const resolvedName =
-    typeof p?.nombre === 'string' && p.nombre.trim().length > 0
-      ? p.nombre
-      : typeof p?.descripcion === 'string' && p.descripcion.trim().length > 0
-      ? p.descripcion
-      : 'Sin nombre';
-
-  return {
-    id: String(p?.id ?? crypto.randomUUID()),
-    title: resolvedName,
-    name: resolvedName,
-    description: p?.descripcion ?? '',
-    price: Math.round(Number(precioFinal) || 0), // Mostrar precio final en el front
-    images,
-    srcUrl: images[0] || p?.srcUrl || '/placeholder.png',
-    category: Array.isArray(p?.categorias) ? p.categorias[0] : (p?.categoria ?? pr?.categoria ?? ''),
-    subcategory: Array.isArray(p?.categorias) && p.categorias.length > 1 ? p.categorias[1] : (p?.subCategoria ?? p?.subcategoria ?? pr?.unidad ?? p?.unidadMedida ?? ''),
-    tipoMadera: p?.tipoMadera ?? p?.tipoMadera?.toString?.() ?? '',
-    stock: Number(p?.inventario ?? p?.stockDisponible ?? p?.stock ?? 0),
-    discount: {
-      amount: Math.max(0, Number(discountAmount) || 0),
-      percentage: Math.max(0, Number(discountPercentage) || 0),
-    },
-    freeShipping: false,
-    createdAt: new Date(),
-    sales: 0,
-    rating: 0,
-    active: isTiendaActivo(item),
-    specialOffer: (Number(discountAmount) || 0) > 0 || (Number(discountPercentage) || 0) > 0,
-    newArrival: Boolean(p?.newArrival ?? false),
-    featuredBrand: Boolean(p?.featuredBrand ?? false),
-    promos: [],
-    updatedAt: new Date().toISOString(),
-  } as Product;
-}
+// Flag para usar Firestore o API externa
+const USE_FIRESTORE = process.env.NEXT_PUBLIC_USE_FIRESTORE === 'true';
 
 export async function GET(request: Request) {
   try {
@@ -84,6 +25,49 @@ export async function GET(request: Request) {
     const cantidad = url.searchParams.get('cantidad') ?? '1';
     const cepillado = url.searchParams.get('cepillado') ?? 'false';
     const redondear = url.searchParams.get('redondear') ?? 'true';
+
+    // ============================================
+    // MODO FIRESTORE
+    // ============================================
+    if (USE_FIRESTORE) {
+      // 1) Listado completo (all=1 o sin params)
+      if (all === '1' || all === 'true' || (!id && !ids && !codigo && !nombre)) {
+        const products = await getAllProductsFromFirestore();
+        return NextResponse.json(products);
+      }
+
+      // 2) Batch por ids
+      if (ids) {
+        const list = ids.split(',').map(s => s.trim()).filter(Boolean);
+        if (list.length === 0) return NextResponse.json([], { status: 200 });
+        const products = await getProductsByIdsFromFirestore(list);
+        return NextResponse.json(products);
+      }
+
+      // 3) Individual por id
+      if (id) {
+        const { getProductByIdFromFirestore } = await import('@/lib/firestore/products');
+        const product = await getProductByIdFromFirestore(id);
+        if (!product) {
+          return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+        }
+        return NextResponse.json(product);
+      }
+
+      // 4) Búsqueda por código/nombre (no soportado en Firestore aún, retornar vacío o implementar búsqueda)
+      if (codigo || nombre) {
+        // TODO: Implementar búsqueda en Firestore si es necesario
+        return NextResponse.json([], { status: 200 });
+      }
+
+      // Fallback: todos los productos
+      const products = await getAllProductsFromFirestore();
+      return NextResponse.json(products);
+    }
+
+    // ============================================
+    // MODO API EXTERNA (compatibilidad)
+    // ============================================
 
     // 1) Listado completo -> preferir POST /precios con body { items } si el backend lo soporta
     if (all === '1' || all === 'true') {
@@ -103,7 +87,7 @@ export async function GET(request: Request) {
       } as any;
       const data = await api.post<any>(`/precios`, payload);
       const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
-      const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
+      const filtered = items.filter(isTiendaActivo).map(mapExternalPrecioToProduct);
       return NextResponse.json(filtered);
     }
 
@@ -116,7 +100,7 @@ export async function GET(request: Request) {
       } as any;
       const data = await api.post<any>(`/precios`, payload);
       const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
-      const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
+      const filtered = items.filter(isTiendaActivo).map(mapExternalPrecioToProduct);
       return NextResponse.json(filtered);
     }
 
@@ -125,7 +109,7 @@ export async function GET(request: Request) {
       const payload = { items: [{ id, cantidad: Number(cantidad) || 1 }] } as any;
       const data = await api.post<any>(`/precios`, payload);
       const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
-      const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
+      const filtered = items.filter(isTiendaActivo).map(mapExternalPrecioToProduct);
       return NextResponse.json(filtered);
     }
 
@@ -139,14 +123,14 @@ export async function GET(request: Request) {
       qs.set('redondear', redondear);
       const data = await api.get<any>(`/precios?${qs.toString()}`);
       const items = Array.isArray(data) ? data : [data];
-      const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
+      const filtered = items.filter(isTiendaActivo).map(mapExternalPrecioToProduct);
       return NextResponse.json(filtered);
     }
 
     // 4) Sin filtros: intenta all=1
     const data = await api.get<any>(`/precios?all=1`);
     const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
-    const filtered = items.filter(isTiendaActivo).map(mapPrecioToProduct);
+    const filtered = items.filter(isTiendaActivo).map(mapExternalPrecioToProduct);
     return NextResponse.json(filtered);
   } catch (error) {
     console.error('Error fetching products:', error);

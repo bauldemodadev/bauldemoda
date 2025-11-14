@@ -1,31 +1,13 @@
-import { initializeApp, getApps, getApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
-import { getAuth } from 'firebase/auth'
+/**
+ * @deprecated Este archivo está deprecado. Usa src/lib/firebase/client.ts en su lugar.
+ * 
+ * Este archivo se mantiene temporalmente para compatibilidad con imports existentes.
+ * Se eliminará en una futura versión.
+ * 
+ * Para nuevo código, usa:
+ * - import { app, db, storage, auth } from '@/lib/firebase/client' (frontend)
+ * - import { getAdminDb } from '@/lib/firebase/admin' (servidor)
+ */
 
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
-}
-
-const isValidConfig = (cfg: Record<string, any>) =>
-  Boolean(cfg.apiKey && cfg.authDomain && cfg.projectId && cfg.appId)
-
-let app: ReturnType<typeof getApp> | ReturnType<typeof initializeApp> | null = null
-let db: ReturnType<typeof getFirestore> | null = null
-let storage: ReturnType<typeof getStorage> | null = null
-let auth: ReturnType<typeof getAuth> | null = null
-
-// Inicializar Firebase SOLO en cliente y si hay config válida
-if (typeof window !== 'undefined' && isValidConfig(firebaseConfig)) {
-  app = getApps().length ? getApp() : initializeApp(firebaseConfig)
-  db = getFirestore(app)
-  storage = getStorage(app)
-  auth = getAuth(app)
-}
-
-export { app, db, storage, auth }
+// Re-exportar desde el nuevo módulo para mantener compatibilidad
+export { app, db, storage, auth } from './firebase/client';

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useAuth } from '@/context/AuthContext';
 import { api } from "@/lib/api";
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebase/client";
 
 interface CartItem {
   id?: string;
