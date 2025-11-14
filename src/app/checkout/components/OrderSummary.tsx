@@ -38,6 +38,7 @@ interface OrderSummaryProps {
   total: number;
   onRemoveItem?: (id: string) => void;
   isLoading?: boolean;
+  paymentMethod?: 'mp' | 'cash' | 'transfer' | undefined;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
@@ -47,6 +48,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   total,
   onRemoveItem,
   isLoading = false,
+  paymentMethod,
 }) => {
   const [showAllProducts, setShowAllProducts] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -216,14 +218,22 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             )}</span>
           </div>
         )}
+        {/* Nota sobre retiro en sucursal según FASE 7 */}
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Envío</span>
-          <span className="text-gray-900">${formatCurrency(shipping)}</span>
+          <span className="text-gray-600">Retiro en sucursal</span>
+          <span className="text-green-600 font-medium">Gratis</span>
         </div>
         <div className="flex justify-between text-base font-semibold border-t border-gray-200 pt-3">
           <span className="text-gray-900">Total</span>
           <span className="text-gray-900">${formatCurrency(total)}</span>
         </div>
+        {paymentMethod && (
+          <div className="mt-2 text-xs text-gray-500 italic">
+            {paymentMethod === 'cash' && 'Precio en efectivo'}
+            {paymentMethod === 'mp' && 'Precio con otros medios de pago'}
+            {paymentMethod === 'transfer' && 'Precio con transferencia'}
+          </div>
+        )}
       </div>
 
       {/* Botón Ver más productos */}

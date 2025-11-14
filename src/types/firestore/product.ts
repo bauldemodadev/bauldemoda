@@ -28,6 +28,13 @@ export interface FirestoreProduct {
   localPriceNumber?: number | null;        // opcional, si parseamos número
   internacionalPriceNumber?: number | null; // opcional
   
+  // Precios diferenciados por método de pago (FASE 7)
+  basePrice?: number | null;              // Precio base de referencia
+  cashPrice?: number | null;              // Precio en efectivo (sin IVA)
+  otherMethodsPrice?: number | null;      // Precio para otros medios (tarjeta, MP, etc., con IVA)
+  internationalPrice?: number | null;     // Precio internacional (opcional)
+  pricingMode?: 'single' | 'dual';       // Estrategia: 'single' = un solo precio, 'dual' = efectivo vs otros
+  
   // Información del taller
   durationText: string;          // meta: duracion (texto libre)
   locationText: string;          // meta: lugar

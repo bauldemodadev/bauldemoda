@@ -180,10 +180,17 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
     shortDescription: fsProduct.shortDescription ?? '',
 
     // Precios
-    price,
+    price, // Mantener para compatibilidad, pero usar basePrice/otherMethodsPrice según método
     priceText: fsProduct.priceText,
     localPriceNumber: fsProduct.localPriceNumber ?? null,
     internacionalPriceNumber: fsProduct.internacionalPriceNumber ?? null,
+    
+    // Precios diferenciados (FASE 7)
+    basePrice: fsProduct.basePrice ?? fsProduct.localPriceNumber ?? price,
+    cashPrice: fsProduct.cashPrice ?? null,
+    otherMethodsPrice: fsProduct.otherMethodsPrice ?? fsProduct.localPriceNumber ?? price,
+    internationalPrice: fsProduct.internationalPrice ?? null,
+    pricingMode: fsProduct.pricingMode ?? (fsProduct.cashPrice && fsProduct.otherMethodsPrice ? 'dual' : 'single'),
     discount: {
       amount: 0, // Se puede calcular si hay precio rebajado
       percentage: 0,

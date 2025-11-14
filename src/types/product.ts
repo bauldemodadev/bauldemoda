@@ -19,10 +19,18 @@ export interface Product {
   shortDescription?: string;    // Descripción corta (Firestore)
 
   // Precios y comercialización
-  price: number;                 // Precio numérico (para cálculos)
+  price: number;                 // Precio numérico (para cálculos) - DEPRECATED: usar basePrice
   priceText?: string;           // Precio como texto libre (Firestore: "x en efectivo, y otros medios")
   localPriceNumber?: number | null;        // Precio local parseado (Firestore)
   internacionalPriceNumber?: number | null; // Precio internacional parseado (Firestore)
+  
+  // Precios diferenciados por método de pago (FASE 7)
+  basePrice?: number | null;              // Precio base de referencia
+  cashPrice?: number | null;              // Precio en efectivo (sin IVA)
+  otherMethodsPrice?: number | null;      // Precio para otros medios (tarjeta, MP, etc., con IVA)
+  internationalPrice?: number | null;     // Precio internacional (opcional)
+  pricingMode?: 'single' | 'dual';       // Estrategia: 'single' = un solo precio, 'dual' = efectivo vs otros
+  
   discount: {
     amount: number;
     percentage: number;

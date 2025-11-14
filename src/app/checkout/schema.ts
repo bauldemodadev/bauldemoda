@@ -13,31 +13,26 @@ export const stepOneSchema = (isLoggedIn: boolean) =>
 
 export type Step1Data = z.infer<ReturnType<typeof stepOneSchema>>
 
-// Paso 2: dirección y documento
+// Paso 2: método de pago (eliminado StepTwo de dirección de envío según FASE 7)
 export const stepTwoSchema = z.object({
-    direccion: z.string().min(1, 'La dirección es obligatoria'),
-    ciudad: z.string().min(1, 'La ciudad es obligatoria'),
-    codigoPostal: z.string().min(1, 'El código postal es obligatorio'),
-    metodoEntrega: z.enum(['envio', 'retiro'], {
-      errorMap: () => ({ message: 'Seleccioná un método de entrega' }),
-    }),
-  })
-  
-  export type Step2Data = z.infer<typeof stepTwoSchema>
-
-// Paso 3: facturación
-export const stepThreeSchema = z.object({
-  comment: z.string().optional(),
+  paymentMethod: z.enum(['mp', 'cash', 'transfer'], {
+    errorMap: () => ({ message: 'Seleccioná un método de pago' }),
+  }),
   acceptTerms: z.literal(true, {
     errorMap: () => ({ message: 'Debes aceptar los términos y condiciones' }),
   }),
+  comment: z.string().optional(),
 })
 
-export type Step3Data = z.infer<typeof stepThreeSchema>
+export type Step2Data = z.infer<typeof stepTwoSchema>
+
+// Mantener Step3Data para compatibilidad, pero ahora será igual a Step2Data
+export type Step3Data = Step2Data
+export const stepThreeSchema = stepTwoSchema
+
 export const fullSchema = z
   .object({})
   .merge(stepOneSchema(false))
   .merge(stepTwoSchema)
-  .merge(stepThreeSchema)
 
 export type FormData = z.infer<typeof fullSchema>
