@@ -284,10 +284,10 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
               </h3>
             </div>
 
-            {/* Descripción principal en negrita grande */}
+            {/* Descripción principal - HTML del editor */}
             {product.detailsHtml ? (
               <div 
-                className="text-lg md:text-xl font-bold text-black mb-6 leading-relaxed product-details-html"
+                className="product-details-html"
                 dangerouslySetInnerHTML={{ __html: product.detailsHtml }}
               />
             ) : (

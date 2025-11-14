@@ -98,28 +98,44 @@ body {
 }
 
 /* Estilos para renderizado de HTML en detalles de productos */
+/* Respetamos los estilos originales del editor y solo agregamos espaciado básico */
 .product-details-html {
-  white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  /* No forzamos white-space para respetar el HTML original */
 }
 
+/* Espaciado básico para párrafos, respetando estilos inline */
 .product-details-html p {
   margin-bottom: 1rem;
   line-height: 1.6;
 }
 
-.product-details-html br {
-  display: block;
-  content: "";
-  margin-top: 0.5rem;
+.product-details-html p:last-child {
+  margin-bottom: 0;
 }
 
+/* Saltos de línea */
+.product-details-html br {
+  display: block;
+  line-height: 1.5;
+}
+
+/* Listas - respetando estilos originales */
 .product-details-html ul,
 .product-details-html ol {
   margin-left: 1.5rem;
   margin-bottom: 1rem;
-  list-style-position: outside;
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.product-details-html ul {
+  list-style-type: disc;
+}
+
+.product-details-html ol {
+  list-style-type: decimal;
 }
 
 .product-details-html li {
@@ -127,48 +143,74 @@ body {
   line-height: 1.6;
 }
 
-.product-details-html strong,
-.product-details-html b {
-  font-weight: bold;
-}
-
-.product-details-html em,
-.product-details-html i {
-  font-style: italic;
-}
-
+/* Encabezados - respetando tamaños originales */
 .product-details-html h1,
 .product-details-html h2,
 .product-details-html h3,
 .product-details-html h4,
 .product-details-html h5,
 .product-details-html h6 {
-  font-weight: bold;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
   line-height: 1.3;
+  font-weight: bold;
 }
 
-.product-details-html h1 {
-  font-size: 2rem;
+.product-details-html h1:first-child,
+.product-details-html h2:first-child,
+.product-details-html h3:first-child,
+.product-details-html h4:first-child,
+.product-details-html h5:first-child,
+.product-details-html h6:first-child {
+  margin-top: 0;
 }
 
-.product-details-html h2 {
-  font-size: 1.75rem;
+/* Estilos de Quill - respetamos las clases del editor */
+.product-details-html .ql-align-center {
+  text-align: center;
 }
 
-.product-details-html h3 {
-  font-size: 1.5rem;
+.product-details-html .ql-align-right {
+  text-align: right;
 }
 
-.product-details-html h4 {
-  font-size: 1.25rem;
+.product-details-html .ql-align-justify {
+  text-align: justify;
 }
 
-.product-details-html h5 {
-  font-size: 1.125rem;
+/* Tamaños de fuente de Quill */
+.product-details-html .ql-size-small {
+  font-size: 0.75em;
 }
 
-.product-details-html h6 {
-  font-size: 1rem;
+.product-details-html .ql-size-large {
+  font-size: 1.5em;
+}
+
+.product-details-html .ql-size-huge {
+  font-size: 2.5em;
+}
+
+/* Permitir que los estilos inline se respeten */
+.product-details-html * {
+  /* No sobrescribimos estilos inline */
+  max-width: 100%;
+}
+
+/* Imágenes dentro del contenido */
+.product-details-html img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem 0;
+}
+
+/* Enlaces */
+.product-details-html a {
+  color: #ec4899; /* pink-500 */
+  text-decoration: underline;
+}
+
+.product-details-html a:hover {
+  color: #db2777; /* pink-600 */
 } 
