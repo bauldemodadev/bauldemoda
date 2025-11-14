@@ -3,23 +3,26 @@ import { requireAdminAuth } from '@/lib/admin/auth';
 import AdminSidebar from '@/components/admin/Sidebar';
 import AdminHeader from '@/components/admin/Header';
 import { Toaster } from '@/components/ui/toaster';
+import { headers } from 'next/headers';
 
 export default async function AdminLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  // Verificar autenticación (redirige a /admin/login si no está autenticado)
-  // La página de login tiene su propio layout que no requiere auth
-  try {
-    await requireAdminAuth();
-  } catch (error) {
-    // Si falla la autenticación, requireAdminAuth ya redirige a /admin/login
-    // Pero si estamos en /admin/login, no deberíamos llegar aquí
-    // Por seguridad, retornamos children para que Next.js maneje la redirección
+  // Obtener pathname desde headers (agregado por middleware)
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
+
+  // Si es la página de login, no verificar autenticación ni mostrar layout admin
+  if (pathname === '/admin/login' || pathname.startsWith('/admin/login')) {
     return <>{children}</>;
   }
 
+  // Para todas las demás rutas admin, verificar autenticación
+  await requireAdminAuth();
+
+  // Si llegamos aquí, el usuario está autenticado
   return (
     <div className="min-h-screen bg-gray-50">
       <AdminHeader />
