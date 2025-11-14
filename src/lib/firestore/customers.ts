@@ -19,13 +19,11 @@ export async function upsertCustomer(
 
     // Buscar cliente existente por email o uid
     let existingCustomer: Customer | null = null;
-    let customerId: string;
 
     if (customerData.uid) {
       const doc = await db.collection('customers').doc(customerData.uid).get();
       if (doc.exists) {
         existingCustomer = { id: doc.id, ...doc.data() } as Customer;
-        customerId = doc.id;
       }
     }
 
@@ -40,7 +38,6 @@ export async function upsertCustomer(
       if (!snapshot.empty) {
         const doc = snapshot.docs[0];
         existingCustomer = { id: doc.id, ...doc.data() } as Customer;
-        customerId = doc.id;
       }
     }
 
@@ -56,7 +53,7 @@ export async function upsertCustomer(
       delete (updates as any).totalOrders;
       delete (updates as any).totalSpent;
 
-      await db.collection('customers').doc(customerId).update(updates);
+      await db.collection('customers').doc(existingCustomer.id).update(updates);
 
       return {
         ...existingCustomer,
@@ -78,11 +75,11 @@ export async function upsertCustomer(
       };
 
       // Usar uid como docId si está disponible, sino generar uno
-      customerId = customerData.uid || db.collection('customers').doc().id;
-      await db.collection('customers').doc(customerId).set(newCustomer);
+      const newCustomerId = customerData.uid || db.collection('customers').doc().id;
+      await db.collection('customers').doc(newCustomerId).set(newCustomer);
 
       return {
-        id: customerId,
+        id: newCustomerId,
         ...newCustomer,
       };
     }
