@@ -1,63 +1,64 @@
-import { NextResponse } from "next/server";
+/**
+ * API Route: Detalle de Orden
+ * GET /api/orders/[id]
+ * 
+ * Retorna el detalle completo de una orden
+ */
+
+import { NextResponse } from 'next/server';
+import { getOrderById } from '@/lib/firestore/orders';
+import { Timestamp } from 'firebase-admin/firestore';
+
+const USE_FIRESTORE = process.env.NEXT_PUBLIC_USE_FIRESTORE === 'true';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+/**
+ * Convierte Timestamps a objetos serializables
+ */
+function serializeOrder(order: any): any {
+  const serialized = { ...order };
+  
+  if (serialized.createdAt instanceof Timestamp) {
+    serialized.createdAt = serialized.createdAt.toDate().toISOString();
+  }
+  if (serialized.updatedAt instanceof Timestamp) {
+    serialized.updatedAt = serialized.updatedAt.toDate().toISOString();
+  }
+  
+  return serialized;
+}
 
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const orderId = params.id;
-    
-    if (!orderId) {
+    if (!USE_FIRESTORE) {
       return NextResponse.json(
-        { error: "ID de orden requerido" },
+        { error: 'Firestore no está habilitado' },
         { status: 400 }
       );
     }
 
-    console.log('🔄 Obteniendo orden:', orderId);
+    const orderId = params.id;
+    const order = await getOrderById(orderId);
 
-    // Enviar a la API externa para obtener la orden
-    const externalApiUrl = process.env.NEXT_PUBLIC_API_BASE || process.env.NEXT_PUBLIC_API_BASE_URL || 'https://bauldemoda.vercel.app';
-    const fullUrl = `${externalApiUrl.replace(/\/+$/, '')}/api/orders/${encodeURIComponent(orderId)}`;
-    
-    console.log('🌐 Llamando a API externa:', fullUrl);
-    
-    const response = await fetch(fullUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    console.log('📡 Respuesta de API externa:', {
-      status: response.status,
-      statusText: response.statusText,
-      ok: response.ok
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('❌ Error de API externa:', {
-        status: response.status,
-        statusText: response.statusText,
-        errorText
-      });
-      throw new Error(`API externa respondió con ${response.status}: ${errorText}`);
+    if (!order) {
+      return NextResponse.json(
+        { error: 'Orden no encontrada' },
+        { status: 404 }
+      );
     }
 
-    const responseData = await response.json();
-    
-    console.log('✅ Orden obtenida:', responseData);
-
-    return NextResponse.json(responseData);
-
+    return NextResponse.json(serializeOrder(order));
   } catch (error) {
-    console.error('❌ Error al obtener orden:', error);
-    
+    console.error(`Error obteniendo orden ${params.id}:`, error);
     return NextResponse.json(
-      { 
-        error: "Error al obtener orden",
-        details: error instanceof Error ? error.message : "Error desconocido"
+      {
+        error: 'Error al obtener la orden',
+        details: error instanceof Error ? error.message : String(error),
       },
       { status: 500 }
     );
