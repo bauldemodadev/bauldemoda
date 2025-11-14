@@ -48,7 +48,6 @@ export async function upsertCustomer(
       // Actualizar cliente existente
       const updates: Partial<Customer> = {
         ...customerData,
-        updatedAt: now,
       };
 
       // No sobrescribir campos que no deben cambiar
