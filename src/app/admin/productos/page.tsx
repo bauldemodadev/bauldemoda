@@ -22,7 +22,7 @@ async function getProducts(page: number = 1) {
   const allProducts = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-  }));
+  })) as any[];
 
   // Paginar en memoria
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
