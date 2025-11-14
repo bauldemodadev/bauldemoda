@@ -929,51 +929,522 @@ Enlaces a cliente y, si corresponde, a acceso de curso online.
 
 
 ────────────────────────
- 9. FASE 7 · ORDERS + MERCADO PAGO (RESUMEN)
  ────────────────────────
-No hace falta implementar todo de una, pero quiero la estructura preparada.
-Objetivo:
-Usar /api/checkout para:
+7. FASE 7 · COBROS + MERCADO PAGO (SIN ENVÍO, SÓLO RETIRO EN SUCURSAL)
+────────────────────────
+
+Objetivo de esta fase:
+- Implementar un flujo de cobros claro y robusto que:
+  - Evite compras duplicadas/confusas.
+  - Soporte precios distintos según método de pago (efectivo vs otros medios).
+  - Permita trabajar inicialmente con cuenta de Mercado Pago de prueba (sandbox) y luego cambiar a cuenta real sólo modificando variables de entorno.
+  - No incluya lógica de envíos: en este proyecto el flujo es SIEMPRE **retiro en sucursal**, no se piden datos de envío ni se calculan costos de envío.
+
+────────────────────────
+7.1. AJUSTES EN EL MODELO DE PRODUCTO (PRECIOS POR MÉTODO)
+────────────────────────
+
+Extender el modelo `Product` en Firestore para soportar precios diferenciados por método de pago:
+
+```ts
+export interface Product {
+  // ...campos ya definidos antes
+
+  // Precio base de referencia (puede coincidir con otros si no hay diferencia)
+  basePrice: number | null;
+
+  // Precio en efectivo (sin IVA), usado cuando el usuario elige ese método
+  cashPrice: number | null;
+
+  // Precio para otros medios (tarjeta, Mercado Pago, etc., con IVA)
+  otherMethodsPrice: number | null;
+
+  // Opcional: precio internacional (si aplica)
+  internationalPrice: number | null;
+
+  // Estrategia de precios:
+  // - "single": usa un solo precio (base/otherMethodsPrice)
+  // - "dual": diferencia efectivo vs otros medios
+  pricingMode: "single" | "dual";
+}
+
+Notas:
+priceText (texto original) se puede seguir usando a nivel marketing; estos campos numéricos se usan en el cálculo real del checkout.
 
 
-Crear preferencia de pago en Mercado Pago.
+Si un producto no necesita doble precio, usar pricingMode = "single" y llenar sólo el precio principal.
 
 
-Crear un Order en Firestore con status: "pending".
+────────────────────────
+ 7.2. FLUJO DE CHECKOUT · DISEÑO GENERAL (SIN ENVÍOS)
+ ────────────────────────
+El checkout debe:
+Crear SIEMPRE un Order en Firestore primero:
 
 
-Usar /api/mercadopago/webhook para:
+Estado inicial: status: "pending", paymentStatus: "pending".
 
 
-Recibir notificaciones de MP.
+La orden tendrá:
 
 
-Buscar el Order por externalReference o mpPaymentId.
+Carrito (items).
 
 
-Actualizar status, paymentStatus, mpPaymentId, etc.
+Cliente.
 
 
-Cuando el pago esté approved/paid:
+paymentMethod elegido: "mp" | "cash" | "transfer".
 
 
-Marcar paymentStatus: "paid".
+totalAmount calculado según el método de pago.
 
 
-Actualizar customers (totalOrders, totalSpent, lastOrderAt).
+No se guardan datos de envío (no hay direcciones, ni costos de envío). El flujo es siempre retiro en sucursal.
 
 
-Si hay ítems onlineCourse, agregar enrolledCourses al customer.
+Luego, según método de pago:
+
+ A) Método “Mercado Pago”:
 
 
-Estructura código:
-Archivo: src/app/api/checkout/route.ts
+Crear una Preferencia de pago en MP usando totalAmount calculado con el precio para “otros medios”.
 
 
-Archivo: src/app/api/mercadopago/webhook/route.ts
+Usar external_reference = orderId (ID de la orden en Firestore).
 
 
-Usar adminDb para escribir en orders y customers.
+Guardar en la orden:
+
+
+mpPreferenceId
+
+
+externalReference
+
+
+Redirigir al usuario a Mercado Pago.
+
+
+El estado final de la orden se decide por WEBHOOK, no por confiar sólo en la URL de retorno.
+
+
+B) Método “Efectivo en sucursal”:
+
+
+No se crea pago en MP.
+
+
+La orden queda con:
+
+
+paymentMethod: "cash"
+
+
+status: "pending"
+
+
+paymentStatus: "pending"
+
+
+Se muestra al usuario:
+
+
+El monto a pagar en efectivo (usando cashPrice).
+
+
+Instrucciones claras de retiro en sucursal (dirección, horarios, plazo de reserva, etc.).
+
+
+Desde el panel admin, cuando el cliente paga en la sucursal:
+
+
+Actualizar la orden a paymentStatus: "paid" y status: "approved".
+
+
+C) Método “Transferencia” (si se utiliza):
+
+
+Similar a efectivo pero con instrucciones de transferencia.
+
+
+No se llama a Mercado Pago.
+
+
+La orden se marca como pagada manualmente cuando se verifica la transferencia.
+
+
+En el FRONT:
+
+
+Debe mostrarse SIEMPRE el total según el método de pago seleccionado:
+
+
+Si el usuario elige “Mercado Pago” → usar otherMethodsPrice.
+
+
+Si elige “Efectivo” → usar cashPrice.
+
+
+Si cambia de método, el total visible se actualiza en tiempo real.
+
+
+No se presenta ninguna UI de envío (ni selector de envío, ni dirección). Sólo retiro en sucursal.
+
+
+────────────────────────
+ 7.3. FLUJO MERCADO PAGO · EVITAR DUPLICADOS
+ ────────────────────────
+Para evitar compras duplicadas y confusión:
+Relación 1:1 entre Orden y Preferencia MP:
+
+
+Al confirmar checkout con método "mp":
+
+
+Si la orden NO tiene mpPreferenceId:
+
+
+Crear una nueva preferencia en MP.
+
+
+Guardar mpPreferenceId y externalReference = orderId.
+
+
+Si la orden YA tiene mpPreferenceId y paymentStatus sigue "pending":
+
+
+No crear otra preferencia.
+
+
+Reutilizar la preferencia existente (link o redirección).
+
+
+En el FRONT:
+
+
+Deshabilitar el botón “Pagar con Mercado Pago” mientras se está creando la preferencia.
+
+
+Si el usuario recarga la página:
+
+
+Volver a obtener la orden (por API).
+
+
+Si hay mpPreferenceId y paymentStatus es "pending", reutilizar esa preferencia.
+
+
+Webhook de Mercado Pago:
+
+
+Endpoint: src/app/api/mercadopago/webhook/route.ts.
+
+
+Pasos:
+
+
+Recibir la notificación de MP.
+
+
+Consultar el pago en MP (estado real).
+
+
+Buscar la orden por external_reference (que contiene orderId).
+
+
+Actualizar en Firestore:
+
+
+mpPaymentId
+
+
+status ("approved" | "rejected" | "cancelled" | "refunded")
+
+
+paymentStatus ("paid" cuando corresponda).
+
+
+Debe ser idempotente (repetir el mismo webhook no debe romper nada).
+
+
+Página de resultado (“gracias”):
+
+
+La página de retorno (success/failure) debe leer la orden desde Firestore usando orderId.
+
+
+El estado mostrado al usuario debe basarse en los datos de Firestore, no sólo en query params de Mercado Pago.
+
+
+────────────────────────
+ 7.4. MERCADO PAGO EN MODO PRUEBA (SANDBOX)
+ ────────────────────────
+Se debe soportar desde el inicio modo sandbox y preparar el cambio a producción sólo tocando variables de entorno.
+Variables de entorno sugeridas:
+
+
+MP_PUBLIC_KEY_SANDBOX
+
+
+MP_ACCESS_TOKEN_SANDBOX
+
+
+MP_PUBLIC_KEY_PROD
+
+
+MP_ACCESS_TOKEN_PROD
+
+
+MP_ENVIRONMENT="sandbox" | "production"
+
+
+Crear módulo adaptador Mercado Pago:
+
+
+Archivo: src/lib/payments/mercadopago.ts
+
+
+Responsabilidades:
+
+
+Elegir las credenciales según el valor de MP_ENVIRONMENT.
+
+
+Exponer funciones:
+
+
+createPreference(params) → devuelve preferenceId, initPoint, sandboxInitPoint.
+
+
+getPaymentById(id) → consulta estado del pago.
+
+
+La lógica de MP no debe dispersarse por varios archivos; debe centralizarse en este adaptador.
+
+
+Cambio a producción:
+
+
+Una vez probado todo con sandbox:
+
+
+Sólo cambiar MP_ENVIRONMENT="production" y setear las variables de producción.
+
+
+No modificar lógica de negocio ni endpoints.
+
+
+────────────────────────
+ 7.5. API ROUTES PARA CHECKOUT Y MERCADO PAGO
+ ────────────────────────
+Implementar las siguientes rutas:
+/api/checkout (POST)
+
+
+Body esperado:
+
+
+customer: datos del cliente (nombre, email, phone).
+
+
+items: lista de productos/cursos con id y quantity.
+
+
+paymentMethod: "mp" | "cash" | "transfer".
+
+
+Pasos:
+
+
+Leer los productos/cursos desde Firestore y calcular totalAmount según:
+
+
+paymentMethod === "mp" → usar otherMethodsPrice.
+
+
+paymentMethod === "cash" → usar cashPrice.
+
+
+paymentMethod === "transfer" → puede usar el mismo valor que "mp", salvo que se defina otra estrategia.
+
+
+Crear un documento Order en Firestore:
+
+
+status: "pending", paymentStatus: "pending", paymentMethod, items, totalAmount.
+
+
+Si paymentMethod === "mp":
+
+
+Crear preferencia en Mercado Pago usando el adaptador.
+
+
+Guardar mpPreferenceId y externalReference = orderId en la orden.
+
+
+Devolver al front:
+
+
+URL de pago (init_point / sandbox_init_point).
+
+
+Si paymentMethod === "cash" o "transfer":
+
+
+No llamar a Mercado Pago.
+
+
+Devolver al front:
+
+
+Datos de la orden.
+
+
+Instrucciones de retiro en sucursal (texto configurable).
+
+
+/api/mercadopago/webhook (POST)
+
+
+Recibe notificaciones de MP.
+
+
+Usa el adaptador para obtener detalles del pago.
+
+
+Actualiza la orden en Firestore (estado + paymentStatus).
+
+
+Si la orden pasa a pagada (paymentStatus: "paid"), luego se disparan las actualizaciones sobre customers y acceso a cursos online.
+
+
+────────────────────────
+ 7.6. EMAILS / MENSAJES PARA EL USUARIO (SIN ENVÍO)
+ ────────────────────────
+Ajustar (o dejar preparado) el envío de emails / mensajes automáticos:
+Para pagos con Mercado Pago:
+
+
+Email al aprobarse el pago (una vez que el webhook actualiza la orden).
+
+
+Contenido sugerido:
+
+
+Resumen de compra.
+
+
+Método de pago (Mercado Pago).
+
+
+Sucursal de retiro y condiciones (no hay envío).
+
+
+En caso de curso online, instrucciones de acceso.
+
+
+Para pagos en efectivo o transferencia:
+
+
+Email con:
+
+
+Monto a pagar según cashPrice (u otro número para transferencia).
+
+
+Detalle de retiro en sucursal o datos de transferencia.
+
+
+Plazo de reserva antes de cancelar la orden.
+
+
+No se deben incluir mensajes genéricos tipo “en breve nos comunicaremos” sin información clara de próximos pasos.
+────────────────────────
+ 7.7. RELACIÓN ORDERS ↔ CUSTOMERS ↔ ONLINE COURSES
+ ────────────────────────
+Cuando una orden pasa a paymentStatus: "paid":
+Actualizar customers:
+
+
+Crear el cliente si no existe (basado en email o uid).
+
+
+Incrementar:
+
+
+totalOrders
+
+
+totalSpent
+
+
+lastOrderAt.
+
+
+Si en la orden hay ítems con type: "onlineCourse":
+
+
+Agregar en customers.enrolledCourses:
+
+
+courseId
+
+
+productId (si corresponde)
+
+
+orderId
+
+
+accessFrom = ahora
+
+
+accessTo opcional (si hay vencimiento de acceso).
+
+
+────────────────────────
+ 7.8. RESUMEN DE IMPLEMENTACIÓN PARA ESTA FASE
+ ────────────────────────
+Implementar en este orden:
+Extender Product para soportar precios diferenciados (basePrice, cashPrice, otherMethodsPrice, pricingMode).
+
+
+Crear el adaptador de Mercado Pago (src/lib/payments/mercadopago.ts) con soporte sandbox/producción.
+
+
+Implementar /api/checkout con:
+
+
+Creación de Order.
+
+
+Integración con Mercado Pago o flujo manual según paymentMethod.
+
+
+Sin campos de envío (siempre retiro en sucursal).
+
+
+Implementar /api/mercadopago/webhook con actualización de Order y Customer.
+
+
+Ajustar el UI de checkout:
+
+
+Selector de método de pago.
+
+
+Re-cálculo del total según método.
+
+
+Prevención de clics duplicados.
+
+
+Sin UI de envío (ni costos ni direcciones).
+
+
+Ajustar o dejar preparado el envío de emails/mensajes según cada tipo de pago.
 
 
 ────────────────────────

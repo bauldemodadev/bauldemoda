@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
-import { Clock, DollarSign, MapPin } from "lucide-react";
+import { Clock, DollarSign, MapPin, ArrowRight, ArrowLeftRight } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 const manejarAgregarAlCarrito = (product: Product, toast: any) => {
@@ -27,16 +26,12 @@ const manejarAgregarAlCarrito = (product: Product, toast: any) => {
     productId: product.id,
   };
 
-  // Agregar al carrito local
   const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
-  const indice = carritoLocal.findIndex(
-    (i: any) => i.id === itemCarrito.id
-  );
+  const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
 
   if (indice > -1) {
     carritoLocal[indice].quantity += 1;
-    carritoLocal[indice].totalPrice =
-      carritoLocal[indice].quantity * itemCarrito.price;
+    carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
     toast({
       title: "¡Cantidad actualizada!",
       description: `Se ha actualizado la cantidad de ${productName} en el carrito.`,
@@ -53,106 +48,6 @@ const manejarAgregarAlCarrito = (product: Product, toast: any) => {
 
   localStorage.setItem("cart", JSON.stringify(carritoLocal));
   window.dispatchEvent(new Event("cartUpdate"));
-};
-
-const getProductFeatures = (product: Product) => {
-  const features = [];
-  
-  // Característica 1: Tipo de producto
-  const category = product.category?.toLowerCase() || '';
-  if (category.includes('revistas')) {
-    features.push({
-      icon: Clock,
-      text: "Revista impresa con moldes reales. Editorial Arcadia."
-    });
-  } else if (category.includes('cursos')) {
-    features.push({
-      icon: Clock,
-      text: "Curso completo con videos, apuntes y asistencia en línea."
-    });
-  } else {
-    features.push({
-      icon: Clock,
-      text: "Producto de calidad premium con garantía."
-    });
-  }
-
-  // Característica 2: Precio
-  const price = product.price || 0;
-  const discountPercentage = product.discount?.percentage || 0;
-  const discountAmount = product.discount?.amount || 0;
-  
-  // Si el descuento es del 100%, mostrar el precio original
-  const precioConDescuento = discountPercentage >= 100 
-    ? price 
-    : discountPercentage > 0
-    ? price - (price * discountPercentage) / 100
-    : discountAmount > 0
-    ? price - discountAmount
-    : price;
-
-  features.push({
-    icon: DollarSign,
-    text: `Valor: $${precioConDescuento.toLocaleString()}, no incluye costos de envío.`
-  });
-
-  // Característica 3: Entrega
-  features.push({
-    icon: MapPin,
-    text: "Entrega sin cargo en la Sede de Ciudad Jardín y/o envíos a toda Argentina con Correo Argentino, a cuenta del comprador."
-  });
-
-  return features;
-};
-
-const getProductDetails = (product: Product) => {
-  // Generar contenido dinámico basado en el tipo de producto
-  const category = product.category?.toLowerCase() || '';
-  const productName = product.name || 'Producto';
-  
-  if (category.includes('revistas')) {
-    return {
-      title: productName,
-      subtitle: "UNA REVISTA PARA CREAR PRENDAS CÓMODAS",
-      summary: [
-        "En esta revista encontrarás todo este sumario:",
-        "Amor amarillo – Buzo con bolsillos",
-        "Prenda comodín – Remera suelta", 
-        "Cómodo y canchero- Pantalón jogging",
-        "Rosa chicle – Vestido largo con bolsillos",
-        "De noche- Capa ancha",
-        "La estrella de la temporada-Mono con lazo"
-      ],
-      additionalInfo: "Todos los diseños se encuentran con moldes a tamaño real del Talle 40 al 46."
-    };
-  } else if (category.includes('cursos')) {
-    return {
-      title: productName,
-      subtitle: "UN CURSO COMPLETO PARA APRENDER",
-      summary: [
-        "En este curso encontrarás:",
-        "Videos explicativos paso a paso",
-        "Apuntes y material de apoyo",
-        "Asistencia personalizada",
-        "Proyectos prácticos",
-        "Certificado de finalización"
-      ],
-      additionalInfo: "Acceso de por vida al contenido del curso."
-    };
-  } else {
-    return {
-      title: productName,
-      subtitle: "UN PRODUCTO DE CALIDAD PREMIUM",
-      summary: [
-        "Este producto incluye:",
-        "Material de primera calidad",
-        "Instrucciones detalladas",
-        "Soporte técnico",
-        "Garantía de satisfacción"
-      ],
-      additionalInfo: "Producto disponible para envío inmediato."
-    };
-  }
 };
 
 export default function ProductPage({ params }: { params: { slug: string[] } }) {
@@ -179,17 +74,15 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         const productData = await response.json() as Product;
         setProduct(productData);
         
-        // Cargar productos relacionados
         const allProductsResponse = await fetch('/api/products', { 
           cache: 'no-store' 
         });
         
         if (allProductsResponse.ok) {
           const allProducts = await allProductsResponse.json() as Product[];
-          // Filtrar productos de la misma categoría
           const related = allProducts
             .filter(p => p.id !== productData.id && p.category === productData.category)
-            .slice(0, 5);
+            .slice(0, 2);
           setRelatedProducts(related);
         }
         
@@ -211,24 +104,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded mb-4 w-1/3"></div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <div>
-                <div className="h-96 bg-gray-200 rounded-lg mb-6"></div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="h-24 bg-gray-200 rounded"></div>
-                  <div className="h-24 bg-gray-200 rounded"></div>
-                </div>
-              </div>
-              <div>
-                <div className="h-12 bg-gray-200 rounded mb-4"></div>
-                <div className="h-6 bg-gray-200 rounded mb-8"></div>
-                <div className="space-y-4">
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                </div>
-              </div>
-            </div>
+            <div className="h-96 bg-gray-200 rounded-lg"></div>
           </div>
         </div>
       </div>
@@ -236,7 +112,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   }
 
   if (error || !product) {
-  return (
+    return (
       <div className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center">
@@ -250,210 +126,268 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
     );
   }
 
-  const features = getProductFeatures(product);
-  const details = getProductDetails(product);
   const productName = product.name || 'Producto sin nombre';
-  const productDescription = product.description || `${productName} - Un producto de calidad premium para tu aprendizaje.`;
+  const productDescription = product.description || product.shortDescription || '';
   const productImages = product.images || [];
-  const price = product.price || 0;
-  const discountPercentage = product.discount?.percentage || 0;
-  const discountAmount = product.discount?.amount || 0;
-  
-  // Si el descuento es del 100%, mostrar el precio original
-  const precioConDescuento = discountPercentage >= 100 
-    ? price 
-    : discountPercentage > 0
-    ? price - (price * discountPercentage) / 100
-    : discountAmount > 0
-    ? price - discountAmount
-    : price;
+  const mainImage = productImages[0] || product.srcUrl || PLACEHOLDER_IMAGE;
+  const price = product.priceText || `$${product.price?.toLocaleString() || 0}`;
+
+  // Extraer información del producto para los bloques
+  const getFeatureText = (index: number) => {
+    const category = product.category?.toLowerCase() || '';
+    if (index === 0) {
+      if (category.includes('revistas')) {
+        return "Revista impresa con moldes reales en 3 talles. Editorial Arcadia.";
+      }
+      return "Producto de calidad premium con garantía.";
+    } else if (index === 1) {
+      return `Valen ${price}, no incluye gastos de envío.`;
+    } else {
+      return "Entrega sin cargo en la Sede de Ciudad Jardín y/o envíos a toda Argentina con Correo Argentino, a cuenta del comprador.";
+    }
+  };
+
+  // Extraer detalles del producto
+  const getDetailsList = () => {
+    const category = product.category?.toLowerCase() || '';
+    if (category.includes('buzos') || category.includes('revistas')) {
+      return [
+        "Buzo con cuello redondo",
+        "Buzo irregular con capucha",
+        "Buzo rayado over size",
+        "Buzo con detalles divertidos"
+      ];
+    }
+    // Parsear desde description o detailsHtml si está disponible
+    if (product.detailsHtml) {
+      // Extraer items de lista si hay HTML
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(product.detailsHtml, 'text/html');
+      const listItems = Array.from(doc.querySelectorAll('li')).map(li => li.textContent || '');
+      if (listItems.length > 0) return listItems;
+    }
+    return [];
+  };
+
+  const detailsList = getDetailsList();
+  const sizingInfo = "Todas los diseños en tallas del 35 al 46 con moldes a tamaño real.";
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-pink-600">Inicio</Link>
-            <span>/</span>
-            <Link href="/shop" className="hover:text-pink-600">Tienda</Link>
-            <span>/</span>
-            <span className="text-gray-900">Productos y servicios</span>
-          </div>
-        </nav>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Columna izquierda - Información del producto */}
-          <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Título y descripción */}
-            <div className="mb-8">
-              <h1 className={cn("text-4xl font-bold text-gray-900 mb-4")}>
-                {productName.toUpperCase()}
-              </h1>
-              <p className="text-gray-700 text-lg mb-6">
-                {productDescription}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Banner Superior */}
+        <div className="relative mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            {/* Columna Izquierda - Texto */}
+            <div className="space-y-4">
+              {/* Subtítulo en fuente script rosa */}
+              <p className="font-beauty text-pink-500 text-xl md:text-2xl">
+                Productos y servicios
               </p>
               
-              {/* Botón principal */}
+              {/* Título principal */}
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-tight">
+                {productName.toUpperCase()}
+              </h1>
+              
+              {/* Descripción */}
+              {productDescription && (
+                <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+                  {productDescription}
+                </p>
+              )}
+              
+              {/* Botón COMPRAR */}
               <button
                 onClick={() => manejarAgregarAlCarrito(product, toast)}
-                className="px-8 py-4 rounded-lg font-bold text-white transition-all duration-200 bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-300 text-lg"
+                className="bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 px-8 rounded-lg hover:from-pink-600 hover:to-pink-700 transition-all duration-200 shadow-lg"
               >
                 COMPRAR
               </button>
             </div>
 
-            {/* Características con iconos */}
-            <div className="space-y-6 mb-8">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ x: -30, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                  className="flex items-start space-x-4"
-                >
-                  <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0">
-                    <feature.icon className="w-6 h-6 text-pink-600" />
-                  </div>
-                  <p className="text-gray-700 text-sm leading-relaxed">
-                    {feature.text}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Sección de detalles */}
-            <div className="mb-8">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                DETALLES
-              </h3>
-              <h4 className={cn("text-2xl font-bold text-gray-900 mb-4")}>
-                {details.title}
-              </h4>
-              <h5 className="text-xl font-semibold text-gray-800 mb-6">
-                {details.subtitle}
-              </h5>
-              
-              <div className="space-y-2 mb-6">
-                {details.summary.map((item, index) => (
-                  <p key={index} className="text-gray-700 text-sm">
-                    {item}
-                  </p>
-                ))}
+            {/* Columna Derecha - Imagen con decoraciones */}
+            <div className="relative">
+              {/* Formas decorativas de fondo - formas orgánicas grandes */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                {/* Forma rosa grande */}
+                <div className="absolute top-10 right-10 w-48 h-48 bg-pink-300 rounded-full opacity-40 blur-3xl transform rotate-12"></div>
+                {/* Forma amarilla */}
+                <div className="absolute bottom-10 left-10 w-56 h-56 bg-yellow-300 rounded-full opacity-40 blur-3xl transform -rotate-12"></div>
+                {/* Forma teal */}
+                <div className="absolute top-1/2 right-1/3 w-40 h-40 bg-teal-300 rounded-full opacity-40 blur-3xl"></div>
               </div>
               
-              <p className="text-gray-700 text-sm mb-6">
-                {details.additionalInfo}
-              </p>
-              
-              <p className="text-gray-700 text-sm mb-8">
-                Entrega sin cargo en la Sede de Ciudad Jardín y/o envíos a toda Argentina con Correo Argentino, a cuenta del comprador.
-              </p>
-
-              {/* Botones de acción */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => manejarAgregarAlCarrito(product, toast)}
-                  className="px-6 py-3 rounded-lg font-bold text-white transition-all duration-200 bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-300"
-                >
-                  COMPRAR
-                </button>
-                <Link
-                  href="/contacto"
-                  className="px-6 py-3 rounded-lg font-bold text-gray-700 transition-all duration-200 border border-gray-300 hover:border-pink-300 hover:text-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-300 text-center"
-                >
-                  CONSULTA POR ESTE CURSO
-                </Link>
-                <Link
-                  href="/shop"
-                  className="px-6 py-3 rounded-lg font-bold text-gray-700 transition-all duration-200 border border-gray-300 hover:border-pink-300 hover:text-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-300 text-center"
-                >
-                  VER MÁS CURSOS
-                </Link>
+              {/* Imagen principal sin fondo - solo la imagen */}
+              <div className="relative z-10 flex items-center justify-center">
+                <img
+                  src={mainImage}
+                  alt={productName}
+                  className="w-full h-auto object-contain max-h-[500px]"
+                  style={{ background: 'transparent' }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                  }}
+                />
               </div>
-            </div>
-          </motion.div>
 
-          {/* Columna derecha - Imágenes */}
-          <motion.div
-            initial={{ x: 50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {/* Imagen principal */}
-            <div className="relative mb-6">
-              <div className="relative w-full h-96 rounded-full overflow-hidden bg-gradient-to-br from-pink-200 via-yellow-200 to-teal-200">
-                {productImages && productImages.length > 0 ? (
-                  <Image
-                    src={productImages[0].split(',')[0].trim()}
-                    alt={productName}
-                    fill
-                    className="object-contain p-8"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-4xl font-bold text-gray-400">📚</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Imágenes secundarias */}
-            {productImages && productImages.length > 1 && (
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                {productImages.slice(1, 3).map((image, index) => (
-                  <div key={index} className="relative h-32 rounded-lg overflow-hidden">
-                    <Image
-                      src={image.split(',')[0].trim()}
-                      alt={`${productName} - Imagen ${index + 2}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Sección de nuevos lanzamientos */}
-            {relatedProducts.length > 0 && (
-              <div className="mb-8">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
-                  NUEVOS LANZAMIENTOS
-                </h3>
-                <div className="grid grid-cols-3 gap-3">
-                  {relatedProducts.slice(0, 6).map((relatedProduct) => (
-                    <Link
-                      key={relatedProduct.id}
-                      href={`/shop/product/${relatedProduct.id}`}
-                      className="group"
-                    >
-                      <div className="relative h-20 rounded-lg overflow-hidden">
-                        <Image
-                          src={relatedProduct.images?.[0]?.split(',')[0].trim() || PLACEHOLDER_IMAGE}
-                          alt={relatedProduct.name}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          sizes="(max-width: 768px) 33vw, 16vw"
-                        />
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-                <p className="text-sm text-gray-600 mt-3">
-                  CONOCÉ TODAS NUESTRAS PUBLICACIONES EN KIOSCOS DE REVISTAS
+              {/* Badge "MOLDES SEPARADOS POR PRENDA" - pequeño en esquina superior derecha */}
+              <div className="absolute top-2 right-2 bg-pink-100 rounded-lg px-2 py-1.5 z-20 shadow-md border border-pink-200">
+                <p className="text-[10px] md:text-xs font-bold text-pink-700 leading-tight text-center">
+                  <span className="text-xs md:text-sm">MOLDES</span>
+                  <br />
+                  SEPARADOS POR
+                  <br />
+                  <span className="text-xs md:text-sm">PRENDA</span>
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tres Bloques de Información */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {/* Bloque 1 - Reloj */}
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                <Clock className="w-6 h-6 text-pink-600" />
+              </div>
+            </div>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              {getFeatureText(0)}
+            </p>
+          </div>
+
+          {/* Bloque 2 - Dólar */}
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-pink-600" />
+              </div>
+            </div>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              {getFeatureText(1)}
+            </p>
+          </div>
+
+          {/* Bloque 3 - Ubicación */}
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
+                <MapPin className="w-6 h-6 text-pink-600" />
+              </div>
+            </div>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              {getFeatureText(2)}
+            </p>
+          </div>
+        </div>
+
+        {/* Sección de Detalles */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {/* Columna Principal - Detalles */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Título DETALLES */}
+            <div>
+              <h2 className="text-sm font-bold text-black uppercase tracking-wide mb-2">
+                DETALLES
+              </h2>
+              <h3 className="font-beauty text-pink-500 text-xl md:text-2xl mb-4">
+                {productName}
+              </h3>
+            </div>
+
+            {/* Descripción principal en negrita grande */}
+            {product.detailsHtml ? (
+              <div 
+                className="text-lg md:text-xl font-bold text-black mb-6 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: product.detailsHtml }}
+              />
+            ) : (
+              <p className="text-lg md:text-xl font-bold text-black mb-6 leading-relaxed">
+                PROPUESTAS SIMPLES PARA COSER EN FORMA EXPRESS. TE ENSEÑAMOS A CREAR MAS TALLES.
+              </p>
             )}
-          </motion.div>
+
+            {/* Lista de diseños */}
+            {detailsList.length > 0 && (
+              <ul className="space-y-2 mb-6">
+                {detailsList.map((item, index) => (
+                  <li key={index} className="text-gray-700 text-sm flex items-start">
+                    <span className="text-pink-500 mr-2">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Información de tallas */}
+            <p className="text-gray-700 text-sm mb-6">
+              {sizingInfo}
+            </p>
+
+            {/* Información de envío repetida */}
+            <p className="text-gray-700 text-sm mb-6">
+              Entrega sin cargo en la Sede de Ciudad Jardín y/o envíos a toda Argentina con Correo Argentino, a cuenta del comprador.
+            </p>
+
+            {/* Botón COMPRAR */}
+            <button
+              onClick={() => manejarAgregarAlCarrito(product, toast)}
+              className="bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 px-8 rounded-lg hover:from-pink-600 hover:to-pink-700 transition-all duration-200 shadow-lg"
+            >
+              COMPRAR
+            </button>
+
+            {/* Enlaces adicionales */}
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link
+                href="/contacto"
+                className="text-gray-600 text-sm hover:text-pink-600 transition-colors flex items-center gap-2"
+              >
+                <ArrowLeftRight className="w-4 h-4" />
+                CONSULTA POR ESTE CURSO
+              </Link>
+              <Link
+                href="/shop"
+                className="text-gray-600 text-sm hover:text-pink-600 transition-colors flex items-center gap-2"
+              >
+                <ArrowRight className="w-4 h-4" />
+                VER MÁS CURSOS
+              </Link>
+            </div>
+          </div>
+
+          {/* Columna Lateral - Productos Relacionados */}
+          {relatedProducts.length > 0 && (
+            <div className="space-y-4">
+              {relatedProducts.map((relatedProduct) => (
+                <Link
+                  key={relatedProduct.id}
+                  href={`/shop/product/${relatedProduct.id}`}
+                  className="block group"
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <img
+                      src={relatedProduct.images?.[0] || relatedProduct.srcUrl || PLACEHOLDER_IMAGE}
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                      }}
+                    />
+                    {/* Overlay con texto si es necesario */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                      <p className="text-white text-sm font-bold">
+                        {relatedProduct.name}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
