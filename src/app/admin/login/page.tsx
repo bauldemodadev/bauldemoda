@@ -78,28 +78,55 @@ export default function AdminLoginPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ token: idToken }),
+        credentials: 'include', // Asegurar que las cookies se incluyan
       });
 
       if (!response.ok) {
         throw new Error('Error al guardar token de autenticación');
       }
 
-      // Esperar un momento para asegurar que la cookie esté disponible
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Verificar que la cookie esté disponible antes de redirigir
+      let retries = 0;
+      const maxRetries = 5;
+      let cookieAvailable = false;
+
+      while (retries < maxRetries && !cookieAvailable) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        try {
+          const verifyResponse = await fetch('/api/admin/auth', {
+            method: 'GET',
+            credentials: 'include',
+            cache: 'no-store',
+          });
+
+          if (verifyResponse.ok) {
+            const data = await verifyResponse.json();
+            if (data.email === 'admin@admin.com') {
+              cookieAvailable = true;
+            }
+          }
+        } catch (error) {
+          console.error('Error verificando cookie:', error);
+        }
+
+        retries++;
+      }
+
+      if (!cookieAvailable) {
+        // Si después de varios intentos la cookie no está disponible, 
+        // redirigir de todos modos (podría ser un problema de timing)
+        console.warn('Cookie no verificada completamente, redirigiendo de todos modos');
+      }
 
       toast({
         title: 'Inicio de sesión exitoso',
         description: 'Bienvenido al panel de administración',
       });
 
-      // Refrescar el router para que Next.js reconozca la nueva cookie
-      router.refresh();
-      
-      // Usar window.location para forzar recarga completa y que el servidor tenga la cookie
-      // Pequeño delay para asegurar que el refresh se complete
-      setTimeout(() => {
-        window.location.href = '/admin';
-      }, 150);
+      // Usar window.location para forzar recarga completa
+      // Esto asegura que la cookie esté disponible cuando el servidor renderice la página
+      window.location.href = '/admin';
     } catch (error: any) {
       console.error('Error en login:', error);
       toast({

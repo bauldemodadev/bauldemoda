@@ -41,6 +41,7 @@ export async function verifyAdminAuth(): Promise<string | null> {
     const token = await getAuthToken();
     
     if (!token) {
+      console.log('Admin auth: No token found');
       return null;
     }
 
@@ -50,9 +51,11 @@ export async function verifyAdminAuth(): Promise<string | null> {
     
     // Verificar que el email sea el admin
     if (isAdminEmail(decodedToken.email)) {
+      console.log('Admin auth: Authenticated as', decodedToken.email);
       return decodedToken.email || null;
     }
 
+    console.log('Admin auth: Email is not admin:', decodedToken.email);
     return null;
   } catch (error) {
     console.error('Error verificando autenticación admin:', error);
@@ -65,12 +68,20 @@ export async function verifyAdminAuth(): Promise<string | null> {
  * Redirige a /admin/login si no está autenticado
  */
 export async function requireAdminAuth() {
-  const email = await verifyAdminAuth();
-  
-  if (!email) {
-    redirect('/admin/login');
+  try {
+    const email = await verifyAdminAuth();
+    
+    if (!email) {
+      console.log('Admin auth: Redirecting to login');
+      redirect('/admin/login');
+    }
+    
+    return email;
+  } catch (error) {
+    // Si hay un error (incluyendo redirect), re-lanzarlo
+    // redirect() lanza un error especial que Next.js maneja
+    console.error('Admin auth: Error in requireAdminAuth:', error);
+    throw error;
   }
-  
-  return email;
 }
 
