@@ -210,9 +210,9 @@ export default function AdminVentasPage() {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Ventas</h1>
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Ventas</h1>
         <button
           onClick={() => {
             // Exportar a CSV
@@ -237,24 +237,24 @@ export default function AdminVentasPage() {
             a.download = `ventas-${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
           }}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-sm sm:text-base"
         >
           <Download className="w-4 h-4" />
-          Exportar CSV
+          <span className="whitespace-nowrap">Exportar CSV</span>
         </button>
       </div>
 
       {/* Filtros */}
-      <div className="bg-white rounded-lg shadow p-4 mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-white rounded-lg shadow p-3 sm:p-4 mb-4 sm:mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Estado
             </label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as OrderStatus | '')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
             >
               <option value="">Todos</option>
               <option value="pending">Pendiente</option>
@@ -266,13 +266,13 @@ export default function AdminVentasPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Estado de Pago
             </label>
             <select
               value={paymentStatusFilter}
               onChange={(e) => setPaymentStatusFilter(e.target.value as PaymentStatus | '')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
             >
               <option value="">Todos</option>
               <option value="pending">Pendiente</option>
@@ -282,13 +282,13 @@ export default function AdminVentasPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Método de Pago
             </label>
             <select
               value={paymentMethodFilter}
               onChange={(e) => setPaymentMethodFilter(e.target.value as PaymentMethod | '')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
             >
               <option value="">Todos</option>
               <option value="mp">Mercado Pago</option>
@@ -298,17 +298,17 @@ export default function AdminVentasPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Buscar
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="ID o email..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full pl-8 sm:pl-10 pr-2 sm:pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
               />
             </div>
           </div>
@@ -318,39 +318,40 @@ export default function AdminVentasPage() {
       {/* Tabla de órdenes */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500 mx-auto"></div>
-            <p className="mt-4 text-gray-500">Cargando órdenes...</p>
+          <div className="p-8 sm:p-12 text-center">
+            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#E9ABBD] mx-auto"></div>
+            <p className="mt-4 text-sm sm:text-base text-gray-500">Cargando órdenes...</p>
           </div>
         ) : orders.length === 0 ? (
-          <div className="p-12 text-center">
-            <p className="text-gray-500">No se encontraron órdenes</p>
+          <div className="p-8 sm:p-12 text-center">
+            <p className="text-sm sm:text-base text-gray-500">No se encontraron órdenes</p>
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            {/* Vista de tabla para desktop */}
+            <div className="hidden lg:block overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       ID / Cliente
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Total
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Estado
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Pago
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Método
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Fecha
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Acciones
                     </th>
                   </tr>
@@ -367,8 +368,8 @@ export default function AdminVentasPage() {
                       );
                     })
                     .map((order) => (
-                      <tr key={order.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
+                      <tr key={order.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                           <div>
                             <div className="text-sm font-medium text-gray-900">
                               #{order.id.slice(0, 8)}
@@ -381,7 +382,7 @@ export default function AdminVentasPage() {
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-semibold text-gray-900">
                             {formatCurrency(order.totalAmount)}
                           </div>
@@ -389,37 +390,38 @@ export default function AdminVentasPage() {
                             {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusBadge(order.status)}`}>
                             {order.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 py-1 text-xs font-medium rounded-full ${getPaymentStatusBadge(order.paymentStatus)}`}>
                             {order.paymentStatus}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-2 text-sm text-gray-600">
                             {getPaymentMethodIcon(order.paymentMethod)}
                             <span className="capitalize">{order.paymentMethod}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {formatDate(order.createdAt)}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               href={`/admin/ventas/${order.id}`}
-                              className="text-pink-600 hover:text-pink-900"
+                              className="text-[#E9ABBD] hover:text-[#D44D7D] transition-colors"
+                              title="Ver detalles"
                             >
                               <Eye className="w-4 h-4" />
                             </Link>
                             {order.paymentStatus === 'pending' && order.paymentMethod === 'cash' && (
                               <button
                                 onClick={() => handleAction(order.id, 'mark_as_paid')}
-                                className="text-green-600 hover:text-green-900"
+                                className="text-green-600 hover:text-green-900 transition-colors"
                                 title="Marcar como pagado"
                               >
                                 <CheckCircle className="w-4 h-4" />
@@ -428,7 +430,7 @@ export default function AdminVentasPage() {
                             {order.status !== 'cancelled' && order.status !== 'refunded' && (
                               <button
                                 onClick={() => handleAction(order.id, 'mark_as_cancelled')}
-                                className="text-red-600 hover:text-red-900"
+                                className="text-red-600 hover:text-red-900 transition-colors"
                                 title="Cancelar"
                               >
                                 <XCircle className="w-4 h-4" />
@@ -442,10 +444,92 @@ export default function AdminVentasPage() {
               </table>
             </div>
 
+            {/* Vista de cards para mobile */}
+            <div className="lg:hidden divide-y divide-gray-200">
+              {orders
+                .filter(order => {
+                  if (!searchQuery) return true;
+                  const query = searchQuery.toLowerCase();
+                  return (
+                    order.id.toLowerCase().includes(query) ||
+                    order.customerSnapshot.email.toLowerCase().includes(query) ||
+                    order.customerSnapshot.name.toLowerCase().includes(query)
+                  );
+                })
+                .map((order) => (
+                  <div key={order.id} className="p-4 hover:bg-gray-50 transition-colors">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-medium text-gray-500">#{order.id.slice(0, 8)}</span>
+                          <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${getStatusBadge(order.status)}`}>
+                            {order.status}
+                          </span>
+                        </div>
+                        <h3 className="text-sm font-medium text-gray-900 truncate">
+                          {order.customerSnapshot.name}
+                        </h3>
+                        <p className="text-xs text-gray-500 truncate">{order.customerSnapshot.email}</p>
+                      </div>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <Link
+                          href={`/admin/ventas/${order.id}`}
+                          className="p-2 text-[#E9ABBD] hover:text-[#D44D7D] hover:bg-pink-50 rounded-md transition-colors"
+                          title="Ver detalles"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Link>
+                        {order.paymentStatus === 'pending' && order.paymentMethod === 'cash' && (
+                          <button
+                            onClick={() => handleAction(order.id, 'mark_as_paid')}
+                            className="p-2 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-md transition-colors"
+                            title="Marcar como pagado"
+                          >
+                            <CheckCircle className="w-4 h-4" />
+                          </button>
+                        )}
+                        {order.status !== 'cancelled' && order.status !== 'refunded' && (
+                          <button
+                            onClick={() => handleAction(order.id, 'mark_as_cancelled')}
+                            className="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-md transition-colors"
+                            title="Cancelar"
+                          >
+                            <XCircle className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <span className="text-gray-500">Total:</span>
+                        <span className="ml-1 font-semibold text-gray-900">{formatCurrency(order.totalAmount)}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Items:</span>
+                        <span className="ml-1 text-gray-700">{order.items.length}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Pago:</span>
+                        <span className={`ml-1 px-2 py-0.5 text-xs font-medium rounded-full ${getPaymentStatusBadge(order.paymentStatus)}`}>
+                          {order.paymentStatus}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {getPaymentMethodIcon(order.paymentMethod)}
+                        <span className="text-gray-700 capitalize">{order.paymentMethod}</span>
+                      </div>
+                    </div>
+                    <div className="mt-2 pt-2 border-t border-gray-100">
+                      <span className="text-xs text-gray-400">{formatDate(order.createdAt)}</span>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
             {/* Paginación */}
             {pagination.total > pagination.limit && (
-              <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
-                <div className="text-sm text-gray-700">
+              <div className="bg-white px-3 sm:px-4 lg:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-gray-200">
+                <div className="text-xs sm:text-sm text-gray-700 text-center sm:text-left">
                   Mostrando {pagination.offset + 1} a {Math.min(pagination.offset + pagination.limit, pagination.total)} de {pagination.total} órdenes
                 </div>
                 <div className="flex gap-2">
@@ -455,7 +539,7 @@ export default function AdminVentasPage() {
                       router.push(`/admin/ventas?offset=${newOffset}`);
                     }}
                     disabled={pagination.offset === 0}
-                    className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                   >
                     Anterior
                   </button>
@@ -465,7 +549,7 @@ export default function AdminVentasPage() {
                       router.push(`/admin/ventas?offset=${newOffset}`);
                     }}
                     disabled={!pagination.hasMore}
-                    className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                   >
                     Siguiente
                   </button>

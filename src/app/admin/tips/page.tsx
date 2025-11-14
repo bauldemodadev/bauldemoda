@@ -60,22 +60,22 @@ export default async function AdminTipsPage({
   const data = await getTips(page, searchParams.search);
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Tips</h1>
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Tips</h1>
         <Link
           href="/admin/tips/nuevo"
-          className="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 transition-colors"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-[#E9ABBD] hover:bg-[#D44D7D] text-white rounded-md transition-colors text-sm sm:text-base"
         >
           <Plus className="w-4 h-4" />
-          Nuevo Tip
+          <span className="whitespace-nowrap">Nuevo Tip</span>
         </Link>
       </div>
 
       {/* Barra de búsqueda */}
-      <div className="mb-6">
+      <div className="mb-4 sm:mb-6">
         <SearchBar 
-          placeholder="Buscar tips por título, slug o categoría..." 
+          placeholder="Buscar tips..." 
           searchParam="search"
         />
       </div>

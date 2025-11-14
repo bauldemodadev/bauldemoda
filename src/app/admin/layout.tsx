@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { requireAdminAuth } from '@/lib/admin/auth';
-import AdminSidebar from '@/components/admin/Sidebar';
-import AdminHeader from '@/components/admin/Header';
+import AdminLayoutClient from '@/components/admin/AdminLayoutClient';
 import { Toaster } from '@/components/ui/toaster';
 import QuillStyles from '@/components/admin/QuillStyles';
 import { headers } from 'next/headers';
@@ -32,13 +31,9 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-gray-50">
       <QuillStyles />
-      <AdminHeader />
-      <div className="flex">
-        <AdminSidebar />
-        <main className="flex-1 p-6">
-          {children}
-        </main>
-      </div>
+      <AdminLayoutClient>
+        {children}
+      </AdminLayoutClient>
       <Toaster />
     </div>
   );

@@ -115,27 +115,27 @@ export default function AdminClientesPage() {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
+    <div className="w-full">
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Clientes</h1>
       </div>
 
       {/* Búsqueda */}
-      <div className="bg-white rounded-lg shadow p-4 mb-6">
-        <form onSubmit={handleSearch} className="flex gap-4">
+      <div className="bg-white rounded-lg shadow p-3 sm:p-4 mb-4 sm:mb-6">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
               placeholder="Buscar por nombre o email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="w-full pl-8 sm:pl-10 pr-2 sm:pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
             />
           </div>
           <button
             type="submit"
-            className="px-6 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 transition-colors"
+            className="px-4 sm:px-6 py-2 bg-[#E9ABBD] hover:bg-[#D44D7D] text-white rounded-md transition-colors text-sm sm:text-base whitespace-nowrap"
           >
             Buscar
           </button>
@@ -145,44 +145,45 @@ export default function AdminClientesPage() {
       {/* Tabla de clientes */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500 mx-auto"></div>
-            <p className="mt-4 text-gray-500">Cargando clientes...</p>
+          <div className="p-8 sm:p-12 text-center">
+            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#E9ABBD] mx-auto"></div>
+            <p className="mt-4 text-sm sm:text-base text-gray-500">Cargando clientes...</p>
           </div>
         ) : customers.length === 0 ? (
-          <div className="p-12 text-center">
-            <p className="text-gray-500">No se encontraron clientes</p>
+          <div className="p-8 sm:p-12 text-center">
+            <p className="text-sm sm:text-base text-gray-500">No se encontraron clientes</p>
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            {/* Vista de tabla para desktop */}
+            <div className="hidden lg:block overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Cliente
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Contacto
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Estadísticas
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Última Compra
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-4 xl:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Acciones
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {customers.map((customer) => (
-                    <tr key={customer.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr key={customer.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center">
-                            <User className="w-5 h-5 text-pink-600" />
+                          <div className="w-10 h-10 bg-[#E9ABBD] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <User className="w-5 h-5 text-[#D44D7D]" />
                           </div>
                           <div>
                             <div className="text-sm font-medium text-gray-900">{customer.name}</div>
@@ -190,27 +191,27 @@ export default function AdminClientesPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900 flex items-center gap-2">
-                          <Mail className="w-4 h-4 text-gray-400" />
-                          {customer.email}
+                          <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                          <span className="truncate">{customer.email}</span>
                         </div>
                         {customer.phone && (
                           <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
-                            <Phone className="w-4 h-4 text-gray-400" />
+                            <Phone className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             {customer.phone}
                           </div>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2 text-sm">
-                            <ShoppingCart className="w-4 h-4 text-gray-400" />
+                            <ShoppingCart className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             <span className="text-gray-900">{customer.totalOrders}</span>
                             <span className="text-gray-500">órdenes</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <DollarSign className="w-4 h-4 text-gray-400" />
+                            <DollarSign className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             <span className="text-gray-900 font-semibold">{formatCurrency(customer.totalSpent)}</span>
                           </div>
                           {customer.enrolledCourses.length > 0 && (
@@ -220,20 +221,20 @@ export default function AdminClientesPage() {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                         {customer.lastOrderAt ? (
                           <div className="flex items-center gap-2 text-sm text-gray-500">
-                            <Calendar className="w-4 h-4" />
+                            <Calendar className="w-4 h-4 flex-shrink-0" />
                             {formatDate(customer.lastOrderAt)}
                           </div>
                         ) : (
                           <span className="text-sm text-gray-400">Sin compras</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <Link
                           href={`/admin/clientes/${customer.id}`}
-                          className="text-pink-600 hover:text-pink-900"
+                          className="text-[#E9ABBD] hover:text-[#D44D7D] transition-colors"
                         >
                           Ver detalle →
                         </Link>
@@ -244,10 +245,76 @@ export default function AdminClientesPage() {
               </table>
             </div>
 
+            {/* Vista de cards para mobile */}
+            <div className="lg:hidden divide-y divide-gray-200">
+              {customers.map((customer) => (
+                <div key={customer.id} className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 bg-[#E9ABBD] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <User className="w-5 h-5 text-[#D44D7D]" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-gray-900 truncate">{customer.name}</h3>
+                      <p className="text-xs text-gray-500">ID: {customer.id.slice(0, 8)}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <span className="text-gray-900 truncate">{customer.email}</span>
+                    </div>
+                    {customer.phone && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <Phone className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                        <span className="text-gray-700">{customer.phone}</span>
+                      </div>
+                    )}
+                    <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-100">
+                      <div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                          <ShoppingCart className="w-3 h-3" />
+                          <span>Órdenes</span>
+                        </div>
+                        <span className="text-sm font-medium text-gray-900">{customer.totalOrders}</span>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                          <DollarSign className="w-3 h-3" />
+                          <span>Total</span>
+                        </div>
+                        <span className="text-sm font-semibold text-gray-900">{formatCurrency(customer.totalSpent)}</span>
+                      </div>
+                      {customer.enrolledCourses.length > 0 && (
+                        <div className="col-span-2">
+                          <span className="text-xs text-gray-500">
+                            {customer.enrolledCourses.length} {customer.enrolledCourses.length === 1 ? 'curso' : 'cursos'} inscrito{customer.enrolledCourses.length > 1 ? 's' : ''}
+                          </span>
+                        </div>
+                      )}
+                      {customer.lastOrderAt && (
+                        <div className="col-span-2 flex items-center gap-2 text-xs text-gray-500">
+                          <Calendar className="w-3 h-3" />
+                          <span>Última compra: {formatDate(customer.lastOrderAt)}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="pt-2">
+                      <Link
+                        href={`/admin/clientes/${customer.id}`}
+                        className="inline-flex items-center text-sm text-[#E9ABBD] hover:text-[#D44D7D] transition-colors"
+                      >
+                        Ver detalle →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             {/* Paginación */}
             {pagination.total > pagination.limit && (
-              <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
-                <div className="text-sm text-gray-700">
+              <div className="bg-white px-3 sm:px-4 lg:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-gray-200">
+                <div className="text-xs sm:text-sm text-gray-700 text-center sm:text-left">
                   Mostrando {pagination.offset + 1} a {Math.min(pagination.offset + pagination.limit, pagination.total)} de {pagination.total} clientes
                 </div>
                 <div className="flex gap-2">
@@ -257,7 +324,7 @@ export default function AdminClientesPage() {
                       router.push(`/admin/clientes?offset=${newOffset}`);
                     }}
                     disabled={pagination.offset === 0}
-                    className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                   >
                     Anterior
                   </button>
@@ -267,7 +334,7 @@ export default function AdminClientesPage() {
                       router.push(`/admin/clientes?offset=${newOffset}`);
                     }}
                     disabled={pagination.offset + pagination.limit >= pagination.total}
-                    className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
                   >
                     Siguiente
                   </button>
