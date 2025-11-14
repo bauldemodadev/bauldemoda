@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { verifyAdminAuth } from '@/lib/admin/auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,6 +30,21 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error en /api/admin/auth:', error);
     return NextResponse.json({ error: 'Error al guardar token' }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  try {
+    const email = await verifyAdminAuth();
+    
+    if (email) {
+      return NextResponse.json({ authenticated: true, email });
+    }
+    
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  } catch (error) {
+    console.error('Error verificando autenticación:', error);
+    return NextResponse.json({ authenticated: false }, { status: 401 });
   }
 }
 

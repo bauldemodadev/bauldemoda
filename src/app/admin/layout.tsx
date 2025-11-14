@@ -4,6 +4,7 @@ import AdminSidebar from '@/components/admin/Sidebar';
 import AdminHeader from '@/components/admin/Header';
 import { Toaster } from '@/components/ui/toaster';
 import QuillStyles from '@/components/admin/QuillStyles';
+import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import { headers } from 'next/headers';
 
 export default async function AdminLayout({
@@ -20,21 +21,31 @@ export default async function AdminLayout({
     return <>{children}</>;
   }
 
-  // Para todas las demás rutas admin, verificar autenticación
-  await requireAdminAuth();
+  // Para todas las demás rutas admin, verificar autenticación en el servidor
+  // Esto puede redirigir si no está autenticado
+  try {
+    await requireAdminAuth();
+  } catch (error) {
+    // Si hay un error de redirección, dejar que Next.js lo maneje
+    // El redirect() lanza un error especial que Next.js captura
+    throw error;
+  }
 
-  // Si llegamos aquí, el usuario está autenticado
+  // Si llegamos aquí, el usuario está autenticado en el servidor
+  // Usar AdminAuthGuard para verificación adicional en el cliente
   return (
-    <div className="min-h-screen bg-gray-50">
-      <QuillStyles />
-      <AdminHeader />
-      <div className="flex">
-        <AdminSidebar />
-        <main className="flex-1 p-6">
-          {children}
-        </main>
+    <AdminAuthGuard>
+      <div className="min-h-screen bg-gray-50">
+        <QuillStyles />
+        <AdminHeader />
+        <div className="flex">
+          <AdminSidebar />
+          <main className="flex-1 p-6">
+            {children}
+          </main>
+        </div>
+        <Toaster />
       </div>
-      <Toaster />
-    </div>
+    </AdminAuthGuard>
   );
 }

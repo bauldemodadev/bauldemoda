@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { AlertCircle } from 'lucide-react';
 
 const ADMIN_EMAIL = 'admin@admin.com';
 const ADMIN_PASSWORD = 'admin2025+!';
@@ -15,6 +16,38 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [hasNonAdminSession, setHasNonAdminSession] = useState(false);
+  const [nonAdminEmail, setNonAdminEmail] = useState<string | null>(null);
+
+  // Detectar si hay una sesión de Firebase activa que no sea admin
+  useEffect(() => {
+    if (!auth) return;
+
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user && user.email !== ADMIN_EMAIL) {
+        // Hay un usuario logueado pero no es admin
+        setHasNonAdminSession(true);
+        setNonAdminEmail(user.email);
+        
+        // Cerrar la sesión del usuario no admin
+        try {
+          await signOut(auth);
+          toast({
+            variant: 'default',
+            title: 'Sesión cerrada',
+            description: 'Se cerró tu sesión de usuario. El panel de administración requiere credenciales específicas.',
+          });
+        } catch (error) {
+          console.error('Error cerrando sesión:', error);
+        }
+      } else {
+        setHasNonAdminSession(false);
+        setNonAdminEmail(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +65,7 @@ export default function AdminLoginPage() {
       // Verificar que sea el admin
       if (userCredential.user.email !== ADMIN_EMAIL) {
         await auth.signOut();
-        throw new Error('No tienes permisos de administrador');
+        throw new Error('Este email no tiene permisos de administrador. Solo el administrador autorizado puede acceder.');
       }
 
       // Guardar token en cookie
@@ -48,13 +81,22 @@ export default function AdminLoginPage() {
         throw new Error('Error al guardar token de autenticación');
       }
 
+      // Esperar un momento para asegurar que la cookie esté disponible
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       toast({
         title: 'Inicio de sesión exitoso',
         description: 'Bienvenido al panel de administración',
       });
 
+      // Refrescar el router para que Next.js reconozca la nueva cookie
+      router.refresh();
+      
       // Usar window.location para forzar recarga completa y que el servidor tenga la cookie
-      window.location.href = '/admin';
+      // Pequeño delay para asegurar que el refresh se complete
+      setTimeout(() => {
+        window.location.href = '/admin';
+      }, 150);
     } catch (error: any) {
       console.error('Error en login:', error);
       toast({
@@ -75,9 +117,28 @@ export default function AdminLoginPage() {
             Panel de Administración
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Inicia sesión para continuar
+            Inicia sesión con credenciales de administrador
           </p>
         </div>
+
+        {/* Mensaje si había una sesión no admin */}
+        {hasNonAdminSession && nonAdminEmail && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+            <div className="flex items-start">
+              <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5 mr-3 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-yellow-800">
+                  Sesión de usuario cerrada
+                </p>
+                <p className="mt-1 text-sm text-yellow-700">
+                  Detectamos una sesión activa con <strong>{nonAdminEmail}</strong>. 
+                  El panel de administración requiere credenciales específicas de administrador.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
