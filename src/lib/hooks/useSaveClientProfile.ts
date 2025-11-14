@@ -62,7 +62,7 @@ export async function guardarPerfilCliente<Data = unknown>(
 	const token = await currentUser.getIdToken(true);
 
 	const nowIso = new Date().toISOString();
-	const data = await api.post<{success: boolean, data: Data}>(
+	const response = await api.post<{success: boolean, data: Data}>(
 		"/clientes",
 		{
 			email: currentUser.email ?? "",
@@ -76,7 +76,12 @@ export async function guardarPerfilCliente<Data = unknown>(
 		{ withAuthToken: token }
 	);
 
-	return { ok: true, status: 200, data: data?.data || data };
+	// La API devuelve {success: boolean, data: Data}
+	const responseData = response && typeof response === 'object' && 'data' in response 
+		? (response as {success: boolean, data: Data}).data 
+		: (response as Data);
+
+	return { ok: true, status: 200, data: responseData };
 }
 
 /**
