@@ -32,12 +32,14 @@ export default function AdminLoginPage() {
         
         // Cerrar la sesión del usuario no admin
         try {
-          await signOut(auth);
-          toast({
-            variant: 'default',
-            title: 'Sesión cerrada',
-            description: 'Se cerró tu sesión de usuario. El panel de administración requiere credenciales específicas.',
-          });
+          if (auth) {
+            await signOut(auth);
+            toast({
+              variant: 'default',
+              title: 'Sesión cerrada',
+              description: 'Se cerró tu sesión de usuario. El panel de administración requiere credenciales específicas.',
+            });
+          }
         } catch (error) {
           console.error('Error cerrando sesión:', error);
         }
