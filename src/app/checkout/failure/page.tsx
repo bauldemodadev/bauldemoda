@@ -11,11 +11,21 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { XCircleIcon, ArrowLeftIcon, HomeIcon, ShoppingBagIcon } from 'lucide-react';
-import type { Order } from '@/types/firestore/order';
+import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+
+// Tipo serializado para orden (con fechas como strings desde la API)
+interface SerializedOrder {
+  id: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
+  paymentMethod: PaymentMethod;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function FailurePage() {
   const searchParams = useSearchParams();
-  const [order, setOrder] = useState<Order | null>(null);
+  const [order, setOrder] = useState<SerializedOrder | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

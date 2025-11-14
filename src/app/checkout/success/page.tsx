@@ -15,12 +15,40 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { CheckCircleIcon, HomeIcon, ShoppingBagIcon, Package } from 'lucide-react';
-import type { Order } from '@/types/firestore/order';
+import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+
+// Tipo serializado para orden (con fechas como strings desde la API)
+interface SerializedOrder {
+  id: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
+  paymentMethod: PaymentMethod;
+  mpPaymentId?: string;
+  mpPreferenceId?: string;
+  externalReference?: string;
+  customerId: string;
+  customerSnapshot: {
+    name: string;
+    email: string;
+    phone?: string;
+  };
+  items: Array<{
+    type: 'product' | 'onlineCourse';
+    name: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }>;
+  totalAmount: number;
+  currency: 'ARS';
+  createdAt: string; // Serializado como ISO string
+  updatedAt: string; // Serializado como ISO string
+}
 
 export default function SuccessPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [order, setOrder] = useState<Order | null>(null);
+  const [order, setOrder] = useState<SerializedOrder | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

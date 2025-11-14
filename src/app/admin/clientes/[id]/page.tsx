@@ -14,12 +14,55 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, User, Mail, Phone, ShoppingCart, DollarSign, BookOpen, Calendar } from 'lucide-react';
-import type { Customer } from '@/types/firestore/customer';
-import type { Order } from '@/types/firestore/order';
+import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+
+// Tipos serializados (con fechas como strings desde la API)
+interface SerializedCustomer {
+  id: string;
+  uid?: string;
+  email: string;
+  name: string;
+  phone?: string;
+  createdAt: string; // Serializado como ISO string
+  lastOrderAt?: string | null; // Serializado como ISO string
+  totalOrders: number;
+  totalSpent: number;
+  tags: string[];
+  enrolledCourses: Array<{
+    courseId: string;
+    productId?: string;
+    orderId: string;
+    accessFrom: string; // Serializado como ISO string
+    accessTo?: string | null; // Serializado como ISO string
+  }>;
+}
+
+interface SerializedOrder {
+  id: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
+  paymentMethod: PaymentMethod;
+  customerId: string;
+  customerSnapshot: {
+    name: string;
+    email: string;
+    phone?: string;
+  };
+  items: Array<{
+    type: 'product' | 'onlineCourse';
+    name: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }>;
+  totalAmount: number;
+  createdAt: string; // Serializado como ISO string
+  updatedAt: string; // Serializado como ISO string
+}
 
 interface CustomerDetailResponse {
-  customer: Customer;
-  orders: Order[];
+  customer: SerializedCustomer;
+  orders: SerializedOrder[];
 }
 
 export default function AdminClienteDetailPage() {
@@ -27,8 +70,8 @@ export default function AdminClienteDetailPage() {
   const router = useRouter();
   const customerId = params.id as string;
 
-  const [customer, setCustomer] = useState<Customer | null>(null);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [customer, setCustomer] = useState<SerializedCustomer | null>(null);
+  const [orders, setOrders] = useState<SerializedOrder[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

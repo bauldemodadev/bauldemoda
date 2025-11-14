@@ -14,10 +14,29 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, User, Mail, Phone, DollarSign, ShoppingCart, Calendar } from 'lucide-react';
-import type { Customer } from '@/types/firestore/customer';
+// Tipo serializado para clientes (con fechas como strings desde la API)
+interface SerializedCustomer {
+  id: string;
+  uid?: string;
+  email: string;
+  name: string;
+  phone?: string;
+  createdAt: string; // Serializado como ISO string
+  lastOrderAt?: string | null; // Serializado como ISO string
+  totalOrders: number;
+  totalSpent: number;
+  tags: string[];
+  enrolledCourses: Array<{
+    courseId: string;
+    productId?: string;
+    orderId: string;
+    accessFrom: string; // Serializado como ISO string
+    accessTo?: string | null; // Serializado como ISO string
+  }>;
+}
 
 interface CustomersResponse {
-  customers: Customer[];
+  customers: SerializedCustomer[];
   pagination: {
     total: number;
     limit: number;
@@ -28,7 +47,7 @@ interface CustomersResponse {
 export default function AdminClientesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [customers, setCustomers] = useState<SerializedCustomer[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0 });
   const [searchQuery, setSearchQuery] = useState('');

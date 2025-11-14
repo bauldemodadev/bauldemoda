@@ -30,7 +30,37 @@ import {
   Calendar
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import type { Order } from '@/types/firestore/order';
+import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+
+// Tipo para orden serializada (con fechas como strings)
+interface SerializedOrder {
+  id: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
+  paymentMethod: PaymentMethod;
+  mpPaymentId?: string;
+  mpPreferenceId?: string;
+  externalReference?: string;
+  customerId: string;
+  customerSnapshot: {
+    name: string;
+    email: string;
+    phone?: string;
+  };
+  items: Array<{
+    type: 'product' | 'onlineCourse';
+    productId?: string;
+    courseId?: string;
+    name: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }>;
+  totalAmount: number;
+  currency: 'ARS';
+  createdAt: string; // Serializado como ISO string
+  updatedAt: string; // Serializado como ISO string
+}
 
 export default function AdminVentaDetailPage() {
   const params = useParams();
@@ -38,7 +68,7 @@ export default function AdminVentaDetailPage() {
   const { toast } = useToast();
   const orderId = params.id as string;
 
-  const [order, setOrder] = useState<Order | null>(null);
+  const [order, setOrder] = useState<SerializedOrder | null>(null);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
 
@@ -113,8 +143,25 @@ export default function AdminVentaDetailPage() {
     return styles[status] || styles.pending;
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-AR', {
+  const formatDate = (dateString: string | Date | any) => {
+    // Manejar diferentes formatos de fecha
+    let date: Date;
+    if (typeof dateString === 'string') {
+      date = new Date(dateString);
+    } else if (dateString instanceof Date) {
+      date = dateString;
+    } else if (dateString && typeof dateString === 'object' && 'toDate' in dateString) {
+      // Timestamp de Firestore
+      date = dateString.toDate();
+    } else {
+      return 'Fecha inválida';
+    }
+    
+    if (isNaN(date.getTime())) {
+      return 'Fecha inválida';
+    }
+    
+    return date.toLocaleDateString('es-AR', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
