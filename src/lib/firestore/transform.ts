@@ -11,6 +11,63 @@ import type { FirestoreProduct } from '@/types/firestore';
 import type { Product } from '@/types/product';
 
 /**
+ * Parsea el precio desde priceText (texto libre) y extrae el primer número encontrado
+ * Ejemplos:
+ * - "$5000 en efectivo, $6000 otros medios" -> 5000
+ * - "5000" -> 5000
+ * - "$5.000" -> 5000
+ * - "5.000 pesos" -> 5000
+ * - "$ 5.000" -> 5000
+ * - "ARS 5000" -> 5000
+ */
+function parsePriceFromText(priceText: string | undefined | null): number {
+  if (!priceText || typeof priceText !== 'string') {
+    return 0;
+  }
+
+  // Buscar el primer número en el texto (puede tener puntos como separadores de miles)
+  // Patrón: busca números con formato argentino (5.000 o 5.000,50) o internacional (5,000 o 5,000.50)
+  const patterns = [
+    /(\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?)/,  // Formato argentino: 5.000 o 5.000,50
+    /(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?)/,  // Formato internacional: 5,000 o 5,000.50
+    /(\d+(?:[.,]\d+)?)/,                    // Número simple: 5000, 5000.50, 5000,50
+  ];
+
+  for (const pattern of patterns) {
+    const match = priceText.match(pattern);
+    if (match) {
+      let numberStr = match[1];
+      
+      // Si tiene puntos como separadores de miles (formato argentino: 5.000)
+      if (numberStr.includes('.') && numberStr.split('.').length > 2) {
+        // Es formato de miles: 5.000 -> 5000, 5.000,50 -> 5000.50
+        numberStr = numberStr.replace(/\./g, '').replace(',', '.');
+      } 
+      // Si tiene comas como separadores de miles (formato internacional: 5,000)
+      else if (numberStr.includes(',') && numberStr.split(',').length > 2) {
+        // Es formato de miles: 5,000 -> 5000, 5,000.50 -> 5000.50
+        numberStr = numberStr.replace(/,/g, '');
+      }
+      // Si tiene una coma y es probablemente decimal (formato argentino: 5,50)
+      else if (numberStr.includes(',') && numberStr.split(',').length === 2) {
+        const parts = numberStr.split(',');
+        if (parts[1].length <= 2) {
+          // Probablemente decimal: 5,50 -> 5.50
+          numberStr = numberStr.replace(',', '.');
+        }
+      }
+      
+      const parsed = parseFloat(numberStr);
+      if (!isNaN(parsed) && parsed > 0) {
+        return Math.round(parsed);
+      }
+    }
+  }
+
+  return 0;
+}
+
+/**
  * Convierte un FirestoreProduct a Product (tipo del frontend)
  * 
  * Esta función transforma:
@@ -61,7 +118,19 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
   }
 
   // Calcular precio numérico desde priceText o usar localPriceNumber
-  const price = fsProduct.localPriceNumber ?? 0;
+  // Prioridad: localPriceNumber > parsePriceFromText(priceText) > 0
+  let price = 0;
+  
+  // Si localPriceNumber está disponible y es un número válido, usarlo
+  if (fsProduct.localPriceNumber !== null && fsProduct.localPriceNumber !== undefined && !isNaN(fsProduct.localPriceNumber)) {
+    price = fsProduct.localPriceNumber;
+  } else {
+    // Si localPriceNumber no está disponible, intentar parsear desde priceText
+    const parsedPrice = parsePriceFromText(fsProduct.priceText);
+    if (parsedPrice > 0) {
+      price = parsedPrice;
+    }
+  }
 
   // Determinar si está activo basado en status
   const active = fsProduct.status === 'publish';
