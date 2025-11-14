@@ -102,7 +102,8 @@ export async function createPreference(
 
     const preference = await new Preference(mp).create({
       body: {
-        items: params.items.map((item) => ({
+        items: params.items.map((item, index) => ({
+          id: `item-${index + 1}`,
           title: item.title,
           unit_price: Number(item.unit_price),
           quantity: Number(item.quantity),
