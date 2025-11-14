@@ -121,14 +121,25 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
+    console.log('📥 POST /api/customers - Body recibido:', JSON.stringify(body, null, 2));
+    
     const { email, nombre, telefono, dni, uid } = body;
 
     if (!email || !nombre) {
+      console.warn('⚠️ POST /api/customers - Datos incompletos:', { email, nombre });
       return NextResponse.json(
         { error: 'Email y nombre son requeridos' },
         { status: 400 }
       );
     }
+
+    console.log('🔄 POST /api/customers - Llamando a upsertCustomer con:', {
+      uid: uid || null,
+      email,
+      name: nombre,
+      phone: telefono,
+      dni: dni || undefined,
+    });
 
     // Usar la función upsertCustomer de firestore/customers
     const { upsertCustomer } = await import('@/lib/firestore/customers');
@@ -137,7 +148,7 @@ export async function POST(request: Request) {
       uid: uid || null,
       email,
       name: nombre,
-      phone: telefono,
+      phone: telefono || undefined,
       dni: dni || undefined,
       totalOrders: 0,
       totalSpent: 0,
@@ -145,16 +156,20 @@ export async function POST(request: Request) {
       enrolledCourses: [],
     });
 
+    console.log('✅ POST /api/customers - Cliente creado/actualizado:', customer.id);
+
     return NextResponse.json({
       success: true,
       data: serializeCustomer(customer),
     });
   } catch (error) {
     console.error('Error creando/actualizando cliente:', error);
+    console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
     return NextResponse.json(
       {
         error: 'Error al crear/actualizar el cliente',
         details: error instanceof Error ? error.message : String(error),
+        stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined,
       },
       { status: 500 }
     );

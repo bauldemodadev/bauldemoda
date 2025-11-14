@@ -1,29 +1,40 @@
 import { getAdminDb } from '@/lib/firebase/admin';
 import TipsList from '@/components/admin/tips/TipsList';
+import SearchBar from '@/components/admin/SearchBar';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { serializeFirestoreData } from '@/lib/admin/serialize';
 
 const ITEMS_PER_PAGE = 20;
 
-async function getTips(page: number = 1) {
+async function getTips(page: number = 1, search?: string) {
   const db = getAdminDb();
-
-  const totalSnapshot = await db.collection('tips').count().get();
-  const total = totalSnapshot.data().count;
 
   const snapshot = await db
     .collection('tips')
     .orderBy('updatedAt', 'desc')
     .get();
 
-  const allTips = snapshot.docs.map((doc) => {
+  let allTips = snapshot.docs.map((doc) => {
     const data = doc.data();
     return serializeFirestoreData({
       id: doc.id,
       ...data,
     });
   });
+
+  // Aplicar búsqueda
+  if (search) {
+    const searchLower = search.toLowerCase();
+    allTips = allTips.filter((tip: any) => {
+      const title = (tip.title || '').toLowerCase();
+      const slug = (tip.slug || '').toLowerCase();
+      const category = (tip.category || '').toLowerCase();
+      return title.includes(searchLower) || slug.includes(searchLower) || category.includes(searchLower);
+    });
+  }
+
+  const total = allTips.length;
 
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -40,10 +51,13 @@ async function getTips(page: number = 1) {
 export default async function AdminTipsPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: { 
+    page?: string;
+    search?: string;
+  };
 }) {
   const page = parseInt(searchParams.page || '1', 10);
-  const data = await getTips(page);
+  const data = await getTips(page, searchParams.search);
 
   return (
     <div>
@@ -56,6 +70,14 @@ export default async function AdminTipsPage({
           <Plus className="w-4 h-4" />
           Nuevo Tip
         </Link>
+      </div>
+
+      {/* Barra de búsqueda */}
+      <div className="mb-6">
+        <SearchBar 
+          placeholder="Buscar tips por título, slug o categoría..." 
+          searchParam="search"
+        />
       </div>
 
       <TipsList

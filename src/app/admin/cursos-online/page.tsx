@@ -1,29 +1,48 @@
 import { getAdminDb } from '@/lib/firebase/admin';
 import CoursesList from '@/components/admin/courses/CoursesList';
+import SearchBar from '@/components/admin/SearchBar';
+import CourseFilters from '@/components/admin/CourseFilters';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { serializeFirestoreData } from '@/lib/admin/serialize';
 
 const ITEMS_PER_PAGE = 20;
 
-async function getCourses(page: number = 1) {
+async function getCourses(page: number = 1, search?: string, filters?: {
+  status?: string;
+}) {
   const db = getAdminDb();
-
-  const totalSnapshot = await db.collection('onlineCourses').count().get();
-  const total = totalSnapshot.data().count;
 
   const snapshot = await db
     .collection('onlineCourses')
     .orderBy('updatedAt', 'desc')
     .get();
 
-  const allCourses = snapshot.docs.map((doc) => {
+  let allCourses = snapshot.docs.map((doc) => {
     const data = doc.data();
     return serializeFirestoreData({
       id: doc.id,
       ...data,
     });
   });
+
+  // Aplicar búsqueda
+  if (search) {
+    const searchLower = search.toLowerCase();
+    allCourses = allCourses.filter((course: any) => {
+      const title = (course.title || '').toLowerCase();
+      const slug = (course.slug || '').toLowerCase();
+      const shortDescription = (course.shortDescription || '').toLowerCase();
+      return title.includes(searchLower) || slug.includes(searchLower) || shortDescription.includes(searchLower);
+    });
+  }
+
+  // Aplicar filtros
+  if (filters?.status) {
+    allCourses = allCourses.filter((course: any) => course.status === filters.status);
+  }
+
+  const total = allCourses.length;
 
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -40,10 +59,16 @@ async function getCourses(page: number = 1) {
 export default async function AdminCoursesPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: { 
+    page?: string;
+    search?: string;
+    status?: string;
+  };
 }) {
   const page = parseInt(searchParams.page || '1', 10);
-  const data = await getCourses(page);
+  const data = await getCourses(page, searchParams.search, {
+    status: searchParams.status,
+  });
 
   return (
     <div>
@@ -58,11 +83,29 @@ export default async function AdminCoursesPage({
         </Link>
       </div>
 
-      <CoursesList
-        courses={data.courses}
-        totalPages={data.totalPages}
-        currentPage={data.currentPage}
-      />
+      {/* Barra de búsqueda */}
+      <div className="mb-6">
+        <SearchBar 
+          placeholder="Buscar cursos por título, slug o descripción..." 
+          searchParam="search"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Filtros */}
+        <div className="lg:col-span-1">
+          <CourseFilters />
+        </div>
+
+        {/* Lista de cursos */}
+        <div className="lg:col-span-3">
+          <CoursesList
+            courses={data.courses}
+            totalPages={data.totalPages}
+            currentPage={data.currentPage}
+          />
+        </div>
+      </div>
     </div>
   );
 }

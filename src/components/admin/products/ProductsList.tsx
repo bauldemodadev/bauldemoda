@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Edit, Trash2, Eye } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -25,8 +25,16 @@ interface ProductsListProps {
 
 export default function ProductsList({ products, totalPages, currentPage }: ProductsListProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  // Función helper para construir URLs de paginación preservando filtros
+  const buildPageUrl = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', page.toString());
+    return `/admin/productos?${params.toString()}`;
+  };
 
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`¿Estás seguro de eliminar el producto "${name}"?`)) {
@@ -181,7 +189,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
           <div className="flex-1 flex justify-between sm:hidden">
             {currentPage > 1 && (
               <Link
-                href={`/admin/productos?page=${currentPage - 1}`}
+                href={buildPageUrl(currentPage - 1)}
                 className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
                 Anterior
@@ -189,7 +197,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
             )}
             {currentPage < totalPages && (
               <Link
-                href={`/admin/productos?page=${currentPage + 1}`}
+                href={buildPageUrl(currentPage + 1)}
                 className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
                 Siguiente
@@ -207,7 +215,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
               <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                 {currentPage > 1 && (
                   <Link
-                    href={`/admin/productos?page=${currentPage - 1}`}
+                    href={buildPageUrl(currentPage - 1)}
                     className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                   >
                     Anterior
@@ -222,7 +230,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                     return (
                       <Link
                         key={pageNum}
-                        href={`/admin/productos?page=${pageNum}`}
+                        href={buildPageUrl(pageNum)}
                         className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
                           pageNum === currentPage
                             ? 'z-10 bg-pink-50 border-pink-500 text-pink-600'
@@ -243,7 +251,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                 })}
                 {currentPage < totalPages && (
                   <Link
-                    href={`/admin/productos?page=${currentPage + 1}`}
+                    href={buildPageUrl(currentPage + 1)}
                     className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                   >
                     Siguiente

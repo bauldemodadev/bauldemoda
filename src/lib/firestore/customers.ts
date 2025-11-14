@@ -53,7 +53,16 @@ export async function upsertCustomer(
       delete (updates as any).totalOrders;
       delete (updates as any).totalSpent;
 
-      await db.collection('customers').doc(existingCustomer.id).update(updates);
+      // Filtrar valores undefined (Firestore no acepta undefined)
+      const cleanUpdates: Record<string, any> = {};
+      Object.keys(updates).forEach((key) => {
+        const value = (updates as any)[key];
+        if (value !== undefined) {
+          cleanUpdates[key] = value;
+        }
+      });
+
+      await db.collection('customers').doc(existingCustomer.id).update(cleanUpdates);
 
       return {
         ...existingCustomer,
@@ -66,6 +75,7 @@ export async function upsertCustomer(
         email: customerData.email,
         name: customerData.name,
         phone: customerData.phone,
+        dni: customerData.dni,
         createdAt: now,
         lastOrderAt: undefined,
         totalOrders: 0,
