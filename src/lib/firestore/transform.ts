@@ -23,24 +23,34 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
   let updatedAt: string;
   
   try {
-    if (fsProduct.createdAt) {
-      createdAt = fsProduct.createdAt instanceof Timestamp
-        ? fsProduct.createdAt.toDate()
-        : fsProduct.createdAt instanceof Date
-        ? fsProduct.createdAt
-        : new Date();
+    // createdAt siempre es Timestamp según el tipo, pero verificamos por seguridad
+    const createdAtValue = fsProduct.createdAt as any;
+    if (createdAtValue) {
+      if (createdAtValue instanceof Timestamp) {
+        createdAt = createdAtValue.toDate();
+      } else if (createdAtValue instanceof Date) {
+        createdAt = createdAtValue;
+      } else if (typeof createdAtValue === 'string') {
+        createdAt = new Date(createdAtValue);
+      } else {
+        createdAt = new Date();
+      }
     } else {
       createdAt = new Date();
     }
     
-    if (fsProduct.updatedAt) {
-      updatedAt = fsProduct.updatedAt instanceof Timestamp
-        ? fsProduct.updatedAt.toDate().toISOString()
-        : fsProduct.updatedAt instanceof Date
-        ? fsProduct.updatedAt.toISOString()
-        : typeof fsProduct.updatedAt === 'string'
-        ? fsProduct.updatedAt
-        : new Date().toISOString();
+    // updatedAt siempre es Timestamp según el tipo, pero verificamos por seguridad
+    const updatedAtValue = fsProduct.updatedAt as any;
+    if (updatedAtValue) {
+      if (updatedAtValue instanceof Timestamp) {
+        updatedAt = updatedAtValue.toDate().toISOString();
+      } else if (updatedAtValue instanceof Date) {
+        updatedAt = updatedAtValue.toISOString();
+      } else if (typeof updatedAtValue === 'string') {
+        updatedAt = updatedAtValue;
+      } else {
+        updatedAt = new Date().toISOString();
+      }
     } else {
       updatedAt = new Date().toISOString();
     }
