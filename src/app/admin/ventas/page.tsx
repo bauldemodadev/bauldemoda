@@ -24,14 +24,44 @@ import {
   Clock,
   DollarSign,
   CreditCard,
-  Banknotes,
-  ArrowPath
+  Banknote,
+  ArrowRightLeft
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import type { Order, OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+
+// Tipo para órdenes serializadas (con fechas como strings)
+interface SerializedOrder {
+  id: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
+  paymentMethod: PaymentMethod;
+  mpPaymentId?: string;
+  mpPreferenceId?: string;
+  externalReference?: string;
+  customerId: string;
+  customerSnapshot: {
+    name: string;
+    email: string;
+    phone?: string;
+  };
+  items: Array<{
+    type: 'product' | 'onlineCourse';
+    productId?: string;
+    courseId?: string;
+    name: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }>;
+  totalAmount: number;
+  currency: 'ARS';
+  createdAt: string; // Serializado como ISO string
+  updatedAt: string; // Serializado como ISO string
+}
 
 interface OrdersResponse {
-  orders: Order[];
+  orders: SerializedOrder[];
   pagination: {
     total: number;
     limit: number;
@@ -45,7 +75,7 @@ export default function AdminVentasPage() {
   const searchParams = useSearchParams();
   const { toast } = useToast();
   
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<SerializedOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0, hasMore: false });
   
@@ -137,16 +167,33 @@ export default function AdminVentasPage() {
       case 'mp':
         return <CreditCard className="w-4 h-4" />;
       case 'cash':
-        return <Banknotes className="w-4 h-4" />;
+        return <Banknote className="w-4 h-4" />;
       case 'transfer':
-        return <ArrowPath className="w-4 h-4" />;
+        return <ArrowRightLeft className="w-4 h-4" />;
       default:
         return <DollarSign className="w-4 h-4" />;
     }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-AR', {
+  const formatDate = (dateString: string | Date | any) => {
+    // Manejar diferentes formatos de fecha
+    let date: Date;
+    if (typeof dateString === 'string') {
+      date = new Date(dateString);
+    } else if (dateString instanceof Date) {
+      date = dateString;
+    } else if (dateString && typeof dateString === 'object' && 'toDate' in dateString) {
+      // Timestamp de Firestore
+      date = dateString.toDate();
+    } else {
+      return 'Fecha inválida';
+    }
+    
+    if (isNaN(date.getTime())) {
+      return 'Fecha inválida';
+    }
+    
+    return date.toLocaleDateString('es-AR', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',

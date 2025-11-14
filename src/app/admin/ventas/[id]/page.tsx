@@ -20,8 +20,8 @@ import {
   XCircle, 
   Clock,
   CreditCard,
-  Banknotes,
-  ArrowPath,
+  Banknote,
+  ArrowRightLeft,
   User,
   Mail,
   Phone,
@@ -212,8 +212,8 @@ export default function AdminVentaDetailPage() {
                 <label className="block text-sm font-medium text-gray-500 mb-1">Método de Pago</label>
                 <div className="flex items-center gap-2">
                   {order.paymentMethod === 'mp' && <CreditCard className="w-4 h-4" />}
-                  {order.paymentMethod === 'cash' && <Banknotes className="w-4 h-4" />}
-                  {order.paymentMethod === 'transfer' && <ArrowPath className="w-4 h-4" />}
+                  {order.paymentMethod === 'cash' && <Banknote className="w-4 h-4" />}
+                  {order.paymentMethod === 'transfer' && <ArrowRightLeft className="w-4 h-4" />}
                   <span className="capitalize">{order.paymentMethod}</span>
                 </div>
               </div>

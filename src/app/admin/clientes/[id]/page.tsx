@@ -57,8 +57,25 @@ export default function AdminClienteDetailPage() {
     }).format(amount);
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-AR', {
+  const formatDate = (dateString: string | Date | any) => {
+    // Manejar diferentes formatos de fecha
+    let date: Date;
+    if (typeof dateString === 'string') {
+      date = new Date(dateString);
+    } else if (dateString instanceof Date) {
+      date = dateString;
+    } else if (dateString && typeof dateString === 'object' && 'toDate' in dateString) {
+      // Timestamp de Firestore
+      date = dateString.toDate();
+    } else {
+      return 'Fecha inválida';
+    }
+    
+    if (isNaN(date.getTime())) {
+      return 'Fecha inválida';
+    }
+    
+    return date.toLocaleDateString('es-AR', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
