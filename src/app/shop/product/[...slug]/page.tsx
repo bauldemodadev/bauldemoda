@@ -216,17 +216,6 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
                   }}
                 />
               </div>
-
-              {/* Badge "MOLDES SEPARADOS POR PRENDA" - pequeño en esquina superior derecha */}
-              <div className="absolute top-2 right-2 bg-pink-100 rounded-lg px-2 py-1.5 z-20 shadow-md border border-pink-200">
-                <p className="text-[10px] md:text-xs font-bold text-pink-700 leading-tight text-center">
-                  <span className="text-xs md:text-sm">MOLDES</span>
-                  <br />
-                  SEPARADOS POR
-                  <br />
-                  <span className="text-xs md:text-sm">PRENDA</span>
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -271,9 +260,9 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         </div>
 
         {/* Sección de Detalles */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
           {/* Columna Principal - Detalles */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 lg:space-y-6">
             {/* Título DETALLES */}
             <div>
               <h2 className="text-sm font-bold text-black uppercase tracking-wide mb-2">
@@ -347,11 +336,11 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
 
           {/* Columna Lateral - Galería de Imágenes */}
           {productImages.length > 1 && (
-            <div className="space-y-4">
+            <div className="space-y-3 lg:space-y-4">
               {productImages.slice(1).map((imageUrl, index) => (
                 <div
                   key={index}
-                  className="relative aspect-[3/4] overflow-hidden rounded-lg bg-white border border-gray-200 shadow-sm"
+                  className="relative w-full max-w-[200px] lg:max-w-[250px] mx-auto lg:mx-0 aspect-[3/4] overflow-hidden"
                 >
                   <img
                     src={imageUrl}
