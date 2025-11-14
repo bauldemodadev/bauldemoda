@@ -55,7 +55,6 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
   const [id] = params.slug;
 
@@ -73,19 +72,6 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         
         const productData = await response.json() as Product;
         setProduct(productData);
-        
-        const allProductsResponse = await fetch('/api/products', { 
-          cache: 'no-store' 
-        });
-        
-        if (allProductsResponse.ok) {
-          const allProducts = await allProductsResponse.json() as Product[];
-          const related = allProducts
-            .filter(p => p.id !== productData.id && p.category === productData.category)
-            .slice(0, 2);
-          setRelatedProducts(related);
-        }
-        
         setError(null);
       } catch (err) {
         console.error('❌ Error fetching product:', err);
@@ -301,7 +287,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
             {/* Descripción principal en negrita grande */}
             {product.detailsHtml ? (
               <div 
-                className="text-lg md:text-xl font-bold text-black mb-6 leading-relaxed"
+                className="text-lg md:text-xl font-bold text-black mb-6 leading-relaxed product-details-html"
                 dangerouslySetInnerHTML={{ __html: product.detailsHtml }}
               />
             ) : (
@@ -359,32 +345,23 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
             </div>
           </div>
 
-          {/* Columna Lateral - Productos Relacionados */}
-          {relatedProducts.length > 0 && (
+          {/* Columna Lateral - Galería de Imágenes */}
+          {productImages.length > 1 && (
             <div className="space-y-4">
-              {relatedProducts.map((relatedProduct) => (
-                <Link
-                  key={relatedProduct.id}
-                  href={`/shop/product/${relatedProduct.id}`}
-                  className="block group"
+              {productImages.slice(1).map((imageUrl, index) => (
+                <div
+                  key={index}
+                  className="relative aspect-[3/4] overflow-hidden rounded-lg bg-white border border-gray-200 shadow-sm"
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                    <img
-                      src={relatedProduct.images?.[0] || relatedProduct.srcUrl || PLACEHOLDER_IMAGE}
-                      alt={relatedProduct.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
-                      }}
-                    />
-                    {/* Overlay con texto si es necesario */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                      <p className="text-white text-sm font-bold">
-                        {relatedProduct.name}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
+                  <img
+                    src={imageUrl}
+                    alt={`${productName} - Imagen ${index + 2}`}
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                    }}
+                  />
+                </div>
               ))}
             </div>
           )}
