@@ -18,8 +18,8 @@ export const stepTwoSchema = z.object({
   paymentMethod: z.enum(['mp', 'cash', 'transfer'], {
     errorMap: () => ({ message: 'Seleccioná un método de pago' }),
   }),
-  acceptTerms: z.literal(true, {
-    errorMap: () => ({ message: 'Debes aceptar los términos y condiciones' }),
+  acceptTerms: z.boolean().refine((val) => val === true, {
+    message: 'Debes aceptar los términos y condiciones',
   }),
   comment: z.string().optional(),
 })
