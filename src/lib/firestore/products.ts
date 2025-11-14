@@ -12,11 +12,16 @@ import type { FirestoreProduct } from '@/types/firestore';
  */
 export async function getAllProductsFromFirestore(): Promise<Product[]> {
   try {
+    console.log('🔍 Iniciando getAllProductsFromFirestore...');
     const db = getAdminDb();
+    console.log('✅ Firebase Admin DB obtenido');
+    
     const snapshot = await db
       .collection('products')
       .where('status', '==', 'publish')
       .get();
+
+    console.log(`📦 Encontrados ${snapshot.size} productos con status 'publish'`);
 
     const products: Product[] = [];
     snapshot.forEach((doc) => {
@@ -25,14 +30,16 @@ export async function getAllProductsFromFirestore(): Promise<Product[]> {
         const product = firestoreProductToProduct({ ...data, id: doc.id });
         products.push(product);
       } catch (error) {
-        console.error(`Error transformando producto ${doc.id}:`, error);
+        console.error(`❌ Error transformando producto ${doc.id}:`, error);
         // Continuar con el siguiente producto
       }
     });
 
+    console.log(`✅ Transformados ${products.length} productos exitosamente`);
     return products;
   } catch (error) {
-    console.error('Error en getAllProductsFromFirestore:', error);
+    console.error('❌ Error en getAllProductsFromFirestore:', error);
+    console.error('Stack:', error instanceof Error ? error.stack : 'No stack');
     throw error;
   }
 }
@@ -44,6 +51,7 @@ export async function getProductsByIdsFromFirestore(ids: string[]): Promise<Prod
   if (ids.length === 0) return [];
 
   try {
+    console.log(`🔍 Buscando ${ids.length} productos por IDs:`, ids.slice(0, 5), '...');
     const db = getAdminDb();
     
     // Firestore Admin SDK: usar getAll() para obtener múltiples documentos por ID

@@ -65,9 +65,14 @@ export async function GET(request: Request) {
         const products = await getAllProductsFromFirestore();
         return NextResponse.json(products);
       } catch (error) {
-        console.error('Error en modo Firestore:', error);
+        console.error('❌ Error en modo Firestore:', error);
+        console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
         return NextResponse.json(
-          { error: 'Failed to fetch products from Firestore', details: error instanceof Error ? error.message : String(error) },
+          { 
+            error: 'Failed to fetch products from Firestore', 
+            details: error instanceof Error ? error.message : String(error),
+            stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined
+          },
           { status: 500 }
         );
       }

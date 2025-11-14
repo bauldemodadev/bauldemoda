@@ -14,8 +14,16 @@ export async function GET(request: Request) {
     const courses = await getAllOnlineCoursesFromFirestore();
     return NextResponse.json(courses);
   } catch (error) {
-    console.error('Error fetching online courses:', error);
-    return NextResponse.json({ error: 'Failed to fetch online courses' }, { status: 500 });
+    console.error('❌ Error fetching online courses:', error);
+    console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
+    return NextResponse.json(
+      { 
+        error: 'Failed to fetch online courses',
+        details: error instanceof Error ? error.message : String(error),
+        stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined
+      },
+      { status: 500 }
+    );
   }
 }
 

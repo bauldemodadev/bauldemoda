@@ -37,6 +37,8 @@ function initializeAdmin(): { adminApp: App; adminDb: Firestore } {
     return { adminApp, adminDb };
   }
 
+  console.log('🔧 Inicializando Firebase Admin...');
+  
   // Intentar obtener credenciales desde Service Account JSON
   const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
   
@@ -83,15 +85,27 @@ function initializeAdmin(): { adminApp: App; adminDb: Firestore } {
   }
 
   // Inicializar la app
-  adminApp = initializeApp({
-    credential,
-    projectId: process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  });
+  try {
+    const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+    if (!projectId) {
+      throw new Error('FIREBASE_PROJECT_ID o NEXT_PUBLIC_FIREBASE_PROJECT_ID no está definido');
+    }
+    
+    console.log(`✅ Inicializando Firebase Admin con projectId: ${projectId}`);
+    adminApp = initializeApp({
+      credential,
+      projectId,
+    });
 
-  // Obtener instancia de Firestore
-  adminDb = getFirestore(adminApp);
+    // Obtener instancia de Firestore
+    adminDb = getFirestore(adminApp);
+    console.log('✅ Firebase Admin inicializado correctamente');
 
-  return { adminApp, adminDb };
+    return { adminApp, adminDb };
+  } catch (error) {
+    console.error('❌ Error al inicializar Firebase Admin:', error);
+    throw error;
+  }
 }
 
 /**
@@ -117,13 +131,20 @@ export function getAdminApp(): App {
  * - API Routes que requieren permisos administrativos
  */
 export function getAdminDb(): Firestore {
-  if (!adminDb) {
-    initializeAdmin();
+  try {
+    if (!adminDb) {
+      initializeAdmin();
+    }
+    if (!adminDb) {
+      const error = new Error('No se pudo inicializar Firebase Admin Firestore. Verifica las variables de entorno FIREBASE_SERVICE_ACCOUNT_JSON o FIREBASE_PROJECT_ID + FIREBASE_CLIENT_EMAIL + FIREBASE_PRIVATE_KEY');
+      console.error('❌ Error inicializando Firebase Admin:', error);
+      throw error;
+    }
+    return adminDb;
+  } catch (error) {
+    console.error('❌ Error en getAdminDb:', error);
+    throw error;
   }
-  if (!adminDb) {
-    throw new Error('No se pudo inicializar Firebase Admin Firestore');
-  }
-  return adminDb;
 }
 
 // Exportar también como adminDb para compatibilidad directa
