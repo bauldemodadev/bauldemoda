@@ -12,9 +12,10 @@ async function getProduct(id: string) {
     return null;
   }
 
+  const data = doc.data() as any;
   return {
     id: doc.id,
-    ...doc.data(),
+    ...data,
   };
 }
 

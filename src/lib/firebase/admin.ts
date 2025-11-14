@@ -11,10 +11,12 @@
 
 import { initializeApp, getApps, cert, App } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
+import { getAuth, Auth } from 'firebase-admin/auth';
 
 // Variables para almacenar las instancias (singleton pattern)
 let adminApp: App | null = null;
 let adminDb: Firestore | null = null;
+let adminAuth: Auth | null = null;
 
 /**
  * Inicializa Firebase Admin SDK
@@ -34,6 +36,7 @@ function initializeAdmin(): { adminApp: App; adminDb: Firestore } {
   if (existingApps.length > 0) {
     adminApp = existingApps[0];
     adminDb = getFirestore(adminApp);
+    adminAuth = getAuth(adminApp);
     return { adminApp, adminDb };
   }
 
@@ -97,8 +100,9 @@ function initializeAdmin(): { adminApp: App; adminDb: Firestore } {
       projectId,
     });
 
-    // Obtener instancia de Firestore
+    // Obtener instancias de Firestore y Auth
     adminDb = getFirestore(adminApp);
+    adminAuth = getAuth(adminApp);
     console.log('✅ Firebase Admin inicializado correctamente');
 
     return { adminApp, adminDb };
@@ -143,6 +147,27 @@ export function getAdminDb(): Firestore {
     return adminDb;
   } catch (error) {
     console.error('❌ Error en getAdminDb:', error);
+    throw error;
+  }
+}
+
+/**
+ * Obtiene la instancia de Firebase Admin Auth
+ * Inicializa si es necesario
+ */
+export function getAdminAuth(): Auth {
+  try {
+    if (!adminAuth) {
+      initializeAdmin();
+    }
+    if (!adminAuth) {
+      const error = new Error('No se pudo inicializar Firebase Admin Auth. Verifica las variables de entorno.');
+      console.error('❌ Error inicializando Firebase Admin Auth:', error);
+      throw error;
+    }
+    return adminAuth;
+  } catch (error) {
+    console.error('❌ Error en getAdminAuth:', error);
     throw error;
   }
 }
