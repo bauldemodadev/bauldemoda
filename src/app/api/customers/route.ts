@@ -111,3 +111,53 @@ export async function GET(request: Request) {
   }
 }
 
+export async function POST(request: Request) {
+  try {
+    if (!USE_FIRESTORE) {
+      return NextResponse.json(
+        { error: 'Firestore no está habilitado' },
+        { status: 400 }
+      );
+    }
+
+    const body = await request.json();
+    const { email, nombre, telefono, dni, uid } = body;
+
+    if (!email || !nombre) {
+      return NextResponse.json(
+        { error: 'Email y nombre son requeridos' },
+        { status: 400 }
+      );
+    }
+
+    // Usar la función upsertCustomer de firestore/customers
+    const { upsertCustomer } = await import('@/lib/firestore/customers');
+    
+    const customer = await upsertCustomer({
+      uid: uid || null,
+      email,
+      name: nombre,
+      phone: telefono,
+      dni: dni || undefined,
+      totalOrders: 0,
+      totalSpent: 0,
+      tags: [],
+      enrolledCourses: [],
+    });
+
+    return NextResponse.json({
+      success: true,
+      data: serializeCustomer(customer),
+    });
+  } catch (error) {
+    console.error('Error creando/actualizando cliente:', error);
+    return NextResponse.json(
+      {
+        error: 'Error al crear/actualizar el cliente',
+        details: error instanceof Error ? error.message : String(error),
+      },
+      { status: 500 }
+    );
+  }
+}
+

@@ -25,6 +25,7 @@ export interface Customer {
   email: string;
   name: string;
   phone?: string;
+  dni?: string;                   // DNI del cliente
 
   // Estadísticas
   totalOrders: number;

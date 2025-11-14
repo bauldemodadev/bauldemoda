@@ -42,10 +42,32 @@ export async function obtenerPerfilCliente(): Promise<PerfilCliente | null> {
 		console.log("📊 Hook: Tipo de respuesta:", typeof response);
 		console.log("🔑 Hook: Propiedades de la respuesta:", Object.keys(response || {}));
 		
-		// La API externa devuelve { success: true, data: {...} }
+		// La API devuelve { success: true, data: {...} }
 		if (response && response.success && response.data) {
 			console.log("✅ Hook: Respuesta exitosa con datos:", response.data);
-			return response.data;
+			// Mapear Customer de Firestore a PerfilCliente
+			const customer = response.data as any;
+			return {
+				uid: customer.uid || customer.id || '',
+				email: customer.email || email,
+				nombre: customer.name || customer.nombre || '',
+				telefono: customer.phone || customer.telefono || '',
+				dni: customer.dni || customer.dni || '',
+				cuit: customer.cuit,
+				direccion: customer.direccion,
+				localidad: customer.localidad,
+				partido: customer.partido,
+				codigoPostal: customer.codigoPostal,
+				barrio: customer.barrio,
+				area: customer.area,
+				lote: customer.lote,
+				lat: customer.lat,
+				lng: customer.lng,
+				esClienteViejo: customer.esClienteViejo,
+				origen: customer.origen,
+				creadoEn: customer.createdAt,
+				actualizadoEn: customer.updatedAt,
+			} as PerfilCliente;
 		}
 		
 		console.log("❌ Hook: Respuesta sin datos o fallida:", response);

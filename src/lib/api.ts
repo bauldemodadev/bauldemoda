@@ -29,6 +29,17 @@ function resolveUrl(path: string): string {
   if (path === '/orders' || path.startsWith('/orders/')) {
     return `/api${path}`; // evita CORS usando nuestra ruta de Next para órdenes
   }
+  if (path === '/clientes' || path.startsWith('/clientes')) {
+    return `/api/customers${path.replace('/clientes', '')}`; // Mapear /clientes a /api/customers
+  }
+  if (path.startsWith('/users/') && path.includes('/profiles')) {
+    // Mapear /users/{email}/profiles a /api/customers/by-email/{email}
+    const emailMatch = path.match(/\/users\/([^\/]+)\/profiles/);
+    if (emailMatch) {
+      const email = emailMatch[1];
+      return `/api/customers/by-email/${email}`;
+    }
+  }
   if (path.startsWith('/api/')) {
     return path; // ya apunta a nuestra API interna
   }

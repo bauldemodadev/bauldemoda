@@ -62,31 +62,21 @@ export async function guardarPerfilCliente<Data = unknown>(
 	const token = await currentUser.getIdToken(true);
 
 	const nowIso = new Date().toISOString();
-	const data = await api.post<Data>(
+	const data = await api.post<{success: boolean, data: Data}>(
 		"/clientes",
 		{
 			email: currentUser.email ?? "",
 			nombre: payload.nombre,
 			telefono: payload.telefono,
 			dni: payload.dni,
-			cuit: payload.cuit,
-			direccion: payload.direccion,
-			localidad: payload.localidad,
-			partido: payload.partido,
-			codigoPostal: payload.codigoPostal,
-			barrio: payload.barrio,
-			area: payload.area,
-			lote: payload.lote,
-			lat: payload.lat,
-			lng: payload.lng,
-			origen: payload.origen ?? "ecommerce",
-			creadoEn: payload.creadoEn ?? nowIso,
-			actualizadoEn: payload.actualizadoEn ?? nowIso,
+			uid: currentUser.uid,
+			// Nota: Los campos adicionales (cuit, direccion, etc.) se pueden agregar después
+			// cuando extendamos el modelo Customer en Firestore
 		},
 		{ withAuthToken: token }
 	);
 
-	return { ok: true, status: 200, data };
+	return { ok: true, status: 200, data: data?.data || data };
 }
 
 /**
