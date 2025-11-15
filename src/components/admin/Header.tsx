@@ -65,19 +65,22 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
           {onMenuToggle && (
             <button
               onClick={(e) => {
-                e.stopPropagation();
-                if (onMenuToggle) {
-                  onMenuToggle();
-                }
-              }}
-              onTouchEnd={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 if (onMenuToggle) {
                   onMenuToggle();
                 }
               }}
-              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100 rounded-md transition-colors touch-manipulation -ml-1"
+              onMouseDown={(e) => {
+                // Prevenir que el evento se propague al overlay
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              onTouchStart={(e) => {
+                // Prevenir que el evento se propague al overlay
+                e.stopPropagation();
+              }}
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100 rounded-md transition-colors touch-manipulation -ml-1 relative z-[60]"
               aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={isMenuOpen}
               type="button"

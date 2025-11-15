@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -28,18 +28,45 @@ interface AdminSidebarProps {
 
 export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const previousPathnameRef = useRef<string | null>(null);
+  const [showOverlay, setShowOverlay] = useState(false);
 
-  // Cerrar sidebar cuando cambia la ruta en mobile
+  // Mostrar overlay con un pequeño delay para evitar que capture el clic del botón
   useEffect(() => {
-    const handleRouteChange = () => {
-      if (isOpen && window.innerWidth < 1024) {
-        onClose?.();
-      }
-    };
+    if (isOpen) {
+      // Retrasar la aparición del overlay para que el botón pueda manejar el evento primero
+      const timer = setTimeout(() => {
+        setShowOverlay(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      setShowOverlay(false);
+    }
+  }, [isOpen]);
+
+  // Cerrar sidebar solo cuando cambia la ruta en mobile
+  // IMPORTANTE: Este efecto SOLO se ejecuta cuando cambia pathname, NO cuando cambia isOpen
+  useEffect(() => {
+    // Ignorar la primera renderización (cuando previousPathnameRef.current es null)
+    if (previousPathnameRef.current === null) {
+      previousPathnameRef.current = pathname;
+      return;
+    }
+
+    // Solo cerrar si el pathname realmente cambió
+    const pathnameChanged = previousPathnameRef.current !== pathname;
     
-    // Cerrar cuando cambia el pathname
-    handleRouteChange();
-  }, [pathname, isOpen, onClose]);
+    if (pathnameChanged) {
+      // Solo cerrar si estamos en mobile y el sidebar está abierto
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+      if (isMobile && isOpen && onClose) {
+        onClose();
+      }
+      // Actualizar el pathname anterior
+      previousPathnameRef.current = pathname;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]); // SOLO pathname en las dependencias - leemos isOpen y onClose pero no queremos que se ejecute cuando cambian
 
   // Prevenir scroll del body cuando el sidebar está abierto en mobile
   useEffect(() => {
@@ -55,17 +82,19 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
 
   return (
     <>
-      {/* Overlay para mobile */}
-      {isOpen && (
+      {/* Overlay para mobile - se muestra con un pequeño delay para evitar conflictos */}
+      {isOpen && showOverlay && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-[40] lg:hidden"
-          onClick={() => {
-            if (onClose) {
+          className="fixed inset-0 bg-black bg-opacity-50 z-[40] lg:hidden transition-opacity duration-200"
+          onClick={(e) => {
+            // Solo cerrar si el click es directamente en el overlay
+            if (e.target === e.currentTarget && onClose) {
               onClose();
             }
           }}
-          onTouchStart={() => {
-            if (onClose) {
+          onTouchEnd={(e) => {
+            // Usar onTouchEnd para evitar conflictos con otros eventos
+            if (e.target === e.currentTarget && onClose) {
               onClose();
             }
           }}
