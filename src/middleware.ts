@@ -20,8 +20,18 @@ export function middleware(request: NextRequest) {
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
     
-    // Si no es la página de login y no hay cookie de autenticación, 
-    // el layout se encargará de redirigir (no lo hacemos aquí para evitar doble verificación)
+    // Verificar autenticación básica: si no es la página de login y no hay cookie de autenticación, redirigir
+    // Esta verificación es solo para evitar la página en blanco, la verificación real del token se hace en el layout
+    if (pathname !== '/admin/login' && !pathname.startsWith('/admin/login')) {
+      const authToken = request.cookies.get('firebase-auth-token');
+      
+      // Si no hay cookie, redirigir inmediatamente a login (esto evita la página en blanco)
+      if (!authToken || !authToken.value) {
+        const loginUrl = new URL('/admin/login', request.url);
+        // Preservar el parámetro de redirección si se necesita
+        return NextResponse.redirect(loginUrl);
+      }
+    }
   }
 
   return response;

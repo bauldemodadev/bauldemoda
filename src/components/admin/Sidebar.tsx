@@ -31,9 +31,14 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
 
   // Cerrar sidebar cuando cambia la ruta en mobile
   useEffect(() => {
-    if (isOpen && window.innerWidth < 1024) {
-      onClose?.();
-    }
+    const handleRouteChange = () => {
+      if (isOpen && window.innerWidth < 1024) {
+        onClose?.();
+      }
+    };
+    
+    // Cerrar cuando cambia el pathname
+    handleRouteChange();
   }, [pathname, isOpen, onClose]);
 
   // Prevenir scroll del body cuando el sidebar está abierto en mobile
@@ -53,8 +58,17 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
       {/* Overlay para mobile */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={onClose}
+          className="fixed inset-0 bg-black bg-opacity-50 z-[40] lg:hidden"
+          onClick={() => {
+            if (onClose) {
+              onClose();
+            }
+          }}
+          onTouchStart={() => {
+            if (onClose) {
+              onClose();
+            }
+          }}
           aria-hidden="true"
         />
       )}
@@ -62,12 +76,14 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
       {/* Sidebar */}
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-40
-          w-64 bg-white shadow-lg lg:shadow-sm
+          fixed lg:static inset-y-0 left-0 z-[50] lg:z-auto
+          w-64 bg-white shadow-xl lg:shadow-sm
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           lg:min-h-screen
         `}
+        role="navigation"
+        aria-label="Menu de navegación"
       >
         <div className="h-full flex flex-col overflow-y-auto">
           <div className="p-4 border-b border-gray-200">
@@ -82,14 +98,14 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => {
+                  onClick={(e) => {
                     // Cerrar sidebar en mobile al hacer clic
-                    if (window.innerWidth < 1024) {
+                    if (window.innerWidth < 1024 && isOpen) {
                       onClose?.();
                     }
                   }}
                   className={`
-                    flex items-center px-4 py-3 text-sm font-medium transition-colors
+                    flex items-center px-4 py-3 text-sm font-medium transition-colors touch-manipulation
                     ${isActive
                       ? 'bg-[#E9ABBD] bg-opacity-10 text-[#D44D7D] border-r-2 border-[#D44D7D]'
                       : 'text-gray-700 hover:bg-gray-50'
