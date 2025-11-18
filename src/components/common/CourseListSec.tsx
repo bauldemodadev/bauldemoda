@@ -234,26 +234,39 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
   if (loading) {
     const skeletonCount = courseNames.length;
     return (
-      <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
-        <div className="text-left mb-8">
-          <h2 className="font-futura font-bold text-gray-900 mb-2">
-            {title}
-          </h2>
-          {subtitle && (
-            <h3 className="font-beauty text-[3rem] text-gray-900">{subtitle}</h3>
-          )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {Array.from({ length: skeletonCount }).map((_, i) => (
-            <div key={i} className="bg-white animate-pulse flex flex-col">
-              <div className="h-64 bg-gray-200"></div>
-              <div className="px-4 py-3">
-                <div className="h-4 bg-gray-200 mb-1"></div>
-                <div className="h-3 bg-gray-200 mb-3"></div>
-              </div>
-              <div className="h-12 bg-gray-200"></div>
+      <section className="relative mb-12">
+        <div 
+          className="relative pt-8 pb-8"
+          style={{ 
+            backgroundColor: "#F5F0D7",
+            marginLeft: "calc(50% - 50vw)",
+            marginRight: "calc(50% - 50vw)",
+            paddingLeft: "calc(50vw - 50%)",
+            paddingRight: "calc(50vw - 50%)"
+          }}
+        >
+          <div className="max-w-frame mx-auto px-4 md:px-6">
+            <div className="text-left mb-6 pt-8 pb-6">
+              <h2 className="font-futura font-bold text-gray-900 mb-2">
+                {title}
+              </h2>
+              {subtitle && (
+                <h3 className="font-beauty text-[3rem] text-gray-900">{subtitle}</h3>
+              )}
             </div>
-          ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {Array.from({ length: skeletonCount }).map((_, i) => (
+                <div key={i} className="bg-white animate-pulse flex flex-col">
+                  <div className="h-64 bg-gray-200"></div>
+                  <div className="px-4 py-3">
+                    <div className="h-4 bg-gray-200 mb-1"></div>
+                    <div className="h-3 bg-gray-200 mb-3"></div>
+                  </div>
+                  <div className="h-12 bg-gray-200"></div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     );
@@ -328,35 +341,9 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
   return (
     <>
       <section className="relative mb-12">
-        {/* Título y subtítulo - fondo blanco con contenedor limitado */}
-        <div className="max-w-frame mx-auto px-4 md:px-6">
-          <div className="text-left mb-6 bg-white pt-8 pb-6 relative z-10">
-            <motion.h2
-              initial={{ y: "100px", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="font-futura font-bold text-gray-900 mb-2"
-            >
-              {title}
-            </motion.h2>
-            {subtitle && (
-              <motion.h3
-                initial={{ y: "100px", opacity: 0 }}
-                animate={{ y: "0", opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-beauty text-[3rem] text-gray-900"
-              >
-                {subtitle}
-              </motion.h3>
-            )}
-          </div>
-        </div>
-
-        {/* Contenedor con fondo amarillo que comienza a la mitad de las cards - ancho completo */}
+        {/* Contenedor con fondo amarillo - ancho completo */}
         <div 
-          className="relative -mt-28 pt-28 pb-8"
+          className="relative pt-8 pb-8"
           style={{ 
             backgroundColor: "#F5F0D7",
             marginLeft: "calc(50% - 50vw)",
@@ -366,6 +353,29 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
           }}
         >
           <div className="max-w-frame mx-auto px-4 md:px-6">
+            {/* Título y subtítulo */}
+            <div className="text-left mb-6 pt-8 pb-6">
+              <motion.h2
+                initial={{ y: "100px", opacity: 0 }}
+                animate={{ y: "0", opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="font-futura font-bold text-gray-900 mb-2"
+              >
+                {title}
+              </motion.h2>
+              {subtitle && (
+                <motion.h3
+                  initial={{ y: "100px", opacity: 0 }}
+                  animate={{ y: "0", opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="font-beauty text-[3rem] text-gray-900"
+                >
+                  {subtitle}
+                </motion.h3>
+              )}
+            </div>
             {/* Grid de cursos */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
               {products.map((product, index) => (
