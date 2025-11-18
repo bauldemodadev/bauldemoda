@@ -61,54 +61,13 @@ const Bauleras = () => {
               </motion.p>
             </div>
 
-            {/* Imagen y elementos decorativos */}
+            {/* Imagen */}
             <div className="relative">
-              {/* Elementos decorativos */}
-              <div className="absolute inset-0">
-                <svg width="100%" height="400" viewBox="0 0 400 400" className="absolute">
-                  {/* Forma amarilla de fondo */}
-                  <ellipse cx="200" cy="200" rx="180" ry="160" fill="#FFD700" opacity="0.8" />
-                  
-                  {/* Hojas decorativas */}
-                  <path d="M50 100 Q80 80 120 100 Q100 120 80 140 Q60 120 50 100" fill="#E9749B" opacity="0.7" />
-                  <path d="M350 80 Q380 60 420 80 Q400 100 380 120 Q360 100 350 80" fill="#E9749B" opacity="0.7" />
-                  <path d="M60 300 Q90 280 130 300 Q110 320 90 340 Q70 320 60 300" fill="#20B2AA" opacity="0.7" />
-                  <path d="M340 320 Q370 300 410 320 Q390 340 370 360 Q350 340 340 320" fill="#20B2AA" opacity="0.7" />
-                  
-                  {/* Corazones */}
-                  <path d="M150 80 Q140 70 150 60 Q160 70 150 80" fill="#FFD700" />
-                  <path d="M250 60 Q240 50 250 40 Q260 50 250 60" fill="#FFD700" />
-                  <path d="M180 350 Q170 340 180 330 Q190 340 180 350" fill="#FFD700" />
-                  
-                  {/* Botón */}
-                  <circle cx="320" cy="120" r="8" fill="#E9749B" />
-                  <circle cx="320" cy="120" r="4" fill="white" />
-                  
-                  {/* Carretes de hilo */}
-                  <rect x="80" y="200" width="12" height="8" fill="#FFD700" />
-                  <rect x="80" y="202" width="12" height="4" fill="white" />
-                  <rect x="300" y="250" width="12" height="8" fill="#E9749B" />
-                  <rect x="300" y="252" width="12" height="4" fill="white" />
-                  
-                  {/* Líneas onduladas */}
-                  <path d="M320 350 Q340 360 360 350 Q380 360 400 350" stroke="#FFD700" strokeWidth="3" fill="none" />
-                </svg>
-              </div>
-
-              {/* Imagen central */}
-              <div className="relative z-10 bg-white rounded-lg p-8 shadow-lg">
-                <div className="text-center">
-                  <div className="w-64 h-64 mx-auto mb-4 flex items-center justify-center">
-                    <img
-                      src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/juli-vero.jpg"
-                      alt="Juli y Vero - Fundadoras de Baúl de Moda"
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
-                  <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">Juli y Vero</h4>
-                  <p className="text-sm text-gray-600">Fundadoras de Baúl de Moda</p>
-                </div>
-              </div>
+              <img
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/6-3.jpg"
+                alt="Somos Baúl de Moda"
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
             </div>
           </div>
         </div>
@@ -126,66 +85,18 @@ const Bauleras = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg p-8 shadow-lg"
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-pink-600">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
-                  </div>
-                  <span className="text-white font-bold">Baúl de Moda online!</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <button className="text-white hover:text-yellow-200 transition-colors">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                  </button>
-                  <button className="text-white hover:text-yellow-200 transition-colors">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              
-              {/* Video real */}
-              <div className="bg-yellow-300 rounded-lg p-8 relative">
-                <div className="aspect-video bg-black rounded-lg overflow-hidden">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                    title="Baúl de Moda - Talleres de indumentaria"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                  ></iframe>
-                </div>
-                
-                {/* Logo Baúl de Moda */}
-                <div className="absolute top-4 right-4">
-                  <div className="bg-white rounded-full p-2 shadow-lg">
-                    <span className="text-pink-600 font-bold text-sm">Baúl de Moda</span>
-                  </div>
-                </div>
-                
-                {/* Texto descriptivo */}
-                <div className="absolute bottom-4 left-4">
-                  <span className="text-pink-600 font-bold text-sm">CURSOS - WORKSHOPS - EVENTOS</span>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <button className="bg-red-600 text-white px-6 py-2 rounded-lg flex items-center space-x-2 mx-auto hover:bg-red-700 transition-colors">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                  </svg>
-                  <span>Mirar en YouTube</span>
-                </button>
+              <div className="aspect-video bg-black rounded-lg overflow-hidden shadow-lg">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/R0rG-C3MErE?si=f0htzeZIapllYlme"
+                  title="Baúl de Moda - Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                ></iframe>
               </div>
             </motion.div>
           </div>
@@ -199,54 +110,13 @@ const Bauleras = () => {
       >
         <div className="max-w-frame mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Imagen y elementos decorativos */}
+            {/* Imagen */}
             <div className="relative">
-              {/* Elementos decorativos */}
-              <div className="absolute inset-0">
-                <svg width="100%" height="400" viewBox="0 0 400 400" className="absolute">
-                  {/* Forma amarilla de fondo */}
-                  <ellipse cx="200" cy="200" rx="180" ry="160" fill="#FFD700" opacity="0.8" />
-                  
-                  {/* Hojas decorativas */}
-                  <path d="M50 100 Q80 80 120 100 Q100 120 80 140 Q60 120 50 100" fill="#E9749B" opacity="0.7" />
-                  <path d="M350 80 Q380 60 420 80 Q400 100 380 120 Q360 100 350 80" fill="#E9749B" opacity="0.7" />
-                  <path d="M60 300 Q90 280 130 300 Q110 320 90 340 Q70 320 60 300" fill="#20B2AA" opacity="0.7" />
-                  <path d="M340 320 Q370 300 410 320 Q390 340 370 360 Q350 340 340 320" fill="#20B2AA" opacity="0.7" />
-                  
-                  {/* Corazones */}
-                  <path d="M150 80 Q140 70 150 60 Q160 70 150 80" fill="#FFD700" />
-                  <path d="M250 60 Q240 50 250 40 Q260 50 250 60" fill="#FFD700" />
-                  <path d="M180 350 Q170 340 180 330 Q190 340 180 350" fill="#FFD700" />
-                  
-                  {/* Botón */}
-                  <circle cx="320" cy="120" r="8" fill="#E9749B" />
-                  <circle cx="320" cy="120" r="4" fill="white" />
-                  
-                  {/* Carretes de hilo */}
-                  <rect x="80" y="200" width="12" height="8" fill="#FFD700" />
-                  <rect x="80" y="202" width="12" height="4" fill="white" />
-                  <rect x="300" y="250" width="12" height="8" fill="#E9749B" />
-                  <rect x="300" y="252" width="12" height="4" fill="white" />
-                  
-                  {/* Líneas onduladas */}
-                  <path d="M320 350 Q340 360 360 350 Q380 360 400 350" stroke="#FFD700" strokeWidth="3" fill="none" />
-                </svg>
-              </div>
-
-              {/* Imagen central */}
-              <div className="relative z-10 bg-white rounded-lg p-8 shadow-lg">
-                <div className="text-center">
-                  <div className="w-64 h-64 mx-auto mb-4 flex items-center justify-center">
-                    <img
-                      src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/historia-baul.jpg"
-                      alt="Historia de Baúl de Moda"
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
-                  <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">Historia de Baúl</h4>
-                  <p className="text-sm text-gray-600">Desde 2008</p>
-                </div>
-              </div>
+              <img
+                src="https://bauldemoda.com.ar/wp-content/uploads/2021/05/1150x750-C-1150x700.jpg"
+                alt="Historia de Baúl de Moda"
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
             </div>
 
             {/* Contenido de texto */}
@@ -343,9 +213,9 @@ const Bauleras = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-online.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2021/03/imagenes-intervenidas-para-web-baul-2020-330x330.jpg"
                     alt="Baúl en Blogs & Páginas"
-                    className="w-16 h-16 object-cover rounded-lg"
+                    className="w-full h-48 object-cover rounded-lg"
                   />
                 </div>
 
@@ -380,9 +250,9 @@ const Bauleras = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-revistas.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/05/1-7.jpg"
                     alt="Contenido Revistas - Arcadia"
-                    className="w-16 h-16 object-cover rounded-lg"
+                    className="w-full h-48 object-cover rounded-lg"
                   />
                 </div>
 
@@ -417,9 +287,9 @@ const Bauleras = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-exposiciones.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/05/5-3.jpg"
                     alt="Eventos, Expos y Premios"
-                    className="w-16 h-16 object-cover rounded-lg"
+                    className="w-full h-48 object-cover rounded-lg"
                   />
                 </div>
 
@@ -454,9 +324,9 @@ const Bauleras = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/prensa-diarios.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/05/2-4.jpg"
                     alt="Clarín & La Nación"
-                    className="w-16 h-16 object-cover rounded-lg"
+                    className="w-full h-48 object-cover rounded-lg"
                   />
                 </div>
 
@@ -480,19 +350,6 @@ const Bauleras = () => {
             </motion.div>
           </div>
 
-          {/* Indicadores de paginación */}
-          <div className="flex justify-center items-center space-x-2">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#E9749B" }}></div>
-            <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-            <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-            <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-            <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-            <div className="ml-4">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-pink-500">
-                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
-              </svg>
-            </div>
-          </div>
         </div>
       </section>
 

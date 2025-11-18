@@ -1,11 +1,37 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import UbicacionWrapper from "@/components/homepage/Ubicacion/UbicacionWrapper";
 
 const ComunidadBaul = () => {
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const testimonials = [
+    {
+      quote: "Arranque en Baul en el 2010 haciendo el curso de Lencería y trajes de baño, que daba Juli. Además de aprender y divertirme, me lleve una amiga y socia! Nos fuimos de viaje después del curso y armamos una marca.",
+      author: "Sofi"
+    },
+    {
+      quote: "En Baúl de Moda puse en marcha mi proyecto de diseño sustentable Carola Cornejo. En Baúl encontrás además de cursos de moldería, clases especiales, contactos de talleres con los que trabajo todavía, y oportunidades para vender mis productos, conocí dos personas generosas de corazón que se brindaron y brindan cada día con la misma calidez, paciencia, honestidad y profesionalismo! Ellas con Julieta y Verónica! Fueron quienes me dieron los primeros elementos para lograr un diseño con identidad, confiando en las capacidades que cada una tenemos! Imperdible conocerlas! Seres generosos como pocos que te enseñan en un clima de armonía único! Súper recomendables!!!! Seguimos juntas desde hace más de 5 años!!!! Gracias Juli y Vero!!!",
+      author: "Caro de \"Carola Cornejo\""
+    },
+    {
+      quote: "En Baúl no solo aprendí distintas herramientas para coser sino que encontré un lugar cálido, amigable, de sostén y acompañamiento para animarme con mi proyecto y poder, actualmente, trabajar como emprendedora con mi marca Viriva.",
+      author: "Aime de \"Viriva\""
+    }
+  ];
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
   return (
     <div className="px-4 xl:px-0">
       <section 
@@ -87,9 +113,13 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-tienda.svg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/tienda-baul.jpg"
                     alt="La Tienda Baúl"
-                    className="w-16 h-16"
+                    className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/tienda-baul.png";
+                    }}
                   />
                 </div>
                 
@@ -115,9 +145,13 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-telas.svg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/telas-agustin.jpg"
                     alt="Telas Agustín"
-                    className="w-16 h-16"
+                    className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/telas-agustin.png";
+                    }}
                   />
                 </div>
                 
@@ -143,9 +177,13 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-enigma.svg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/enigma.jpg"
                     alt="Enigma, Casa Gonzalez"
-                    className="w-16 h-16"
+                    className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/enigma.png";
+                    }}
                   />
                 </div>
                 
@@ -171,9 +209,13 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-epoje.svg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/epoje.jpg"
                     alt="EPOJE TEXTIL"
-                    className="w-16 h-16"
+                    className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/epoje.png";
+                    }}
                   />
                 </div>
                 
@@ -225,7 +267,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/kluma-deco.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/162736908_153938863654181_2552882831917902521_n-330x330.jpg"
                     alt="Kluma Deco"
                     className="w-16 h-16 rounded-full object-cover"
                   />
@@ -253,7 +295,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/dani-ramirez.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/AB63E0AAC6614D38A33C0C8ECB4D1B4E-330x330.jpg"
                     alt="Dani Ramirez"
                     className="w-16 h-16 rounded-full object-cover"
                   />
@@ -281,7 +323,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/buziana.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/LOGOS-pdf.jpg"
                     alt="Buziana"
                     className="w-16 h-16 rounded-full object-cover"
                   />
@@ -309,7 +351,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/mover-los-hilos.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2023/06/mover-los-hilos.jpg"
                     alt="Mover los Hilos"
                     className="w-16 h-16 rounded-full object-cover"
                   />
@@ -386,7 +428,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/festival-11-ed.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2021/11/1-330x330.jpg"
                     alt="Festival 11° Ed. Ciudad Jardín"
                     className="w-full h-32 object-cover rounded-lg"
                   />
@@ -414,7 +456,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/festival-12-ed.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/feed-festival-330x330.gif"
                     alt="Festival 12° Ed. Ciudad Jardín"
                     className="w-full h-32 object-cover rounded-lg"
                   />
@@ -442,7 +484,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/mercadillo-almagro.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2021/11/mercadillo-navidad-330x330.jpg"
                     alt="El Mercadillo de Almagro Navidad"
                     className="w-full h-32 object-cover rounded-lg"
                   />
@@ -470,7 +512,7 @@ const ComunidadBaul = () => {
                 {/* Imagen real */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/festival-en-casa.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/12/131822889_10158279931233924_4735578909456527845_o-330x330.jpg"
                     alt="Festival en Casa"
                     className="w-full h-32 object-cover rounded-lg"
                   />
@@ -522,59 +564,63 @@ const ComunidadBaul = () => {
           <div className="absolute top-20 left-20 w-1 h-6 opacity-30" style={{ backgroundColor: "#F0C8D7" }}></div>
           <div className="absolute top-24 left-24 w-1 h-4 opacity-30" style={{ backgroundColor: "#F0C8D7" }}></div>
 
-          {/* Contenido del testimonio */}
-          <div className="relative z-10 text-center py-16">
-            <motion.blockquote
-              initial={{ y: "100px", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 2.4 }}
-              className="text-lg md:text-xl text-gray-700 italic leading-relaxed max-w-4xl mx-auto mb-8"
-            >
-              "En Baúl no solo aprendí distintas herramientas para coser sino que encontré un lugar cálido, amigable, de sostén y acompañamiento para animarme con mi proyecto y poder, actualmente, trabajar como emprendedora con mi marca Viriva."
-            </motion.blockquote>
-            
-            <motion.cite
-              initial={{ y: "100px", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 2.5 }}
-              className="text-lg font-bold"
-              style={{ color: "#E9749B" }}
-            >
-              AIME DE 'VIRIVA'
-            </motion.cite>
+          {/* Contenido del testimonio - Slider */}
+          <div className="relative z-10 text-center py-16 min-h-[300px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentTestimonial}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="max-w-4xl mx-auto"
+              >
+                <blockquote className="text-lg md:text-xl text-gray-700 italic leading-relaxed mb-8">
+                  "{testimonials[currentTestimonial].quote}"
+                </blockquote>
+                
+                <cite className="text-lg font-bold block" style={{ color: "#E9749B" }}>
+                  {testimonials[currentTestimonial].author.toUpperCase()}
+                </cite>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           {/* Flechas de navegación */}
-          <div className="absolute left-8 top-1/2 transform -translate-y-1/2">
-            <motion.button
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 2.6 }}
-              className="w-8 h-8 flex items-center justify-center"
-              style={{ color: "#E9749B" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-              </svg>
-            </motion.button>
-          </div>
+          <button
+            onClick={prevTestimonial}
+            className="absolute left-4 md:left-8 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full hover:bg-pink-100 transition-colors z-20"
+            style={{ color: "#E9749B" }}
+            aria-label="Testimonio anterior"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+            </svg>
+          </button>
           
-          <div className="absolute right-8 top-1/2 transform -translate-y-1/2">
-            <motion.button
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 2.7 }}
-              className="w-8 h-8 flex items-center justify-center"
-              style={{ color: "#E9749B" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
-              </svg>
-            </motion.button>
+          <button
+            onClick={nextTestimonial}
+            className="absolute right-4 md:right-8 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full hover:bg-pink-100 transition-colors z-20"
+            style={{ color: "#E9749B" }}
+            aria-label="Testimonio siguiente"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+            </svg>
+          </button>
+
+          {/* Indicadores de puntos */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentTestimonial(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentTestimonial ? 'bg-pink-500 w-8' : 'bg-pink-200'
+                }`}
+                aria-label={`Ir al testimonio ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -637,92 +683,25 @@ const ComunidadBaul = () => {
             </motion.div>
           </div>
 
-          {/* Imágenes de Co-Working */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Imagen Ciudad Jardín */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 3.0 }}
-              className="bg-white rounded-lg p-6 shadow-lg"
-            >
-              <div className="text-center">
-                <img
-                  src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/cjinfo.svg"
-                  alt="Baul de Moda - Ciudad Jardín"
-                  className="w-full h-auto mb-4"
-                />
-                <h4 className="font-beauty text-xl font-bold text-gray-900 mb-4">
-                  CIUDAD JARDÍN
-                </h4>
-                <div className="flex flex-col gap-3">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
-                    style={{ backgroundColor: "#E9ABBD" }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
-                  >
-                    CONTACTAR
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
-                    style={{ backgroundColor: "#E9ABBD" }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
-                  >
-                    NEWSLETTER
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Imagen Almagro */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 3.1 }}
-              className="bg-white rounded-lg p-6 shadow-lg"
-            >
-              <div className="text-center">
-                <img
-                  src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/almagroinfo.svg"
-                  alt="Baul de Moda - Almagro"
-                  className="w-full h-auto mb-4"
-                />
-                <h4 className="font-beauty text-xl font-bold text-gray-900 mb-4">
-                  ALMAGRO
-                </h4>
-                <div className="flex flex-col gap-3">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
-                    style={{ backgroundColor: "#E9ABBD" }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
-                  >
-                    CONTACTAR
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
-                    style={{ backgroundColor: "#E9ABBD" }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
-                  >
-                    NEWSLETTER
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          {/* Imagen de Co-Working */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 3.0 }}
+            className="relative"
+          >
+            <div className="relative w-full h-[400px] rounded-lg shadow-lg overflow-hidden bg-gray-100">
+              <Image
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/coworking.jpg"
+                alt="Co-Working Baúl de Moda"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                unoptimized
+              />
+            </div>
+          </motion.div>
         </div>
         </div>
       </section>
