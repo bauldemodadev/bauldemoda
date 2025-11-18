@@ -39,8 +39,17 @@ const ComunidadBaul = () => {
         style={{ backgroundColor: "#F8F5E8" }}
       >
         <div className="max-w-frame mx-auto px-4 md:px-6">
-        {/* Título principal */}
-        <div className="text-center mb-8">
+        {/* Título principal con fondo blanco a todo el ancho */}
+        <div 
+          className="text-center py-12 md:py-16 mb-8"
+          style={{
+            backgroundColor: "#FFFFFF",
+            marginLeft: "calc(50% - 50vw)",
+            marginRight: "calc(50% - 50vw)",
+            paddingLeft: "calc(50vw - 50%)",
+            paddingRight: "calc(50vw - 50%)"
+          }}
+        >
           <motion.h2
             initial={{ y: "100px", opacity: 0 }}
             animate={{ y: "0", opacity: 1 }}
@@ -51,15 +60,20 @@ const ComunidadBaul = () => {
             COMUNIDAD BAÚL
           </motion.h2>
           
-          {/* Línea decorativa azul */}
+          {/* SVG decorativo onda celeste */}
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-24 h-1 mx-auto mb-4"
-            style={{ backgroundColor: "#87CEEB" }}
-          />
+            className="flex justify-center mb-4"
+          >
+            <img
+              src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/onda-celeste.svg"
+              alt="Onda decorativa"
+              className="h-4 md:h-5"
+            />
+          </motion.div>
           
           <motion.p
             initial={{ y: "100px", opacity: 0 }}

@@ -35,8 +35,6 @@ body {
     --input: 220 13% 91%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 0.5rem;
-    --font-beauty: "Beauty", Georgia, serif;
-    --font-futura: "Futura Md BT", Arial, sans-serif;
   }
  
   .dark {
