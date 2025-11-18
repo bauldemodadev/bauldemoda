@@ -431,7 +431,7 @@ export default function CursosOnlinePage() {
             transition={{ duration: 0.6 }}
             className="mb-8 text-center"
           >
-            <h2 className="font-futura font-bold text-gray-900 mb-4">
+            <h2 className="font-futura font-bold text-gray-900 mb-4 text-2xl sm:text-3xl md:text-3xl lg:text-4xl">
               CURSOS ONLINE
             </h2>
             

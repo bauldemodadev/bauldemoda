@@ -15,7 +15,7 @@ const filterProductsBySlug = (products: Product[], slug: string): Product[] => {
     'cursos-online': ['curso online', 'cursos online', 'online', 'masterclass', 'intensivo', 'pack', 'gift', 'abc costura'],
     'cursos-ciudad-jardin': ['ciudad jardín', 'ciudad jardin', 'ciudad jardín', 'intensivo', 'regular', 'baul a puertas abiertas', 'overlock', 'collareta'],
     'cursos-almagro': ['almagro', 'intensivo', 'regular', 'indumentaria', 'carteras', 'lencería', 'lenceria', 'mallas'],
-    'productos-servicios': ['revista', 'ebook', 'insumo', 'herramienta', 'producto', 'servicio'],
+    'productos-servicios': ['revista', 'ebook', 'insumo', 'herramienta', 'producto', 'servicio', 'gift'],
   };
 
   const searchTerms = keywords[slug] || [];
@@ -34,8 +34,6 @@ const segmentProducts = (products: Product[]) => {
   const segments = {
     revistas: [] as Product[],
     giftCards: [] as Product[],
-    ebooks: [] as Product[],
-    insumos: [] as Product[],
   };
 
   products.forEach(product => {
@@ -43,14 +41,79 @@ const segmentProducts = (products: Product[]) => {
     const categoryLower = (product.category || '').toLowerCase();
     const searchText = `${nameLower} ${categoryLower}`;
     
-    if (searchText.includes('revista')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('gift') || searchText.includes('card')) {
+    // Gift Cards
+    if (searchText.includes('gift baulera intensivos')) {
       segments.giftCards.push(product);
-    } else if (searchText.includes('ebook')) {
-      segments.ebooks.push(product);
-    } else if (searchText.includes('insumo') || searchText.includes('herramienta')) {
-      segments.insumos.push(product);
+    } else if (searchText.includes('gift baulera abc') && searchText.includes('intensivo')) {
+      segments.giftCards.push(product);
+    } else if (searchText.includes('gift baulera pack x 3') || searchText.includes('gift baulera pack x3')) {
+      segments.giftCards.push(product);
+    } else if (searchText.includes('gift baulera abc online')) {
+      segments.giftCards.push(product);
+    } else if (searchText.includes('gift')) {
+      segments.giftCards.push(product);
+    }
+    // Revistas
+    else if (searchText.includes('revista especial bebes') || searchText.includes('revista especial bebés') || searchText.includes('especial bebes') || searchText.includes('especial bebés')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista moda oversize') || searchText.includes('moda oversize')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista vida sustentable') || searchText.includes('vida sustentable')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista ropa comoda y casual') || searchText.includes('ropa comoda y casual') || searchText.includes('ropa cómoda y casual')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista vestidos simpleza y color') || searchText.includes('vestidos simpleza y color')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista lenceria i') || searchText.includes('revista lencería i') || searchText.includes('lenceria i') || searchText.includes('lencería i')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista macrame mandalas') || searchText.includes('macramé mandalas') || searchText.includes('macrame mandalas')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista vestidos dama') || searchText.includes('vestidos dama')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista costura express') || searchText.includes('costura express')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista comodo y femenino') || searchText.includes('revista cómodo y femenino') || searchText.includes('cómodo y femenino')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista ropa deportiva') || searchText.includes('ropa deportiva')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista accesorios') || searchText.includes('accesorios')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista vivi la moda') || searchText.includes('vivi la moda')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista mujeres reales') || searchText.includes('mujeres reales')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista especial abrigos') || searchText.includes('especial abrigos')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista especial vestidos') || searchText.includes('especial vestidos')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista especial buzos') || searchText.includes('especial buzos')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista ropa con apliques') || searchText.includes('ropa con apliques')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista ropa de noche') || searchText.includes('ropa de noche')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista lenceria ii') || searchText.includes('revista lencería ii') || searchText.includes('lenceria ii') || searchText.includes('lencería ii')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista mix telas') || searchText.includes('mix telas')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista diseños a medida') || searchText.includes('diseños a medida')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista vestidos nenas') || searchText.includes('vestidos nenas')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista talles reales') || searchText.includes('talles reales')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista bohemia peques') || searchText.includes('bohemia peques')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista pijamas divertidos') || searchText.includes('pijamas divertidos')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista ropa de trabajo') || searchText.includes('ropa de trabajo')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista camisas') || searchText.includes('camisas')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista de mochilas') || searchText.includes('revista mochilas') || searchText.includes('mochilas')) {
+      segments.revistas.push(product);
+    } else if (searchText.includes('revista')) {
+      segments.revistas.push(product);
     }
   });
 
@@ -74,7 +137,6 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
     productId: product.id,
   };
 
-  // Agregar al carrito local
   const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
   const indice = carritoLocal.findIndex(
     (i: any) => i.id === itemCarrito.id
@@ -102,11 +164,11 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
   window.dispatchEvent(new Event("cartUpdate"));
 };
 
-// Card simple sin precio (como en el inicio)
-const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
+// Card genérica reutilizable
+const ProductCard = ({ product, toast, subtitle = "Productos y Servicios" }: { product: Product; toast: any; subtitle?: string }) => {
   return (
     <motion.div
-      className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
+      className="bg-white border border-gray-200 overflow-hidden transition-all duration-300 group flex flex-col"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
     >
@@ -154,7 +216,7 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
             {product.name}
           </h3>
           <p className="text-gray-600 text-sm mb-3 text-center">
-            Productos y Servicios
+            {subtitle}
           </p>
         </div>
         
@@ -171,33 +233,6 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
         </Link>
       </div>
     </motion.div>
-  );
-};
-
-const ProductSection = ({ 
-  title, 
-  products, 
-  toast 
-}: { 
-  title: string; 
-  products: Product[]; 
-  toast: any;
-}) => {
-  if (products.length === 0) return null;
-
-  return (
-    <section className="max-w-7xl mx-auto px-4 md:px-6 mb-12">
-      <div className="text-left mb-8">
-        <h2 className="font-futura font-bold text-gray-900 mb-2">
-          {title}
-        </h2>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} toast={toast} />
-        ))}
-      </div>
-    </section>
   );
 };
 
@@ -220,9 +255,7 @@ export default function ProductosYServiciosPage() {
         }
         
         const allProducts = await response.json() as Product[];
-        // Filtrar productos basándose en el slug de la URL
         const filteredProducts = filterProductsBySlug(allProducts, 'productos-servicios');
-        
         setProducts(filteredProducts);
         setError(null);
       } catch (err) {
@@ -243,15 +276,14 @@ export default function ProductosYServiciosPage() {
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded mb-4 w-1/3"></div>
             <div className="h-4 bg-gray-200 rounded mb-8 w-2/3"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, i) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Array.from({ length: 2 }).map((_, i) => (
                 <div key={i} className="bg-white animate-pulse flex flex-col">
                   <div className="h-80 bg-gray-200"></div>
                   <div className="px-4 py-3">
                     <div className="h-4 bg-gray-200 mb-1"></div>
                     <div className="h-3 bg-gray-200 mb-3"></div>
                   </div>
-                  <div className="h-12 bg-gray-200"></div>
                 </div>
               ))}
             </div>
@@ -274,85 +306,102 @@ export default function ProductosYServiciosPage() {
   }
 
   const segments = segmentProducts(products);
+  
+  // Componente de sección reutilizable
+  const ProductSection = ({ 
+    title, 
+    products, 
+    subtitle = "Productos y Servicios"
+  }: { 
+    title: string; 
+    products: Product[]; 
+    subtitle?: string;
+  }) => {
+    if (products.length === 0) return null;
+
+    return (
+      <section className="mb-16">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-8"
+        >
+          <h2 className="font-beauty text-4xl md:text-5xl text-gray-900 mb-4">
+            {title}
+          </h2>
+          
+          <nav className="mb-6">
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <Link href="/shop" className="hover:text-[#E9ABBD]">Tienda</Link>
+              <span>/</span>
+              <Link href="/shop/categoria/productos-servicios" className="hover:text-[#E9ABBD]">
+                Productos y Servicios
+              </Link>
+              <span>/</span>
+              <Link href="/shop/categoria/productos-servicios" className="text-[#E9ABBD] hover:text-[#D44D7D]">
+                {title}
+              </Link>
+              <span>→</span>
+            </div>
+          </nav>
+        </motion.div>
+
+        <div className="mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} toast={toast} subtitle={subtitle} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-pink-600">Inicio</Link>
-            <span>/</span>
-            <Link href="/shop" className="hover:text-pink-600">Tienda</Link>
-            <span>/</span>
-            <span className="text-gray-900">Productos y servicios</span>
-          </div>
-        </nav>
+        {/* Sección PRODUCTOS Y SERVICIOS */}
+        <section className="mb-16">
+          {/* Título y descripción - fondo blanco */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 text-center"
+          >
+            <h2 className="font-futura font-bold text-gray-900 mb-4 text-2xl sm:text-3xl md:text-3xl lg:text-4xl">
+              PRODUCTOS Y SERVICIOS
+            </h2>
+            
+            {/* Línea decorativa azul ondulada */}
+            <div className="mb-4 flex justify-center">
+              <img
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/onda-celeste.svg"
+                alt="Línea decorativa"
+                className="h-4 md:h-5"
+              />
+            </div>
+            
+            <p className="text-gray-700 text-base leading-relaxed max-w-4xl mx-auto">
+              Tienda virtual donde vas a conseguir las revistas de Baúl, que desarrollamos para Editorial Arcadia, y algunas herramientas de costura. Podes comprarlas desde la web y retirarlas sin cargo por las sedes o recibirlas por correo.
+            </p>
+          </motion.div>
+        </section>
 
-        {/* Título y descripción */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          <h2 className="font-futura font-bold text-gray-900 mb-2">
-            PRODUCTOS Y SERVICIOS
-          </h2>
-          <h3 className="font-beauty text-[3rem] text-gray-900 mb-4">
-            Revistas y herramientas de costura
-          </h3>
-          <p className="text-gray-700 text-lg max-w-4xl">
-            Tienda virtual donde vas a conseguir las revistas de Baúl, que desarrollamos para Editorial Arcadia, y algunas herramientas de costura. Podes comprarlas desde la web y retirarlas sin cargo por las sedes o recibirlas por correo.
-          </p>
-        </motion.div>
-
-        {/* Secciones de productos */}
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <ProductSection 
-            title="Revistas" 
-            products={segments.revistas} 
-            toast={toast}
-          />
-          
-          <ProductSection 
-            title="Gift cards" 
-            products={segments.giftCards} 
-            toast={toast}
-          />
-          
-          <ProductSection 
-            title="Ebooks" 
-            products={segments.ebooks} 
-            toast={toast}
-          />
-          
-          <ProductSection 
-            title="Insumos" 
-            products={segments.insumos} 
-            toast={toast}
-          />
-        </motion.div>
-
-        {/* Botón volver a la tienda */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <Link href="/shop">
-            <button 
-              className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200 bg-pink-100 hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300"
-            >
-              Volver a la tienda
-            </button>
-          </Link>
-        </motion.div>
+        {/* Sección Revistas */}
+        <ProductSection 
+          title="Revistas" 
+          products={segments.revistas}
+          subtitle="Revistas"
+        />
+        
+        {/* Sección Gift Cards */}
+        <ProductSection 
+          title="Gift Cards" 
+          products={segments.giftCards}
+          subtitle="Gift Cards"
+        />
       </div>
     </div>
   );

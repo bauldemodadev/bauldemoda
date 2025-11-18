@@ -34,7 +34,9 @@ const filterProductsBySlug = (products: Product[], slug: string): Product[] => {
 const segmentProducts = (products: Product[]) => {
   const segments = {
     intensivos: [] as Product[],
-    regulares: [] as Product[],
+    regularesCarteras: [] as Product[],
+    regularesIndumentaria: [] as Product[],
+    regularesLenceria: [] as Product[],
   };
 
   products.forEach(product => {
@@ -42,10 +44,29 @@ const segmentProducts = (products: Product[]) => {
     const categoryLower = (product.category || '').toLowerCase();
     const searchText = `${nameLower} ${categoryLower}`;
     
-    if (searchText.includes('intensivo')) {
+    // Intensivos
+    if (searchText.includes('arreglos de ropa')) {
       segments.intensivos.push(product);
-    } else if (searchText.includes('regular')) {
-      segments.regulares.push(product);
+    } else if (searchText.includes('munecos') && (searchText.includes('especial navidad') || searchText.includes('navidad'))) {
+      segments.intensivos.push(product);
+    } else if (searchText.includes('abc costura') && !searchText.includes('regular')) {
+      segments.intensivos.push(product);
+    } else if (searchText.includes('intensivo indumentaria')) {
+      segments.intensivos.push(product);
+    } else if (searchText.includes('intensivo') && !searchText.includes('regular')) {
+      segments.intensivos.push(product);
+    }
+    // Regulares - Carteras
+    else if ((searchText.includes('regular') || searchText.includes('regulares')) && searchText.includes('cartera')) {
+      segments.regularesCarteras.push(product);
+    }
+    // Regulares - Indumentaria
+    else if ((searchText.includes('regular') || searchText.includes('regulares')) && searchText.includes('indumentaria')) {
+      segments.regularesIndumentaria.push(product);
+    }
+    // Regulares - Lencería y Mallas
+    else if ((searchText.includes('regular') || searchText.includes('regulares')) && (searchText.includes('lenceria') || searchText.includes('lencería') || searchText.includes('malla') || searchText.includes('mallas'))) {
+      segments.regularesLenceria.push(product);
     }
   });
 
@@ -55,53 +76,13 @@ const segmentProducts = (products: Product[]) => {
 const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: any) => {
   e.preventDefault();
   e.stopPropagation();
-
-  const itemCarrito = {
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    quantity: 1,
-    totalPrice: product.price,
-    srcUrl: product.srcUrl,
-    image: product.images?.[0] || product.srcUrl || PLACEHOLDER_IMAGE,
-    discount: product.discount || { percentage: 0, amount: 0 },
-    slug: product.name.split(" ").join("-"),
-    productId: product.id,
-  };
-
-  // Agregar al carrito local
-  const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
-  const indice = carritoLocal.findIndex(
-    (i: any) => i.id === itemCarrito.id
-  );
-
-  if (indice > -1) {
-    carritoLocal[indice].quantity += 1;
-    carritoLocal[indice].totalPrice =
-      carritoLocal[indice].quantity * itemCarrito.price;
-    toast({
-      title: "¡Cantidad actualizada!",
-      description: `Se ha actualizado la cantidad de ${product.name} en el carrito.`,
-      variant: "cart",
-    });
-  } else {
-    carritoLocal.push(itemCarrito);
-    toast({
-      title: "¡Producto agregado al carrito!",
-      description: `${product.name} ha sido agregado correctamente al carrito.`,
-      variant: "cart",
-    });
-  }
-
-  localStorage.setItem("cart", JSON.stringify(carritoLocal));
-  window.dispatchEvent(new Event("cartUpdate"));
 };
 
-// Card simple sin precio (como en el inicio)
-const ProductCard = ({ product, toast, onAddToCart }: { product: Product; toast: any; onAddToCart: (product: Product) => void }) => {
+// Card genérica reutilizable
+const ProductCard = ({ product, toast, subtitle = "Cursos Presenciales", onAddToCart }: { product: Product; toast: any; subtitle?: string; onAddToCart: (product: Product) => void }) => {
   return (
     <motion.div
-      className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
+      className="bg-white border border-gray-200 overflow-hidden transition-all duration-300 group flex flex-col"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
     >
@@ -153,7 +134,7 @@ const ProductCard = ({ product, toast, onAddToCart }: { product: Product; toast:
             {product.name}
           </h3>
           <p className="text-gray-600 text-sm mb-3 text-center">
-            Cursos Presenciales
+            {subtitle}
           </p>
         </div>
         
@@ -170,35 +151,6 @@ const ProductCard = ({ product, toast, onAddToCart }: { product: Product; toast:
         </Link>
       </div>
     </motion.div>
-  );
-};
-
-const ProductSection = ({ 
-  title, 
-  products, 
-  toast,
-  onAddToCart
-}: { 
-  title: string; 
-  products: Product[]; 
-  toast: any;
-  onAddToCart: (product: Product) => void;
-}) => {
-  if (products.length === 0) return null;
-
-  return (
-    <section className="max-w-7xl mx-auto px-4 md:px-6 mb-12">
-      <div className="text-left mb-8">
-        <h2 className="font-futura font-bold text-gray-900 mb-2">
-          {title}
-        </h2>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} toast={toast} onAddToCart={onAddToCart} />
-        ))}
-      </div>
-    </section>
   );
 };
 
@@ -223,9 +175,7 @@ export default function CursosAlmagroPage() {
         }
         
         const allProducts = await response.json() as Product[];
-        // Filtrar productos basándose en el slug de la URL
         const filteredProducts = filterProductsBySlug(allProducts, 'cursos-almagro');
-        
         setProducts(filteredProducts);
         setError(null);
       } catch (err) {
@@ -246,15 +196,14 @@ export default function CursosAlmagroPage() {
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded mb-4 w-1/3"></div>
             <div className="h-4 bg-gray-200 rounded mb-8 w-2/3"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, i) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Array.from({ length: 2 }).map((_, i) => (
                 <div key={i} className="bg-white animate-pulse flex flex-col">
                   <div className="h-80 bg-gray-200"></div>
                   <div className="px-4 py-3">
                     <div className="h-4 bg-gray-200 mb-1"></div>
                     <div className="h-3 bg-gray-200 mb-3"></div>
                   </div>
-                  <div className="h-12 bg-gray-200"></div>
                 </div>
               ))}
             </div>
@@ -285,7 +234,6 @@ export default function CursosAlmagroPage() {
 
   const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
     if (selectedProduct) {
-      // Agregar información de fecha y horario al producto si se seleccionó
       const itemCarrito = {
         id: selectedProduct.id,
         name: selectedProduct.name,
@@ -323,77 +271,123 @@ export default function CursosAlmagroPage() {
 
       localStorage.setItem("cart", JSON.stringify(carritoLocal));
       window.dispatchEvent(new Event("cartUpdate"));
+      setIsModalOpen(false);
+      setSelectedProduct(null);
     }
+  };
+
+  // Componente de sección reutilizable
+  const ProductSection = ({ 
+    title, 
+    products, 
+    subtitle = "Cursos Presenciales"
+  }: { 
+    title: string; 
+    products: Product[]; 
+    subtitle?: string;
+  }) => {
+    if (products.length === 0) return null;
+
+    return (
+      <section className="mb-16">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-8"
+        >
+          <h2 className="font-beauty text-4xl md:text-5xl text-gray-900 mb-4">
+            {title}
+          </h2>
+          
+          <nav className="mb-6">
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <Link href="/shop" className="hover:text-[#E9ABBD]">Tienda</Link>
+              <span>/</span>
+              <Link href="/shop/categoria/cursos-almagro" className="hover:text-[#E9ABBD]">
+                Cursos Almagro
+              </Link>
+              <span>/</span>
+              <Link href="/shop/categoria/cursos-almagro" className="text-[#E9ABBD] hover:text-[#D44D7D]">
+                {title}
+              </Link>
+              <span>→</span>
+            </div>
+          </nav>
+        </motion.div>
+
+        <div className="mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} toast={toast} subtitle={subtitle} onAddToCart={handleAddToCart} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   };
 
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-pink-600">Inicio</Link>
-            <span>/</span>
-            <Link href="/shop" className="hover:text-pink-600">Tienda</Link>
-            <span>/</span>
-            <span className="text-gray-900">Cursos Almagro</span>
-          </div>
-        </nav>
+        {/* Sección CURSOS PRESENCIALES */}
+        <section className="mb-16">
+          {/* Título y descripción - fondo blanco */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 text-center"
+          >
+            <h2 className="font-futura font-bold text-gray-900 mb-4 text-2xl sm:text-3xl md:text-3xl lg:text-4xl">
+              CURSOS PRESENCIALES
+            </h2>
+            
+            {/* Línea decorativa azul ondulada */}
+            <div className="mb-4 flex justify-center">
+              <img
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/onda-celeste.svg"
+                alt="Línea decorativa"
+                className="h-4 md:h-5"
+              />
+            </div>
+            
+            <h3 className="font-beauty text-[3rem] text-gray-900 mb-4">
+              Almagro
+            </h3>
+            
+            <p className="text-gray-700 text-base leading-relaxed max-w-4xl mx-auto">
+              Te presentamos los cursos presenciales en nuestra sede de Almagro, en Capital Federal.
+            </p>
+          </motion.div>
+        </section>
 
-        {/* Título y descripción */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          <h2 className="font-futura font-bold text-gray-900 mb-2">
-            CURSOS PRESENCIALES
-          </h2>
-          <h3 className="font-beauty text-[3rem] text-gray-900 mb-4">
-            Almagro
-          </h3>
-          <p className="text-gray-700 text-lg max-w-4xl">
-            Te presentamos los cursos presenciales en nuestra sede de Almagro, en Capital Federal.
-          </p>
-        </motion.div>
-
-        {/* Secciones de productos */}
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <ProductSection 
-            title="Intensivos" 
-            products={segments.intensivos} 
-            toast={toast}
-            onAddToCart={handleAddToCart}
-          />
-          
-          <ProductSection 
-            title="Regulares" 
-            products={segments.regulares} 
-            toast={toast}
-            onAddToCart={handleAddToCart}
-          />
-        </motion.div>
-
-        {/* Botón volver a la tienda */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <Link href="/shop">
-            <button 
-              className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200 bg-pink-100 hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300"
-            >
-              Volver a la tienda
-            </button>
-          </Link>
-        </motion.div>
+        {/* Sección Intensivos */}
+        <ProductSection 
+          title="Intensivos" 
+          products={segments.intensivos}
+        />
+        
+        {/* Sección Regulares - Carteras */}
+        <ProductSection 
+          title="Regulares" 
+          products={segments.regularesCarteras}
+          subtitle="Carteras"
+        />
+        
+        {/* Sección Regulares - Indumentaria */}
+        <ProductSection 
+          title="Regulares" 
+          products={segments.regularesIndumentaria}
+          subtitle="Indumentaria"
+        />
+        
+        {/* Sección Regulares - Lencería y Mallas */}
+        <ProductSection 
+          title="Regulares" 
+          products={segments.regularesLenceria}
+          subtitle="Lencería y Mallas"
+        />
       </div>
 
       {/* Modal de disponibilidad */}
