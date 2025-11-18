@@ -12,7 +12,7 @@ const AtencionPersonalizada = () => {
             whileInView={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-beauty text-4xl md:text-5xl font-bold text-gray-800 mb-4"
+            className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
           >
             CONOCENOS
           </motion.h2>
@@ -36,30 +36,30 @@ const AtencionPersonalizada = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center flex-1 max-w-sm"
+              className="text-center flex-1 max-w-sm w-full flex flex-col items-center"
             >
               {/* Imagen */}
-              <div className="mb-6 flex justify-center">
+              <div className="mb-6 flex justify-center items-center w-full">
                 <img 
                   src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-bauleras.svg" 
                   alt="Bauleras" 
-                  className="w-24 h-24"
+                  className="w-32 h-32 md:w-40 md:h-40 object-contain"
                 />
               </div>
               
               {/* Título */}
-              <h3 className="font-beauty text-2xl md:text-4xl text-gray-800 mb-4">
+              <h3 className="font-beauty text-3xl md:text-5xl text-gray-800 mb-4">
                 bauleras
               </h3>
               
               {/* Descripción */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
                 Descubrí quiénes somos<br />
                 y nuestra historia
               </p>
               
               {/* Link */}
-              <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors">
+              <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors text-sm md:text-base">
                 ver más
               </a>
             </motion.div>
@@ -70,30 +70,30 @@ const AtencionPersonalizada = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-center flex-1 max-w-sm"
+              className="text-center flex-1 max-w-sm w-full flex flex-col items-center"
             >
               {/* Imagen */}
-              <div className="mb-6 flex justify-center">
+              <div className="mb-6 flex justify-center items-center w-full">
                 <img 
                   src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-comunidad.svg" 
                   alt="Comunidad" 
-                  className="w-24 h-24"
+                  className="w-32 h-32 md:w-40 md:h-40 object-contain"
                 />
               </div>
               
               {/* Título */}
-              <h3 className="font-beauty text-2xl md:text-4xl text-gray-800 mb-4">
+              <h3 className="font-beauty text-3xl md:text-5xl text-gray-800 mb-4">
                 comunidad
               </h3>
               
               {/* Descripción */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
                 Conoce los beneficios para<br />
                 alumnos y nuestros eventos
               </p>
               
               {/* Link */}
-              <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors">
+              <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors text-sm md:text-base">
                 ver más
               </a>
             </motion.div>
@@ -104,30 +104,30 @@ const AtencionPersonalizada = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-center flex-1 max-w-sm"
+              className="text-center flex-1 max-w-sm w-full flex flex-col items-center"
             >
               {/* Imagen */}
-              <div className="mb-6 flex justify-center">
+              <div className="mb-6 flex justify-center items-center w-full">
                 <img 
                   src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-tips.svg" 
                   alt="Tips" 
-                  className="w-24 h-24"
+                  className="w-32 h-32 md:w-40 md:h-40 object-contain"
                 />
               </div>
               
               {/* Título */}
-              <h3 className="font-beauty text-2xl md:text-4xl text-gray-800 mb-4">
+              <h3 className="font-beauty text-3xl md:text-5xl text-gray-800 mb-4">
                 tips
               </h3>
               
               {/* Descripción */}
-              <p className="text-gray-700 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed text-sm md:text-base">
                 Accede a nuestro blog<br />
                 de datos útiles
               </p>
               
               {/* Link */}
-              <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors">
+              <a href="#" className="text-pink-500 hover:text-pink-600 transition-colors text-sm md:text-base">
                 ver más
               </a>
             </motion.div>
