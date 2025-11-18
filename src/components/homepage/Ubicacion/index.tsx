@@ -6,25 +6,6 @@ const Ubicacion = () => {
   return (
     <div className="px-4 xl:px-0">
       <section className="max-w-frame mx-auto px-4 md:px-6 py-16 md:py-24 bg-white">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <motion.h2
-            initial={{ y: "100px", opacity: 0 }}
-            whileInView={{ y: "0", opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="font-beauty text-3xl md:text-4xl font-bold text-gray-800 mb-4"
-          >
-            Nuestras Ubicaciones
-          </motion.h2>
-        </motion.div>
-
         {/* Ubicaciones */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
           {/* Ciudad Jardín */}
