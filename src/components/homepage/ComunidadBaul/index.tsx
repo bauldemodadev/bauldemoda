@@ -35,13 +35,13 @@ const ComunidadBaul = () => {
   return (
     <div className="px-4 xl:px-0 overflow-x-hidden">
       <section 
-        className="w-full py-12 md:py-16" 
+        className="w-full" 
         style={{ backgroundColor: "#F8F5E8" }}
       >
         <div className="max-w-frame mx-auto px-4 md:px-6">
         {/* Título principal con fondo blanco a todo el ancho */}
         <div 
-          className="text-center pb-12 md:pb-16 mb-8"
+          className="text-center py-12 md:py-16 mb-8"
           style={{
             backgroundColor: "#FFFFFF",
             marginLeft: "calc(50% - 50vw)",
@@ -735,15 +735,17 @@ const ComunidadBaul = () => {
         style={{ backgroundColor: "#FFFFFF" }}
       >
         <div className="relative">
-          {/* Elementos decorativos */}
-          <div className="absolute top-0 left-0 w-32 h-32 opacity-20">
-            <div className="w-full h-full rounded-full" style={{ backgroundColor: "#F5F0D7" }}></div>
+          {/* Elemento decorativo SVG */}
+          <div className="absolute top-0 left-0 w-64 h-64 md:w-80 md:h-80 opacity-30 pointer-events-none">
+            <Image
+              src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/brush-testimonial.svg"
+              alt="Decoración testimonial"
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 256px, 320px"
+              unoptimized
+            />
           </div>
-          <div className="absolute top-8 left-8 w-1 h-16 opacity-30" style={{ backgroundColor: "#F0C8D7" }}></div>
-          <div className="absolute top-12 left-12 w-1 h-12 opacity-30" style={{ backgroundColor: "#F0C8D7" }}></div>
-          <div className="absolute top-16 left-16 w-1 h-8 opacity-30" style={{ backgroundColor: "#F0C8D7" }}></div>
-          <div className="absolute top-20 left-20 w-1 h-6 opacity-30" style={{ backgroundColor: "#F0C8D7" }}></div>
-          <div className="absolute top-24 left-24 w-1 h-4 opacity-30" style={{ backgroundColor: "#F0C8D7" }}></div>
 
           {/* Contenido del testimonio - Slider */}
           <div className="relative z-10 text-center py-16 min-h-[300px] flex items-center justify-center">
@@ -832,33 +834,34 @@ const ComunidadBaul = () => {
               transition={{ duration: 0.6, delay: 2.9 }}
               className="text-gray-700 space-y-4"
             >
-              <p>
-                Baúl de Moda abre sus puertas a la comunidad emprendedora, ofreciéndote un área de trabajo creativo y relajado en donde vas a poder sacarle provecho de tus horas laborales!
+              <p className="text-base md:text-lg leading-relaxed">
+                Baúl de Moda abre sus puertas a la comunidad emprendedora, ofreciéndote un área de trabajo creativo y relajado en donde vas a poder sacarle provecho de tus horas laborales! Ideal si necesitas salir un poco de tu casa o necesitas el uso de maquinarias e instalaciones! Existen distintas modalidades, consulta disponibilidad y precios sobre la que te interese:
               </p>
               
-              <p className="italic">
-                Ideal si necesitas salir un poco de tu casa o necesitas el uso de maquinarias e instalaciones!
-              </p>
-              
-              <p>
-                Existen distintas modalidades, consulta disponibilidad y precios sobre la que te interese:
-              </p>
-              
-              <div className="space-y-3">
+              <div className="space-y-4 mt-6">
                 <div>
-                  <strong>Taller:</strong> ideal para venir a coser y/o cortar muestras o pequeñas producciones.
+                  <p className="font-bold text-gray-900 mb-1">Taller:</p>
+                  <p className="text-base md:text-lg leading-relaxed">
+                    ideal para venir a coser y/o cortar muestras o pequeñas producciones.
+                  </p>
                 </div>
                 
                 <div>
-                  <strong>Oficina:</strong> Ideal para venir con tu notebook a trabajar, tener entrevistas/reuniones, o hacer otros tipos de trabajo como sección de fotos.
+                  <p className="font-bold text-gray-900 mb-1">Oficina:</p>
+                  <p className="text-base md:text-lg leading-relaxed">
+                    Ideal para venir con tu notebook a trabajar, tener entrevistas/reuniones, o hacer otros tipos de trabajo como sección de fotos.
+                  </p>
                 </div>
                 
                 <div>
-                  <strong>Alquiler de Sala, Baúl a Puertas Abiertas:</strong> si buscas un lugar para dar clases u organizar eventos. Ver más!
+                  <p className="font-bold text-gray-900 mb-1">Alquiler de Sala, Baúl a Puertas Abiertas:</p>
+                  <p className="text-base md:text-lg leading-relaxed">
+                    si buscas un lugar para dar clases u organizar eventos. <span className="font-semibold" style={{ color: "#E9749B" }}>Ver más!</span>
+                  </p>
                 </div>
               </div>
               
-              <p>
+              <p className="text-base md:text-lg leading-relaxed mt-6" style={{ color: "#E9749B" }}>
                 Todos los servicios incluyen: wifi libre, agua, té, mate, café, heladera para guardar gaseosas o viandas, aire acondicionado (frío o calor), música ambiente, entre otras comodidades.
               </p>
             </motion.div>
@@ -874,7 +877,7 @@ const ComunidadBaul = () => {
           >
             <div className="relative w-full h-[400px] rounded-lg shadow-lg overflow-hidden bg-gray-100">
               <Image
-                src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/coworking.jpg"
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/05/cowork.png"
                 alt="Co-Working Baúl de Moda"
                 fill
                 className="object-cover"
