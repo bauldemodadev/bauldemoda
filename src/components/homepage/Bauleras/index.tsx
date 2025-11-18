@@ -11,7 +11,7 @@ const Bauleras = () => {
       {/* Sección Somos Baúl de Moda */}
       <section 
         className="w-full py-12 md:py-16" 
-        style={{ backgroundColor: "#F8F5E8" }}
+        style={{ backgroundColor: "#FFFFFF" }}
       >
         <div className="max-w-frame mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -76,7 +76,7 @@ const Bauleras = () => {
       {/* Sección Video */}
       <section 
         className="w-full py-12 md:py-16" 
-        style={{ backgroundColor: "#FFFFFF" }}
+        style={{ backgroundColor: "#EBCCD5" }}
       >
         <div className="max-w-frame mx-auto px-4 md:px-6">
           <div className="text-center">
