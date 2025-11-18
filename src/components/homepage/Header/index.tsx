@@ -111,7 +111,7 @@ const Header = () => {
 
   return (
     <section className="relative w-full bg-white">
-      <div className="relative w-full h-[450px] sm:h-[550px] md:h-[600px] lg:h-[700px] xl:h-[666px] overflow-hidden">
+      <div className="relative w-full h-[450px] sm:h-[550px] md:h-[600px] lg:h-[700px] xl:h-[600px] overflow-hidden">
         {/* Slide actual */}
         <div className="relative w-full h-full">
           <div className="h-full flex items-start pt-4 sm:pt-6 lg:pt-8">
