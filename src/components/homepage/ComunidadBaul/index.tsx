@@ -33,7 +33,7 @@ const ComunidadBaul = () => {
   };
 
   return (
-    <div className="px-4 xl:px-0">
+    <div className="px-4 xl:px-0 overflow-x-hidden">
       <section 
         className="w-full py-12 md:py-16" 
         style={{ backgroundColor: "#F8F5E8" }}
@@ -41,7 +41,7 @@ const ComunidadBaul = () => {
         <div className="max-w-frame mx-auto px-4 md:px-6">
         {/* Título principal con fondo blanco a todo el ancho */}
         <div 
-          className="text-center py-12 md:py-16 mb-8"
+          className="text-center pb-12 md:pb-16 mb-8"
           style={{
             backgroundColor: "#FFFFFF",
             marginLeft: "calc(50% - 50vw)",
@@ -227,12 +227,9 @@ const ComunidadBaul = () => {
                 {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/enigma.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/club-baul-2-330x330.jpg"
                     alt="Enigma, Casa Gonzalez"
                     className="w-24 h-24 md:w-32 md:h-32 object-contain"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/enigma.png";
-                    }}
                   />
                 </div>
                 
@@ -273,12 +270,9 @@ const ComunidadBaul = () => {
                 {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/epoje.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2021/12/21dbac7e-d532-4608-badf-a69ae09d4e6a-330x330.jpg"
                     alt="EPOJE TEXTIL"
                     className="w-24 h-24 md:w-32 md:h-32 object-contain"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/epoje.png";
-                    }}
                   />
                 </div>
                 
