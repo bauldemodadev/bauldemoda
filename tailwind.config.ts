@@ -99,6 +99,6 @@ const config: Config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-  safelist: ["backdrop-blur-[2px]"],
+  safelist: ["backdrop-blur-[2px]", "font-futura", "font-beauty"],
 };
 export default config;
