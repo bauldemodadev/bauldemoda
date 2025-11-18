@@ -22,8 +22,8 @@ const normalizeText = (text: string): string => {
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remover acentos
-    .replace(/[^a-z0-9\s]/g, '') // Remover caracteres especiales
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, '')
     .trim();
 };
 
@@ -33,7 +33,7 @@ const filterCoursesByName = (products: Product[], courseNames: string[]): Produc
   
   courseNames.forEach(courseName => {
     const normalizedSearchName = normalizeText(courseName);
-    const searchWords = normalizedSearchName.split(/\s+/).filter(w => w.length > 2); // Palabras de más de 2 caracteres
+    const searchWords = normalizedSearchName.split(/\s+/).filter(w => w.length > 2);
     
     const found = products.find(product => {
       const normalizedProductName = normalizeText(product.name);
