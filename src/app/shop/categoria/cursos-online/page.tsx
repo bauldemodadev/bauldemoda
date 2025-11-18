@@ -371,47 +371,49 @@ export default function CursosOnlinePage() {
   const ProductSection = ({ 
     title, 
     products, 
-    subtitle = "Cursos Online",
-    showYellowBackground = true 
+    subtitle = "Cursos Online"
   }: { 
     title: string; 
     products: Product[]; 
     subtitle?: string;
-    showYellowBackground?: boolean;
   }) => {
     if (products.length === 0) return null;
 
     return (
       <section className="mb-16">
-        <div className="relative z-10 mb-6">
-          <h3 className="font-futura font-bold text-gray-900 mb-6">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-8"
+        >
+          <h2 className="font-beauty text-4xl md:text-5xl text-gray-900 mb-4">
             {title}
-          </h3>
+          </h2>
+          
+          <nav className="mb-6">
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <Link href="/shop" className="hover:text-[#E9ABBD]">Tienda</Link>
+              <span>/</span>
+              <Link href="/shop/categoria/cursos-online" className="hover:text-[#E9ABBD]">
+                Cursos Online
+              </Link>
+              <span>/</span>
+              <Link href="/shop/categoria/cursos-online" className="text-[#E9ABBD] hover:text-[#D44D7D]">
+                {title}
+              </Link>
+              <span>→</span>
+            </div>
+          </nav>
+        </motion.div>
+
+        <div className="mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} toast={toast} subtitle={subtitle} />
             ))}
           </div>
         </div>
-
-        {showYellowBackground && (
-          <div 
-            className="relative pb-8"
-            style={{ 
-              backgroundColor: "#F5F0D7",
-              marginLeft: "calc(50% - 50vw)",
-              marginRight: "calc(50% - 50vw)",
-              paddingLeft: "calc(50vw - 50%)",
-              paddingRight: "calc(50vw - 50%)",
-              marginTop: "-8rem",
-              paddingTop: "8rem"
-            }}
-          >
-            <div className="max-w-7xl mx-auto px-4 md:px-6">
-              {/* Espacio para el contenido dentro del fondo amarillo */}
-            </div>
-          </div>
-        )}
       </section>
     );
   };
@@ -419,16 +421,6 @@ export default function CursosOnlinePage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link href="/shop" className="hover:text-[#E9ABBD]">Tienda</Link>
-            <span>/</span>
-            <Link href="/shop/categoria/cursos-online" className="text-[#E9ABBD] hover:text-[#D44D7D]">
-              Cursos Online
-            </Link>
-          </div>
-        </nav>
 
         {/* Sección CURSOS ONLINE */}
         <section className="mb-16">
@@ -437,14 +429,14 @@ export default function CursosOnlinePage() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="mb-8"
+            className="mb-8 text-center"
           >
             <h2 className="font-futura font-bold text-gray-900 mb-4">
               CURSOS ONLINE
             </h2>
             
             {/* Línea decorativa azul ondulada */}
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center">
               <img
                 src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/onda-celeste.svg"
                 alt="Línea decorativa"
@@ -452,7 +444,7 @@ export default function CursosOnlinePage() {
               />
             </div>
             
-            <p className="text-gray-700 text-base leading-relaxed max-w-4xl">
+            <p className="text-gray-700 text-base leading-relaxed max-w-4xl mx-auto">
               Aprende moldería, corte y confección de forma online. Cursos desde cero o el nivel que tengas! Te enseñamos a través de videos, apuntes, ebooks y asistencia en línea para lo que necesites!
             </p>
           </motion.div>
@@ -488,27 +480,12 @@ export default function CursosOnlinePage() {
               </nav>
             </motion.div>
 
-            <div className="relative z-10 mb-6">
+            <div className="mb-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {segments.masterClassGratuita.map((product) => (
                   <MasterClassCard key={product.id} product={product} toast={toast} />
                 ))}
               </div>
-            </div>
-
-            <div 
-              className="relative pb-8"
-              style={{ 
-                backgroundColor: "#F5F0D7",
-                marginLeft: "calc(50% - 50vw)",
-                marginRight: "calc(50% - 50vw)",
-                paddingLeft: "calc(50vw - 50%)",
-                paddingRight: "calc(50vw - 50%)",
-                marginTop: "-8rem",
-                paddingTop: "8rem"
-              }}
-            >
-              <div className="max-w-7xl mx-auto px-4 md:px-6"></div>
             </div>
           </section>
         )}
