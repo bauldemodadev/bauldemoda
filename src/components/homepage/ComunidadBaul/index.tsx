@@ -637,119 +637,91 @@ const ComunidadBaul = () => {
             </motion.div>
           </div>
 
-          {/* Imagen y elementos decorativos */}
-          <div className="relative">
-            {/* Forma amarilla de fondo */}
-            <div className="absolute inset-0">
-              <svg width="100%" height="400" viewBox="0 0 400 400" className="absolute">
-                <path d="M50 50 Q100 20 200 50 Q300 80 350 50 Q380 100 350 150 Q320 200 350 250 Q380 300 350 350 Q300 380 200 350 Q100 320 50 350 Q20 300 50 250 Q80 200 50 150 Q20 100 50 50" 
-                      fill="#FFD700" opacity="0.8" />
-              </svg>
-            </div>
-
-            {/* Elementos decorativos */}
-            <div className="absolute top-8 left-8">
-              <svg width="40" height="40" viewBox="0 0 40 40" className="text-pink-400">
-                <path d="M20 5 Q15 10 20 15 Q25 10 20 5" fill="currentColor" />
-                <path d="M20 15 Q15 20 20 25 Q25 20 20 15" fill="currentColor" />
-                <path d="M20 25 Q15 30 20 35 Q25 30 20 25" fill="currentColor" />
-              </svg>
-            </div>
-
-            <div className="absolute top-16 left-16">
-              <svg width="30" height="30" viewBox="0 0 30 30" className="text-teal-400">
-                <path d="M15 5 Q12 8 15 12 Q18 8 15 5" fill="currentColor" />
-                <path d="M15 12 Q12 15 15 18 Q18 15 15 12" fill="currentColor" />
-                <path d="M15 18 Q12 21 15 25 Q18 21 15 18" fill="currentColor" />
-              </svg>
-            </div>
-
-            <div className="absolute top-24 left-12">
-              <svg width="25" height="25" viewBox="0 0 25 25" className="text-yellow-500">
-                <path d="M12.5 2 L15 8 L22 8 L17 12 L19 19 L12.5 15 L6 19 L8 12 L3 8 L10 8 Z" fill="currentColor" />
-              </svg>
-            </div>
-
-            <div className="absolute top-32 left-20">
-              <svg width="20" height="20" viewBox="0 0 20 20" className="text-yellow-500">
-                <circle cx="10" cy="10" r="8" fill="currentColor" />
-                <path d="M10 2 L10 6 M10 14 L10 18 M2 10 L6 10 M14 10 L18 10" stroke="white" strokeWidth="1" />
-              </svg>
-            </div>
-
-            <div className="absolute top-40 left-8">
-              <svg width="35" height="35" viewBox="0 0 35 35" className="text-pink-400">
-                <path d="M17.5 5 Q15 8 17.5 12 Q20 8 17.5 5" fill="currentColor" />
-                <path d="M17.5 12 Q15 15 17.5 18 Q20 15 17.5 12" fill="currentColor" />
-                <path d="M17.5 18 Q15 21 17.5 25 Q20 21 17.5 18" fill="currentColor" />
-                <path d="M17.5 25 Q15 28 17.5 30 Q20 28 17.5 25" fill="currentColor" />
-              </svg>
-            </div>
-
-            <div className="absolute top-48 left-16">
-              <svg width="30" height="30" viewBox="0 0 30 30" className="text-white">
-                <path d="M15 5 L20 15 L30 15 L22 22 L25 32 L15 27 L5 32 L8 22 L0 15 L10 15 Z" fill="currentColor" />
-              </svg>
-            </div>
-
-            {/* Imagen central */}
-            <div className="relative z-10 bg-white rounded-lg p-8 shadow-lg">
+          {/* Imágenes de Co-Working */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Imagen Ciudad Jardín */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 3.0 }}
+              className="bg-white rounded-lg p-6 shadow-lg"
+            >
               <div className="text-center">
-                <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <svg width="80" height="80" viewBox="0 0 80 80" className="text-gray-600">
-                    {/* Persona trabajando */}
-                    <circle cx="40" cy="25" r="8" fill="#8B4513" />
-                    <rect x="32" y="33" width="16" height="20" fill="#4169E1" />
-                    
-                    {/* Notebook */}
-                    <rect x="25" y="45" width="20" height="12" fill="#000" />
-                    <rect x="27" y="47" width="16" height="8" fill="#87CEEB" />
-                    
-                    {/* Teléfono */}
-                    <rect x="50" y="48" width="6" height="10" fill="#000" />
-                    
-                    {/* Organizador */}
-                    <rect x="20" y="50" width="12" height="8" fill="#E0E0E0" />
-                    <circle cx="24" cy="52" r="1" fill="#FF0000" />
-                    <circle cx="28" cy="52" r="1" fill="#00FF00" />
-                    <circle cx="24" cy="55" r="1" fill="#0000FF" />
-                    <circle cx="28" cy="55" r="1" fill="#FFFF00" />
-                    
-                    {/* Bolso */}
-                    <rect x="55" y="45" width="8" height="6" fill="#FF69B4" />
-                    <path d="M59 45 Q59 42 59 40" stroke="#FF69B4" strokeWidth="1" fill="none" />
-                    
-                    {/* Mouse */}
-                    <ellipse cx="48" cy="58" rx="3" ry="2" fill="#C0C0C0" />
-                    
-                    {/* Cuaderno */}
-                    <rect x="15" y="40" width="8" height="10" fill="#FFFFFF" stroke="#000" strokeWidth="1" />
-                    <rect x="16" y="42" width="6" height="1" fill="#FFD700" />
-                    <rect x="16" y="44" width="6" height="1" fill="#FFD700" />
-                    <rect x="16" y="46" width="6" height="1" fill="#FFD700" />
-                  </svg>
+                <img
+                  src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/cjinfo.svg"
+                  alt="Baul de Moda - Ciudad Jardín"
+                  className="w-full h-auto mb-4"
+                />
+                <h4 className="font-beauty text-xl font-bold text-gray-900 mb-4">
+                  CIUDAD JARDÍN
+                </h4>
+                <div className="flex flex-col gap-3">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
+                    style={{ backgroundColor: "#E9ABBD" }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                  >
+                    CONTACTAR
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
+                    style={{ backgroundColor: "#E9ABBD" }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                  >
+                    NEWSLETTER
+                  </motion.button>
                 </div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">Co-Working Baúl</h4>
-                <p className="text-sm text-gray-600">Espacio creativo y productivo</p>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Elementos decorativos adicionales */}
-            <div className="absolute bottom-8 right-8">
-              <svg width="40" height="40" viewBox="0 0 40 40" className="text-red-500">
-                <path d="M20 5 Q15 10 20 15 Q25 10 20 5" fill="currentColor" />
-                <path d="M20 15 Q15 20 20 25 Q25 20 20 15" fill="currentColor" />
-                <path d="M20 25 Q15 30 20 35 Q25 30 20 25" fill="currentColor" />
-              </svg>
-            </div>
-
-            <div className="absolute bottom-16 right-16">
-              <svg width="30" height="30" viewBox="0 0 30 30" className="text-green-400">
-                <path d="M15 5 Q12 8 15 12 Q18 8 15 5" fill="currentColor" />
-                <path d="M15 12 Q12 15 15 18 Q18 15 15 12" fill="currentColor" />
-                <path d="M15 18 Q12 21 15 25 Q18 21 15 18" fill="currentColor" />
-              </svg>
-            </div>
+            {/* Imagen Almagro */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 3.1 }}
+              className="bg-white rounded-lg p-6 shadow-lg"
+            >
+              <div className="text-center">
+                <img
+                  src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/almagroinfo.svg"
+                  alt="Baul de Moda - Almagro"
+                  className="w-full h-auto mb-4"
+                />
+                <h4 className="font-beauty text-xl font-bold text-gray-900 mb-4">
+                  ALMAGRO
+                </h4>
+                <div className="flex flex-col gap-3">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
+                    style={{ backgroundColor: "#E9ABBD" }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                  >
+                    CONTACTAR
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors uppercase"
+                    style={{ backgroundColor: "#E9ABBD" }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                  >
+                    NEWSLETTER
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
         </div>
