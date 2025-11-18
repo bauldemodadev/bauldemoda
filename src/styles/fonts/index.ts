@@ -20,8 +20,17 @@ export const beauty = localFont({
   fallback: ["Georgia", "serif"],
 });
 
-// Fuente para el resto del contenido - usando CSS custom properties
-export const futura = {
+// Fuente Futura Md BT - usando archivo local
+export const futura = localFont({
+  src: [
+    {
+      path: "../../../public/fonts/Futura Md BT/futuramdbt_bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-futura",
-  className: "font-futura",
-};
+  display: "swap",
+  preload: true,
+  fallback: ["Arial", "sans-serif"],
+});

@@ -327,65 +327,69 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
 
   return (
     <>
-      <section className="max-w-frame mx-auto px-4 md:px-6 mb-12 relative">
-        {/* Título y subtítulo - fondo blanco */}
-        <div className="text-left mb-6 bg-white pt-8 pb-6 relative z-10">
-          <motion.h2
-            initial={{ y: "100px", opacity: 0 }}
-            animate={{ y: "0", opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="font-futura font-bold text-gray-900 mb-2"
-          >
-            {title}
-          </motion.h2>
-          {subtitle && (
-            <motion.h3
+      <section className="relative mb-12">
+        {/* Título y subtítulo - fondo blanco con contenedor limitado */}
+        <div className="max-w-frame mx-auto px-4 md:px-6">
+          <div className="text-left mb-6 bg-white pt-8 pb-6 relative z-10">
+            <motion.h2
               initial={{ y: "100px", opacity: 0 }}
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-beauty text-[3rem] text-gray-900"
+              transition={{ duration: 0.6 }}
+              className="font-futura font-bold text-gray-900 mb-2"
             >
-              {subtitle}
-            </motion.h3>
-          )}
+              {title}
+            </motion.h2>
+            {subtitle && (
+              <motion.h3
+                initial={{ y: "100px", opacity: 0 }}
+                animate={{ y: "0", opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="font-beauty text-[3rem] text-gray-900"
+              >
+                {subtitle}
+              </motion.h3>
+            )}
+          </div>
         </div>
 
-        {/* Contenedor con fondo amarillo que comienza a la mitad de las cards */}
+        {/* Contenedor con fondo amarillo que comienza a la mitad de las cards - ancho completo */}
         <div 
           className="relative -mt-28 pt-28 pb-8"
-          style={{ backgroundColor: "#F5F0D7" }}
+          style={{ backgroundColor: "#F5F0D7", width: "100vw", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)" }}
         >
-          {/* Grid de cursos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            {products.map((product, index) => (
-              <CourseCard 
-                key={product.id} 
-                product={product} 
-                category={category}
-                toast={toast}
-                onAddToCart={isPresencial ? handleAddToCart : undefined}
-              />
-            ))}
-          </div>
+          <div className="max-w-frame mx-auto px-4 md:px-6">
+            {/* Grid de cursos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+              {products.map((product, index) => (
+                <CourseCard 
+                  key={product.id} 
+                  product={product} 
+                  category={category}
+                  toast={toast}
+                  onAddToCart={isPresencial ? handleAddToCart : undefined}
+                />
+              ))}
+            </div>
 
-          {/* Botón VER TODOS */}
-          <div className="text-center">
-            <Link href={showAllUrl}>
-              <motion.button
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200"
-                style={{ backgroundColor: "#F5E6E8" }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"} 
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#F5E6E8"}
-              >
-                VER TODOS
-              </motion.button>
-            </Link>
+            {/* Botón VER TODOS */}
+            <div className="text-center">
+              <Link href={showAllUrl}>
+                <motion.button
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200"
+                  style={{ backgroundColor: "#F5E6E8" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"} 
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#F5E6E8"}
+                >
+                  VER TODOS
+                </motion.button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
