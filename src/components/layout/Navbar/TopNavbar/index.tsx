@@ -32,7 +32,7 @@ const data: NavMenu = [
       { id: 22, label: "CURSOS CIUDAD JARDÍN", url: "/shop/categoria/cursos-ciudad-jardin" },
       { id: 23, label: "CURSOS ALMAGRO", url: "/shop/categoria/cursos-almagro" },
       { id: 24, label: "PRODUCTOS Y SERVICIOS", url: "/shop/categoria/productos-servicios" },
-      { id: 25, label: "TODOS", url: "/shop" },
+      { id: 25, label: "TODOS", url: "/tienda" },
     ],
   },
   {

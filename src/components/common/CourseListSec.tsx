@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
+import AvailabilityModal from "@/components/courses/AvailabilityModal";
 
 type CourseListSecProps = {
   title: string;
@@ -105,12 +106,14 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
 };
 
 // Card simple sin precio (como en el inicio)
-const CourseCard = ({ product, category, toast }: { product: Product; category: string; toast: any }) => {
+const CourseCard = ({ product, category, toast, onAddToCart }: { product: Product; category: string; toast: any; onAddToCart?: (product: Product) => void }) => {
   const categoryLabel = category === 'online' 
     ? 'Cursos Online' 
     : category === 'ciudad-jardin' 
     ? 'Cursos Ciudad Jardín' 
     : 'Cursos Almagro';
+
+  const isPresencial = category === 'ciudad-jardin' || category === 'almagro';
 
   return (
     <motion.div
@@ -139,7 +142,15 @@ const CourseCard = ({ product, category, toast }: { product: Product; category: 
 
           {/* Botón de agregar al carrito */}
           <button
-            onClick={(e) => manejarAgregarAlCarrito(e, product, toast)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (isPresencial && onAddToCart) {
+                onAddToCart(product);
+              } else {
+                manejarAgregarAlCarrito(e, product, toast);
+              }
+            }}
             className="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-lg z-10"
             style={{ backgroundColor: "#E9ABBD" }}
             onMouseEnter={(e) => {
@@ -150,7 +161,7 @@ const CourseCard = ({ product, category, toast }: { product: Product; category: 
               e.currentTarget.style.backgroundColor = "#E9ABBD";
               e.currentTarget.style.transform = "scale(1)";
             }}
-            aria-label="Agregar al carrito"
+            aria-label={isPresencial ? "Consultar disponibilidad" : "Agregar al carrito"}
           >
             <Plus className="w-5 h-5 text-white" strokeWidth={3} />
           </button>
@@ -187,6 +198,10 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const isPresencial = category === 'ciudad-jardin' || category === 'almagro';
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -259,62 +274,129 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
     return null;
   }
 
+  const handleAddToCart = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
+    if (selectedProduct) {
+      // Si se seleccionó fecha y hora, agregar automáticamente al carrito
+      if (selectedDate && selectedTime) {
+        const itemCarrito = {
+          id: selectedProduct.id,
+          name: selectedProduct.name,
+          price: selectedProduct.price,
+          quantity: 1,
+          totalPrice: selectedProduct.price,
+          srcUrl: selectedProduct.srcUrl,
+          image: selectedProduct.images?.[0] || selectedProduct.srcUrl || PLACEHOLDER_IMAGE,
+          discount: selectedProduct.discount || { percentage: 0, amount: 0 },
+          slug: selectedProduct.name.split(" ").join("-"),
+          productId: selectedProduct.id,
+          selectedDate,
+          selectedTime,
+        };
+
+        const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
+        const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
+
+        if (indice > -1) {
+          carritoLocal[indice].quantity += 1;
+          carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
+          toast({
+            title: "¡Cantidad actualizada!",
+            description: `Se ha actualizado la cantidad de ${selectedProduct.name} en el carrito.`,
+            variant: "cart",
+          });
+        } else {
+          carritoLocal.push(itemCarrito);
+          toast({
+            title: "¡Producto agregado al carrito!",
+            description: `${selectedProduct.name} ha sido agregado correctamente al carrito con fecha ${selectedDate} a las ${selectedTime}.`,
+            variant: "cart",
+          });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(carritoLocal));
+        window.dispatchEvent(new Event("cartUpdate"));
+      }
+      // Si no se seleccionó fecha/hora, no hacer nada (el usuario puede cerrar el modal)
+    }
+  };
+
   return (
-    <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
-      {/* Título y subtítulo */}
-      <div className="text-left mb-8">
-        <motion.h2
-          initial={{ y: "100px", opacity: 0 }}
-          animate={{ y: "0", opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="font-beauty text-2xl font-bold text-gray-900 mb-2"
-        >
-          {title}
-        </motion.h2>
-        {subtitle && (
-          <motion.p
+    <>
+      <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
+        {/* Título y subtítulo */}
+        <div className="text-left mb-8">
+          <motion.h2
             initial={{ y: "100px", opacity: 0 }}
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-beauty text-lg text-gray-600"
+            transition={{ duration: 0.6 }}
+            className="font-beauty text-2xl font-bold text-gray-900 mb-2"
           >
-            {subtitle}
-          </motion.p>
-        )}
-      </div>
+            {title}
+          </motion.h2>
+          {subtitle && (
+            <motion.p
+              initial={{ y: "100px", opacity: 0 }}
+              animate={{ y: "0", opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-beauty text-lg text-gray-600"
+            >
+              {subtitle}
+            </motion.p>
+          )}
+        </div>
 
-      {/* Grid de cursos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-        {products.map((product, index) => (
-          <CourseCard 
-            key={product.id} 
-            product={product} 
-            category={category}
-            toast={toast}
-          />
-        ))}
-      </div>
+        {/* Grid de cursos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {products.map((product, index) => (
+            <CourseCard 
+              key={product.id} 
+              product={product} 
+              category={category}
+              toast={toast}
+              onAddToCart={isPresencial ? handleAddToCart : undefined}
+            />
+          ))}
+        </div>
 
-      {/* Botón VER TODOS */}
-      <div className="text-center">
-        <Link href={showAllUrl}>
-          <motion.button
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200"
-            style={{ backgroundColor: "#F5E6E8" }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"} 
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#F5E6E8"}
-          >
-            VER TODOS
-          </motion.button>
-        </Link>
-      </div>
-    </section>
+        {/* Botón VER TODOS */}
+        <div className="text-center">
+          <Link href={showAllUrl}>
+            <motion.button
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200"
+              style={{ backgroundColor: "#F5E6E8" }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"} 
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#F5E6E8"}
+            >
+              VER TODOS
+            </motion.button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Modal de disponibilidad para cursos presenciales */}
+      {isPresencial && (
+        <AvailabilityModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedProduct(null);
+          }}
+          product={selectedProduct}
+          onConfirm={handleConfirmAvailability}
+        />
+      )}
+    </>
   );
 };
 

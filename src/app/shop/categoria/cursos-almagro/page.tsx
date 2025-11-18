@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
+import AvailabilityModal from "@/components/courses/AvailabilityModal";
 
 // Función para filtrar productos basándose en palabras clave del slug
 const filterProductsBySlug = (products: Product[], slug: string): Product[] => {
@@ -97,7 +98,7 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
 };
 
 // Card simple sin precio (como en el inicio)
-const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
+const ProductCard = ({ product, toast, onAddToCart }: { product: Product; toast: any; onAddToCart: (product: Product) => void }) => {
   return (
     <motion.div
       className="bg-white overflow-hidden transition-all duration-300 group flex flex-col"
@@ -125,7 +126,11 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
 
           {/* Botón de agregar al carrito */}
           <button
-            onClick={(e) => manejarAgregarAlCarrito(e, product, toast)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onAddToCart(product);
+            }}
             className="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-lg z-10"
             style={{ backgroundColor: "#E9ABBD" }}
             onMouseEnter={(e) => {
@@ -136,7 +141,7 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
               e.currentTarget.style.backgroundColor = "#E9ABBD";
               e.currentTarget.style.transform = "scale(1)";
             }}
-            aria-label="Agregar al carrito"
+            aria-label="Consultar disponibilidad"
           >
             <Plus className="w-5 h-5 text-white" strokeWidth={3} />
           </button>
@@ -171,11 +176,13 @@ const ProductCard = ({ product, toast }: { product: Product; toast: any }) => {
 const ProductSection = ({ 
   title, 
   products, 
-  toast 
+  toast,
+  onAddToCart
 }: { 
   title: string; 
   products: Product[]; 
   toast: any;
+  onAddToCart: (product: Product) => void;
 }) => {
   if (products.length === 0) return null;
 
@@ -188,7 +195,7 @@ const ProductSection = ({
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} toast={toast} />
+          <ProductCard key={product.id} product={product} toast={toast} onAddToCart={onAddToCart} />
         ))}
       </div>
     </section>
@@ -200,6 +207,8 @@ export default function CursosAlmagroPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -269,6 +278,54 @@ export default function CursosAlmagroPage() {
 
   const segments = segmentProducts(products);
 
+  const handleAddToCart = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
+    if (selectedProduct) {
+      // Agregar información de fecha y horario al producto si se seleccionó
+      const itemCarrito = {
+        id: selectedProduct.id,
+        name: selectedProduct.name,
+        price: selectedProduct.price,
+        quantity: 1,
+        totalPrice: selectedProduct.price,
+        srcUrl: selectedProduct.srcUrl,
+        image: selectedProduct.images?.[0] || selectedProduct.srcUrl || PLACEHOLDER_IMAGE,
+        discount: selectedProduct.discount || { percentage: 0, amount: 0 },
+        slug: selectedProduct.name.split(" ").join("-"),
+        productId: selectedProduct.id,
+        selectedDate,
+        selectedTime,
+      };
+
+      const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
+      const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
+
+      if (indice > -1) {
+        carritoLocal[indice].quantity += 1;
+        carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
+        toast({
+          title: "¡Cantidad actualizada!",
+          description: `Se ha actualizado la cantidad de ${selectedProduct.name} en el carrito.`,
+          variant: "cart",
+        });
+      } else {
+        carritoLocal.push(itemCarrito);
+        toast({
+          title: "¡Producto agregado al carrito!",
+          description: `${selectedProduct.name} ha sido agregado correctamente al carrito.`,
+          variant: "cart",
+        });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(carritoLocal));
+      window.dispatchEvent(new Event("cartUpdate"));
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -308,12 +365,14 @@ export default function CursosAlmagroPage() {
             title="Intensivos" 
             products={segments.intensivos} 
             toast={toast}
+            onAddToCart={handleAddToCart}
           />
           
           <ProductSection 
             title="Regulares" 
             products={segments.regulares} 
             toast={toast}
+            onAddToCart={handleAddToCart}
           />
         </motion.div>
 
@@ -333,6 +392,17 @@ export default function CursosAlmagroPage() {
           </Link>
         </motion.div>
       </div>
+
+      {/* Modal de disponibilidad */}
+      <AvailabilityModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedProduct(null);
+        }}
+        product={selectedProduct}
+        onConfirm={handleConfirmAvailability}
+      />
     </div>
   );
 }
