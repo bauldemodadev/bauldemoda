@@ -33,7 +33,7 @@ const Ubicacion = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-md lg:max-w-lg"
+            className="relative w-full max-w-md lg:max-w-lg lg:-mr-[165px]"
           >
             <div className="relative space-y-4">
               {/* Imagen Ciudad Jardín */}
@@ -47,19 +47,25 @@ const Ubicacion = () => {
                 />
               </div>
               
-              {/* Botones pequeños */}
-              <div className="flex gap-2 justify-center">
+              {/* Botones verticales */}
+              <div className="flex flex-col gap-2 items-center justify-center">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors duration-300 uppercase tracking-wide"
+                  style={{ backgroundColor: "#E9ABBD" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
                 >
                   CONTACTAR
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors duration-300 uppercase tracking-wide"
+                  style={{ backgroundColor: "#E9ABBD" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
                 >
                   NEWSLETTER
                 </motion.button>
@@ -87,19 +93,25 @@ const Ubicacion = () => {
                 />
               </div>
               
-              {/* Botones pequeños */}
-              <div className="flex gap-2 justify-center">
+              {/* Botones verticales */}
+              <div className="flex flex-col gap-2 items-center justify-center">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors duration-300 uppercase tracking-wide"
+                  style={{ backgroundColor: "#E9ABBD" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
                 >
                   CONTACTAR
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-3 py-1.5 bg-pink-200 text-black font-bold rounded text-xs hover:bg-pink-300 transition-colors duration-300 uppercase tracking-wide"
+                  className="px-6 py-2.5 text-white font-bold rounded-lg text-sm transition-colors duration-300 uppercase tracking-wide"
+                  style={{ backgroundColor: "#E9ABBD" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
                 >
                   NEWSLETTER
                 </motion.button>

@@ -274,7 +274,7 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
 
   if (error) {
     return (
-      <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
+      <section className="max-w-frame mx-auto px-4 md:px-6">
         <div className="text-center">
           <p className="text-red-600">{error}</p>
         </div>
@@ -340,7 +340,7 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
 
   return (
     <>
-      <section className="relative mb-12">
+      <section className="relative">
         {/* Contenedor con fondo amarillo - ancho completo */}
         <div 
           className="relative pt-8 pb-8"

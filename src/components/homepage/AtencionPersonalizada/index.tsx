@@ -43,12 +43,12 @@ const AtencionPersonalizada = () => {
                 <img 
                   src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-bauleras.svg" 
                   alt="Bauleras" 
-                  className="w-16 h-16"
+                  className="w-24 h-24"
                 />
               </div>
               
               {/* Título */}
-              <h3 className="font-beauty text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+              <h3 className="font-beauty text-2xl md:text-4xl text-gray-800 mb-4">
                 bauleras
               </h3>
               
@@ -77,12 +77,12 @@ const AtencionPersonalizada = () => {
                 <img 
                   src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-comunidad.svg" 
                   alt="Comunidad" 
-                  className="w-16 h-16"
+                  className="w-24 h-24"
                 />
               </div>
               
               {/* Título */}
-              <h3 className="font-beauty text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+              <h3 className="font-beauty text-2xl md:text-4xl text-gray-800 mb-4">
                 comunidad
               </h3>
               
@@ -111,12 +111,12 @@ const AtencionPersonalizada = () => {
                 <img 
                   src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/icon-tips.svg" 
                   alt="Tips" 
-                  className="w-16 h-16"
+                  className="w-24 h-24"
                 />
               </div>
               
               {/* Título */}
-              <h3 className="font-beauty text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+              <h3 className="font-beauty text-2xl md:text-4xl text-gray-800 mb-4">
                 tips
               </h3>
               
