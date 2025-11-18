@@ -444,7 +444,7 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
                   animate={{ y: "0", opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  className={`${isAlmagro ? 'font-beauty' : 'font-futura'} font-bold text-gray-900 mb-2`}
+                  className={`${isAlmagro ? 'font-beauty' : 'font-futura'} text-[3rem] text-gray-900 mb-2`}
                 >
                   {title}
                 </motion.h2>

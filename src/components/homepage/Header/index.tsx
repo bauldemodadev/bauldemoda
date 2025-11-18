@@ -111,14 +111,14 @@ const Header = () => {
 
   return (
     <section className="relative w-full bg-white">
-      <div className="relative w-full h-[500px] sm:h-[600px] lg:h-[700px] overflow-hidden">
+      <div className="relative w-full h-[450px] sm:h-[550px] md:h-[600px] lg:h-[700px] xl:h-[800px] overflow-hidden">
         {/* Slide actual */}
         <div className="relative w-full h-full">
           <div className="h-full flex items-center">
-            <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
-              <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-6 lg:gap-8">
                 {/* Contenido de texto - Izquierda */}
-                <div className="w-full lg:w-2/5 text-center lg:text-left">
+                <div className="w-full lg:w-2/5 xl:w-2/5 text-center lg:text-left order-2 lg:order-1">
                   <div className="max-w-lg mx-auto lg:mx-0">
                     {(() => {
                       const bannerActual = banners[indiceActual];
@@ -136,12 +136,12 @@ const Header = () => {
                           )}
                           
                           {/* Título */}
-                          <h1 className="font-beauty text-2xl sm:text-3xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
+                          <h1 className="font-beauty text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-gray-900 mb-3 sm:mb-4 leading-tight">
                             {bannerActual.titulo}
                           </h1>
                           
                           {/* Descripción */}
-                          <p className="text-sm sm:text-base text-gray-600 mb-6 leading-relaxed">
+                          <p className="text-xs sm:text-sm md:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
                             {bannerActual.descripcion}
                           </p>
                           
@@ -202,15 +202,16 @@ const Header = () => {
                 </div>
 
                 {/* Imagen - Derecha */}
-                <div className="w-full lg:w-3/5 flex justify-center">
-                  <div className="relative w-full max-w-xl lg:max-w-3xl xl:max-w-4xl">
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="w-full lg:w-3/5 xl:w-3/5 flex justify-center order-1 lg:order-2">
+                  <div className="relative w-full max-w-2xl lg:max-w-4xl xl:max-w-5xl">
+                    <div className="relative aspect-[4/3] lg:aspect-[5/4] xl:aspect-[6/4] overflow-hidden">
                       <Image
                         src={banners[indiceActual].imagenUrl}
                         alt={banners[indiceActual].titulo}
                         fill
                         className="object-contain object-center"
                         priority={indiceActual === 0}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 50vw"
                       />
                       {/* Overlay decorativo */}
                       <div className="absolute inset-0" />
@@ -223,13 +224,13 @@ const Header = () => {
         </div>
 
         {/* Indicadores */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
+        <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
           {banners.map((_, i) => (
             <button
               key={i}
               onClick={() => cambiarSlide(i)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                i === indiceActual ? 'scale-125' : 'bg-gray-300 hover:bg-gray-400'
+              className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
+                i === indiceActual ? 'scale-110 sm:scale-125' : 'bg-gray-300 hover:bg-gray-400'
               }`}
               style={i === indiceActual ? { backgroundColor: "#E9ABBD" } : undefined}
               aria-label={`Ir al slide ${i + 1}`}
@@ -242,24 +243,24 @@ const Header = () => {
           type="button"
           onClick={() => cambiarSlide(indiceActual - 1)}
           aria-label="Anterior"
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full text-white transition-all shadow-lg hover:shadow-xl"
+          className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full text-white transition-all shadow-lg hover:shadow-xl z-10"
           style={{ backgroundColor: "#E9ABBD" }}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
         >
-          <span className="text-xl">‹</span>
+          <span className="text-lg sm:text-xl">‹</span>
         </button>
         
         <button
           type="button"
           onClick={() => cambiarSlide(indiceActual + 1)}
           aria-label="Siguiente"
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full text-white transition-all shadow-lg hover:shadow-xl"
+          className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full text-white transition-all shadow-lg hover:shadow-xl z-10"
           style={{ backgroundColor: "#E9ABBD" }}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
         >
-          <span className="text-xl">›</span>
+          <span className="text-lg sm:text-xl">›</span>
         </button>
       </div>
     </section>
