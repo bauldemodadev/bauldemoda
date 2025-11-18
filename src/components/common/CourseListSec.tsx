@@ -357,7 +357,13 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
         {/* Contenedor con fondo amarillo que comienza a la mitad de las cards - ancho completo */}
         <div 
           className="relative -mt-28 pt-28 pb-8"
-          style={{ backgroundColor: "#F5F0D7", width: "100vw", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)" }}
+          style={{ 
+            backgroundColor: "#F5F0D7",
+            marginLeft: "calc(50% - 50vw)",
+            marginRight: "calc(50% - 50vw)",
+            paddingLeft: "calc(50vw - 50%)",
+            paddingRight: "calc(50vw - 50%)"
+          }}
         >
           <div className="max-w-frame mx-auto px-4 md:px-6">
             {/* Grid de cursos */}

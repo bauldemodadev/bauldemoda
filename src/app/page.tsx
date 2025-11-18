@@ -13,7 +13,7 @@ export default function Home() {
       <Header />
       
       <main
-        className="my-[50px] sm:my-[72px] mt-5 lg:pt-32 lg:-mt-32 bg-white"
+        className="my-[50px] sm:my-[72px] mt-5 lg:pt-32 lg:-mt-32 bg-white overflow-x-hidden"
       >
         {/* Cursos Online */}
         <CourseListSec
