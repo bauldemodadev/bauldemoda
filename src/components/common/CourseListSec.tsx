@@ -343,9 +343,9 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
   return (
     <>
       <section className="relative">
-        {/* Título y subtítulo */}
+        {/* Título y subtítulo - fondo blanco */}
         <div className="max-w-frame mx-auto px-4 md:px-6">
-          <div className={`text-left mb-6 pt-8 ${isOnline ? 'pb-6' : 'pb-6'}`}>
+          <div className="text-left mb-6 pt-8 pb-6">
             <motion.h2
               initial={{ y: "100px", opacity: 0 }}
               animate={{ y: "0", opacity: 1 }}
@@ -369,38 +369,11 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
           </div>
         </div>
 
-        {/* Grid de cursos - fuera del fondo amarillo para cursos online */}
-        {isOnline && (
-          <div className="max-w-frame mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 relative">
-              {products.map((product, index) => (
-                <CourseCard 
-                  key={product.id} 
-                  product={product} 
-                  category={category}
-                  toast={toast}
-                  onAddToCart={isPresencial ? handleAddToCart : undefined}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Contenedor con fondo amarillo - ancho completo */}
-        <div 
-          className="relative pt-8 pb-8"
-          style={{ 
-            backgroundColor: "#F5F0D7",
-            marginLeft: "calc(50% - 50vw)",
-            marginRight: "calc(50% - 50vw)",
-            paddingLeft: "calc(50vw - 50%)",
-            paddingRight: "calc(50vw - 50%)",
-            marginTop: isOnline ? "-8rem" : "0" // Comienza a la mitad de las cards para cursos online
-          }}
-        >
-          <div className="max-w-frame mx-auto px-4 md:px-6">
-            {/* Grid de cursos - solo para cursos presenciales */}
-            {!isOnline && (
+        {/* Para cursos online: Grid de cursos con fondo amarillo comenzando a la mitad */}
+        {isOnline ? (
+          <>
+            {/* Grid de cursos - posición relativa para que el fondo amarillo se superponga */}
+            <div className="max-w-frame mx-auto px-4 md:px-6 relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                 {products.map((product, index) => (
                   <CourseCard 
@@ -412,11 +385,22 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
                   />
                 ))}
               </div>
-            )}
+            </div>
 
-            {/* Para cursos online, mostrar solo el botón VER TODOS dentro del fondo amarillo */}
-            {isOnline && (
-              <div className="pt-32">
+            {/* Fondo amarillo que comienza a la mitad de las cards */}
+            <div 
+              className="relative pb-8"
+              style={{ 
+                backgroundColor: "#F5F0D7",
+                marginLeft: "calc(50% - 50vw)",
+                marginRight: "calc(50% - 50vw)",
+                paddingLeft: "calc(50vw - 50%)",
+                paddingRight: "calc(50vw - 50%)",
+                marginTop: "-8rem",
+                paddingTop: "8rem"
+              }}
+            >
+              <div className="max-w-frame mx-auto px-4 md:px-6">
                 {/* Botón VER TODOS */}
                 <div className="text-center">
                   <Link href={showAllUrl}>
@@ -435,32 +419,54 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
                   </Link>
                 </div>
               </div>
-            )}
+            </div>
+          </>
+        ) : (
+          /* Para cursos presenciales: estructura normal con fondo amarillo desde el inicio */
+          <div 
+            className="relative pt-8 pb-8"
+            style={{ 
+              backgroundColor: "#F5F0D7",
+              marginLeft: "calc(50% - 50vw)",
+              marginRight: "calc(50% - 50vw)",
+              paddingLeft: "calc(50vw - 50%)",
+              paddingRight: "calc(50vw - 50%)"
+            }}
+          >
+            <div className="max-w-frame mx-auto px-4 md:px-6">
+              {/* Grid de cursos */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                {products.map((product, index) => (
+                  <CourseCard 
+                    key={product.id} 
+                    product={product} 
+                    category={category}
+                    toast={toast}
+                    onAddToCart={isPresencial ? handleAddToCart : undefined}
+                  />
+                ))}
+              </div>
 
-            {/* Para cursos presenciales, mostrar grid y botón normalmente */}
-            {!isOnline && (
-              <>
-                {/* Botón VER TODOS */}
-                <div className="text-center">
-                  <Link href={showAllUrl}>
-                    <motion.button
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
-                      className="px-8 py-3 rounded-full font-bold text-white transition-all duration-200"
-                      style={{ backgroundColor: "#E9ABBD" }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
-                    >
-                      VER TODOS
-                    </motion.button>
-                  </Link>
-                </div>
-              </>
-            )}
+              {/* Botón VER TODOS */}
+              <div className="text-center">
+                <Link href={showAllUrl}>
+                  <motion.button
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="px-8 py-3 rounded-full font-bold text-white transition-all duration-200"
+                    style={{ backgroundColor: "#E9ABBD" }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                  >
+                    VER TODOS
+                  </motion.button>
+                </Link>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* Modal de disponibilidad para cursos presenciales */}

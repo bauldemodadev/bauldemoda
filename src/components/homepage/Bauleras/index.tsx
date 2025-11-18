@@ -22,7 +22,7 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className={cn("text-3xl md:text-4xl font-bold text-gray-900 mb-6")}
+                className={cn("text-2xl md:text-3xl font-bold text-gray-900 mb-6")}
               >
                 SOMOS<br />
                 BAÚL DE MODA
@@ -33,7 +33,7 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-gray-700 mb-6 text-lg"
+                className="text-gray-700 mb-6 text-base"
               >
                 Un lugar para que te encuentres con nuevos hobbies, viejos oficios y posibles emprendimientos. Un espacio para conectar con la creatividad, liberar el stress y romper con la rutina del día.
               </motion.p>
@@ -43,10 +43,9 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-lg mb-4"
-                style={{ color: "#E9749B" }}
+                className="text-base mb-4 text-gray-700"
               >
-                <strong>Somos Juli y Vero,</strong> dos diseñadoras de Indumentaria, emprendedoras y amantes de los oficios. Disfrutamos, junto a más profes, compartir "el tiempo entre costuras…y otros oficios".
+                <strong style={{ color: "#E9749B" }}>Somos Juli y Vero,</strong> dos diseñadoras de Indumentaria, emprendedoras y amantes de los oficios. Disfrutamos, junto a más profes, compartir "el tiempo entre costuras…y otros oficios".
               </motion.p>
 
               <motion.p
@@ -54,7 +53,7 @@ const Bauleras = () => {
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-lg font-bold"
+                className="text-base font-bold"
                 style={{ color: "#E9749B" }}
               >
                 Cualquiera sea tu búsqueda, nosotras te acompañamos!
@@ -66,7 +65,7 @@ const Bauleras = () => {
               <img
                 src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/6-3.jpg"
                 alt="Somos Baúl de Moda"
-                className="w-full h-auto rounded-lg shadow-lg"
+                className="w-full h-auto"
               />
             </div>
           </div>
