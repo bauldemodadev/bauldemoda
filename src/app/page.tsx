@@ -13,8 +13,7 @@ export default function Home() {
       <Header />
       
       <main
-        className="my-[50px] sm:my-[72px] mt-5 lg:pt-32 lg:-mt-32"
-        style={{ backgroundColor: "#F5F0D7" }}
+        className="my-[50px] sm:my-[72px] mt-5 lg:pt-32 lg:-mt-32 bg-white"
       >
         {/* Cursos Online */}
         <CourseListSec

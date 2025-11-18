@@ -123,7 +123,7 @@ const CourseCard = ({ product, category, toast, onAddToCart }: { product: Produc
     >
       <div className="flex flex-col h-full">
         {/* Imagen del producto */}
-        <div className="relative h-80">
+        <div className="relative h-64">
           {product.images && product.images.length > 0 ? (
             <Image
               src={product.images[0].split(',')[0].trim()}
@@ -246,7 +246,7 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {Array.from({ length: skeletonCount }).map((_, i) => (
             <div key={i} className="bg-white animate-pulse flex flex-col">
-              <div className="h-80 bg-gray-200"></div>
+              <div className="h-64 bg-gray-200"></div>
               <div className="px-4 py-3">
                 <div className="h-4 bg-gray-200 mb-1"></div>
                 <div className="h-3 bg-gray-200 mb-3"></div>
@@ -327,9 +327,9 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
 
   return (
     <>
-      <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
-        {/* Título y subtítulo */}
-        <div className="text-left mb-8">
+      <section className="max-w-frame mx-auto px-4 md:px-6 mb-12 relative">
+        {/* Título y subtítulo - fondo blanco */}
+        <div className="text-left mb-6 bg-white pt-8 pb-6 relative z-10">
           <motion.h2
             initial={{ y: "100px", opacity: 0 }}
             animate={{ y: "0", opacity: 1 }}
@@ -352,35 +352,41 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
           )}
         </div>
 
-        {/* Grid de cursos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          {products.map((product, index) => (
-            <CourseCard 
-              key={product.id} 
-              product={product} 
-              category={category}
-              toast={toast}
-              onAddToCart={isPresencial ? handleAddToCart : undefined}
-            />
-          ))}
-        </div>
+        {/* Contenedor con fondo amarillo que comienza a la mitad de las cards */}
+        <div 
+          className="relative -mt-28 pt-28 pb-8"
+          style={{ backgroundColor: "#F5F0D7" }}
+        >
+          {/* Grid de cursos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            {products.map((product, index) => (
+              <CourseCard 
+                key={product.id} 
+                product={product} 
+                category={category}
+                toast={toast}
+                onAddToCart={isPresencial ? handleAddToCart : undefined}
+              />
+            ))}
+          </div>
 
-        {/* Botón VER TODOS */}
-        <div className="text-center">
-          <Link href={showAllUrl}>
-            <motion.button
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200"
-              style={{ backgroundColor: "#F5E6E8" }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"} 
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#F5E6E8"}
-            >
-              VER TODOS
-            </motion.button>
-          </Link>
+          {/* Botón VER TODOS */}
+          <div className="text-center">
+            <Link href={showAllUrl}>
+              <motion.button
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200"
+                style={{ backgroundColor: "#F5E6E8" }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"} 
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#F5E6E8"}
+              >
+                VER TODOS
+              </motion.button>
+            </Link>
+          </div>
         </div>
       </section>
 
