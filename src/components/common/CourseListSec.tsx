@@ -339,35 +339,38 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
   };
 
   const isOnline = category === "online";
+  const isAlmagro = title === "Almagro";
 
   return (
     <>
       <section className="relative">
-        {/* Título y subtítulo - fondo blanco */}
-        <div className="max-w-frame mx-auto px-4 md:px-6">
-          <div className="text-left mb-6 pt-8 pb-6">
-            <motion.h2
-              initial={{ y: "100px", opacity: 0 }}
-              animate={{ y: "0", opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="font-futura font-bold text-gray-900 mb-2"
-            >
-              {title}
-            </motion.h2>
-            {subtitle && (
-              <motion.h3
+        {/* Para cursos online: Título y subtítulo - fondo blanco */}
+        {isOnline && (
+          <div className="max-w-frame mx-auto px-4 md:px-6">
+            <div className="text-left mb-6 pt-8 pb-6">
+              <motion.h2
                 initial={{ y: "100px", opacity: 0 }}
                 animate={{ y: "0", opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-beauty text-[3rem] text-gray-900"
+                transition={{ duration: 0.6 }}
+                className="font-futura font-bold text-gray-900 mb-2"
               >
-                {subtitle}
-              </motion.h3>
-            )}
+                {title}
+              </motion.h2>
+              {subtitle && (
+                <motion.h3
+                  initial={{ y: "100px", opacity: 0 }}
+                  animate={{ y: "0", opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="font-beauty text-[3rem] text-gray-900"
+                >
+                  {subtitle}
+                </motion.h3>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Para cursos online: Grid de cursos con fondo amarillo comenzando a la mitad */}
         {isOnline ? (
@@ -434,6 +437,30 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
             }}
           >
             <div className="max-w-frame mx-auto px-4 md:px-6">
+              {/* Título y subtítulo dentro del fondo amarillo */}
+              <div className="text-left mb-6 pt-8 pb-6">
+                <motion.h2
+                  initial={{ y: "100px", opacity: 0 }}
+                  animate={{ y: "0", opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className={`${isAlmagro ? 'font-beauty' : 'font-futura'} font-bold text-gray-900 mb-2`}
+                >
+                  {title}
+                </motion.h2>
+                {subtitle && (
+                  <motion.h3
+                    initial={{ y: "100px", opacity: 0 }}
+                    animate={{ y: "0", opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="font-beauty text-[3rem] text-gray-900"
+                  >
+                    {subtitle}
+                  </motion.h3>
+                )}
+              </div>
+
               {/* Grid de cursos */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                 {products.map((product, index) => (
