@@ -9,10 +9,10 @@ type BannerItem = {
   id: string;
   imagenUrl: string;
   titulo: string;
-  subtitulo: string;
+  subtitulo?: string;
   descripcion: string;
-  ctaTexto: string;
-  ctaUrl: string;
+  ctaTexto: string | string[];
+  ctaUrl: string | string[];
 };
 
 const Header = () => {
@@ -20,21 +20,67 @@ const Header = () => {
     () => [
       {
         id: "1",
-        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2020/05/slider-abc-costura-online.jpg",
-        titulo: "Nueva Colección",
-        subtitulo: "Primavera Verano 2024",
-        descripcion: "Descubre las últimas tendencias en moda con nuestra nueva colección. Diseños únicos que reflejan tu personalidad.",
-        ctaTexto: "Ver Colección",
-        ctaUrl: "/shop"
+        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2025/11/slider.jpg",
+        titulo: "Especial Navidad",
+        descripcion: "Este año celebramos las fiestas creando un muñeco con base universal, que luego podrás adaptar a otras temáticas durante todo el año. Fechas en ambas sedes",
+        ctaTexto: "Anotate en la sede más cercana",
+        ctaUrl: "/contacto"
       },
       {
-        id: "2", 
+        id: "2",
+        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2025/09/Sin-titulo-1150-x-700-px-1150x700-1.png",
+        titulo: "Moda Circular online",
+        descripcion: "Lanzamiento Moda Ciruclar online. Recupera tus prendas y dale una nueva oportunidad",
+        ctaTexto: "Sacar Clase",
+        ctaUrl: "/shop/categoria/cursos-online"
+      },
+      {
+        id: "3",
+        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2023/02/slide-masterclass.jpg",
+        titulo: "Master Class",
+        descripcion: "Una guía gratuita sobre limpieza y lubricación para máquinas felices.",
+        ctaTexto: "Sacar Clase",
+        ctaUrl: "/shop/categoria/cursos-online"
+      },
+      {
+        id: "4",
+        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2020/05/slider-abc-costura-online.jpg",
+        titulo: "Abc Costura online",
+        descripcion: "Una guía gratuita sobre limpieza y lubricación para máquinas felices.",
+        ctaTexto: "Ver más",
+        ctaUrl: "/shop/categoria/cursos-online"
+      },
+      {
+        id: "5",
         imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2023/03/masterclass-slide.jpg",
-        titulo: "Ofertas Especiales",
-        subtitulo: "Hasta 50% OFF",
-        descripcion: "No te pierdas nuestras ofertas especiales en ropa y accesorios. Calidad premium a precios increíbles.",
-        ctaTexto: "Comprar Ahora",
-        ctaUrl: "/shop?filter=specialOffer"
+        titulo: "Master Class",
+        descripcion: "Una clase abierta y gratuita con Todo lo que tenes que saber sobre Máquinas de Coser.",
+        ctaTexto: "Sacar Clase",
+        ctaUrl: "/shop/categoria/cursos-online"
+      },
+      {
+        id: "6",
+        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2024/09/slide-web.png",
+        titulo: "Intensivo de Jeans",
+        descripcion: "Renovamos nuestro intensivo de JEANS, ya podes disfrutar de su versión más dinámica!",
+        ctaTexto: "Comprar Curso",
+        ctaUrl: "/shop/categoria/cursos-online"
+      },
+      {
+        id: "7",
+        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2022/11/slider.gif",
+        titulo: "Clases Presenciales",
+        descripcion: "Conoce la Grilla de nuestras clases presenciales!",
+        ctaTexto: ["Almagro", "Ciudad Jardin"],
+        ctaUrl: ["/shop/categoria/cursos-almagro", "/shop/categoria/cursos-ciudad-jardin"]
+      },
+      {
+        id: "8",
+        imagenUrl: "https://bauldemoda.com.ar/wp-content/uploads/2024/08/SALIMOS-EN-MAS-CHIC.jpg",
+        titulo: "Salimos en la Tele!",
+        descripcion: "En el episodio 7 de \"Locas por el Jean\" donde vamos a estar reciclando una prenda de Jean y customizando...no te la pierdas! Transmite el canal MasChic x Flow.",
+        ctaTexto: ["Ver Programa en Flow", "Maschictv"],
+        ctaUrl: ["https://flow.com.ar", "https://maschic.tv"]
       }
     ],
     []
@@ -74,34 +120,84 @@ const Header = () => {
                 {/* Contenido de texto - Izquierda */}
                 <div className="w-full lg:w-2/5 text-center lg:text-left">
                   <div className="max-w-lg mx-auto lg:mx-0">
-                    {/* Subtítulo */}
-                    <div className="mb-3">
-                      <span className="inline-block bg-pink-100 text-pink-600 px-3 py-1.5 rounded-full text-xs font-medium uppercase">
-                        {banners[indiceActual].subtitulo}
-                      </span>
-                    </div>
-                    
-                    {/* Título */}
-                    <h1 className="font-beauty text-2xl sm:text-3xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
-                      {banners[indiceActual].titulo}
-                    </h1>
-                    
-                    {/* Descripción */}
-                    <p className="text-sm sm:text-base text-gray-600 mb-6 leading-relaxed">
-                      {banners[indiceActual].descripcion}
-                    </p>
-                    
-                    {/* Botón CTA */}
-                    <div className="flex justify-center lg:justify-start">
-                      <Button
-                        size="sm"
-                        className="bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white px-6 py-3 text-sm font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
-                        onClick={() => window.location.href = banners[indiceActual].ctaUrl}
-                      >
-                        {banners[indiceActual].ctaTexto}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
+                    {(() => {
+                      const bannerActual = banners[indiceActual];
+                      const tieneMultiplesBotones = Array.isArray(bannerActual.ctaTexto);
+                      
+                      return (
+                        <>
+                          {/* Subtítulo - solo si existe */}
+                          {bannerActual.subtitulo && (
+                            <div className="mb-3">
+                              <span className="inline-block bg-pink-100 text-pink-600 px-3 py-1.5 rounded-full text-xs font-medium uppercase">
+                                {bannerActual.subtitulo}
+                              </span>
+                            </div>
+                          )}
+                          
+                          {/* Título */}
+                          <h1 className="font-beauty text-2xl sm:text-3xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
+                            {bannerActual.titulo}
+                          </h1>
+                          
+                          {/* Descripción */}
+                          <p className="text-sm sm:text-base text-gray-600 mb-6 leading-relaxed">
+                            {bannerActual.descripcion}
+                          </p>
+                          
+                          {/* Botones CTA - soporta múltiples botones */}
+                          <div className={`flex ${tieneMultiplesBotones ? 'flex-col gap-3' : 'justify-center lg:justify-start'}`}>
+                            {tieneMultiplesBotones ? (
+                              // Múltiples botones
+                              (bannerActual.ctaTexto as string[]).map((texto, index) => {
+                                const urls = bannerActual.ctaUrl as string[];
+                                return (
+                                  <Button
+                                    key={index}
+                                    size="sm"
+                                    className="text-white px-6 py-3 text-sm font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl w-full lg:w-auto"
+                                    style={{ backgroundColor: "#E9ABBD" }}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                                    onClick={() => {
+                                      const url = urls[index];
+                                      if (url.startsWith('http')) {
+                                        window.open(url, '_blank');
+                                      } else {
+                                        window.location.href = url;
+                                      }
+                                    }}
+                                  >
+                                    {texto}
+                                    <ArrowRight className="ml-2 h-4 w-4" />
+                                  </Button>
+                                );
+                              })
+                            ) : (
+                              // Un solo botón
+                              <Button
+                                size="sm"
+                                className="text-white px-6 py-3 text-sm font-medium rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
+                                style={{ backgroundColor: "#E9ABBD" }}
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                                onClick={() => {
+                                  const url = bannerActual.ctaUrl as string;
+                                  if (url.startsWith('http')) {
+                                    window.open(url, '_blank');
+                                  } else {
+                                    window.location.href = url;
+                                  }
+                                }}
+                              >
+                                {bannerActual.ctaTexto as string}
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </Button>
+                            )}
+                          </div>
+                        </>
+                      );
+                    })()}
                   </div>
                 </div>
 
@@ -133,8 +229,9 @@ const Header = () => {
               key={i}
               onClick={() => cambiarSlide(i)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                i === indiceActual ? 'bg-pink-500 scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                i === indiceActual ? 'scale-125' : 'bg-gray-300 hover:bg-gray-400'
               }`}
+              style={i === indiceActual ? { backgroundColor: "#E9ABBD" } : undefined}
               aria-label={`Ir al slide ${i + 1}`}
             />
           ))}
@@ -145,7 +242,10 @@ const Header = () => {
           type="button"
           onClick={() => cambiarSlide(indiceActual - 1)}
           aria-label="Anterior"
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full bg-pink-500 hover:bg-pink-600 text-white transition-all shadow-lg hover:shadow-xl"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full text-white transition-all shadow-lg hover:shadow-xl"
+          style={{ backgroundColor: "#E9ABBD" }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
         >
           <span className="text-xl">‹</span>
         </button>
@@ -154,7 +254,10 @@ const Header = () => {
           type="button"
           onClick={() => cambiarSlide(indiceActual + 1)}
           aria-label="Siguiente"
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full bg-pink-500 hover:bg-pink-600 text-white transition-all shadow-lg hover:shadow-xl"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 inline-flex h-12 w-12 items-center justify-center rounded-full text-white transition-all shadow-lg hover:shadow-xl"
+          style={{ backgroundColor: "#E9ABBD" }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
         >
           <span className="text-xl">›</span>
         </button>
