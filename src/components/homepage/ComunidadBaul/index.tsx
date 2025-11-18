@@ -107,29 +107,45 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
-                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/tienda-baul.jpg"
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2020/05/tienda-baul-330x330.jpg"
                     alt="La Tienda Baúl"
-                    className="w-16 h-16 object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/tienda-baul.png";
-                    }}
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
-                  LA TIENDA BAUL
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
+                  LA TIENDA BAÚL
                 </h4>
                 
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Nuestra tiendita de Diseño 100% emprendedor se suma a la comunidad con descuentos imperdibles para alumnas Baúl: 20% en efectivo / 10% débito / 5% crédito.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .96 4.534.96 10.09c0 1.76.413 3.421 1.15 4.891L.08 24l9.218-2.41a11.876 11.876 0 005.752 1.48h.005c5.554 0 10.089-4.534 10.089-10.09 0-2.688-1.06-5.216-2.987-7.113"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -139,29 +155,49 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.7 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/telas-agustin.jpg"
                     alt="Telas Agustín"
-                    className="w-16 h-16 object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/telas-agustin.png";
-                    }}
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
-                  Telas Agustín
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
+                  TELAS AGUSTÍN
                 </h4>
                 
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Ofrece la más amplia variedad en telas por menor y mayor con descuentos especiales para la Comunidad Baúl, del 10% en telas x metro. Santos Vega 7300, esq. 12 de Octubre, Villa Bosch. con envíos a domicilio.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .96 4.534.96 10.09c0 1.76.413 3.421 1.15 4.891L.08 24l9.218-2.41a11.876 11.876 0 005.752 1.48h.005c5.554 0 10.089-4.534 10.089-10.09 0-2.688-1.06-5.216-2.987-7.113"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -171,29 +207,43 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/enigma.jpg"
                     alt="Enigma, Casa Gonzalez"
-                    className="w-16 h-16 object-contain"
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
                     onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/enigma.png";
+                      e.currentTarget.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/enigma.png";
                     }}
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
-                  Enigma, Casa Gonzalez
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
+                  ENIGMA, CASA GONZALEZ
                 </h4>
                 
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Descuentos del 5% en máquinas de coser, repuesto e insumos para la confección / 7% pagos en efectivo. Av. Belgrano 3787, Almagro.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -203,29 +253,43 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.9 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/epoje.jpg"
                     alt="EPOJE TEXTIL"
-                    className="w-16 h-16 object-contain"
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
                     onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/epoje.png";
+                      e.currentTarget.src = "https://bauldemoda.com.ar/wp-content/uploads/2020/03/epoje.png";
                     }}
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   EPOJE TEXTIL
                 </h4>
                 
-                <p className="text-sm text-gray-600">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Showroom de telas, gran variedad de retazos en telas planas y de punto. Descuentos del 10% para la comunidad. Venta por mayor y menor. Venezuela 4736 Villa Martelli
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .96 4.534.96 10.09c0 1.76.413 3.421 1.15 4.891L.08 24l9.218-2.41a11.876 11.876 0 005.752 1.48h.005c5.554 0 10.089-4.534 10.089-10.09 0-2.688-1.06-5.216-2.987-7.113"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -261,25 +325,40 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 1.2 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/162736908_153938863654181_2552882831917902521_n-330x330.jpg"
                     alt="Kluma Deco"
-                    className="w-16 h-16 rounded-full object-cover"
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   KLUMA DECO
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Deco con diseños textiles exclusivos.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .96 4.534.96 10.09c0 1.76.413 3.421 1.15 4.891L.08 24l9.218-2.41a11.876 11.876 0 005.752 1.48h.005c5.554 0 10.089-4.534 10.089-10.09 0-2.688-1.06-5.216-2.987-7.113"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -289,25 +368,39 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 1.3 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/AB63E0AAC6614D38A33C0C8ECB4D1B4E-330x330.jpg"
                     alt="Dani Ramirez"
-                    className="w-16 h-16 rounded-full object-cover"
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   DANI RAMIREZ
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Soy ilustradora. Creo objetos para la vida cotidiana e ilustro para otras marcas. Productos mágicos, únicos y con sentido.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -317,25 +410,40 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 1.4 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/LOGOS-pdf.jpg"
                     alt="Buziana"
-                    className="w-16 h-16 rounded-full object-cover"
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   BUZIANA
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   BUZIANA. LIBRETAS Y CUADERNOS PARA INSPIRARTE!
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                </div>
               </div>
             </motion.div>
 
@@ -345,25 +453,34 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 1.5 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
-                {/* Imagen real */}
+              <div className="text-center flex-1 flex flex-col">
+                {/* Imagen real - más grande */}
                 <div className="mb-4 flex justify-center">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2023/06/mover-los-hilos.jpg"
                     alt="Mover los Hilos"
-                    className="w-16 h-16 rounded-full object-cover"
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   MOVER LOS HILOS
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Tienda de tejidos artesanales realizados a medida. Ciudad Jardín, El Palomar.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -422,25 +539,44 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 1.9 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
+              <div className="text-center flex-1 flex flex-col">
                 {/* Imagen real */}
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2021/11/1-330x330.jpg"
                     alt="Festival 11° Ed. Ciudad Jardín"
-                    className="w-full h-32 object-cover rounded-lg"
+                    className="w-full h-40 md:h-48 object-cover rounded-lg"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   FESTIVAL 11° ED. EN CIUDAD JARDÍN
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   DOMINGO 19 DE DICIEMBRE 2021 de 16hs a 22hs en la Calle. Te esperan más de 30 emprendedores con Música en vivo, Shows, Entretenimiento y Sorteos.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -450,25 +586,39 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 2.0 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
+              <div className="text-center flex-1 flex flex-col">
                 {/* Imagen real */}
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2022/11/feed-festival-330x330.gif"
                     alt="Festival 12° Ed. Ciudad Jardín"
-                    className="w-full h-32 object-cover rounded-lg"
+                    className="w-full h-40 md:h-48 object-cover rounded-lg"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   FESTIVAL 12° ED. EN CIUDAD JARDÍN
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   DOMINGO 11 DE DICIEMBRE 2022 de 16hs a 22hs en la Calle. Te esperan más de 30 emprendedores con Música en vivo, Shows, Entretenimiento y Sorteos.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -478,25 +628,39 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 2.1 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
+              <div className="text-center flex-1 flex flex-col">
                 {/* Imagen real */}
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2021/11/mercadillo-navidad-330x330.jpg"
                     alt="El Mercadillo de Almagro Navidad"
-                    className="w-full h-32 object-cover rounded-lg"
+                    className="w-full h-40 md:h-48 object-cover rounded-lg"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   EL MERCADILLO DE ALMAGRO NAVIDAD
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   SÁBADO 18 DE DIC 2021 La sede de Almagro te espera con una feria emprendedora en toda su galería y shows en vivo. De 14hs a 20.30hs y continua en la semana del 20 al 23 de 12 a 19.30hs Av. Rivadavia 4390, Almagro.
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.344 5.667c.28 0 .511.231.511.511v11.644c0 .28-.231.511-.511.511H5.656c-.28 0-.511-.231-.511-.511V6.178c0-.28.231-.511.511-.511h12.688zm-6.172 5.49L7.25 8.5v7l4.922-2.343L17.094 15.5v-7l-4.922 2.657z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -506,25 +670,34 @@ const ComunidadBaul = () => {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 2.2 }}
-              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
             >
-              <div className="text-center">
+              <div className="text-center flex-1 flex flex-col">
                 {/* Imagen real */}
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4">
                   <img
                     src="https://bauldemoda.com.ar/wp-content/uploads/2020/12/131822889_10158279931233924_4735578909456527845_o-330x330.jpg"
                     alt="Festival en Casa"
-                    className="w-full h-32 object-cover rounded-lg"
+                    className="w-full h-40 md:h-48 object-cover rounded-lg"
                   />
                 </div>
                 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="font-bold text-base md:text-lg text-gray-900 mb-3">
                   FESTIVAL EN CASA
                 </h4>
                 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-xs md:text-sm text-gray-600 mb-4 flex-1">
                   Este 2020 lo cerramos en nuestras sedes que tanto nos extrañaron con Feria, Shows y muchas sorpresas más! Conoce los horarios de cada sede y pasa por la que te quede más cerca! Ciudad Jardín Almagro
                 </p>
+                
+                {/* Iconos de redes sociales */}
+                <div className="flex justify-center gap-2 mt-auto pt-4">
+                  <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>

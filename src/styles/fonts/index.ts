@@ -25,7 +25,6 @@ export const futura = localFont({
   src: [
     {
       path: "../../../public/fonts/Futura Md BT/futuramdbt_bold.otf",
-      weight: "700",
       style: "normal",
     },
   ],

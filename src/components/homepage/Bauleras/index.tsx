@@ -219,7 +219,7 @@ const Bauleras = () => {
                   />
                 </div>
 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
                   ONLINE
                 </h4>
 
@@ -256,7 +256,7 @@ const Bauleras = () => {
                   />
                 </div>
 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
                   CONTENIDO REVISTAS
                 </h4>
 
@@ -293,7 +293,7 @@ const Bauleras = () => {
                   />
                 </div>
 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
                   EXPOSICIONES
                 </h4>
 
@@ -330,7 +330,7 @@ const Bauleras = () => {
                   />
                 </div>
 
-                <h4 className="font-beauty text-lg font-bold text-gray-900 mb-2">
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
                   DIARIOS
                 </h4>
 
