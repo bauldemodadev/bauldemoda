@@ -2,7 +2,6 @@
 
 import ProductListSec from "@/components/common/ProductListSec";
 import CourseListSec from "@/components/common/CourseListSec";
-import DressStyle from "@/components/homepage/DressStyle";
 import AtencionPersonalizadaWrapper from "@/components/homepage/AtencionPersonalizada/AtencionPersonalizadaWrapper";
 import RedesWrapper from "@/components/homepage/Redes/RedesWrapper";
 import UbicacionWrapper from "@/components/homepage/Ubicacion/UbicacionWrapper";
@@ -12,8 +11,6 @@ export default function Home() {
   return (
     <>
       <Header />
-      <DressStyle />
-
       
       <main
         className="my-[50px] sm:my-[72px] mt-5 lg:pt-32 lg:-mt-32"

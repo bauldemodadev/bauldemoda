@@ -188,7 +188,7 @@ const ProductSection = ({
   return (
     <section className="max-w-7xl mx-auto px-4 md:px-6 mb-12">
       <div className="text-left mb-8">
-        <h2 className="font-beauty text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="font-futura font-bold text-gray-900 mb-2">
           {title}
         </h2>
       </div>
@@ -296,9 +296,12 @@ export default function ProductosYServiciosPage() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h1 className="font-beauty text-4xl font-bold text-gray-900 mb-4">
-            Productos y servicios
-          </h1>
+          <h2 className="font-futura font-bold text-gray-900 mb-2">
+            PRODUCTOS Y SERVICIOS
+          </h2>
+          <h3 className="font-beauty text-[3rem] text-gray-900 mb-4">
+            Revistas y herramientas de costura
+          </h3>
           <p className="text-gray-700 text-lg max-w-4xl">
             Tienda virtual donde vas a conseguir las revistas de Baúl, que desarrollamos para Editorial Arcadia, y algunas herramientas de costura. Podes comprarlas desde la web y retirarlas sin cargo por las sedes o recibirlas por correo.
           </p>

@@ -189,7 +189,7 @@ const ProductSection = ({
   return (
     <section className="max-w-7xl mx-auto px-4 md:px-6 mb-12">
       <div className="text-left mb-8">
-        <h2 className="font-beauty text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="font-futura font-bold text-gray-900 mb-2">
           {title}
         </h2>
       </div>
@@ -347,9 +347,12 @@ export default function CursosAlmagroPage() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h1 className="font-beauty text-4xl font-bold text-gray-900 mb-4">
-            Cursos Almagro
-          </h1>
+          <h2 className="font-futura font-bold text-gray-900 mb-2">
+            CURSOS PRESENCIALES
+          </h2>
+          <h3 className="font-beauty text-[3rem] text-gray-900 mb-4">
+            Almagro
+          </h3>
           <p className="text-gray-700 text-lg max-w-4xl">
             Te presentamos los cursos presenciales en nuestra sede de Almagro, en Capital Federal.
           </p>

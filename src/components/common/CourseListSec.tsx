@@ -236,11 +236,11 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
     return (
       <section className="max-w-frame mx-auto px-4 md:px-6 mb-12">
         <div className="text-left mb-8">
-          <h2 className="font-beauty text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="font-futura font-bold text-gray-900 mb-2">
             {title}
           </h2>
           {subtitle && (
-            <p className="font-beauty text-lg text-gray-600">{subtitle}</p>
+            <h3 className="font-beauty text-[3rem] text-gray-900">{subtitle}</h3>
           )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -335,20 +335,20 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
             animate={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="font-beauty text-2xl font-bold text-gray-900 mb-2"
+            className="font-futura font-bold text-gray-900 mb-2"
           >
             {title}
           </motion.h2>
           {subtitle && (
-            <motion.p
+            <motion.h3
               initial={{ y: "100px", opacity: 0 }}
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-beauty text-lg text-gray-600"
+              className="font-beauty text-[3rem] text-gray-900"
             >
               {subtitle}
-            </motion.p>
+            </motion.h3>
           )}
         </div>
 

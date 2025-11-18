@@ -200,7 +200,7 @@ const ProductSection = ({
   return (
     <section className="max-w-7xl mx-auto px-4 md:px-6 mb-12">
       <div className="text-left mb-8">
-        <h2 className="font-beauty text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="font-futura font-bold text-gray-900 mb-2">
           {title}
         </h2>
       </div>
@@ -308,12 +308,12 @@ export default function CursosOnlinePage() {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <h1 className="font-beauty text-4xl font-bold text-gray-900 mb-4">
-            Cursos Online
-          </h1>
-          <p className="text-gray-700 text-lg max-w-4xl">
+          <h2 className="font-futura font-bold text-gray-900 mb-2">
+            CURSOS ONLINE
+          </h2>
+          <h3 className="font-beauty text-[3rem] text-gray-900 mb-4">
             Aprende moldería, corte y confección de forma online. Cursos desde cero o el nivel que tengas! Te enseñamos a través de videos, apuntes, ebooks y asistencia en línea para lo que necesites!
-          </p>
+          </h3>
         </motion.div>
 
         {/* Secciones de productos */}

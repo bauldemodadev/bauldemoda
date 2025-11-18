@@ -61,19 +61,19 @@ export default function TiendaPage() {
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="font-beauty text-2xl font-bold text-gray-900 mb-2"
+              className="font-futura font-bold text-gray-900 mb-2"
             >
               PRODUCTOS Y SERVICIOS
             </motion.h2>
-            <motion.p
+            <motion.h3
               initial={{ y: "100px", opacity: 0 }}
               animate={{ y: "0", opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-beauty text-lg text-gray-600"
+              className="font-beauty text-[3rem] text-gray-900"
             >
               Revistas y herramientas de costura
-            </motion.p>
+            </motion.h3>
           </div>
 
           {/* Botón VER TODOS */}
