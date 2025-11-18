@@ -114,7 +114,7 @@ const Header = () => {
       <div className="relative w-full h-[450px] sm:h-[550px] md:h-[600px] lg:h-[700px] xl:h-[800px] overflow-hidden">
         {/* Slide actual */}
         <div className="relative w-full h-full">
-          <div className="h-full flex items-center">
+          <div className="h-full flex items-start pt-4 sm:pt-6 lg:pt-8">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-6 lg:gap-8">
                 {/* Contenido de texto - Izquierda */}
@@ -230,7 +230,7 @@ const Header = () => {
               key={i}
               onClick={() => cambiarSlide(i)}
               className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
-                i === indiceActual ? 'scale-110 sm:scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                i === indiceActual ? '' : 'bg-gray-300 hover:bg-gray-400'
               }`}
               style={i === indiceActual ? { backgroundColor: "#E9ABBD" } : undefined}
               aria-label={`Ir al slide ${i + 1}`}

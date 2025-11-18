@@ -18,7 +18,6 @@ type CourseListSecProps = {
   showAllUrl: string; // URL para el botón "Ver todos"
 };
 
-// Función para normalizar texto (remover acentos, convertir a minúsculas, etc.)
 const normalizeText = (text: string): string => {
   return text
     .toLowerCase()
