@@ -397,10 +397,10 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
                   animate={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="px-8 py-3 rounded-lg font-bold text-gray-800 transition-all duration-200"
-                  style={{ backgroundColor: "#F5E6E8" }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"} 
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#F5E6E8"}
+                  className="px-8 py-3 rounded-full font-bold text-white transition-all duration-200"
+                  style={{ backgroundColor: "#E9ABBD" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
                 >
                   VER TODOS
                 </motion.button>
