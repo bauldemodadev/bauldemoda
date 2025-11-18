@@ -229,10 +229,29 @@ const Header = () => {
             <button
               key={i}
               onClick={() => cambiarSlide(i)}
-              className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
-                i === indiceActual ? '' : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-              style={i === indiceActual ? { backgroundColor: "#E9ABBD" } : undefined}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: '8px',
+                height: '8px',
+                minWidth: '8px',
+                minHeight: '8px',
+                maxWidth: '8px',
+                maxHeight: '8px',
+                backgroundColor: i === indiceActual ? "#E9ABBD" : "#D1D5DB",
+                borderRadius: '50%',
+                padding: 0,
+                border: 'none'
+              }}
+              onMouseEnter={(e) => {
+                if (i !== indiceActual) {
+                  e.currentTarget.style.backgroundColor = "#9CA3AF";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (i !== indiceActual) {
+                  e.currentTarget.style.backgroundColor = "#D1D5DB";
+                }
+              }}
               aria-label={`Ir al slide ${i + 1}`}
             />
           ))}
