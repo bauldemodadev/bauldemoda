@@ -70,6 +70,33 @@ body {
     @apply bg-background text-foreground;
     font-family: var(--font-futura);
   }
+  
+  /* Aplicar Futura a todos los elementos de texto por defecto */
+  body,
+  p,
+  span,
+  div,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label,
+  li,
+  td,
+  th {
+    font-family: var(--font-futura);
+  }
+  
+  /* Aplicar Futura a los encabezados también (excepto cuando se use Beauty explícitamente) */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-futura);
+  }
 }
 
 @layer utilities {
