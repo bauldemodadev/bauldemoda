@@ -139,22 +139,17 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Banner Superior */}
         <div className="relative mb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Columna Izquierda - Texto */}
-            <div className="space-y-4">
-              {/* Subtítulo en fuente script rosa */}
-              <p className="font-beauty text-pink-500 text-xl md:text-2xl">
-                Productos y servicios
-              </p>
-              
-              {/* Título principal */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black leading-tight">
+            <div className="space-y-6">
+              {/* Título principal - grande y en negrita */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 {productName.toUpperCase()}
               </h1>
               
               {/* Descripción */}
               {productDescription && (
-                <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+                <p className="text-gray-700 text-lg md:text-xl leading-relaxed max-w-xl">
                   {productDescription}
                 </p>
               )}
@@ -162,36 +157,25 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
               {/* Botón COMPRAR */}
               <button
                 onClick={() => manejarAgregarAlCarrito(product, toast)}
-                className="bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 px-8 rounded-lg hover:from-pink-600 hover:to-pink-700 transition-all duration-200 shadow-lg"
+                className="text-white font-bold py-4 px-10 rounded-lg transition-all duration-200 shadow-lg text-lg"
+                style={{ backgroundColor: "#E9ABBD" }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
               >
                 COMPRAR
               </button>
             </div>
 
-            {/* Columna Derecha - Imagen con decoraciones */}
-            <div className="relative">
-              {/* Formas decorativas de fondo - formas orgánicas grandes */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                {/* Forma rosa grande */}
-                <div className="absolute top-10 right-10 w-48 h-48 bg-pink-300 rounded-full opacity-40 blur-3xl transform rotate-12"></div>
-                {/* Forma amarilla */}
-                <div className="absolute bottom-10 left-10 w-56 h-56 bg-yellow-300 rounded-full opacity-40 blur-3xl transform -rotate-12"></div>
-                {/* Forma teal */}
-                <div className="absolute top-1/2 right-1/3 w-40 h-40 bg-teal-300 rounded-full opacity-40 blur-3xl"></div>
-              </div>
-              
-              {/* Imagen principal sin fondo - solo la imagen */}
-              <div className="relative z-10 flex items-center justify-center">
-                <img
-                  src={mainImage}
-                  alt={productName}
-                  className="w-full h-auto object-contain max-h-[500px]"
-                  style={{ background: 'transparent' }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
-                  }}
-                />
-              </div>
+            {/* Columna Derecha - Solo imagen */}
+            <div className="relative flex items-center justify-center">
+              <img
+                src={mainImage}
+                alt={productName}
+                className="w-full h-auto object-contain max-h-[600px]"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                }}
+              />
             </div>
           </div>
         </div>
