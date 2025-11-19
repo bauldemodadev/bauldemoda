@@ -133,30 +133,6 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
     }
   };
 
-  // Extraer detalles del producto
-  const getDetailsList = () => {
-    const category = product.category?.toLowerCase() || '';
-    if (category.includes('buzos') || category.includes('revistas')) {
-      return [
-        "Buzo con cuello redondo",
-        "Buzo irregular con capucha",
-        "Buzo rayado over size",
-        "Buzo con detalles divertidos"
-      ];
-    }
-    // Parsear desde description o detailsHtml si está disponible
-    if (product.detailsHtml) {
-      // Extraer items de lista si hay HTML
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(product.detailsHtml, 'text/html');
-      const listItems = Array.from(doc.querySelectorAll('li')).map(li => li.textContent || '');
-      if (listItems.length > 0) return listItems;
-    }
-    return [];
-  };
-
-  const detailsList = getDetailsList();
-  const sizingInfo = "Todas los diseños en tallas del 35 al 46 con moldes a tamaño real.";
 
   return (
     <div className="min-h-screen bg-white">
@@ -284,36 +260,6 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
                 PROPUESTAS SIMPLES PARA COSER EN FORMA EXPRESS. TE ENSEÑAMOS A CREAR MAS TALLES.
               </p>
             )}
-
-            {/* Lista de diseños */}
-            {detailsList.length > 0 && (
-              <ul className="space-y-2 mb-6">
-                {detailsList.map((item, index) => (
-                  <li key={index} className="text-gray-700 text-sm flex items-start">
-                    <span className="text-pink-500 mr-2">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {/* Información de tallas */}
-            <p className="text-gray-700 text-sm mb-6">
-              {sizingInfo}
-            </p>
-
-            {/* Información de envío repetida */}
-            <p className="text-gray-700 text-sm mb-6">
-              Entrega sin cargo en la Sede de Ciudad Jardín y/o envíos a toda Argentina con Correo Argentino, a cuenta del comprador.
-            </p>
-
-            {/* Botón COMPRAR */}
-            <button
-              onClick={() => manejarAgregarAlCarrito(product, toast)}
-              className="bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 px-8 rounded-lg hover:from-pink-600 hover:to-pink-700 transition-all duration-200 shadow-lg"
-            >
-              COMPRAR
-            </button>
 
             {/* Enlaces adicionales */}
             <div className="flex flex-wrap gap-4 pt-4">
