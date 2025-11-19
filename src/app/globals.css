@@ -168,11 +168,12 @@ body {
   line-height: 1.6;
 }
 
-/* Texto en negrita - color rosa específico */
+/* Texto en negrita - color rosa específico y mayúsculas */
 .product-details-html strong,
 .product-details-html b {
   font-weight: bold;
   color: #D44D7D;
+  text-transform: uppercase;
 }
 
 /* Encabezados - respetando tamaños originales */
