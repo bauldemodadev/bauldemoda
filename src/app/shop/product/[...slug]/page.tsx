@@ -240,11 +240,11 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
           {/* Columna Principal - Detalles */}
           <div className="lg:col-span-2 space-y-4 lg:space-y-6">
             {/* Título DETALLES */}
-            <div>
-              <h2 className="text-sm font-bold text-black uppercase tracking-wide mb-2">
+            <div className="space-y-4">
+              <h2 className="text-[1.5rem] font-bold text-black uppercase tracking-wide">
                 DETALLES
               </h2>
-              <h3 className="font-beauty text-pink-500 text-xl md:text-2xl mb-4">
+              <h3 className="font-beauty text-black text-[3rem]">
                 {productName}
               </h3>
             </div>
