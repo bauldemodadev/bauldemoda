@@ -6,7 +6,7 @@ import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
-import { Clock, DollarSign, MapPin, ArrowRight, ArrowLeftRight } from "lucide-react";
+import { ArrowRight, ArrowLeftRight } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 const manejarAgregarAlCarrito = (product: Product, toast: any) => {
@@ -185,33 +185,39 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
           {/* Bloque 1 - Reloj */}
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
-                <Clock className="w-6 h-6 text-pink-600" />
-              </div>
+              <img
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/reloj.svg"
+                alt="Reloj"
+                className="w-12 h-12 object-contain"
+              />
             </div>
             <p className="text-gray-700 text-sm leading-relaxed">
               {getFeatureText(0)}
             </p>
           </div>
 
-          {/* Bloque 2 - Dólar */}
+          {/* Bloque 2 - Peso */}
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-pink-600" />
-              </div>
+              <img
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/peso.svg"
+                alt="Peso"
+                className="w-12 h-12 object-contain"
+              />
             </div>
             <p className="text-gray-700 text-sm leading-relaxed">
               {getFeatureText(1)}
             </p>
           </div>
 
-          {/* Bloque 3 - Ubicación */}
+          {/* Bloque 3 - Pin */}
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center">
-                <MapPin className="w-6 h-6 text-pink-600" />
-              </div>
+              <img
+                src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/pin.svg"
+                alt="Ubicación"
+                className="w-12 h-12 object-contain"
+              />
             </div>
             <p className="text-gray-700 text-sm leading-relaxed">
               {getFeatureText(2)}
