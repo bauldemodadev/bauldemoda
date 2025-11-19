@@ -139,25 +139,25 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Banner Superior */}
         <div className="relative mb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Columna Izquierda - Texto */}
-            <div className="space-y-6">
-              {/* Título principal - grande y en negrita */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 lg:gap-12 items-center">
+            {/* Columna Izquierda - Texto (30%) */}
+            <div className="lg:col-span-3 space-y-4">
+              {/* Título principal - 2em */}
+              <h1 className="text-[2em] font-bold text-gray-900 leading-tight">
                 {productName.toUpperCase()}
               </h1>
               
-              {/* Descripción */}
+              {/* Descripción - 1rem */}
               {productDescription && (
-                <p className="text-gray-700 text-lg md:text-xl leading-relaxed max-w-xl">
+                <p className="text-[1rem] text-gray-700 leading-relaxed">
                   {productDescription}
                 </p>
               )}
               
-              {/* Botón COMPRAR */}
+              {/* Botón COMPRAR - más pequeño con bordes redondeados */}
               <button
                 onClick={() => manejarAgregarAlCarrito(product, toast)}
-                className="text-white font-bold py-4 px-10 rounded-lg transition-all duration-200 shadow-lg text-lg"
+                className="text-white font-bold py-2 px-6 rounded-full transition-all duration-200 shadow-lg text-sm"
                 style={{ backgroundColor: "#E9ABBD" }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
@@ -166,12 +166,12 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
               </button>
             </div>
 
-            {/* Columna Derecha - Solo imagen */}
-            <div className="relative flex items-center justify-center">
+            {/* Columna Derecha - Imagen más grande (70%) */}
+            <div className="lg:col-span-7 relative flex items-center justify-center">
               <img
                 src={mainImage}
                 alt={productName}
-                className="w-full h-auto object-contain max-h-[600px]"
+                className="w-full h-auto object-contain"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
                 }}
