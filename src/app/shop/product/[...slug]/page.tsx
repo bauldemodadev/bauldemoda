@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowRight, ArrowLeftRight } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
+import AvailabilityModal from "@/components/courses/AvailabilityModal";
 
 const manejarAgregarAlCarrito = (product: Product, toast: any) => {
   const productName = product.name || 'Producto';
@@ -55,6 +56,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [id] = params.slug;
 
@@ -118,6 +120,60 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   const mainImage = productImages[0] || product.srcUrl || PLACEHOLDER_IMAGE;
   const price = product.priceText || `$${product.price?.toLocaleString() || 0}`;
 
+  // Detectar si es un curso presencial
+  const isPresencial = product.category?.toLowerCase().includes('presencial') || 
+                       product.subcategory?.toLowerCase().includes('presencial') ||
+                       product.locationText?.toLowerCase().includes('ciudad jardín') ||
+                       product.locationText?.toLowerCase().includes('almagro');
+
+  // Función para manejar la confirmación del modal de disponibilidad
+  const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
+    if (product && selectedDate && selectedTime) {
+      // Usar el precio correcto: basePrice > localPriceNumber > price
+      const productPrice = product.basePrice ?? 
+                          product.localPriceNumber ?? 
+                          product.price;
+
+      const itemCarrito = {
+        id: product.id,
+        name: product.name,
+        price: productPrice,
+        quantity: 1,
+        totalPrice: productPrice,
+        srcUrl: product.srcUrl,
+        image: product.images?.[0] || product.srcUrl || PLACEHOLDER_IMAGE,
+        discount: { percentage: 0, amount: 0 }, // Sin descuentos para cursos presenciales
+        slug: product.name.split(" ").join("-"),
+        productId: product.id,
+        selectedDate,
+        selectedTime,
+      };
+
+      const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
+      const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
+
+      if (indice > -1) {
+        carritoLocal[indice].quantity += 1;
+        carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
+        toast({
+          title: "¡Cantidad actualizada!",
+          description: `Se ha actualizado la cantidad de ${product.name} en el carrito.`,
+          variant: "cart",
+        });
+      } else {
+        carritoLocal.push(itemCarrito);
+        toast({
+          title: "¡Producto agregado al carrito!",
+          description: `${product.name} ha sido agregado correctamente al carrito con fecha ${selectedDate} a las ${selectedTime}.`,
+          variant: "cart",
+        });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(carritoLocal));
+      window.dispatchEvent(new Event("cartUpdate"));
+    }
+  };
+
   // Extraer información del producto para los bloques
   const getFeatureText = (index: number) => {
     const category = product.category?.toLowerCase() || '';
@@ -155,15 +211,27 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
               )}
               
               {/* Botón COMPRAR - más pequeño con bordes redondeados */}
-              <button
-                onClick={() => manejarAgregarAlCarrito(product, toast)}
-                className="text-white font-bold py-2 px-6 rounded-full transition-all duration-200 shadow-lg text-sm"
-                style={{ backgroundColor: "#E9ABBD" }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
-              >
-                COMPRAR
-              </button>
+              {isPresencial ? (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="text-white font-bold py-2 px-6 rounded-full transition-all duration-200 shadow-lg text-sm"
+                  style={{ backgroundColor: "#E9ABBD" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                >
+                  COMPRAR
+                </button>
+              ) : (
+                <button
+                  onClick={() => manejarAgregarAlCarrito(product, toast)}
+                  className="text-white font-bold py-2 px-6 rounded-full transition-all duration-200 shadow-lg text-sm"
+                  style={{ backgroundColor: "#E9ABBD" }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+                >
+                  COMPRAR
+                </button>
+              )}
             </div>
 
             {/* Columna Derecha - Imagen más grande (70%) */}
@@ -292,6 +360,16 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
           )}
         </div>
       </div>
+
+      {/* Modal de Disponibilidad para cursos presenciales */}
+      {isPresencial && product && (
+        <AvailabilityModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          product={product}
+          onConfirm={handleConfirmAvailability}
+        />
+      )}
     </div>
   );
 }

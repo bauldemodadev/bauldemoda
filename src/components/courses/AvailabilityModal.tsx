@@ -185,12 +185,28 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     }
 
     // Ordenar por fecha y hora
-    return slots.sort((a, b) => {
+    const sortedSlots = slots.sort((a, b) => {
       if (a.date !== b.date) {
         return a.date.localeCompare(b.date);
       }
       return a.time.localeCompare(b.time);
     });
+
+    // Limitar a máximo 3 fechas únicas disponibles
+    const uniqueDates = new Set<string>();
+    const limitedSlots: AvailabilitySlot[] = [];
+    
+    for (const slot of sortedSlots) {
+      if (uniqueDates.size < 3 && !uniqueDates.has(slot.date)) {
+        uniqueDates.add(slot.date);
+        limitedSlots.push(slot);
+      } else if (uniqueDates.has(slot.date)) {
+        // Si ya tenemos esta fecha, agregar el slot si hay espacio
+        limitedSlots.push(slot);
+      }
+    }
+
+    return limitedSlots;
   };
 
   const fetchAvailability = async () => {
