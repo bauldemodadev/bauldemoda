@@ -41,8 +41,8 @@ export interface FirestoreProduct {
   detailsHtml: string;           // meta: detalles_del_taller (HTML completo)
 
   // Medios
-  thumbnailMediaId: number | null;  // meta: imagen_principal (ID WP)
-  galleryMediaIds: number[];        // meta: _product_image_gallery CSV IDs
+  thumbnailMediaId: number | string | null;  // meta: imagen_principal (ID WP o URL)
+  galleryMediaIds: (number | string)[];        // meta: _product_image_gallery CSV IDs o URLs
   images?: string[];                // URLs de imágenes (se pueden derivar de mediaIds)
 
   // Categorización

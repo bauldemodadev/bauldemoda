@@ -24,8 +24,8 @@ interface Product {
   sede?: string | null;
   status?: 'publish' | 'draft';
   stockStatus?: string;
-  thumbnailMediaId?: number | null;
-  galleryMediaIds?: number[];
+  thumbnailMediaId?: number | string | null;
+  galleryMediaIds?: (number | string)[];
   sku?: string | null;
 }
 
@@ -268,12 +268,25 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Imagen Principal (Media ID)
+                Imagen Principal (Media ID o URL)
               </label>
               <input
-                type="number"
+                type="text"
                 value={formData.thumbnailMediaId || ''}
-                onChange={(e) => handleChange('thumbnailMediaId', e.target.value ? parseInt(e.target.value) : null)}
+                onChange={(e) => {
+                  const value = e.target.value.trim();
+                  if (!value) {
+                    handleChange('thumbnailMediaId', null);
+                  } else if (value.startsWith('http://') || value.startsWith('https://')) {
+                    // Es una URL
+                    handleChange('thumbnailMediaId', value);
+                  } else {
+                    // Intentar parsear como número (ID)
+                    const numValue = parseInt(value, 10);
+                    handleChange('thumbnailMediaId', !isNaN(numValue) && numValue > 0 ? numValue : value);
+                  }
+                }}
+                placeholder="Ej: 123 o https://ejemplo.com/imagen.jpg"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-2"
               />
               {formData.thumbnailMediaId && (
@@ -289,19 +302,28 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Galería (Media IDs separados por comas)
+                Galería (Media IDs o URLs separados por comas)
               </label>
               <input
                 type="text"
-                value={formData.galleryMediaIds?.join(', ') || ''}
+                value={formData.galleryMediaIds?.map(id => String(id)).join(', ') || ''}
                 onChange={(e) => {
-                  const ids = e.target.value
+                  const values = e.target.value
                     .split(',')
-                    .map((id) => parseInt(id.trim(), 10))
-                    .filter((id) => !isNaN(id) && id > 0);
-                  handleChange('galleryMediaIds', ids);
+                    .map((val) => val.trim())
+                    .filter((val) => val.length > 0)
+                    .map((val) => {
+                      // Si es una URL, mantenerla como string
+                      if (val.startsWith('http://') || val.startsWith('https://')) {
+                        return val;
+                      }
+                      // Intentar parsear como número (ID)
+                      const numValue = parseInt(val, 10);
+                      return !isNaN(numValue) && numValue > 0 ? numValue : val;
+                    });
+                  handleChange('galleryMediaIds', values);
                 }}
-                placeholder="Ej: 123, 456, 789"
+                placeholder="Ej: 123, 456, https://ejemplo.com/imagen.jpg"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-2"
               />
               {formData.galleryMediaIds && formData.galleryMediaIds.length > 0 && (

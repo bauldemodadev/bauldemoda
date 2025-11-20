@@ -34,12 +34,7 @@ export default function Home() {
           title="CURSOS PRESENCIALES"
           subtitle="Ciudad Jardin"
           category="ciudad-jardin"
-          courseNames={[
-            "Abc Overlock & Collareta",
-            "abc Costura",
-            "Indumentaria",
-            "Lenceria y mallas"
-          ]}
+          courseIds={[8987, 415, 71, 50]}
           showAllUrl="/shop/categoria/cursos-ciudad-jardin"
         />
 
@@ -47,13 +42,7 @@ export default function Home() {
         <CourseListSec
           title="Almagro"
           category="almagro"
-          courseNames={[
-            "Intensivo Indumentaria",
-            "Arreglos de Ropa",
-            "Carteras",
-            "Indumentaria",
-            "Abc Costura"
-          ]}
+          courseIds={[9556, 4140, 71, 415]}
           showAllUrl="/shop/categoria/cursos-almagro"
         />
       </main>

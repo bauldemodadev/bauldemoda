@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Loader2, ImageOff } from 'lucide-react';
 
 interface MediaImageProps {
-  mediaId: number | null | undefined;
+  mediaId: number | string | null | undefined;
   alt?: string;
   width?: number;
   height?: number;
@@ -36,11 +36,26 @@ export default function MediaImage({
       return;
     }
 
-    // El endpoint /api/media/[id] ahora sirve la imagen directamente
-    // Podemos usarlo directamente como URL de imagen
-    setImageUrl(`/api/media/${mediaId}`);
-    setLoading(false);
-    setError(false);
+    // Si es una URL (string que comienza con http:// o https://), usarla directamente
+    if (typeof mediaId === 'string' && (mediaId.startsWith('http://') || mediaId.startsWith('https://'))) {
+      setImageUrl(mediaId);
+      setLoading(false);
+      setError(false);
+      return;
+    }
+
+    // Si es un ID (número o string numérico), usar el endpoint /api/media/[id]
+    const idValue = typeof mediaId === 'number' ? mediaId : parseInt(mediaId, 10);
+    if (!isNaN(idValue) && idValue > 0) {
+      setImageUrl(`/api/media/${idValue}`);
+      setLoading(false);
+      setError(false);
+    } else {
+      // Si no es ni URL ni ID válido, usar fallback
+      setImageUrl(fallback);
+      setLoading(false);
+      setError(true);
+    }
   }, [mediaId, fallback]);
 
   if (loading) {
@@ -51,7 +66,11 @@ export default function MediaImage({
       >
         <Loader2 className="w-6 h-6 animate-spin text-gray-400 mb-2" />
         {showId && mediaId && (
-          <span className="text-xs text-gray-500">ID: {mediaId}</span>
+          <span className="text-xs text-gray-500">
+            {typeof mediaId === 'string' && (mediaId.startsWith('http://') || mediaId.startsWith('https://'))
+              ? 'URL'
+              : `ID: ${mediaId}`}
+          </span>
         )}
       </div>
     );
@@ -66,7 +85,11 @@ export default function MediaImage({
         <ImageOff className="w-8 h-8 mb-2" />
         <span className="text-xs text-center px-2">Sin imagen</span>
         {showId && mediaId && (
-          <span className="text-xs text-gray-500 mt-1">ID: {mediaId}</span>
+          <span className="text-xs text-gray-500 mt-1">
+            {typeof mediaId === 'string' && (mediaId.startsWith('http://') || mediaId.startsWith('https://'))
+              ? 'URL'
+              : `ID: ${mediaId}`}
+          </span>
         )}
       </div>
     );
@@ -87,7 +110,9 @@ export default function MediaImage({
       />
       {showId && mediaId && (
         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs px-2 py-1 text-center">
-          ID: {mediaId}
+          {typeof mediaId === 'string' && (mediaId.startsWith('http://') || mediaId.startsWith('https://'))
+            ? 'URL'
+            : `ID: ${mediaId}`}
         </div>
       )}
     </div>

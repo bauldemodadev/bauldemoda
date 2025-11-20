@@ -14,7 +14,8 @@ type CourseListSecProps = {
   title: string;
   subtitle?: string;
   category: 'online' | 'ciudad-jardin' | 'almagro';
-  courseNames: string[]; // Nombres de los cursos a buscar
+  courseNames?: string[]; // Nombres de los cursos a buscar (para cursos online)
+  courseIds?: (string | number)[]; // IDs de los cursos en el orden deseado (para cursos presenciales)
   showAllUrl: string; // URL para el botón "Ver todos"
 };
 
@@ -51,6 +52,24 @@ const filterCoursesByName = (products: Product[], courseNames: string[]): Produc
       return false;
     });
     
+    if (found && !filtered.find(p => p.id === found.id)) {
+      filtered.push(found);
+    }
+  });
+  
+  return filtered;
+};
+
+// Función para filtrar y ordenar productos por IDs
+const filterCoursesByIds = (products: Product[], courseIds: (string | number)[]): Product[] => {
+  const filtered: Product[] = [];
+  
+  // Convertir todos los IDs a string para comparación
+  const courseIdsStr = courseIds.map(id => String(id));
+  
+  // Filtrar y ordenar según el orden de los IDs proporcionados
+  courseIdsStr.forEach(courseId => {
+    const found = products.find(product => String(product.id) === courseId);
     if (found && !filtered.find(p => p.id === found.id)) {
       filtered.push(found);
     }
@@ -192,7 +211,7 @@ const CourseCard = ({ product, category, toast, onAddToCart }: { product: Produc
   );
 };
 
-const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: CourseListSecProps) => {
+const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, showAllUrl }: CourseListSecProps) => {
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -215,8 +234,13 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
         }
         
         const allProducts = await response.json() as Product[];
-        // Filtrar cursos por nombres
-        const filteredCourses = filterCoursesByName(allProducts, courseNames);
+        // Filtrar cursos por IDs (si se proporcionan) o por nombres
+        let filteredCourses: Product[] = [];
+        if (courseIds && courseIds.length > 0) {
+          filteredCourses = filterCoursesByIds(allProducts, courseIds);
+        } else if (courseNames && courseNames.length > 0) {
+          filteredCourses = filterCoursesByName(allProducts, courseNames);
+        }
         setProducts(filteredCourses);
         setError(null);
       } catch (err) {
@@ -228,10 +252,10 @@ const CourseListSec = ({ title, subtitle, category, courseNames, showAllUrl }: C
     };
 
     fetchProducts();
-  }, [courseNames.join(',')]);
+  }, [courseIds?.join(','), courseNames?.join(',')]);
 
   if (loading) {
-    const skeletonCount = courseNames.length;
+    const skeletonCount = courseIds?.length || courseNames?.length || 4;
     return (
       <section className="relative mb-12">
         <div 

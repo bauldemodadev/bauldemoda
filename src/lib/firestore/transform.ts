@@ -139,25 +139,46 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
   // Prioridad: images existentes > galleryMediaIds > thumbnailMediaId > placeholder
   let images: string[] = [];
 
+  // Función helper para convertir mediaId (puede ser número, string numérico o URL) a URL
+  const mediaIdToUrl = (mediaId: number | string | null | undefined): string | null => {
+    if (!mediaId) return null;
+    
+    // Si es una URL (string que comienza con http:// o https://), usarla directamente
+    if (typeof mediaId === 'string' && (mediaId.startsWith('http://') || mediaId.startsWith('https://'))) {
+      return mediaId;
+    }
+    
+    // Si es un ID (número o string numérico), usar el endpoint /api/media/[id]
+    const idValue = typeof mediaId === 'number' ? mediaId : parseInt(String(mediaId), 10);
+    if (!isNaN(idValue) && idValue > 0) {
+      return `/api/media/${idValue}`;
+    }
+    
+    return null;
+  };
+
   // Si ya hay imágenes en el array, usarlas
   if (fsProduct.images && Array.isArray(fsProduct.images) && fsProduct.images.length > 0) {
     images = fsProduct.images;
   } else {
-    // Convertir mediaIds a URLs usando el endpoint /api/media/[id]
+    // Convertir mediaIds a URLs (soporta tanto IDs como URLs)
     const mediaUrls: string[] = [];
 
     // Agregar imagen principal (thumbnail)
-    if (fsProduct.thumbnailMediaId) {
-      mediaUrls.push(`/api/media/${fsProduct.thumbnailMediaId}`);
+    const thumbnailUrl = mediaIdToUrl(fsProduct.thumbnailMediaId);
+    if (thumbnailUrl) {
+      mediaUrls.push(thumbnailUrl);
     }
 
     // Agregar imágenes de la galería (evitando duplicar la principal)
     if (fsProduct.galleryMediaIds && Array.isArray(fsProduct.galleryMediaIds)) {
       for (const mediaId of fsProduct.galleryMediaIds) {
-        const url = `/api/media/${mediaId}`;
-        // Solo agregar si no es la misma que la principal
-        if (!fsProduct.thumbnailMediaId || mediaId !== fsProduct.thumbnailMediaId) {
-          mediaUrls.push(url);
+        const url = mediaIdToUrl(mediaId);
+        if (url) {
+          // Solo agregar si no es la misma que la principal
+          if (!thumbnailUrl || url !== thumbnailUrl) {
+            mediaUrls.push(url);
+          }
         }
       }
     }
