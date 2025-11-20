@@ -149,31 +149,36 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Empezar desde la próxima semana
-    const startDate = new Date(today);
-    const daysUntilNextWeek = (8 - startDate.getDay()) % 7 || 7;
-    startDate.setDate(startDate.getDate() + daysUntilNextWeek);
-    startDate.setHours(0, 0, 0, 0);
-
     // Generar fechas para las próximas 8 semanas
     const weeksToShow = 8;
+    const maxDates = 3; // Máximo de fechas únicas a mostrar
 
-    for (let week = 0; week < weeksToShow; week++) {
-      const weekDate = new Date(startDate);
-      weekDate.setDate(startDate.getDate() + (week * 7));
+    // Para cada día de la semana encontrado en el HTML
+    parsed.days.forEach(dayOfWeek => {
+      // Encontrar la próxima ocurrencia de este día de la semana
+      const nextDate = new Date(today);
+      const currentDay = nextDate.getDay();
+      
+      // Calcular cuántos días faltan hasta el próximo día de la semana deseado
+      let daysToAdd = (dayOfWeek - currentDay + 7) % 7;
+      
+      // Si hoy es el día deseado, usar el próximo (siguiente semana)
+      if (daysToAdd === 0) {
+        daysToAdd = 7;
+      }
+      
+      nextDate.setDate(today.getDate() + daysToAdd);
+      nextDate.setHours(0, 0, 0, 0);
 
-      // Para cada día encontrado en el HTML
-      parsed.days.forEach(dayOfWeek => {
-        const classDate = new Date(weekDate);
-        const dayOffset = (dayOfWeek - weekDate.getDay() + 7) % 7;
-        classDate.setDate(weekDate.getDate() + dayOffset);
+      // Generar fechas para las próximas semanas
+      for (let week = 0; week < weeksToShow; week++) {
+        const classDate = new Date(nextDate);
+        classDate.setDate(nextDate.getDate() + (week * 7));
 
         // Solo agregar fechas futuras
         if (classDate >= today) {
           // Para cada horario encontrado
           parsed.times.forEach(time => {
-            // No simular disponibilidad - mostrar todos los slots como disponibles
-            // La disponibilidad real vendrá de una API en el futuro
             slots.push({
               date: classDate.toISOString().split('T')[0],
               time,
@@ -181,8 +186,8 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
             });
           });
         }
-      });
-    }
+      }
+    });
 
     // Ordenar por fecha y hora
     const sortedSlots = slots.sort((a, b) => {
