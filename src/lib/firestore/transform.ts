@@ -11,56 +11,126 @@ import type { FirestoreProduct } from '@/types/firestore';
 import type { Product } from '@/types/product';
 
 /**
- * Parsea el precio desde priceText (texto libre) y extrae el primer número encontrado
+ * Parsea el precio desde priceText (texto libre) y extrae el precio de "otros medios" o "transferencia"
+ * IGNORA el precio en efectivo ya que se maneja manualmente en la sede presencial
  * Ejemplos:
- * - "$5000 en efectivo, $6000 otros medios" -> 5000
- * - "5000" -> 5000
- * - "$5.000" -> 5000
- * - "5.000 pesos" -> 5000
- * - "$ 5.000" -> 5000
- * - "ARS 5000" -> 5000
+ * - "$78.000 en efectivo / $94.380 otros medios" -> 94380
+ * - "$78.000 en efectivo, $94.380 transferencia" -> 94380
+ * - "$5000 otros medios" -> 5000
+ * - "$5.000" -> 5000 (si no hay mención de efectivo)
  */
 function parsePriceFromText(priceText: string | undefined | null): number {
   if (!priceText || typeof priceText !== 'string') {
     return 0;
   }
 
-  // Buscar el primer número en el texto (puede tener puntos como separadores de miles)
-  // Patrón: busca números con formato argentino (5.000 o 5.000,50) o internacional (5,000 o 5,000.50)
-  const patterns = [
-    /(\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?)/,  // Formato argentino: 5.000 o 5.000,50
-    /(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?)/,  // Formato internacional: 5,000 o 5,000.50
-    /(\d+(?:[.,]\d+)?)/,                    // Número simple: 5000, 5000.50, 5000,50
+  // Buscar el precio de "otros medios" o "transferencia" (ignorar precio en efectivo)
+  // Patrones para encontrar el precio después de "otros medios", "transferencia", o "/"
+  const otherMethodsPatterns = [
+    /(?:otros\s+medios|transferencia)[:\s]*\$?\s*(\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?)/i,  // Formato argentino después de "otros medios" o "transferencia"
+    /(?:otros\s+medios|transferencia)[:\s]*\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?)/i,  // Formato internacional
+    /\/(?:[^$]*)\$?\s*(\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?)/i,  // Después de "/" (formato argentino)
+    /\/(?:[^$]*)\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?)/i,  // Después de "/" (formato internacional)
   ];
 
-  for (const pattern of patterns) {
+  // Primero buscar el precio de "otros medios" o "transferencia"
+  for (const pattern of otherMethodsPatterns) {
     const match = priceText.match(pattern);
-    if (match) {
+    if (match && match[1]) {
       let numberStr = match[1];
       
-      // Si tiene puntos como separadores de miles (formato argentino: 5.000)
-      if (numberStr.includes('.') && numberStr.split('.').length > 2) {
-        // Es formato de miles: 5.000 -> 5000, 5.000,50 -> 5000.50
-        numberStr = numberStr.replace(/\./g, '').replace(',', '.');
-      } 
-      // Si tiene comas como separadores de miles (formato internacional: 5,000)
-      else if (numberStr.includes(',') && numberStr.split(',').length > 2) {
-        // Es formato de miles: 5,000 -> 5000, 5,000.50 -> 5000.50
-        numberStr = numberStr.replace(/,/g, '');
+      // Formato argentino: 94.380 o 94.380,50
+      if (numberStr.includes('.')) {
+        const parts = numberStr.split('.');
+        // Si la última parte tiene 3 dígitos, es separador de miles
+        if (parts.length > 1 && parts[parts.length - 1].length === 3) {
+          numberStr = numberStr.replace(/\./g, '');
+          // Si hay coma, es decimal: 94.380,50 -> 94380.50
+          if (numberStr.includes(',')) {
+            numberStr = numberStr.replace(',', '.');
+          }
+        }
       }
-      // Si tiene una coma y es probablemente decimal (formato argentino: 5,50)
-      else if (numberStr.includes(',') && numberStr.split(',').length === 2) {
+      // Formato internacional: 94,380 o 94,380.50
+      else if (numberStr.includes(',')) {
         const parts = numberStr.split(',');
-        if (parts[1].length <= 2) {
-          // Probablemente decimal: 5,50 -> 5.50
+        // Si la última parte tiene 3 dígitos, es separador de miles
+        if (parts.length > 1 && parts[parts.length - 1].length === 3) {
+          numberStr = numberStr.replace(/,/g, '');
+        }
+        // Si solo hay una coma y el número después tiene 1-2 dígitos, es decimal
+        else if (parts.length === 2 && parts[1].length <= 2) {
           numberStr = numberStr.replace(',', '.');
         }
       }
       
       const parsed = parseFloat(numberStr);
       if (!isNaN(parsed) && parsed > 0) {
-        return Math.round(parsed);
+        return parsed;
       }
+    }
+  }
+
+  // Si no se encontró "otros medios" o "transferencia", verificar si hay mención de "efectivo"
+  // Si hay "efectivo", no devolver el primer precio (porque sería el de efectivo)
+  if (/efectivo/i.test(priceText)) {
+    // Si hay mención de efectivo pero no encontramos "otros medios", retornar 0
+    // para que se use localPriceNumber u otherMethodsPrice si está disponible
+    return 0;
+  }
+
+  // Si no hay mención de "efectivo", buscar el primer precio disponible
+  const cleanText = priceText.replace(/[$ARS\s]/gi, '');
+  const patterns = [
+    /(\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?)/,  // Formato argentino: 78.000 o 78.000,50
+    /(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?)/,  // Formato internacional: 78,000 o 78,000.50
+  ];
+
+  for (const pattern of patterns) {
+    const match = cleanText.match(pattern);
+    if (match) {
+      let numberStr = match[1];
+      
+      if (numberStr.includes('.')) {
+        const parts = numberStr.split('.');
+        if (parts.length > 1 && parts[parts.length - 1].length === 3) {
+          numberStr = numberStr.replace(/\./g, '');
+          if (numberStr.includes(',')) {
+            numberStr = numberStr.replace(',', '.');
+          }
+        }
+      }
+      else if (numberStr.includes(',')) {
+        const parts = numberStr.split(',');
+        if (parts.length > 1 && parts[parts.length - 1].length === 3) {
+          numberStr = numberStr.replace(/,/g, '');
+        }
+        else if (parts.length === 2 && parts[1].length <= 2) {
+          numberStr = numberStr.replace(',', '.');
+        }
+      }
+      
+      const parsed = parseFloat(numberStr);
+      if (!isNaN(parsed) && parsed > 0) {
+        return parsed;
+      }
+    }
+  }
+
+  // Si no se encontró con patrones de miles, buscar números simples
+  const simplePattern = /(\d+(?:[.,]\d{1,2})?)/;
+  const simpleMatch = cleanText.match(simplePattern);
+  if (simpleMatch) {
+    let numberStr = simpleMatch[1];
+    if (numberStr.includes(',') && !numberStr.includes('.')) {
+      const parts = numberStr.split(',');
+      if (parts.length === 2 && parts[1].length <= 2) {
+        numberStr = numberStr.replace(',', '.');
+      }
+    }
+    const parsed = parseFloat(numberStr);
+    if (!isNaN(parsed) && parsed > 0) {
+      return parsed;
     }
   }
 

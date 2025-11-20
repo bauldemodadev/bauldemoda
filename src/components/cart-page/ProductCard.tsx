@@ -189,7 +189,10 @@ const ProductCard = ({ data }: ProductCardProps) => {
               <TooltipTrigger asChild>
                 <div className="flex items-center space-x-[5px] xl:space-x-2.5 cursor-help">
                   <span className="font-bold text-black text-base sm:text-lg md:text-xl xl:text-2xl">
-                    ${Math.round(priceDetails.totalPrice)}
+                    ${priceDetails.totalPrice % 1 === 0 
+                      ? priceDetails.totalPrice.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
+                      : priceDetails.totalPrice.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    }
                   </span>
                   {data.activePromo && (
                     <div className="text-sm text-green-600 font-medium">
@@ -208,21 +211,24 @@ const ProductCard = ({ data }: ProductCardProps) => {
                   {data.activePromo && (
                     <>
                       <p className="font-medium">Desglose del precio:</p>
-                      <p>{priceDetails.promoQuantity}x unidades con promoción: ${priceDetails.promoPrice}</p>
+                      <p>{priceDetails.promoQuantity}x unidades con promoción: ${priceDetails.promoPrice.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
                       {priceDetails.extraQuantity > 0 && (
-                        <p>{priceDetails.extraQuantity}x unidades al precio normal: ${priceDetails.extraQuantity * priceDetails.normalPrice}</p>
+                        <p>{priceDetails.extraQuantity}x unidades al precio normal: ${(priceDetails.extraQuantity * priceDetails.normalPrice).toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
                       )}
-                      <p className="text-gray-500 line-through">Precio original: ${priceDetails.originalTotal}</p>
+                      <p className="text-gray-500 line-through">Precio original: ${priceDetails.originalTotal.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
                     </>
                   )}
                   {data.discount?.percentage > 0 && !data.activePromo && (
                     <>
                       <p className="font-medium">Desglose del precio:</p>
-                      <p className="text-gray-500 line-through">Precio original: ${priceDetails.originalTotal}</p>
+                      <p className="text-gray-500 line-through">Precio original: ${priceDetails.originalTotal.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
                       <p>Descuento: -{data.discount.percentage}%</p>
                     </>
                   )}
-                  <p className="font-medium text-green-600">Total: ${Math.round(priceDetails.totalPrice)}</p>
+                  <p className="font-medium text-green-600">Total: ${priceDetails.totalPrice % 1 === 0 
+                    ? priceDetails.totalPrice.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
+                    : priceDetails.totalPrice.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                  }</p>
                 </div>
               </TooltipContent>
             </Tooltip>

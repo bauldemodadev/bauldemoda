@@ -52,69 +52,132 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     }
   }, [isOpen, product]);
 
-  // Función para parsear durationText y extraer información
-  const parseDurationText = (durationText?: string) => {
-    if (!durationText) return null;
+  // Función para parsear detailsHtml y extraer turnos y horarios
+  const parseDetailsHtml = (detailsHtml?: string) => {
+    if (!detailsHtml) return null;
 
-    // Buscar patrones como "1 mes", "4 clases", "2hs"
-    const durationMatch = durationText.match(/(\d+)\s*(mes|meses)/i);
-    const classesMatch = durationText.match(/(\d+)\s*(clase|clases)/i);
-    const hoursMatch = durationText.match(/(\d+)\s*(hs|h|horas|hora)/i);
+    // Crear un parser DOM para analizar el HTML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(detailsHtml, 'text/html');
+    const textContent = doc.body.textContent || detailsHtml;
+
+    // Mapeo de días de la semana en español a números (0 = domingo, 1 = lunes, etc.)
+    const dayMap: Record<string, number> = {
+      'domingo': 0,
+      'lunes': 1,
+      'martes': 2,
+      'miércoles': 3,
+      'miercoles': 3,
+      'jueves': 4,
+      'viernes': 5,
+      'sábado': 6,
+      'sabado': 6
+    };
+
+    // Buscar días de la semana mencionados
+    const foundDays: number[] = [];
+    Object.keys(dayMap).forEach(day => {
+      const regex = new RegExp(`\\b${day}\\b`, 'gi');
+      if (regex.test(textContent)) {
+        foundDays.push(dayMap[day]);
+      }
+    });
+
+    // Buscar horarios en formato HH:MM o texto como "mañana", "tarde", "noche"
+    const timePatterns = [
+      /\b(\d{1,2}):(\d{2})\b/g, // Formato 10:00, 14:30, etc.
+      /\b(mañana|tarde|noche)\b/gi, // Texto mañana, tarde, noche
+    ];
+
+    const foundTimes: string[] = [];
+    
+    // Buscar horarios en formato HH:MM
+    const timeMatches = textContent.match(/\b(\d{1,2}):(\d{2})\b/g);
+    if (timeMatches) {
+      timeMatches.forEach(match => {
+        const [hours, minutes] = match.split(':').map(Number);
+        if (hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60) {
+          const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+          if (!foundTimes.includes(formattedTime)) {
+            foundTimes.push(formattedTime);
+          }
+        }
+      });
+    }
+
+    // Buscar referencias a mañana, tarde, noche y convertirlas a horarios
+    if (/\bmañana\b/gi.test(textContent)) {
+      if (!foundTimes.includes('10:00')) foundTimes.push('10:00');
+      if (!foundTimes.includes('11:00')) foundTimes.push('11:00');
+    }
+    if (/\btarde\b/gi.test(textContent)) {
+      if (!foundTimes.includes('14:00')) foundTimes.push('14:00');
+      if (!foundTimes.includes('15:00')) foundTimes.push('15:00');
+    }
+    if (/\bnoche\b/gi.test(textContent)) {
+      if (!foundTimes.includes('18:00')) foundTimes.push('18:00');
+      if (!foundTimes.includes('19:00')) foundTimes.push('19:00');
+    }
+
+    // Si no se encontraron horarios específicos, usar horarios comunes
+    if (foundTimes.length === 0) {
+      foundTimes.push('10:00', '14:00', '18:00');
+    }
+
+    // Si no se encontraron días, usar lunes, miércoles y viernes por defecto
+    if (foundDays.length === 0) {
+      foundDays.push(1, 3, 5); // Lunes, Miércoles, Viernes
+    }
 
     return {
-      months: durationMatch ? parseInt(durationMatch[1], 10) : null,
-      classes: classesMatch ? parseInt(classesMatch[1], 10) : null,
-      hoursPerClass: hoursMatch ? parseInt(hoursMatch[1], 10) : null,
-      raw: durationText
+      days: foundDays,
+      times: foundTimes.sort(),
+      raw: textContent
     };
   };
 
-  // Función para generar disponibilidad basada en durationText
-  const generateAvailabilityFromDuration = (durationText?: string): AvailabilitySlot[] => {
-    if (!durationText) return [];
+  // Función para generar disponibilidad basada en detailsHtml
+  const generateAvailabilityFromDetails = (detailsHtml?: string): AvailabilitySlot[] => {
+    if (!detailsHtml) return [];
 
-    const parsed = parseDurationText(durationText);
-    if (!parsed) return [];
+    const parsed = parseDetailsHtml(detailsHtml);
+    if (!parsed || parsed.days.length === 0 || parsed.times.length === 0) {
+      return [];
+    }
 
     const slots: AvailabilitySlot[] = [];
     const today = new Date();
-    const startDate = new Date(today);
+    today.setHours(0, 0, 0, 0);
     
-    // Empezar desde la próxima semana (lunes)
-    const daysUntilMonday = (8 - startDate.getDay()) % 7 || 7;
-    startDate.setDate(startDate.getDate() + daysUntilMonday);
+    // Empezar desde la próxima semana
+    const startDate = new Date(today);
+    const daysUntilNextWeek = (8 - startDate.getDay()) % 7 || 7;
+    startDate.setDate(startDate.getDate() + daysUntilNextWeek);
     startDate.setHours(0, 0, 0, 0);
 
     // Generar fechas para las próximas 8 semanas
     const weeksToShow = 8;
-    const times = ["10:00", "14:00", "18:00"]; // Turnos comunes
 
     for (let week = 0; week < weeksToShow; week++) {
       const weekDate = new Date(startDate);
-      weekDate.setDate(weekDate.getDate() + (week * 7));
+      weekDate.setDate(startDate.getDate() + (week * 7));
 
-      // Solo mostrar lunes, miércoles y viernes
-      const daysOfWeek = [1, 3, 5]; // Lunes, Miércoles, Viernes
-      
-      daysOfWeek.forEach(dayOfWeek => {
+      // Para cada día encontrado en el HTML
+      parsed.days.forEach(dayOfWeek => {
         const classDate = new Date(weekDate);
         const dayOffset = (dayOfWeek - weekDate.getDay() + 7) % 7;
         classDate.setDate(weekDate.getDate() + dayOffset);
 
         // Solo agregar fechas futuras
         if (classDate >= today) {
-          times.forEach(time => {
-            // Simular disponibilidad (en producción esto vendría de una API)
-            const isAvailable = Math.random() > 0.2; // 80% de disponibilidad
-            const capacity = 15;
-            const enrolled = isAvailable ? Math.floor(Math.random() * capacity) : capacity;
-
+          // Para cada horario encontrado
+          parsed.times.forEach(time => {
+            // No simular disponibilidad - mostrar todos los slots como disponibles
+            // La disponibilidad real vendrá de una API en el futuro
             slots.push({
               date: classDate.toISOString().split('T')[0],
               time,
-              available: isAvailable && enrolled < capacity,
-              capacity,
-              enrolled
+              available: true,
             });
           });
         }
@@ -140,8 +203,8 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
       // Simular carga
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Generar disponibilidad basada en durationText
-      const generatedAvailability = generateAvailabilityFromDuration(product.durationText);
+      // Generar disponibilidad basada en detailsHtml (turnos y horarios)
+      const generatedAvailability = generateAvailabilityFromDetails(product.detailsHtml);
       
       if (generatedAvailability.length === 0) {
         setError("No se pudo generar disponibilidad. Por favor, contacta con nosotros.");
@@ -219,6 +282,25 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
                 </div>
               </div>
             )}
+            {product?.detailsHtml && (() => {
+              const parsed = parseDetailsHtml(product.detailsHtml);
+              if (parsed && (parsed.days.length > 0 || parsed.times.length > 0)) {
+                const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                const daysText = parsed.days.map(d => dayNames[d]).join(', ');
+                return (
+                  <div className="flex items-start gap-3">
+                    <Calendar className="w-5 h-5 text-pink-600 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Turnos disponibles:</p>
+                      <p className="text-gray-700">
+                        {daysText} {parsed.times.length > 0 && `- ${parsed.times.join(', ')}`}
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
+              return null;
+            })()}
           </div>
 
           {loading ? (
