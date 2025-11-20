@@ -50,8 +50,8 @@ export interface Product {
   // Medios
   images: string[];             // Array de URLs de imágenes
   srcUrl: string;               // URL principal de imagen
-  thumbnailMediaId?: number | null;  // ID de media principal (Firestore)
-  galleryMediaIds?: number[];        // IDs de galería (Firestore)
+  thumbnailMediaId?: number | string | null;  // ID de media principal o URL (Firestore)
+  galleryMediaIds?: (number | string)[];        // IDs de galería o URLs (Firestore)
 
   // Estado y disponibilidad
   active: boolean;              // Si está activo/publicado

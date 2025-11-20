@@ -52,6 +52,84 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     }
   }, [isOpen, product]);
 
+  // Función para parsear durationText y extraer información
+  const parseDurationText = (durationText?: string) => {
+    if (!durationText) return null;
+
+    // Buscar patrones como "1 mes", "4 clases", "2hs"
+    const durationMatch = durationText.match(/(\d+)\s*(mes|meses)/i);
+    const classesMatch = durationText.match(/(\d+)\s*(clase|clases)/i);
+    const hoursMatch = durationText.match(/(\d+)\s*(hs|h|horas|hora)/i);
+
+    return {
+      months: durationMatch ? parseInt(durationMatch[1], 10) : null,
+      classes: classesMatch ? parseInt(classesMatch[1], 10) : null,
+      hoursPerClass: hoursMatch ? parseInt(hoursMatch[1], 10) : null,
+      raw: durationText
+    };
+  };
+
+  // Función para generar disponibilidad basada en durationText
+  const generateAvailabilityFromDuration = (durationText?: string): AvailabilitySlot[] => {
+    if (!durationText) return [];
+
+    const parsed = parseDurationText(durationText);
+    if (!parsed) return [];
+
+    const slots: AvailabilitySlot[] = [];
+    const today = new Date();
+    const startDate = new Date(today);
+    
+    // Empezar desde la próxima semana (lunes)
+    const daysUntilMonday = (8 - startDate.getDay()) % 7 || 7;
+    startDate.setDate(startDate.getDate() + daysUntilMonday);
+    startDate.setHours(0, 0, 0, 0);
+
+    // Generar fechas para las próximas 8 semanas
+    const weeksToShow = 8;
+    const times = ["10:00", "14:00", "18:00"]; // Turnos comunes
+
+    for (let week = 0; week < weeksToShow; week++) {
+      const weekDate = new Date(startDate);
+      weekDate.setDate(weekDate.getDate() + (week * 7));
+
+      // Solo mostrar lunes, miércoles y viernes
+      const daysOfWeek = [1, 3, 5]; // Lunes, Miércoles, Viernes
+      
+      daysOfWeek.forEach(dayOfWeek => {
+        const classDate = new Date(weekDate);
+        const dayOffset = (dayOfWeek - weekDate.getDay() + 7) % 7;
+        classDate.setDate(weekDate.getDate() + dayOffset);
+
+        // Solo agregar fechas futuras
+        if (classDate >= today) {
+          times.forEach(time => {
+            // Simular disponibilidad (en producción esto vendría de una API)
+            const isAvailable = Math.random() > 0.2; // 80% de disponibilidad
+            const capacity = 15;
+            const enrolled = isAvailable ? Math.floor(Math.random() * capacity) : capacity;
+
+            slots.push({
+              date: classDate.toISOString().split('T')[0],
+              time,
+              available: isAvailable && enrolled < capacity,
+              capacity,
+              enrolled
+            });
+          });
+        }
+      });
+    }
+
+    // Ordenar por fecha y hora
+    return slots.sort((a, b) => {
+      if (a.date !== b.date) {
+        return a.date.localeCompare(b.date);
+      }
+      return a.time.localeCompare(b.time);
+    });
+  };
+
   const fetchAvailability = async () => {
     if (!product) return;
 
@@ -59,57 +137,17 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     setError(null);
 
     try {
-      // TODO: Implementar API real para obtener disponibilidad
-      // Por ahora simulamos datos de ejemplo
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Simular carga
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Datos de ejemplo - esto debería venir de una API
-      const mockAvailability: AvailabilitySlot[] = [
-        {
-          date: "2024-03-15",
-          time: "10:00",
-          available: true,
-          capacity: 15,
-          enrolled: 8,
-        },
-        {
-          date: "2024-03-15",
-          time: "14:00",
-          available: true,
-          capacity: 15,
-          enrolled: 5,
-        },
-        {
-          date: "2024-03-22",
-          time: "10:00",
-          available: true,
-          capacity: 15,
-          enrolled: 12,
-        },
-        {
-          date: "2024-03-22",
-          time: "14:00",
-          available: false,
-          capacity: 15,
-          enrolled: 15,
-        },
-        {
-          date: "2024-03-29",
-          time: "10:00",
-          available: true,
-          capacity: 15,
-          enrolled: 3,
-        },
-        {
-          date: "2024-03-29",
-          time: "14:00",
-          available: true,
-          capacity: 15,
-          enrolled: 7,
-        },
-      ];
-
-      setAvailability(mockAvailability);
+      // Generar disponibilidad basada en durationText
+      const generatedAvailability = generateAvailabilityFromDuration(product.durationText);
+      
+      if (generatedAvailability.length === 0) {
+        setError("No se pudo generar disponibilidad. Por favor, contacta con nosotros.");
+      } else {
+        setAvailability(generatedAvailability);
+      }
     } catch (err) {
       console.error("Error al obtener disponibilidad:", err);
       setError("No se pudo cargar la disponibilidad. Por favor, intenta nuevamente.");
@@ -164,7 +202,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
 
         <div className="space-y-4">
           {/* Información del curso */}
-          <div className="bg-pink-50 p-4 rounded-lg">
+          <div className="bg-pink-50 p-4 rounded-lg space-y-3">
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-pink-600 mt-0.5" />
               <div>
@@ -172,6 +210,15 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
                 <p className="text-gray-700">{sede}</p>
               </div>
             </div>
+            {product?.durationText && (
+              <div className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-pink-600 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-gray-900">Duración:</p>
+                  <p className="text-gray-700">{product.durationText}</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {loading ? (

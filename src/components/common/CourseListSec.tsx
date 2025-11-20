@@ -124,7 +124,7 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
 };
 
 // Card simple sin precio (como en el inicio)
-const CourseCard = ({ product, category, toast, onAddToCart }: { product: Product; category: string; toast: any; onAddToCart?: (product: Product) => void }) => {
+const CourseCard = ({ product, category, toast, onAddToCart, onMoreInfo }: { product: Product; category: string; toast: any; onAddToCart?: (product: Product) => void; onMoreInfo?: (product: Product) => void }) => {
   const categoryLabel = category === 'online' 
     ? 'Cursos Online' 
     : category === 'ciudad-jardin' 
@@ -196,8 +196,13 @@ const CourseCard = ({ product, category, toast, onAddToCart }: { product: Produc
         </div>
         
         {/* Botón MÁS INFO */}
-        <Link href={`/shop/product/${product.id}`}>
+        {isPresencial && onMoreInfo ? (
           <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onMoreInfo(product);
+            }}
             className="w-full text-white text-sm font-medium py-3 transition-colors" 
             style={{ backgroundColor: "#E9ABBD" }} 
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
@@ -205,7 +210,18 @@ const CourseCard = ({ product, category, toast, onAddToCart }: { product: Produc
           >
             MÁS INFO
           </button>
-        </Link>
+        ) : (
+          <Link href={`/shop/product/${product.id}`}>
+            <button 
+              className="w-full text-white text-sm font-medium py-3 transition-colors" 
+              style={{ backgroundColor: "#E9ABBD" }} 
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+            >
+              MÁS INFO
+            </button>
+          </Link>
+        )}
       </div>
     </motion.div>
   );
@@ -315,19 +331,29 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
     setIsModalOpen(true);
   };
 
+  const handleMoreInfo = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
   const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
     if (selectedProduct) {
       // Si se seleccionó fecha y hora, agregar automáticamente al carrito
       if (selectedDate && selectedTime) {
+        // Usar el precio correcto: basePrice > localPriceNumber > price
+        const productPrice = selectedProduct.basePrice ?? 
+                            selectedProduct.localPriceNumber ?? 
+                            selectedProduct.price;
+
         const itemCarrito = {
           id: selectedProduct.id,
           name: selectedProduct.name,
-          price: selectedProduct.price,
+          price: productPrice,
           quantity: 1,
-          totalPrice: selectedProduct.price,
+          totalPrice: productPrice,
           srcUrl: selectedProduct.srcUrl,
           image: selectedProduct.images?.[0] || selectedProduct.srcUrl || PLACEHOLDER_IMAGE,
-          discount: selectedProduct.discount || { percentage: 0, amount: 0 },
+          discount: { percentage: 0, amount: 0 }, // Sin descuentos para cursos presenciales
           slug: selectedProduct.name.split(" ").join("-"),
           productId: selectedProduct.id,
           selectedDate,
@@ -408,6 +434,7 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
                     category={category}
                     toast={toast}
                     onAddToCart={isPresencial ? handleAddToCart : undefined}
+                    onMoreInfo={isPresencial ? handleMoreInfo : undefined}
                   />
                 ))}
               </div>
@@ -493,6 +520,7 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
                     category={category}
                     toast={toast}
                     onAddToCart={isPresencial ? handleAddToCart : undefined}
+                    onMoreInfo={isPresencial ? handleMoreInfo : undefined}
                   />
                 ))}
               </div>

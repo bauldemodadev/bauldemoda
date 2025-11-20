@@ -81,6 +81,13 @@ export default function SuccessPage() {
   };
 
   const formatCurrency = (amount: number) => {
+    // Formatear sin decimales si el valor es entero
+    if (amount % 1 === 0) {
+      return amount.toLocaleString('es-AR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
+    }
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
       currency: 'ARS',

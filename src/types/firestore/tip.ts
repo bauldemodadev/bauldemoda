@@ -22,8 +22,8 @@ export interface Tip {
   category: string;                // category principal (nicename o texto)
 
   // Medios
-  coverMediaId: number | null;     // meta: imagen_portada
-  downloadMediaId?: number | null; // meta: archivo_descargable (opcional)
+  coverMediaId: number | string | null;     // meta: imagen_portada (ID WP o URL)
+  downloadMediaId?: number | string | null; // meta: archivo_descargable (ID WP o URL, opcional)
 
   // SEO
   seoDescription: string;          // _yoast_wpseo_metadesc

@@ -14,8 +14,8 @@ interface Tip {
   shortDescription?: string;
   contentHtml?: string;
   category?: string;
-  coverMediaId?: number | null;
-  downloadMediaId?: number | null;
+  coverMediaId?: number | string | null;
+  downloadMediaId?: number | string | null;
   seoDescription?: string;
   status?: 'publish' | 'draft';
 }
@@ -137,12 +137,25 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Imagen de Portada (Media ID)
+                Imagen de Portada (Media ID o URL)
               </label>
               <input
-                type="number"
+                type="text"
                 value={formData.coverMediaId || ''}
-                onChange={(e) => handleChange('coverMediaId', e.target.value ? parseInt(e.target.value) : null)}
+                onChange={(e) => {
+                  const value = e.target.value.trim();
+                  if (!value) {
+                    handleChange('coverMediaId', null);
+                  } else if (value.startsWith('http://') || value.startsWith('https://')) {
+                    // Es una URL
+                    handleChange('coverMediaId', value);
+                  } else {
+                    // Intentar parsear como número (ID)
+                    const numValue = parseInt(value, 10);
+                    handleChange('coverMediaId', !isNaN(numValue) && numValue > 0 ? numValue : value);
+                  }
+                }}
+                placeholder="Ej: 123 o https://ejemplo.com/imagen.jpg"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-2"
               />
               {formData.coverMediaId && (
@@ -158,14 +171,26 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Archivo Descargable (Media ID)
+                Archivo Descargable (Media ID o URL)
               </label>
               <input
-                type="number"
+                type="text"
                 value={formData.downloadMediaId || ''}
-                onChange={(e) => handleChange('downloadMediaId', e.target.value ? parseInt(e.target.value) : null)}
+                onChange={(e) => {
+                  const value = e.target.value.trim();
+                  if (!value) {
+                    handleChange('downloadMediaId', null);
+                  } else if (value.startsWith('http://') || value.startsWith('https://')) {
+                    // Es una URL
+                    handleChange('downloadMediaId', value);
+                  } else {
+                    // Intentar parsear como número (ID)
+                    const numValue = parseInt(value, 10);
+                    handleChange('downloadMediaId', !isNaN(numValue) && numValue > 0 ? numValue : value);
+                  }
+                }}
+                placeholder="Ej: 123 o https://ejemplo.com/archivo.pdf"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
-                placeholder="ID del archivo descargable"
               />
             </div>
           </div>

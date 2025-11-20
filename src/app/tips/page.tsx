@@ -14,8 +14,8 @@ interface SerializedTip {
   shortDescription: string;
   contentHtml: string;
   category: string;
-  coverMediaId: number | null;
-  downloadMediaId?: number | null;
+  coverMediaId: number | string | null;
+  downloadMediaId?: number | string | null;
   seoDescription: string;
   status: 'draft' | 'publish';
   createdAt: string; // ISO string
@@ -27,9 +27,25 @@ interface TipCardProps {
 }
 
 const TipCard = ({ tip }: TipCardProps) => {
-  const imageUrl = tip.coverMediaId 
-    ? `/api/media/${tip.coverMediaId}`
-    : '/placeholder.png';
+  // Función helper para convertir coverMediaId (puede ser número, string numérico o URL) a URL
+  const getImageUrl = (coverMediaId: number | string | null | undefined): string => {
+    if (!coverMediaId) return '/placeholder.png';
+    
+    // Si es una URL (string que comienza con http:// o https://), usarla directamente
+    if (typeof coverMediaId === 'string' && (coverMediaId.startsWith('http://') || coverMediaId.startsWith('https://'))) {
+      return coverMediaId;
+    }
+    
+    // Si es un ID (número o string numérico), usar el endpoint /api/media/[id]
+    const idValue = typeof coverMediaId === 'number' ? coverMediaId : parseInt(String(coverMediaId), 10);
+    if (!isNaN(idValue) && idValue > 0) {
+      return `/api/media/${idValue}`;
+    }
+    
+    return '/placeholder.png';
+  };
+
+  const imageUrl = getImageUrl(tip.coverMediaId);
 
   return (
     <motion.div

@@ -227,8 +227,8 @@ export function firestoreProductToProduct(fsProduct: FirestoreProduct): Product 
     // Medios
     images,
     srcUrl: images[0] || '/placeholder.png',
-    thumbnailMediaId: fsProduct.thumbnailMediaId,
-    galleryMediaIds: fsProduct.galleryMediaIds,
+    thumbnailMediaId: (fsProduct.thumbnailMediaId ?? null) as number | string | null | undefined,
+    galleryMediaIds: (fsProduct.galleryMediaIds ?? []) as (number | string)[] | undefined,
 
     // Estado
     active,

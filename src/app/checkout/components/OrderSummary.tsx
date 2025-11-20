@@ -79,6 +79,13 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
 
   // Formatear números con separadores de miles y decimales
   const formatCurrency = (value: number) => {
+    // Formatear sin decimales si el valor es entero
+    if (value % 1 === 0) {
+      return value.toLocaleString('es-AR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
+    }
     return value.toLocaleString('es-AR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2

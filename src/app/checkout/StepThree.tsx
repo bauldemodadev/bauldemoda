@@ -380,17 +380,17 @@ const StepThree = ({
               <div className="border-t pt-4 mt-4 space-y-3">
                 <div className="flex justify-between text-base">
                   <p className="text-gray-600">Subtotal</p>
-                  <p className="font-medium">${subtotal.toFixed(2)}</p>
+                  <p className="font-medium">${subtotal % 1 === 0 ? subtotal.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : subtotal.toFixed(2)}</p>
                 </div>
                 {discountTotal > 0 && (
                   <div className="flex justify-between text-base">
                     <p className="text-gray-600">Descuentos</p>
-                    <p className="font-medium text-green-600">-${discountTotal.toFixed(2)}</p>
+                    <p className="font-medium text-green-600">-${discountTotal % 1 === 0 ? discountTotal.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : discountTotal.toFixed(2)}</p>
                   </div>
                 )}
                 <div className="flex justify-between text-base font-medium text-gray-900">
                   <p>Total</p>
-                  <p className="whitespace-nowrap">${total.toFixed(2)}</p>
+                  <p className="whitespace-nowrap">${total % 1 === 0 ? total.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) : total.toFixed(2)}</p>
                 </div>
               </div>
             </div>
