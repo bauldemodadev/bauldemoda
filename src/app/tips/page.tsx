@@ -166,19 +166,24 @@ export default function TipsPage() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="font-beauty text-4xl md:text-5xl font-bold text-gray-900 mb-4 uppercase"
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
           >
             TIPS PARA AYUDARTE
           </motion.h1>
-          
-          {/* Línea decorativa amarilla */}
+          {/* SVG decorativo onda celeste */}
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="h-1 bg-yellow-400 w-32 mx-auto mb-6 rounded-full"
-            style={{ transformOrigin: 'center' }}
-          />
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center mb-4"
+          >
+            <img
+              src="https://bauldemoda.com.ar/wp-content/uploads/2020/03/onda-arena.svg"
+              alt="Onda decorativa"
+              className="h-4 md:h-5"
+            />
+          </motion.div>
 
           <motion.p
             initial={{ y: 20, opacity: 0 }}
