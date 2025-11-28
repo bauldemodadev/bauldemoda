@@ -26,7 +26,6 @@ import {
   RefreshCw,
   CreditCard,
   Banknote,
-  ArrowPath,
   Eye,
   ShoppingBag,
 } from 'lucide-react';
@@ -143,7 +142,7 @@ const getPaymentMethodIcon = (method: PaymentMethod) => {
     case 'cash':
       return Banknote;
     case 'transfer':
-      return ArrowPath;
+      return RefreshCw;
     default:
       return CreditCard;
   }

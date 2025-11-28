@@ -71,7 +71,7 @@ async function calculateOrderTotal(
       const total = unitPrice * item.quantity;
 
       // Obtener la URL de la imagen del producto
-      const imageUrl = product.images?.[0] || product.srcUrl || null;
+      const imageUrl = product.images?.[0] || product.srcUrl || undefined;
 
       orderItems.push({
         type: 'product',
