@@ -15,7 +15,9 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { CheckCircleIcon, HomeIcon, ShoppingBagIcon, Package } from 'lucide-react';
+import { CurrencyDollarIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
 import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+import { getFormattedPickupLocations } from '@/lib/utils/pickupLocations';
 
 // Tipo serializado para orden (con fechas como strings desde la API)
 interface SerializedOrder {
@@ -41,6 +43,11 @@ interface SerializedOrder {
   }>;
   totalAmount: number;
   currency: 'ARS';
+  metadata?: {
+    orderType?: 'curso_presencial';
+    sede?: 'almagro' | 'ciudad-jardin';
+    [key: string]: any;
+  };
   createdAt: string; // Serializado como ISO string
   updatedAt: string; // Serializado como ISO string
 }
@@ -174,23 +181,33 @@ export default function SuccessPage() {
         </div>
 
         {/* Información de retiro */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-          <h3 className="font-semibold text-blue-900 mb-2">Retiro en Sucursal</h3>
-          <p className="text-sm text-blue-800 mb-3">
-            Tu pedido debe retirarse en una de nuestras sucursales:
+        <div className="bg-[#E9ABBD]/10 border border-[#E9ABBD] rounded-lg p-6 mb-6">
+          <h3 className="font-semibold text-[#D44D7D] mb-2">Retiro en Sucursal</h3>
+          <p className="text-sm text-[#D44D7D] mb-3">
+            {order.items.length === 1 && order.metadata?.sede
+              ? 'Tu pedido debe retirarse en:'
+              : 'Tu pedido debe retirarse en una de nuestras sucursales:'}
           </p>
-          <ul className="text-sm text-blue-800 space-y-1 mb-3">
-            <li>• Ciudad Jardín: [Dirección]</li>
-            <li>• Almagro: [Dirección]</li>
+          <ul className="text-sm text-[#D44D7D] space-y-1 mb-3">
+            {getFormattedPickupLocations(
+              order.items.map(item => ({
+                sede: order.metadata?.sede || null,
+                locationText: null, // No tenemos locationText en la orden, solo sede
+              }))
+            ).map((location, index) => (
+              <li key={index}>• {location}</li>
+            ))}
           </ul>
           {order.paymentMethod === 'cash' && (
-            <p className="text-sm font-medium text-blue-900">
-              💵 Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
+            <p className="text-sm font-medium text-[#D44D7D] flex items-center gap-2">
+              <CurrencyDollarIcon className="w-5 h-5" />
+              Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
             </p>
           )}
           {order.paymentMethod === 'transfer' && (
-            <p className="text-sm font-medium text-blue-900">
-              💳 Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
+            <p className="text-sm font-medium text-[#D44D7D] flex items-center gap-2">
+              <BuildingLibraryIcon className="w-5 h-5" />
+              Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
             </p>
           )}
         </div>

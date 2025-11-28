@@ -80,6 +80,13 @@ export interface Order {
   totalAmount: number;
   currency: 'ARS';
 
+  // Metadata adicional (para cursos presenciales, etc.)
+  metadata?: {
+    orderType?: 'curso_presencial';
+    sede?: 'almagro' | 'ciudad-jardin';
+    [key: string]: any;
+  };
+
   // Fechas
   createdAt: Timestamp;
   updatedAt: Timestamp;

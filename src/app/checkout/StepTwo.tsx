@@ -21,11 +21,14 @@ import {
   ArrowLeftIcon,
   ExclamationCircleIcon,
   CheckCircleIcon,
+  CurrencyDollarIcon,
+  BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
 import { Step1Data, Step2Data } from "./schema";
 import { cn } from "@/lib/utils";
 import { futura } from "@/styles/fonts";
 import { useToast } from "@/components/ui/use-toast";
+import { getFormattedPickupLocations } from "@/lib/utils/pickupLocations";
 
 type Product = {
   id: string;
@@ -44,6 +47,8 @@ type Product = {
     descuento: number;
     precioFinal: number;
   };
+  sede?: 'almagro' | 'ciudad-jardin' | null;
+  locationText?: string | null;
 };
 
 interface StepTwoProps {
@@ -299,26 +304,31 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-blue-50 border border-blue-200 rounded-lg p-4"
+          className="bg-[#E9ABBD]/10 border border-[#E9ABBD] rounded-lg p-4"
         >
-          <h3 className="font-semibold text-blue-900 mb-2">
+          <h3 className="font-semibold text-[#D44D7D] mb-2">
             Retiro en Sucursal
           </h3>
-          <p className="text-sm text-blue-800">
-            Todos los pedidos deben retirarse en nuestras sucursales:
+          <p className="text-sm text-[#D44D7D] mb-2">
+            {cart.length === 1 
+              ? 'Tu pedido debe retirarse en:'
+              : 'Todos los pedidos deben retirarse en nuestras sucursales:'}
           </p>
-          <ul className="mt-2 text-sm text-blue-800 list-disc list-inside space-y-1">
-            <li>Ciudad Jardín: [Dirección]</li>
-            <li>Almagro: [Dirección]</li>
+          <ul className="mt-2 text-sm text-[#D44D7D] list-disc list-inside space-y-1">
+            {getFormattedPickupLocations(cart).map((location, index) => (
+              <li key={index}>{location}</li>
+            ))}
           </ul>
           {selectedPaymentMethod === 'cash' && (
-            <p className="mt-3 text-sm font-medium text-blue-900">
-              💵 Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
+            <p className="mt-3 text-sm font-medium text-[#D44D7D] flex items-center gap-2">
+              <CurrencyDollarIcon className="w-5 h-5" />
+              Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
             </p>
           )}
           {selectedPaymentMethod === 'transfer' && (
-            <p className="mt-3 text-sm font-medium text-blue-900">
-              💳 Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
+            <p className="mt-3 text-sm font-medium text-[#D44D7D] flex items-center gap-2">
+              <BuildingLibraryIcon className="w-5 h-5" />
+              Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
             </p>
           )}
         </motion.div>
