@@ -180,7 +180,7 @@ export default function AdminVentaDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -189,7 +189,7 @@ export default function AdminVentaDetailPage() {
     return (
       <div className="text-center py-12">
         <p className="text-gray-500">Orden no encontrada</p>
-        <Link href="/admin/ventas" className="text-pink-600 hover:text-pink-700 mt-4 inline-block">
+        <Link href="/admin/ventas" className="text-blue-600 hover:text-blue-700 mt-4 inline-block">
           Volver a ventas
         </Link>
       </div>
@@ -324,7 +324,7 @@ export default function AdminVentaDetailPage() {
                   <p className="font-medium text-gray-900">{order.customerSnapshot.name}</p>
                   <Link
                     href={`/admin/clientes/${order.customerId}`}
-                    className="text-sm text-pink-600 hover:text-pink-700"
+                    className="text-sm text-blue-600 hover:text-blue-700"
                   >
                     Ver perfil completo →
                   </Link>

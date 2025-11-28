@@ -130,12 +130,12 @@ export default function AdminClientesPage() {
               placeholder="Buscar por nombre o email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 sm:pl-10 pr-2 sm:pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
+              className="w-full pl-8 sm:pl-10 pr-2 sm:pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
             />
           </div>
           <button
             type="submit"
-            className="px-4 sm:px-6 py-2 bg-[#E9ABBD] hover:bg-[#D44D7D] text-white rounded-md transition-colors text-sm sm:text-base whitespace-nowrap"
+            className="px-4 sm:px-6 py-2 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-md transition-colors text-sm sm:text-base whitespace-nowrap"
           >
             Buscar
           </button>
@@ -146,7 +146,7 @@ export default function AdminClientesPage() {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {loading ? (
           <div className="p-8 sm:p-12 text-center">
-            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#E9ABBD] mx-auto"></div>
+            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#3B82F6] mx-auto"></div>
             <p className="mt-4 text-sm sm:text-base text-gray-500">Cargando clientes...</p>
           </div>
         ) : customers.length === 0 ? (
@@ -182,8 +182,8 @@ export default function AdminClientesPage() {
                     <tr key={customer.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-[#E9ABBD] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
-                            <User className="w-5 h-5 text-[#D44D7D]" />
+                          <div className="w-10 h-10 bg-[#3B82F6] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <User className="w-5 h-5 text-[#2563EB]" />
                           </div>
                           <div>
                             <div className="text-sm font-medium text-gray-900">{customer.name}</div>
@@ -234,7 +234,7 @@ export default function AdminClientesPage() {
                       <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <Link
                           href={`/admin/clientes/${customer.id}`}
-                          className="text-[#E9ABBD] hover:text-[#D44D7D] transition-colors"
+                          className="text-[#3B82F6] hover:text-[#2563EB] transition-colors"
                         >
                           Ver detalle →
                         </Link>
@@ -250,8 +250,8 @@ export default function AdminClientesPage() {
               {customers.map((customer) => (
                 <div key={customer.id} className="p-4 hover:bg-gray-50 transition-colors">
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="w-10 h-10 bg-[#E9ABBD] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-5 h-5 text-[#D44D7D]" />
+                    <div className="w-10 h-10 bg-[#3B82F6] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <User className="w-5 h-5 text-[#2563EB]" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-medium text-gray-900 truncate">{customer.name}</h3>
@@ -301,7 +301,7 @@ export default function AdminClientesPage() {
                     <div className="pt-2">
                       <Link
                         href={`/admin/clientes/${customer.id}`}
-                        className="inline-flex items-center text-sm text-[#E9ABBD] hover:text-[#D44D7D] transition-colors"
+                        className="inline-flex items-center text-sm text-[#3B82F6] hover:text-[#2563EB] transition-colors"
                       >
                         Ver detalle →
                       </Link>

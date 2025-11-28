@@ -65,7 +65,7 @@ export default async function AdminTipsPage({
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Tips</h1>
         <Link
           href="/admin/tips/nuevo"
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-[#E9ABBD] hover:bg-[#D44D7D] text-white rounded-md transition-colors text-sm sm:text-base"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors text-sm sm:text-base"
         >
           <Plus className="w-4 h-4" />
           <span className="whitespace-nowrap">Nuevo Tip</span>

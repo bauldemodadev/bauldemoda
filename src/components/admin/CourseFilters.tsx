@@ -57,7 +57,7 @@ export default function CourseFilters({ onFilterChange }: CourseFiltersProps) {
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
-            className="text-xs text-pink-600 hover:text-pink-700 flex items-center gap-1"
+            className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
           >
             <X className="w-3 h-3" />
             Limpiar todo
@@ -81,7 +81,7 @@ export default function CourseFilters({ onFilterChange }: CourseFiltersProps) {
                     onClick={() => handleStatusChange(status)}
                     className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors capitalize ${
                       selectedStatus === status
-                        ? 'bg-pink-100 text-pink-700 font-medium'
+                        ? 'bg-blue-100 text-blue-700 font-medium'
                         : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >

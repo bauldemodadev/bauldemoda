@@ -58,7 +58,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
   }, [showUserMenu]);
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-[45] lg:z-50">
+    <header className="bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-[45] lg:z-50" style={{ fontFamily: 'var(--font-poppins)' }}>
       <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center gap-3">
           {/* Botón de menú para mobile */}

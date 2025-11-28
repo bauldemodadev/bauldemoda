@@ -97,7 +97,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
                 type="text"
                 value={formData.title || ''}
                 onChange={(e) => handleChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -108,7 +108,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
                 type="text"
                 value={formData.slug || ''}
                 onChange={(e) => handleChange('slug', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -119,7 +119,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
                 type="text"
                 value={formData.category || ''}
                 onChange={(e) => handleChange('category', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -129,7 +129,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
               <select
                 value={formData.status || 'draft'}
                 onChange={(e) => handleChange('status', e.target.value as 'publish' | 'draft')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="draft">Borrador</option>
                 <option value="publish">Publicado</option>
@@ -156,7 +156,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
                   }
                 }}
                 placeholder="Ej: 123 o https://ejemplo.com/imagen.jpg"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 mb-2"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
               />
               {formData.coverMediaId && (
                 <MediaImage
@@ -190,7 +190,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
                   }
                 }}
                 placeholder="Ej: 123 o https://ejemplo.com/archivo.pdf"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -208,7 +208,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
                 value={formData.shortDescription || ''}
                 onChange={(e) => handleChange('shortDescription', e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -229,7 +229,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
                 value={formData.seoDescription || ''}
                 onChange={(e) => handleChange('seoDescription', e.target.value)}
                 rows={2}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -240,7 +240,7 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="flex items-center gap-2 px-6 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <Save className="w-4 h-4" />
             {isSaving ? 'Guardando...' : 'Guardar Cambios'}

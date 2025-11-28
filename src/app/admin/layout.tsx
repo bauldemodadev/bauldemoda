@@ -5,6 +5,9 @@ import { Toaster } from '@/components/ui/toaster';
 import QuillStyles from '@/components/admin/QuillStyles';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { poppins } from '@/styles/fonts';
+import { cn } from '@/lib/utils';
+import './admin.css';
 
 export default async function AdminLayout({
   children,
@@ -37,7 +40,7 @@ export default async function AdminLayout({
   // Si llegamos aquí, el usuario está autenticado en el servidor
   // Renderizar directamente el layout admin
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={cn("min-h-screen bg-gray-50", poppins.variable)}>
       <QuillStyles />
       <AdminLayoutClient>
         {children}

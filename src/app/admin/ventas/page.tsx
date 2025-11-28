@@ -254,7 +254,7 @@ export default function AdminVentasPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as OrderStatus | '')}
-              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
+              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
             >
               <option value="">Todos</option>
               <option value="pending">Pendiente</option>
@@ -272,7 +272,7 @@ export default function AdminVentasPage() {
             <select
               value={paymentStatusFilter}
               onChange={(e) => setPaymentStatusFilter(e.target.value as PaymentStatus | '')}
-              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
+              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
             >
               <option value="">Todos</option>
               <option value="pending">Pendiente</option>
@@ -288,7 +288,7 @@ export default function AdminVentasPage() {
             <select
               value={paymentMethodFilter}
               onChange={(e) => setPaymentMethodFilter(e.target.value as PaymentMethod | '')}
-              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
+              className="w-full px-2 sm:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
             >
               <option value="">Todos</option>
               <option value="mp">Mercado Pago</option>
@@ -308,7 +308,7 @@ export default function AdminVentasPage() {
                 placeholder="ID o email..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 sm:pl-10 pr-2 sm:pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]"
+                className="w-full pl-8 sm:pl-10 pr-2 sm:pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
               />
             </div>
           </div>
@@ -319,7 +319,7 @@ export default function AdminVentasPage() {
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {loading ? (
           <div className="p-8 sm:p-12 text-center">
-            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#E9ABBD] mx-auto"></div>
+            <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#3B82F6] mx-auto"></div>
             <p className="mt-4 text-sm sm:text-base text-gray-500">Cargando órdenes...</p>
           </div>
         ) : orders.length === 0 ? (
@@ -413,7 +413,7 @@ export default function AdminVentasPage() {
                           <div className="flex items-center justify-end gap-2">
                             <Link
                               href={`/admin/ventas/${order.id}`}
-                              className="text-[#E9ABBD] hover:text-[#D44D7D] transition-colors"
+                              className="text-[#3B82F6] hover:text-[#2563EB] transition-colors"
                               title="Ver detalles"
                             >
                               <Eye className="w-4 h-4" />
@@ -474,7 +474,7 @@ export default function AdminVentasPage() {
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <Link
                           href={`/admin/ventas/${order.id}`}
-                          className="p-2 text-[#E9ABBD] hover:text-[#D44D7D] hover:bg-pink-50 rounded-md transition-colors"
+                          className="p-2 text-[#3B82F6] hover:text-[#2563EB] hover:bg-blue-50 rounded-md transition-colors"
                           title="Ver detalles"
                         >
                           <Eye className="w-4 h-4" />

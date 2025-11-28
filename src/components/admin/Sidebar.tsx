@@ -105,18 +105,18 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
       {/* Sidebar */}
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-[50] lg:z-auto
+          fixed lg:fixed inset-y-0 left-0 z-[50] lg:z-auto
           w-64 bg-white shadow-xl lg:shadow-sm
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          lg:min-h-screen
+          lg:h-[calc(100vh-64px)] lg:top-16
         `}
         role="navigation"
         aria-label="Menu de navegación"
       >
         <div className="h-full flex flex-col overflow-y-auto">
           <div className="p-4 border-b border-gray-200">
-            <h1 className="text-lg sm:text-xl font-bold text-gray-900">Panel Admin</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-poppins)' }}>Panel Admin</h1>
           </div>
           <nav className="mt-4 flex-1">
             {menuItems.map((item) => {
@@ -136,10 +136,11 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
                   className={`
                     flex items-center px-4 py-3 text-sm font-medium transition-colors touch-manipulation
                     ${isActive
-                      ? 'bg-[#E9ABBD] bg-opacity-10 text-[#D44D7D] border-r-2 border-[#D44D7D]'
+                      ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600'
                       : 'text-gray-700 hover:bg-gray-50'
                     }
                   `}
+                  style={{ fontFamily: 'var(--font-poppins)' }}
                 >
                   <Icon className="w-5 h-5 mr-3 flex-shrink-0" />
                   <span>{item.label}</span>

@@ -16,15 +16,15 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
   }, []);
 
   return (
-    <>
+    <div className="admin-container">
       <AdminHeader onMenuToggle={toggleMenu} isMenuOpen={isMenuOpen} />
-      <div className="flex flex-col lg:flex-row relative">
+      <div className="flex flex-col lg:flex-row relative" style={{ marginTop: '64px', height: 'calc(100vh - 64px)' }}>
         <AdminSidebar isOpen={isMenuOpen} onClose={closeMenu} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-6 w-full min-w-0 overflow-x-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-6 w-full min-w-0 overflow-y-auto overflow-x-hidden" style={{ fontFamily: 'var(--font-poppins)' }}>
           {children}
         </main>
       </div>
-    </>
+    </div>
   );
 }
 

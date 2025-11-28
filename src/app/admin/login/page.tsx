@@ -140,18 +140,18 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-pink-50/30 to-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-100 p-4">
       {/* Fondo decorativo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-[#E9ABBD] opacity-10 blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-[#E9ABBD] opacity-10 blur-3xl"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-[#3B82F6] opacity-10 blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-[#3B82F6] opacity-10 blur-3xl"></div>
       </div>
 
       <div className="relative w-full max-w-md">
         {/* Card principal */}
         <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
           {/* Header con logo */}
-          <div className="bg-gradient-to-br from-[#E9ABBD] to-[#D44D7D] p-8 pb-12 text-center">
+          <div className="bg-gradient-to-br from-[#3B82F6] to-[#2563EB] p-8 pb-12 text-center">
             <div className="flex justify-center mb-6">
               <div className="relative w-48 h-20">
                 <Image
@@ -210,7 +210,7 @@ export default function AdminLoginPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E9ABBD] focus:border-[#E9ABBD] transition-all duration-200 text-gray-900 placeholder-gray-400"
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3B82F6] focus:border-[#3B82F6] transition-all duration-200 text-gray-900 placeholder-gray-400"
                     placeholder="admin@admin.com"
                   />
                 </div>
@@ -233,7 +233,7 @@ export default function AdminLoginPage() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#E9ABBD] focus:border-[#E9ABBD] transition-all duration-200 text-gray-900 placeholder-gray-400"
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3B82F6] focus:border-[#3B82F6] transition-all duration-200 text-gray-900 placeholder-gray-400"
                     placeholder="••••••••"
                   />
                 </div>
@@ -244,9 +244,9 @@ export default function AdminLoginPage() {
                 type="submit"
                 disabled={isLoading}
                 style={{
-                  backgroundColor: isLoading ? '#E9ABBD' : '#E9ABBD',
+                  backgroundColor: isLoading ? '#3B82F6' : '#3B82F6',
                 }}
-                className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-lg text-white font-semibold text-base transition-all duration-200 hover:bg-[#D44D7D] focus:outline-none focus:ring-2 focus:ring-[#E9ABBD] focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                className="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-lg text-white font-semibold text-base transition-all duration-200 hover:bg-[#2563EB] focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
               >
                 {isLoading ? (
                   <>

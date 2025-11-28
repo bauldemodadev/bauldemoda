@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Poppins } from "next/font/google";
 
 // Fuente para títulos importantes y h1 - usando archivos locales
 export const beauty = localFont({
@@ -32,4 +33,13 @@ export const futura = localFont({
   display: "swap",
   preload: true,
   fallback: ["Arial", "sans-serif"],
+});
+
+// Fuente Poppins para el panel admin
+export const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });

@@ -104,7 +104,7 @@ export default function ProductFilters({
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
-            className="text-xs text-pink-600 hover:text-pink-700 flex items-center gap-1"
+            className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
           >
             <X className="w-3 h-3" />
             Limpiar todo
@@ -129,7 +129,7 @@ export default function ProductFilters({
                       onClick={() => handleCategoryChange(category)}
                       className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors ${
                         selectedCategory === category
-                          ? 'bg-pink-100 text-pink-700 font-medium'
+                          ? 'bg-blue-100 text-blue-700 font-medium'
                           : 'text-gray-600 hover:bg-gray-50'
                       }`}
                     >
@@ -158,7 +158,7 @@ export default function ProductFilters({
                       onClick={() => handleSubcategoryChange(subcategory)}
                       className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors ${
                         selectedSubcategory === subcategory
-                          ? 'bg-pink-100 text-pink-700 font-medium'
+                          ? 'bg-blue-100 text-blue-700 font-medium'
                           : 'text-gray-600 hover:bg-gray-50'
                       }`}
                     >
@@ -187,7 +187,7 @@ export default function ProductFilters({
                       onClick={() => handleSedeChange(sede)}
                       className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors ${
                         selectedSede === sede
-                          ? 'bg-pink-100 text-pink-700 font-medium'
+                          ? 'bg-blue-100 text-blue-700 font-medium'
                           : 'text-gray-600 hover:bg-gray-50'
                       }`}
                     >
@@ -215,7 +215,7 @@ export default function ProductFilters({
                     onClick={() => handleStatusChange(status)}
                     className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors capitalize ${
                       selectedStatus === status
-                        ? 'bg-pink-100 text-pink-700 font-medium'
+                        ? 'bg-blue-100 text-blue-700 font-medium'
                         : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >
@@ -242,7 +242,7 @@ export default function ProductFilters({
                     onClick={() => handleStockStatusChange(stockStatus)}
                     className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors capitalize ${
                       selectedStockStatus === stockStatus
-                        ? 'bg-pink-100 text-pink-700 font-medium'
+                        ? 'bg-blue-100 text-blue-700 font-medium'
                         : 'text-gray-600 hover:bg-gray-50'
                     }`}
                   >

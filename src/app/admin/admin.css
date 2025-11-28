@@ -1,0 +1,40 @@
+/* Estilos específicos para el panel admin */
+/* Aplicar Poppins a todo el admin */
+
+/* Aplicar Poppins a todo el contenido dentro de /admin */
+body:has([href*="/admin"]),
+[href*="/admin"],
+.admin-container,
+.admin-container * {
+  font-family: var(--font-poppins), system-ui, sans-serif !important;
+}
+
+/* Asegurar que todos los elementos del admin usen Poppins */
+html body [class*="admin"] *,
+html body [href*="/admin"] *,
+html body main[class*="flex-1"] * {
+  font-family: var(--font-poppins), system-ui, sans-serif !important;
+}
+
+/* Override para elementos específicos del admin */
+.admin-container h1,
+.admin-container h2,
+.admin-container h3,
+.admin-container h4,
+.admin-container h5,
+.admin-container h6,
+.admin-container p,
+.admin-container span,
+.admin-container div,
+.admin-container a,
+.admin-container button,
+.admin-container input,
+.admin-container textarea,
+.admin-container select,
+.admin-container label,
+.admin-container li,
+.admin-container td,
+.admin-container th {
+  font-family: var(--font-poppins), system-ui, sans-serif !important;
+}
+
