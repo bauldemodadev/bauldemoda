@@ -1,4 +1,4 @@
-/* Estilos específicos para el panel admin */
+/* Estilos específicos para el panel admin - UI/UX 2025 */
 /* Aplicar Poppins a todo el admin */
 
 /* Aplicar Poppins a todo el contenido dentro de /admin */
@@ -36,5 +36,97 @@ html body main[class*="flex-1"] * {
 .admin-container td,
 .admin-container th {
   font-family: var(--font-poppins), system-ui, sans-serif !important;
+}
+
+/* Animaciones modernas */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Scrollbar moderno */
+.admin-container main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-container main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-container main::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.admin-container main::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Mejoras de accesibilidad y UX */
+.admin-container button:focus-visible,
+.admin-container a:focus-visible,
+.admin-container input:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Transiciones suaves globales */
+.admin-container * {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Estados de hover mejorados */
+.admin-container button:hover,
+.admin-container a:hover {
+  transform: translateY(-1px);
+}
+
+.admin-container button:active {
+  transform: translateY(0);
+}
+
+/* Mejoras de tipografía */
+.admin-container h1,
+.admin-container h2,
+.admin-container h3 {
+  letter-spacing: -0.025em;
+}
+
+/* Cards con efecto glassmorphism sutil */
+.admin-container .card-glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 

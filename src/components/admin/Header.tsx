@@ -58,9 +58,12 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
   }, [showUserMenu]);
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-[45] lg:z-50" style={{ fontFamily: 'var(--font-poppins)' }}>
-      <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
-        <div className="flex items-center gap-3">
+    <header 
+      className="bg-white/95 backdrop-blur-sm border-b border-gray-200/80 fixed top-0 left-0 right-0 z-[45] lg:z-50 shadow-sm" 
+      style={{ fontFamily: 'var(--font-poppins)' }}
+    >
+      <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
+        <div className="flex items-center gap-3 lg:gap-4">
           {/* Botón de menú para mobile */}
           {onMenuToggle && (
             <button
@@ -72,55 +75,57 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
                 }
               }}
               onMouseDown={(e) => {
-                // Prevenir que el evento se propague al overlay
                 e.preventDefault();
                 e.stopPropagation();
               }}
               onTouchStart={(e) => {
-                // Prevenir que el evento se propague al overlay
                 e.stopPropagation();
               }}
-              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 active:bg-gray-100 rounded-md transition-colors touch-manipulation -ml-1 relative z-[60]"
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-all duration-200 touch-manipulation -ml-1 relative z-[60] active:scale-95"
               aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={isMenuOpen}
               type="button"
             >
               {isMenuOpen ? (
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 transition-transform duration-200" />
               ) : (
-                <Menu className="w-5 h-5" />
+                <Menu className="w-5 h-5 transition-transform duration-200" />
               )}
             </button>
           )}
-          <h2 className="text-base sm:text-lg font-semibold text-gray-900">
-            <span className="hidden sm:inline">Administración</span>
-            <span className="sm:hidden">Admin</span>
-          </h2>
+          <div>
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900 tracking-tight">
+              <span className="hidden sm:inline">Administración</span>
+              <span className="sm:hidden">Admin</span>
+            </h2>
+          </div>
         </div>
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Información de usuario - ocultar en mobile muy pequeño */}
-          <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600">
-            <User className="w-4 h-4" />
-            <span className="hidden md:inline">admin@admin.com</span>
+          <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-gray-50 text-sm text-gray-700">
+            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+              <User className="w-4 h-4 text-white" />
+            </div>
+            <span className="hidden md:inline font-medium">admin@admin.com</span>
           </div>
           {/* Botón de cerrar sesión - versión responsive */}
           <div className="relative user-menu-container">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="sm:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors touch-manipulation"
+              className="sm:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all duration-200 touch-manipulation active:scale-95"
               aria-label="User menu"
               type="button"
             >
               <User className="w-5 h-5" />
             </button>
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-[60]">
-                <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-200">
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-200/80 py-2 z-[60] animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="px-4 py-3 text-sm font-medium text-gray-900 border-b border-gray-100">
                   admin@admin.com
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors text-left"
+                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors text-left rounded-lg mx-1"
                   type="button"
                 >
                   <LogOut className="w-4 h-4" />
@@ -131,7 +136,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
           </div>
           <button
             onClick={handleLogout}
-            className="hidden sm:flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+            className="hidden sm:flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 active:scale-95"
             type="button"
           >
             <LogOut className="w-4 h-4" />

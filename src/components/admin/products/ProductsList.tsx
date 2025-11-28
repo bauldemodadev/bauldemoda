@@ -92,11 +92,11 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
   };
 
   return (
-    <div className="bg-white rounded-lg shadow">
+    <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm overflow-hidden">
       {/* Vista de tabla para desktop */}
       <div className="hidden lg:block overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-gradient-to-r from-gray-50 to-gray-50/50">
             <tr>
               <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Nombre
@@ -130,39 +130,52 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
               </tr>
             ) : (
               products.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-50">
+                <tr 
+                  key={product.id} 
+                  className="hover:bg-gray-50/80 transition-colors duration-150 border-b border-gray-100 last:border-0 group"
+                >
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{product.name || 'Sin nombre'}</div>
+                    <div className="text-sm font-semibold text-gray-900 group-hover:text-gray-950 transition-colors">
+                      {product.name || 'Sin nombre'}
+                    </div>
                   </td>
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{product.slug || 'N/A'}</div>
+                    <div className="text-sm text-gray-500 font-mono">{product.slug || 'N/A'}</div>
                   </td>
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{product.category || 'N/A'}</div>
-                    <div className="text-xs text-gray-500">{product.sede || 'N/A'}</div>
+                    <div className="text-sm font-medium text-gray-900">{product.category || 'N/A'}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{product.sede || 'N/A'}</div>
                   </td>
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full transition-all duration-200 ${
                         product.status === 'publish'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                          : 'bg-gray-100 text-gray-700 border border-gray-200'
                       }`}
                     >
                       {product.status === 'publish' ? 'Publicado' : 'Borrador'}
                     </span>
                   </td>
-                  <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {product.stockStatus === 'instock' ? 'En stock' : product.stockStatus === 'outofstock' ? 'Sin stock' : product.stockStatus || 'N/A'}
+                  <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
+                    <span className={`text-sm font-medium ${
+                      product.stockStatus === 'instock' 
+                        ? 'text-emerald-600' 
+                        : product.stockStatus === 'outofstock' 
+                        ? 'text-red-600' 
+                        : 'text-gray-500'
+                    }`}>
+                      {product.stockStatus === 'instock' ? 'En stock' : product.stockStatus === 'outofstock' ? 'Sin stock' : product.stockStatus || 'N/A'}
+                    </span>
                   </td>
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {formatDate(product.updatedAt)}
                   </td>
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex items-center justify-end gap-1.5">
                       <Link
                         href={`/admin/productos/${product.id}`}
-                        className="text-[#3B82F6] hover:text-[#2563EB] transition-colors"
+                        className="p-1.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-200 active:scale-95"
                         title="Editar"
                       >
                         <Edit className="w-4 h-4" />
@@ -170,7 +183,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                       <button
                         onClick={() => handleDelete(product.id, product.name)}
                         disabled={deletingId === product.id}
-                        className="text-red-600 hover:text-red-900 disabled:opacity-50 transition-colors"
+                        className="p-1.5 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
                         title="Eliminar"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -185,37 +198,43 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
       </div>
 
       {/* Vista de cards para mobile */}
-      <div className="lg:hidden divide-y divide-gray-200">
+      <div className="lg:hidden divide-y divide-gray-100">
         {products.length === 0 ? (
-          <div className="px-4 py-8 text-center text-gray-500">
-            No hay productos
+          <div className="px-4 py-12 text-center">
+            <p className="text-gray-500 font-medium">No hay productos</p>
           </div>
         ) : (
           products.map((product) => (
-            <div key={product.id} className="p-4 hover:bg-gray-50 transition-colors">
+            <div key={product.id} className="p-4 hover:bg-gray-50/80 transition-colors duration-150 active:bg-gray-100">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium text-gray-900 truncate">
+                  <h3 className="text-sm font-semibold text-gray-900 truncate">
                     {product.name || 'Sin nombre'}
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1 truncate">{product.slug || 'N/A'}</p>
+                  <p className="text-xs text-gray-500 mt-1 truncate font-mono">{product.slug || 'N/A'}</p>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <span className="text-xs text-gray-600">{product.category || 'N/A'}</span>
+                    <span className="text-xs font-medium text-gray-700">{product.category || 'N/A'}</span>
                     {product.sede && (
                       <span className="text-xs text-gray-500">• {product.sede}</span>
                     )}
                   </div>
-                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
                     <span
-                      className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                      className={`px-2.5 py-1 text-xs font-semibold rounded-full border ${
                         product.status === 'publish'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-emerald-100 text-emerald-700 border-emerald-200'
+                          : 'bg-gray-100 text-gray-700 border-gray-200'
                       }`}
                     >
                       {product.status === 'publish' ? 'Publicado' : 'Borrador'}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className={`text-xs font-medium ${
+                      product.stockStatus === 'instock' 
+                        ? 'text-emerald-600' 
+                        : product.stockStatus === 'outofstock' 
+                        ? 'text-red-600' 
+                        : 'text-gray-500'
+                    }`}>
                       {product.stockStatus === 'instock' ? 'En stock' : product.stockStatus === 'outofstock' ? 'Sin stock' : product.stockStatus || 'N/A'}
                     </span>
                     <span className="text-xs text-gray-400">
@@ -223,10 +242,10 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="flex items-center gap-1 flex-shrink-0">
                   <Link
                     href={`/admin/productos/${product.id}`}
-                    className="p-2 text-[#3B82F6] hover:text-[#2563EB] hover:bg-blue-50 rounded-md transition-colors"
+                    className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-200 active:scale-95"
                     title="Editar"
                   >
                     <Edit className="w-4 h-4" />
@@ -234,7 +253,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                   <button
                     onClick={() => handleDelete(product.id, product.name)}
                     disabled={deletingId === product.id}
-                    className="p-2 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-md disabled:opacity-50 transition-colors"
+                    className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
                     title="Eliminar"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -302,10 +321,10 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                       <Link
                         key={pageNum}
                         href={buildPageUrl(pageNum)}
-                        className={`relative inline-flex items-center px-3 py-2 border text-sm font-medium transition-colors ${
+                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-all duration-200 ${
                           pageNum === currentPage
-                            ? 'z-10 bg-[#3B82F6] bg-opacity-10 border-[#2563EB] text-[#2563EB]'
-                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                            ? 'z-10 bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20'
+                            : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
                         }`}
                       >
                         {pageNum}

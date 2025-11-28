@@ -109,14 +109,22 @@ export default async function AdminProductsPage({
   });
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Productos</h1>
+    <div className="w-full space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: 'var(--font-poppins)' }}>
+            Productos
+          </h1>
+          <p className="text-sm text-gray-500 mt-1.5" style={{ fontFamily: 'var(--font-poppins)' }}>
+            Gestiona todos tus productos
+          </p>
+        </div>
         <Link
           href="/admin/productos/nuevo"
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors text-sm sm:text-base"
+          className="group flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-200 text-sm font-medium active:scale-95"
+          style={{ fontFamily: 'var(--font-poppins)' }}
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform duration-200" />
           <span className="whitespace-nowrap">Nuevo Producto</span>
         </Link>
       </div>

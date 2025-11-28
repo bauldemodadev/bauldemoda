@@ -92,32 +92,37 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow">
-      <div className="p-6 space-y-6">
+    <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm" style={{ fontFamily: 'var(--font-poppins)' }}>
+      <div className="p-6 sm:p-8 space-y-8">
         {/* Datos Básicos */}
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Datos Básicos</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mb-6 pb-4 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900">Datos Básicos</h2>
+            <p className="text-sm text-gray-500 mt-1">Información principal del producto</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Nombre *
               </label>
               <input
                 type="text"
                 value={formData.name || ''}
                 onChange={(e) => handleChange('name', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-sm"
+                style={{ fontFamily: 'var(--font-poppins)' }}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Slug *
               </label>
               <input
                 type="text"
                 value={formData.slug || ''}
                 onChange={(e) => handleChange('slug', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-sm font-mono"
+                style={{ fontFamily: 'var(--font-poppins)' }}
               />
             </div>
             <div>
@@ -384,13 +389,14 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
         </section>
 
         {/* Botón Guardar */}
-        <div className="flex justify-end pt-4 border-t border-gray-200">
+        <div className="flex justify-end pt-6 border-t border-gray-200">
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="group flex items-center gap-2.5 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm active:scale-95"
+            style={{ fontFamily: 'var(--font-poppins)' }}
           >
-            <Save className="w-4 h-4" />
+            <Save className={`w-4 h-4 ${isSaving ? 'animate-spin' : ''}`} />
             {isSaving ? 'Guardando...' : 'Guardar Cambios'}
           </button>
         </div>

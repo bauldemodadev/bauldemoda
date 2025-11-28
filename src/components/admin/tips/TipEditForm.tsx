@@ -236,13 +236,14 @@ export default function TipEditForm({ tip }: TipEditFormProps) {
         </section>
 
         {/* Botón Guardar */}
-        <div className="flex justify-end pt-4 border-t border-gray-200">
+        <div className="flex justify-end pt-6 border-t border-gray-200">
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="group flex items-center gap-2.5 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm active:scale-95"
+            style={{ fontFamily: 'var(--font-poppins)' }}
           >
-            <Save className="w-4 h-4" />
+            <Save className={`w-4 h-4 ${isSaving ? 'animate-spin' : ''}`} />
             {isSaving ? 'Guardando...' : 'Guardar Cambios'}
           </button>
         </div>

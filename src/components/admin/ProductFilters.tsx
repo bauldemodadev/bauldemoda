@@ -95,19 +95,21 @@ export default function ProductFilters({
   const hasActiveFilters = selectedCategory || selectedSubcategory || selectedSede || selectedStatus || selectedStockStatus;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Filter className="w-5 h-5 text-gray-500" />
+    <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm p-5" style={{ fontFamily: 'var(--font-poppins)' }}>
+      <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center gap-2.5">
+          <div className="p-1.5 bg-blue-50 rounded-lg">
+            <Filter className="w-4 h-4 text-blue-600" />
+          </div>
           <h3 className="text-sm font-semibold text-gray-900">Filtros</h3>
         </div>
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
-            className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
+            className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1.5 px-2 py-1 hover:bg-blue-50 rounded-md transition-colors duration-200"
           >
             <X className="w-3 h-3" />
-            Limpiar todo
+            Limpiar
           </button>
         )}
       </div>
@@ -118,19 +120,19 @@ export default function ProductFilters({
           <Disclosure defaultOpen>
             {({ open }) => (
               <div className="border border-gray-100 rounded-lg">
-                <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
+                <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                   <span>Categorías</span>
-                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${open ? 'transform rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'transform rotate-180' : ''}`} />
                 </Disclosure.Button>
-                <Disclosure.Panel className="px-3 pb-2 space-y-1">
+                <Disclosure.Panel className="px-3 pb-3 space-y-1.5">
                   {categories.map((category) => (
                     <button
                       key={category}
                       onClick={() => handleCategoryChange(category)}
-                      className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors ${
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                         selectedCategory === category
-                          ? 'bg-blue-100 text-blue-700 font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                       }`}
                     >
                       {category}
@@ -147,19 +149,19 @@ export default function ProductFilters({
           <Disclosure defaultOpen>
             {({ open }) => (
               <div className="border border-gray-100 rounded-lg">
-                <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
+                <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                   <span>Subcategorías</span>
-                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${open ? 'transform rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'transform rotate-180' : ''}`} />
                 </Disclosure.Button>
-                <Disclosure.Panel className="px-3 pb-2 space-y-1">
+                <Disclosure.Panel className="px-3 pb-3 space-y-1.5">
                   {subcategories.map((subcategory) => (
                     <button
                       key={subcategory}
                       onClick={() => handleSubcategoryChange(subcategory)}
-                      className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors ${
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                         selectedSubcategory === subcategory
-                          ? 'bg-blue-100 text-blue-700 font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                       }`}
                     >
                       {subcategory}
@@ -176,19 +178,19 @@ export default function ProductFilters({
           <Disclosure defaultOpen>
             {({ open }) => (
               <div className="border border-gray-100 rounded-lg">
-                <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
+                <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                   <span>Sedes</span>
-                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${open ? 'transform rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'transform rotate-180' : ''}`} />
                 </Disclosure.Button>
-                <Disclosure.Panel className="px-3 pb-2 space-y-1">
+                <Disclosure.Panel className="px-3 pb-3 space-y-1.5">
                   {sedes.map((sede) => (
                     <button
                       key={sede}
                       onClick={() => handleSedeChange(sede)}
-                      className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors ${
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                         selectedSede === sede
-                          ? 'bg-blue-100 text-blue-700 font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                       }`}
                     >
                       {sede}
@@ -204,19 +206,19 @@ export default function ProductFilters({
         <Disclosure defaultOpen>
           {({ open }) => (
             <div className="border border-gray-100 rounded-lg">
-              <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
+              <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                 <span>Estado</span>
-                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${open ? 'transform rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'transform rotate-180' : ''}`} />
               </Disclosure.Button>
-              <Disclosure.Panel className="px-3 pb-2 space-y-1">
+              <Disclosure.Panel className="px-3 pb-3 space-y-1.5">
                 {['publish', 'draft'].map((status) => (
                   <button
                     key={status}
                     onClick={() => handleStatusChange(status)}
-                    className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors capitalize ${
+                    className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 capitalize ${
                       selectedStatus === status
-                        ? 'bg-blue-100 text-blue-700 font-medium'
-                        : 'text-gray-600 hover:bg-gray-50'
+                        ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >
                     {status === 'publish' ? 'Publicado' : 'Borrador'}
@@ -231,19 +233,19 @@ export default function ProductFilters({
         <Disclosure defaultOpen>
           {({ open }) => (
             <div className="border border-gray-100 rounded-lg">
-              <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">
+              <Disclosure.Button className="flex w-full justify-between items-center px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                 <span>Stock</span>
-                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${open ? 'transform rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'transform rotate-180' : ''}`} />
               </Disclosure.Button>
-              <Disclosure.Panel className="px-3 pb-2 space-y-1">
+              <Disclosure.Panel className="px-3 pb-3 space-y-1.5">
                 {['instock', 'outofstock', 'onbackorder'].map((stockStatus) => (
                   <button
                     key={stockStatus}
                     onClick={() => handleStockStatusChange(stockStatus)}
-                    className={`w-full text-left px-3 py-1.5 text-sm rounded-md transition-colors capitalize ${
+                    className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 capitalize ${
                       selectedStockStatus === stockStatus
-                        ? 'bg-blue-100 text-blue-700 font-medium'
-                        : 'text-gray-600 hover:bg-gray-50'
+                        ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >
                     {stockStatus === 'instock' ? 'En stock' : stockStatus === 'outofstock' ? 'Sin stock' : 'Pedido especial'}
