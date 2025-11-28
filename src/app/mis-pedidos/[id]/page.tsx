@@ -24,7 +24,6 @@ import {
   RefreshCw,
   CreditCard,
   Banknote,
-  ArrowPath,
   ArrowLeft,
 } from 'lucide-react';
 import { CurrencyDollarIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
@@ -149,7 +148,7 @@ const getPaymentMethodIcon = (method: PaymentMethod) => {
     case 'cash':
       return Banknote;
     case 'transfer':
-      return ArrowPath;
+      return RefreshCw;
     default:
       return CreditCard;
   }
