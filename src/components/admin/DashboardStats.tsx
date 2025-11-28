@@ -19,7 +19,7 @@ import {
   XCircle,
   CreditCard,
   Banknote,
-  ArrowPath,
+  RefreshCw,
   BarChart3,
 } from 'lucide-react';
 
@@ -348,7 +348,7 @@ export default function DashboardStats() {
             </div>
             <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
               <div className="flex items-center gap-3">
-                <ArrowPath className="w-5 h-5 text-purple-600" />
+                <RefreshCw className="w-5 h-5 text-purple-600" />
                 <span className="font-medium text-gray-900">Transferencia</span>
               </div>
               <span className="font-semibold text-gray-900">{stats.paymentMethods.transfer}</span>

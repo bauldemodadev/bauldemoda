@@ -35,7 +35,7 @@ export async function GET(request: Request) {
 
     // Obtener parámetro de sede del query string
     const { searchParams } = new URL(request.url);
-    const sedeParam = searchParams.get('sede') as 'almagro' | 'ciudad-jardin' | null;
+    const sedeParam = searchParams.get('sede');
     
     // Determinar la sede del admin
     const adminSede = getAdminSede(email);
