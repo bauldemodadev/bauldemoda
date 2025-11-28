@@ -70,6 +70,8 @@ const TopNavbar = () => {
   const { user, signOut, isLoading } = useAuth();
   const { cart, loading: cartLoading, totalQuantity } = useCart();
   const [localCartCount, setLocalCartCount] = useState(getLocalCartCount());
+  const [hasCourses, setHasCourses] = useState(false);
+  const [checkingCourses, setCheckingCourses] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -84,6 +86,40 @@ const TopNavbar = () => {
       window.removeEventListener("cartUpdate", handleCartUpdate);
     };
   }, []);
+
+  // Verificar si el usuario tiene cursos online comprados
+  useEffect(() => {
+    const checkUserCourses = async () => {
+      if (!user?.email) {
+        setHasCourses(false);
+        setCheckingCourses(false);
+        return;
+      }
+
+      setCheckingCourses(true);
+      try {
+        const response = await fetch(`/api/courses/my-courses?email=${encodeURIComponent(user.email)}`);
+        if (response.ok) {
+          const courses = await response.json();
+          setHasCourses(courses && courses.length > 0);
+        } else {
+          setHasCourses(false);
+        }
+      } catch (err) {
+        console.error('Error verificando cursos del usuario:', err);
+        setHasCourses(false);
+      } finally {
+        setCheckingCourses(false);
+      }
+    };
+
+    if (!isLoading && user) {
+      checkUserCourses();
+    } else if (!isLoading && !user) {
+      setHasCourses(false);
+      setCheckingCourses(false);
+    }
+  }, [user, isLoading]);
 
   const totalItems = user ? totalQuantity : localCartCount;
 
@@ -240,13 +276,28 @@ const TopNavbar = () => {
                   </DropdownMenu.Item>
                   <DropdownMenu.Item asChild>
                     <Link
-                      href="/orders"
+                      href="/mis-pedidos"
                         className="flex items-center gap-2 px-3 py-2 hover:bg-pink-50 rounded-md transition-colors duration-150"
                     >
                       <Image src="/icons/orders.svg" alt="orders" width={20} height={20} />
                       Mis Pedidos
                     </Link>
                   </DropdownMenu.Item>
+                  
+                  {/* Mostrar "Mis Cursos" solo si el usuario tiene cursos online comprados */}
+                  {hasCourses && (
+                    <DropdownMenu.Item asChild>
+                      <Link
+                        href="/mis-cursos"
+                        className="flex items-center gap-2 px-3 py-2 hover:bg-pink-50 rounded-md transition-colors duration-150"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                        Mis Cursos
+                      </Link>
+                    </DropdownMenu.Item>
+                  )}
                   
                     <DropdownMenu.Separator className="h-px my-1 bg-gray-200" />
                   <DropdownMenu.Item
