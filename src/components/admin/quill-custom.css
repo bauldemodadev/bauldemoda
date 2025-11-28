@@ -114,22 +114,34 @@
   color: #6b7280;
   font-size: 12px;
   height: 24px;
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   margin: 0 1px;
+  position: relative;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .rich-text-editor .ql-toolbar .ql-picker-label {
-  padding: 0 6px;
-  min-width: 70px;
-  max-width: 90px;
+  padding: 0 6px !important;
+  min-width: 50px !important;
+  max-width: 100px !important;
+  width: auto !important;
   border-radius: 4px;
-  font-size: 12px;
-  height: 24px;
-  line-height: 24px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 12px !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
   white-space: nowrap;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #374151 !important;
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 .rich-text-editor .ql-toolbar .ql-picker-options {
@@ -361,18 +373,158 @@
 /* Mejorar el diseño de los dropdowns - compactos */
 .rich-text-editor .ql-toolbar .ql-picker {
   margin-right: 1px;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-flex !important;
 }
 
 .rich-text-editor .ql-toolbar .ql-picker-label {
-  padding: 0 6px;
-  min-width: 70px;
-  max-width: 90px;
-  font-size: 12px;
+  padding: 0 6px !important;
+  min-width: 50px !important;
+  max-width: 100px !important;
+  width: auto !important;
+  font-size: 12px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  color: #374151 !important;
 }
 
 /* Asegurar que todos los elementos del toolbar sean compactos */
 .rich-text-editor .ql-toolbar * {
   box-sizing: border-box;
+}
+
+/* CRÍTICO: Asegurar que los pickers (heading, font, size) sean visibles */
+.rich-text-editor .ql-toolbar .ql-picker.ql-header,
+.rich-text-editor .ql-toolbar .ql-picker.ql-font,
+.rich-text-editor .ql-toolbar .ql-picker.ql-size {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker.ql-header .ql-picker-label,
+.rich-text-editor .ql-toolbar .ql-picker.ql-font .ql-picker-label,
+.rich-text-editor .ql-toolbar .ql-picker.ql-size .ql-picker-label {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  padding: 0 6px !important;
+  min-width: 50px !important;
+  width: auto !important;
+  color: #374151 !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+/* Asegurar que el texto dentro de los pickers sea visible */
+.rich-text-editor .ql-toolbar .ql-picker-label::before {
+  color: #374151 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Asegurar que la flecha del picker sea visible */
+.rich-text-editor .ql-toolbar .ql-picker-label svg {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 10px !important;
+  height: 10px !important;
+  margin-left: 4px !important;
+}
+
+/* CRÍTICO: Forzar visibilidad del contenido de los pickers */
+.rich-text-editor .ql-toolbar .ql-picker-label::before {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #374151 !important;
+  font-size: 12px !important;
+  line-height: 24px !important;
+  height: 24px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Asegurar que los pickers tengan el ancho suficiente */
+.rich-text-editor .ql-toolbar .ql-picker.ql-header {
+  width: auto !important;
+  min-width: 80px !important;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker.ql-font {
+  width: auto !important;
+  min-width: 100px !important;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker.ql-size {
+  width: auto !important;
+  min-width: 70px !important;
+}
+
+/* Asegurar que no haya overflow hidden que corte el contenido */
+.rich-text-editor .ql-toolbar .ql-picker-label {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
+
+/* Asegurar que el contenedor del toolbar no corte los pickers */
+.rich-text-editor .ql-toolbar {
+  overflow: visible !important;
+  flex-wrap: wrap !important;
+}
+
+/* CRÍTICO: Asegurar que los primeros 3 pickers (header, font, size) sean completamente visibles */
+.rich-text-editor .ql-toolbar .ql-formats:first-child,
+.rich-text-editor .ql-toolbar .ql-formats:first-child .ql-picker,
+.rich-text-editor .ql-toolbar .ql-formats:first-child .ql-picker-label {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  min-width: 50px !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  color: #374151 !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Asegurar que el texto dentro de los pickers sea visible y legible */
+.rich-text-editor .ql-toolbar .ql-picker-label {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-label::before {
+  position: relative !important;
+  z-index: 2 !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Asegurar que los SVG dentro de los pickers sean visibles */
+.rich-text-editor .ql-toolbar .ql-picker-label svg.ql-stroke {
+  position: relative !important;
+  z-index: 2 !important;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  stroke: #374151 !important;
 }
 
 /* Espaciado mínimo entre elementos */
