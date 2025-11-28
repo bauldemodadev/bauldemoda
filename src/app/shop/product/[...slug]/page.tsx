@@ -150,8 +150,8 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
       // Para cursos presenciales: ir directo al checkout (no al carrito)
       // Si no hay fecha/hora, permitir continuar igual (caso: no se encontraron turnos en detalles)
       handleBuyNowPresentialCourse(product, selectedDate, selectedTime);
-    } else if (product && !isPresencial && selectedDate && selectedTime) {
-      // Para cursos online: agregar al carrito (lógica original)
+    } else if (product && !isPresencial) {
+      // Para cursos online: agregar al carrito (ahora permitimos sin fecha/hora)
       const productPrice = product.basePrice ?? 
                           product.localPriceNumber ?? 
                           product.price;
@@ -184,9 +184,12 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         });
       } else {
         carritoLocal.push(itemCarrito);
+        const dateTimeText = selectedDate && selectedTime 
+          ? ` con fecha ${selectedDate} a las ${selectedTime}`
+          : '';
         toast({
           title: "¡Producto agregado al carrito!",
-          description: `${product.name} ha sido agregado correctamente al carrito con fecha ${selectedDate} a las ${selectedTime}.`,
+          description: `${product.name} ha sido agregado correctamente al carrito${dateTimeText}.`,
           variant: "cart",
         });
       }

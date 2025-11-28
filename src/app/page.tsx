@@ -20,12 +20,7 @@ export default function Home() {
           title="CURSOS ONLINE"
           subtitle="hacelos en casa"
           category="online"
-          courseNames={[
-            "Arreglos de Ropa",
-            "Intensivo Mi primer jean",
-            "abc costura online",
-            "Intensivo Mallas"
-          ]}
+          courseIds={[9556, 1925, 139, 2036]}
           showAllUrl="/shop/categoria/cursos-online"
         />
 
@@ -42,7 +37,7 @@ export default function Home() {
         <CourseListSec
           title="Almagro"
           category="almagro"
-          courseIds={[9556, 4140, 71, 415]}
+          courseIds={[11240, 150, 144, 139]}
           showAllUrl="/shop/categoria/cursos-almagro"
         />
       </main>

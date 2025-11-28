@@ -346,50 +346,52 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
         handleBuyNowPresentialCourse(selectedProduct, selectedDate, selectedTime);
       } else {
         // Para cursos online: agregar al carrito (lógica original)
-        if (selectedDate && selectedTime) {
-          // Usar el precio correcto: basePrice > localPriceNumber > price
-          const productPrice = selectedProduct.basePrice ?? 
-                              selectedProduct.localPriceNumber ?? 
-                              selectedProduct.price;
+        // Ahora permitimos agregar sin fecha/hora (el modal solo muestra información)
+        // Usar el precio correcto: basePrice > localPriceNumber > price
+        const productPrice = selectedProduct.basePrice ?? 
+                            selectedProduct.localPriceNumber ?? 
+                            selectedProduct.price;
 
-          const itemCarrito = {
-            id: selectedProduct.id,
-            name: selectedProduct.name,
-            price: productPrice,
-            quantity: 1,
-            totalPrice: productPrice,
-            srcUrl: selectedProduct.srcUrl,
-            image: selectedProduct.images?.[0] || selectedProduct.srcUrl || PLACEHOLDER_IMAGE,
-            discount: { percentage: 0, amount: 0 },
-            slug: selectedProduct.name.split(" ").join("-"),
-            productId: selectedProduct.id,
-            selectedDate,
-            selectedTime,
-          };
+        const itemCarrito = {
+          id: selectedProduct.id,
+          name: selectedProduct.name,
+          price: productPrice,
+          quantity: 1,
+          totalPrice: productPrice,
+          srcUrl: selectedProduct.srcUrl,
+          image: selectedProduct.images?.[0] || selectedProduct.srcUrl || PLACEHOLDER_IMAGE,
+          discount: { percentage: 0, amount: 0 },
+          slug: selectedProduct.name.split(" ").join("-"),
+          productId: selectedProduct.id,
+          selectedDate,
+          selectedTime,
+        };
 
-          const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
-          const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
+        const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
+        const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
 
-          if (indice > -1) {
-            carritoLocal[indice].quantity += 1;
-            carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
-            toast({
-              title: "¡Cantidad actualizada!",
-              description: `Se ha actualizado la cantidad de ${selectedProduct.name} en el carrito.`,
-              variant: "cart",
-            });
-          } else {
-            carritoLocal.push(itemCarrito);
-            toast({
-              title: "¡Producto agregado al carrito!",
-              description: `${selectedProduct.name} ha sido agregado correctamente al carrito con fecha ${selectedDate} a las ${selectedTime}.`,
-              variant: "cart",
-            });
-          }
-
-          localStorage.setItem("cart", JSON.stringify(carritoLocal));
-          window.dispatchEvent(new Event("cartUpdate"));
+        if (indice > -1) {
+          carritoLocal[indice].quantity += 1;
+          carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
+          toast({
+            title: "¡Cantidad actualizada!",
+            description: `Se ha actualizado la cantidad de ${selectedProduct.name} en el carrito.`,
+            variant: "cart",
+          });
+        } else {
+          carritoLocal.push(itemCarrito);
+          const dateTimeText = selectedDate && selectedTime 
+            ? ` con fecha ${selectedDate} a las ${selectedTime}`
+            : '';
+          toast({
+            title: "¡Producto agregado al carrito!",
+            description: `${selectedProduct.name} ha sido agregado correctamente al carrito${dateTimeText}.`,
+            variant: "cart",
+          });
         }
+
+        localStorage.setItem("cart", JSON.stringify(carritoLocal));
+        window.dispatchEvent(new Event("cartUpdate"));
       }
     }
   };
