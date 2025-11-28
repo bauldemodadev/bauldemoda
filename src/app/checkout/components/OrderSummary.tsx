@@ -167,11 +167,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             </div>
             <div className="text-right">
               <p className="font-medium">${product.totalPrice}</p>
-              {(product.activePromo || product.discount) && (
-                <p className="text-sm text-gray-400 line-through">
-                  ${product.price * product.quantity}
-                </p>
-              )}
             </div>
           </div>
         ))}
