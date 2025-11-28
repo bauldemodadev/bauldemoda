@@ -116,18 +116,14 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
         aria-label="Menu de navegación"
       >
         <div className="h-full flex flex-col overflow-y-auto overflow-x-hidden">
-          <div className="p-5 border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white">
-            <h1 className="text-lg font-semibold text-gray-900 tracking-tight" style={{ fontFamily: 'var(--font-poppins)' }}>
-              Panel Admin
-            </h1>
-            <p className="text-xs text-gray-500 mt-1" style={{ fontFamily: 'var(--font-poppins)' }}>
-              Administración
-            </p>
-          </div>
+
           <nav className="mt-2 flex-1 px-2 py-3">
             {menuItems.map((item, index) => {
               const Icon = item.icon;
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+              // Lógica mejorada para determinar si un item está activo
+              // Solo activar si es exactamente igual o es una subruta (pero no activar /admin cuando estás en /admin/productos)
+              const isActive = pathname === item.href || 
+                (item.href !== '/admin' && pathname.startsWith(item.href + '/'));
               
               return (
                 <Link
@@ -139,11 +135,11 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
                       onClose?.();
                     }
                   }}
-                  className={`
+                    className={`
                     group flex items-center px-3 py-2.5 mb-1 text-sm font-medium rounded-lg
                     transition-all duration-200 ease-out touch-manipulation
                     ${isActive
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                      ? 'bg-[#E9ABBD] text-white shadow-md shadow-[#D44D7D]/20'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                     }
                   `}

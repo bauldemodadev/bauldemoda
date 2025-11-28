@@ -175,7 +175,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                     <div className="flex items-center justify-end gap-1.5">
                       <Link
                         href={`/admin/productos/${product.id}`}
-                        className="p-1.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-200 active:scale-95"
+                        className="p-1.5 text-[#D44D7D] hover:text-[#E9ABBD] hover:bg-[#E9ABBD]/10 rounded-lg transition-all duration-200 active:scale-95"
                         title="Editar"
                       >
                         <Edit className="w-4 h-4" />
@@ -245,7 +245,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                 <div className="flex items-center gap-1 flex-shrink-0">
                   <Link
                     href={`/admin/productos/${product.id}`}
-                    className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all duration-200 active:scale-95"
+                    className="p-2 text-[#D44D7D] hover:text-[#E9ABBD] hover:bg-[#E9ABBD]/10 rounded-lg transition-all duration-200 active:scale-95"
                     title="Editar"
                   >
                     <Edit className="w-4 h-4" />
@@ -323,7 +323,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                         href={buildPageUrl(pageNum)}
                         className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-all duration-200 ${
                           pageNum === currentPage
-                            ? 'z-10 bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-500/20'
+                            ? 'z-10 bg-[#E9ABBD] text-white border-[#E9ABBD] shadow-sm shadow-[#D44D7D]/20'
                             : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
                         }`}
                       >

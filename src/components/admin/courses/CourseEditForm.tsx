@@ -181,7 +181,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                 type="text"
                 value={formData.title || ''}
                 onChange={(e) => handleChange('title', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -192,7 +192,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                 type="text"
                 value={formData.slug || ''}
                 onChange={(e) => handleChange('slug', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div className="md:col-span-2">
@@ -203,7 +203,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                 value={formData.shortDescription || ''}
                 onChange={(e) => handleChange('shortDescription', e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div className="md:col-span-2">
@@ -214,7 +214,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                 value={formData.seoDescription || ''}
                 onChange={(e) => handleChange('seoDescription', e.target.value)}
                 rows={2}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -224,7 +224,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
               <select
                 value={formData.status || 'draft'}
                 onChange={(e) => handleChange('status', e.target.value as 'publish' | 'draft')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               >
                 <option value="draft">Borrador</option>
                 <option value="publish">Publicado</option>
@@ -238,7 +238,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                 type="number"
                 value={formData.thumbnailMediaId || ''}
                 onChange={(e) => handleChange('thumbnailMediaId', e.target.value ? parseInt(e.target.value) : null)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] mb-2"
               />
               {formData.thumbnailMediaId && (
                 <MediaImage
@@ -260,7 +260,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
             <h2 className="text-lg font-semibold text-gray-900">Clases</h2>
             <button
               onClick={handleAddLesson}
-              className="flex items-center gap-2 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="flex items-center gap-2 px-3 py-1 text-sm bg-[#E9ABBD] text-white rounded-md hover:bg-[#D44D7D]"
             >
               <Plus className="w-4 h-4" />
               Agregar Clase
@@ -287,7 +287,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                       type="text"
                       value={lesson.title}
                       onChange={(e) => handleLessonChange(index, 'title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
                     />
                   </div>
                   <div>
@@ -298,7 +298,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                       type="text"
                       value={lesson.duration || ''}
                       onChange={(e) => handleLessonChange(index, 'duration', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
                     />
                   </div>
                   <div>
@@ -309,7 +309,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                       type="url"
                       value={lesson.videoUrl}
                       onChange={(e) => handleLessonChange(index, 'videoUrl', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
                     />
                   </div>
                   <div>
@@ -320,7 +320,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                       type="text"
                       value={lesson.videoPassword || ''}
                       onChange={(e) => handleLessonChange(index, 'videoPassword', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -350,7 +350,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
             <h2 className="text-lg font-semibold text-gray-900">Información Útil</h2>
             <button
               onClick={handleAddInfoBlock}
-              className="flex items-center gap-2 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="flex items-center gap-2 px-3 py-1 text-sm bg-[#E9ABBD] text-white rounded-md hover:bg-[#D44D7D]"
             >
               <Plus className="w-4 h-4" />
               Agregar Bloque
@@ -377,7 +377,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                       type="text"
                       value={block.title}
                       onChange={(e) => handleInfoBlockChange(index, 'title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
                     />
                   </div>
                   <div>
@@ -406,7 +406,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="group flex items-center gap-2.5 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm active:scale-95"
+            className="group flex items-center gap-2.5 px-6 py-3 bg-[#E9ABBD] text-white rounded-lg shadow-md shadow-[#D44D7D]/20 hover:shadow-lg hover:shadow-[#D44D7D]/30 hover:bg-[#D44D7D] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm active:scale-95"
             style={{ fontFamily: 'var(--font-poppins)' }}
           >
             <Save className={`w-4 h-4 ${isSaving ? 'animate-spin' : ''}`} />

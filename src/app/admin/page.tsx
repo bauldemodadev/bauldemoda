@@ -26,9 +26,9 @@ export default async function AdminDashboard() {
       title: 'Productos Activos',
       value: stats.products,
       icon: Package,
-      color: 'blue',
-      gradient: 'from-blue-500 to-blue-600',
-      bgGradient: 'from-blue-50 to-blue-100/50',
+      color: 'pink',
+      gradient: 'from-[#E9ABBD] to-[#D44D7D]',
+      bgGradient: 'from-[#E9ABBD]/10 to-[#D44D7D]/5',
     },
     {
       title: 'Cursos Online',

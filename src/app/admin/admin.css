@@ -95,7 +95,7 @@ html body main[class*="flex-1"] * {
 .admin-container button:focus-visible,
 .admin-container a:focus-visible,
 .admin-container input:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #D44D7D;
   outline-offset: 2px;
 }
 

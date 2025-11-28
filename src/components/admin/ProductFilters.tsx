@@ -98,15 +98,15 @@ export default function ProductFilters({
     <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm p-5" style={{ fontFamily: 'var(--font-poppins)' }}>
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2.5">
-          <div className="p-1.5 bg-blue-50 rounded-lg">
-            <Filter className="w-4 h-4 text-blue-600" />
+          <div className="p-1.5 bg-[#E9ABBD]/10 rounded-lg">
+            <Filter className="w-4 h-4 text-[#D44D7D]" />
           </div>
           <h3 className="text-sm font-semibold text-gray-900">Filtros</h3>
         </div>
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
-            className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1.5 px-2 py-1 hover:bg-blue-50 rounded-md transition-colors duration-200"
+            className="text-xs text-[#D44D7D] hover:text-[#E9ABBD] font-medium flex items-center gap-1.5 px-2 py-1 hover:bg-[#E9ABBD]/10 rounded-md transition-colors duration-200"
           >
             <X className="w-3 h-3" />
             Limpiar
@@ -131,7 +131,7 @@ export default function ProductFilters({
                       onClick={() => handleCategoryChange(category)}
                       className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                         selectedCategory === category
-                          ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                          ? 'bg-[#E9ABBD] text-white font-semibold shadow-sm shadow-[#D44D7D]/20'
                           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                       }`}
                     >
@@ -160,7 +160,7 @@ export default function ProductFilters({
                       onClick={() => handleSubcategoryChange(subcategory)}
                       className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                         selectedSubcategory === subcategory
-                          ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                          ? 'bg-[#E9ABBD] text-white font-semibold shadow-sm shadow-[#D44D7D]/20'
                           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                       }`}
                     >
@@ -189,7 +189,7 @@ export default function ProductFilters({
                       onClick={() => handleSedeChange(sede)}
                       className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 ${
                         selectedSede === sede
-                          ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                          ? 'bg-[#E9ABBD] text-white font-semibold shadow-sm shadow-[#D44D7D]/20'
                           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                       }`}
                     >
@@ -217,7 +217,7 @@ export default function ProductFilters({
                     onClick={() => handleStatusChange(status)}
                     className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 capitalize ${
                       selectedStatus === status
-                        ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                        ? 'bg-[#E9ABBD] text-white font-semibold shadow-sm shadow-[#D44D7D]/20'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >
@@ -244,7 +244,7 @@ export default function ProductFilters({
                     onClick={() => handleStockStatusChange(stockStatus)}
                     className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-all duration-200 capitalize ${
                       selectedStockStatus === stockStatus
-                        ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-500/20'
+                        ? 'bg-[#E9ABBD] text-white font-semibold shadow-sm shadow-[#D44D7D]/20'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }`}
                   >

@@ -24,7 +24,7 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
           className="flex-1 p-4 sm:p-6 lg:p-8 w-full min-w-0 overflow-y-auto overflow-x-hidden lg:ml-64 scroll-smooth" 
           style={{ fontFamily: 'var(--font-poppins)' }}
         >
-          <div className="max-w-7xl mx-auto">
+          <div className="mx-auto">
             {children}
           </div>
         </main>

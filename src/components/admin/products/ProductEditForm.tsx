@@ -109,7 +109,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.name || ''}
                 onChange={(e) => handleChange('name', e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-sm"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] transition-all duration-200 text-sm"
                 style={{ fontFamily: 'var(--font-poppins)' }}
               />
             </div>
@@ -121,7 +121,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.slug || ''}
                 onChange={(e) => handleChange('slug', e.target.value)}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-sm font-mono"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] transition-all duration-200 text-sm font-mono"
                 style={{ fontFamily: 'var(--font-poppins)' }}
               />
             </div>
@@ -133,7 +133,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.category || ''}
                 onChange={(e) => handleChange('category', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -144,7 +144,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.subcategory || ''}
                 onChange={(e) => handleChange('subcategory', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -154,7 +154,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
               <select
                 value={formData.sede || ''}
                 onChange={(e) => handleChange('sede', e.target.value || null)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               >
                 <option value="">Seleccionar...</option>
                 <option value="ciudad-jardin">Ciudad Jardín</option>
@@ -170,7 +170,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
               <select
                 value={formData.status || 'draft'}
                 onChange={(e) => handleChange('status', e.target.value as 'publish' | 'draft')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               >
                 <option value="draft">Borrador</option>
                 <option value="publish">Publicado</option>
@@ -183,7 +183,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
               <select
                 value={formData.stockStatus || 'instock'}
                 onChange={(e) => handleChange('stockStatus', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               >
                 <option value="instock">En Stock</option>
                 <option value="outofstock">Sin Stock</option>
@@ -198,7 +198,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.sku || ''}
                 onChange={(e) => handleChange('sku', e.target.value || null)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
           </div>
@@ -217,7 +217,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 value={formData.priceText || ''}
                 onChange={(e) => handleChange('priceText', e.target.value)}
                 placeholder="Ej: $5000 en efectivo, $6000 otros medios"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -228,7 +228,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="number"
                 value={formData.localPriceNumber || ''}
                 onChange={(e) => handleChange('localPriceNumber', e.target.value ? parseFloat(e.target.value) : null)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -239,7 +239,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.durationText || ''}
                 onChange={(e) => handleChange('durationText', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -250,7 +250,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.locationText || ''}
                 onChange={(e) => handleChange('locationText', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -261,7 +261,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 type="text"
                 value={formData.tipoMadera || ''}
                 onChange={(e) => handleChange('tipoMadera', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
           </div>
@@ -292,7 +292,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                   }
                 }}
                 placeholder="Ej: 123 o https://ejemplo.com/imagen.jpg"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] mb-2"
               />
               {formData.thumbnailMediaId && (
                 <MediaImage
@@ -329,7 +329,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                   handleChange('galleryMediaIds', values);
                 }}
                 placeholder="Ej: 123, 456, https://ejemplo.com/imagen.jpg"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] mb-2"
               />
               {formData.galleryMediaIds && formData.galleryMediaIds.length > 0 && (
                 <div className="grid grid-cols-3 gap-2 mt-2">
@@ -361,7 +361,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 value={formData.shortDescription || ''}
                 onChange={(e) => handleChange('shortDescription', e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -372,7 +372,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 value={formData.description || ''}
                 onChange={(e) => handleChange('description', e.target.value)}
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
             <div>
@@ -393,7 +393,7 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="group flex items-center gap-2.5 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm active:scale-95"
+            className="group flex items-center gap-2.5 px-6 py-3 bg-[#E9ABBD] text-white rounded-lg shadow-md shadow-[#D44D7D]/20 hover:shadow-lg hover:shadow-[#D44D7D]/30 hover:bg-[#D44D7D] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-sm active:scale-95"
             style={{ fontFamily: 'var(--font-poppins)' }}
           >
             <Save className={`w-4 h-4 ${isSaving ? 'animate-spin' : ''}`} />

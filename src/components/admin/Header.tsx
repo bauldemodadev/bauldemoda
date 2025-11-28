@@ -95,7 +95,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
           )}
           <div>
             <h2 className="text-base sm:text-lg font-semibold text-gray-900 tracking-tight">
-              <span className="hidden sm:inline">Administración</span>
+              <span className="hidden sm:inline">Panel Admin</span>
               <span className="sm:hidden">Admin</span>
             </h2>
           </div>
@@ -103,7 +103,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Información de usuario - ocultar en mobile muy pequeño */}
           <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-gray-50 text-sm text-gray-700">
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-[#E9ABBD] flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
             <span className="hidden md:inline font-medium">admin@admin.com</span>
@@ -125,7 +125,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors text-left rounded-lg mx-1"
+                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#D44D7D] transition-colors text-left rounded-lg mx-1"
                   type="button"
                 >
                   <LogOut className="w-4 h-4" />
@@ -136,7 +136,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
           </div>
           <button
             onClick={handleLogout}
-            className="hidden sm:flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 active:scale-95"
+            className="hidden sm:flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#D44D7D] hover:bg-gray-50 rounded-lg transition-all duration-200 active:scale-95"
             type="button"
           >
             <LogOut className="w-4 h-4" />

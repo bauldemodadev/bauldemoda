@@ -153,7 +153,7 @@ export default function CoursesList({ courses, totalPages, currentPage }: Course
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/admin/cursos-online/${course.id}`}
-                        className="text-[#3B82F6] hover:text-[#2563EB] transition-colors"
+                        className="text-[#D44D7D] hover:text-[#E9ABBD] transition-colors"
                         title="Editar"
                       >
                         <Edit className="w-4 h-4" />
@@ -211,7 +211,7 @@ export default function CoursesList({ courses, totalPages, currentPage }: Course
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <Link
                     href={`/admin/cursos-online/${course.id}`}
-                    className="p-2 text-[#3B82F6] hover:text-[#2563EB] hover:bg-blue-50 rounded-md transition-colors"
+                    className="p-2 text-[#D44D7D] hover:text-[#E9ABBD] hover:bg-[#E9ABBD]/10 rounded-lg transition-all duration-200 active:scale-95"
                     title="Editar"
                   >
                     <Edit className="w-4 h-4" />
@@ -289,7 +289,7 @@ export default function CoursesList({ courses, totalPages, currentPage }: Course
                         href={buildPageUrl(pageNum)}
                         className={`relative inline-flex items-center px-3 py-2 border text-sm font-medium transition-colors ${
                           pageNum === currentPage
-                            ? 'z-10 bg-[#3B82F6] bg-opacity-10 border-[#2563EB] text-[#2563EB]'
+                            ? 'z-10 bg-[#E9ABBD] bg-opacity-10 border-[#D44D7D] text-[#D44D7D]'
                             : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
                         }`}
                       >

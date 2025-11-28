@@ -72,7 +72,7 @@ export default async function AdminTipsPage({
         </div>
         <Link
           href="/admin/tips/nuevo"
-          className="group flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-200 text-sm font-medium active:scale-95"
+          className="group flex items-center justify-center gap-2 px-5 py-2.5 bg-[#E9ABBD] hover:bg-[#D44D7D] text-white rounded-lg shadow-md shadow-[#D44D7D]/20 hover:shadow-lg hover:shadow-[#D44D7D]/30 transition-all duration-200 text-sm font-medium active:scale-95"
           style={{ fontFamily: 'var(--font-poppins)' }}
         >
           <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform duration-200" />
