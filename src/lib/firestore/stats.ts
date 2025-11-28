@@ -5,6 +5,7 @@
 import { getAdminDb } from '@/lib/firebase/admin';
 import { Timestamp } from 'firebase-admin/firestore';
 import type { Query, CollectionReference } from 'firebase-admin/firestore';
+import type { Order } from '@/types/firestore/order';
 
 export interface DashboardStats {
   // Ventas
@@ -68,10 +69,10 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
 
     // Obtener todas las órdenes (o filtradas por sede)
     const allOrdersSnapshot = await ordersQuery.get();
-    const allOrders = allOrdersSnapshot.docs.map(doc => ({
+    const allOrders: (Order & { id: string })[] = allOrdersSnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    } as Order & { id: string }));
 
     // Filtrar órdenes por fecha en memoria (ya que Firestore no permite múltiples where en diferentes campos)
     const todayOrders = allOrders.filter(order => {
