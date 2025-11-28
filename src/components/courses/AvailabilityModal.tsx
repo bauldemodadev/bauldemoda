@@ -122,7 +122,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     const allTurnosText = turnosSections.join(' ') + ' ' + fullText;
     
     // Patrón 1: "Día HHhs" o "Día HH.HHhs" o "Día HH:HHhs"
-    const dayTimeMatches = allTurnosText.matchAll(/\b(lunes|martes|miércoles|miercoles|jueves|viernes|sábado|sabado|domingo)\s+(\d{1,2})(?:\.(\d{1,2}))?(?:hs|:(\d{2})hs?)?/gi);
+    const dayTimeMatches = Array.from(allTurnosText.matchAll(/\b(lunes|martes|miércoles|miercoles|jueves|viernes|sábado|sabado|domingo)\s+(\d{1,2})(?:\.(\d{1,2}))?(?:hs|:(\d{2})hs?)?/gi));
     for (const match of dayTimeMatches) {
       const dayName = match[1].toLowerCase();
       const dayNum = dayMap[dayName];
@@ -150,7 +150,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     }
 
     // Patrón 2: Buscar horarios sueltos en formato "HH.HHhs" o "HH:HHhs" (sin día específico)
-    const timeOnlyMatches = allTurnosText.matchAll(/\b(\d{1,2})(?:\.(\d{1,2})|:(\d{2}))hs?:/gi);
+    const timeOnlyMatches = Array.from(allTurnosText.matchAll(/\b(\d{1,2})(?:\.(\d{1,2})|:(\d{2}))hs?:/gi));
     for (const match of timeOnlyMatches) {
       const hours = parseInt(match[1], 10);
       let minutes = 0;
