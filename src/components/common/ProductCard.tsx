@@ -14,6 +14,7 @@ import { ProductImage } from "@/components/ui/ProductImage";
 import { formatPrice } from "@/lib/utils";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { api } from "@/lib/api";
+import { isPresentialCourse } from "@/lib/utils/productHelpers";
 /* Holaaaa */
 
 function formatearTituloProducto(nombre: string): string {
@@ -84,6 +85,17 @@ const ProductCard = ({
   const manejarAgregarAlCarrito = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // IMPORTANTE: Verificar que NO sea un curso presencial
+    // Los cursos presenciales deben usar checkout directo
+    if (isPresentialCourse(data)) {
+      toast({
+        variant: 'destructive',
+        title: 'Compra individual',
+        description: 'Los cursos presenciales se compran en forma individual y no se pueden combinar con otros productos. Te vamos a llevar al pago directo de este curso.',
+      });
+      return;
+    }
 
     const itemCarrito = {
       id: data.id,

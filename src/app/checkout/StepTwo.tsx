@@ -115,6 +115,16 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
     setErrorMessage(null);
 
     try {
+      // Leer metadata del checkout si existe (para cursos presenciales)
+      const checkoutMetadata = typeof window !== 'undefined' 
+        ? JSON.parse(localStorage.getItem('checkout_metadata') || '{}')
+        : {};
+      
+      // Determinar si es un curso presencial y obtener la sede
+      const isPresentialCheckout = checkoutMetadata.type === 'curso_presencial' || 
+                                    checkoutMetadata.isDirectCheckout === true;
+      const sede = checkoutMetadata.sede || null;
+      
       // Llamar al nuevo endpoint /api/checkout
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -133,6 +143,11 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
             quantity: item.quantity,
           })),
           paymentMethod: data.paymentMethod,
+          // Información adicional para cursos presenciales
+          ...(isPresentialCheckout && sede ? {
+            orderType: 'curso_presencial' as const,
+            sede: sede as 'almagro' | 'ciudad-jardin',
+          } : {}),
         }),
       });
 

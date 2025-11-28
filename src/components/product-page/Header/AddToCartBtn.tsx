@@ -89,6 +89,18 @@ export default function AddToCartBtn({ data }: Props) {
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    // IMPORTANTE: Verificar que NO sea un curso presencial
+    const { isPresentialCourse } = require('@/lib/utils/productHelpers');
+    if (isPresentialCourse(data)) {
+      toast({
+        variant: 'destructive',
+        title: 'Compra individual',
+        description: 'Los cursos presenciales se compran en forma individual y no se pueden combinar con otros productos.',
+      });
+      return;
+    }
+    
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
     await updateCart(newQuantity);

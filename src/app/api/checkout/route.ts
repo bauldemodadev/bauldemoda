@@ -31,6 +31,9 @@ interface CheckoutRequest {
     quantity: number;
   }>;
   paymentMethod: PaymentMethod;
+  // Información adicional para cursos presenciales
+  orderType?: 'curso_presencial';
+  sede?: 'almagro' | 'ciudad-jardin';
 }
 
 /**
@@ -174,6 +177,13 @@ export async function POST(request: Request) {
       items: orderItems,
       totalAmount,
       currency: 'ARS',
+      // Guardar información de sede si es un curso presencial
+      ...(body.orderType === 'curso_presencial' && body.sede ? {
+        metadata: {
+          orderType: 'curso_presencial',
+          sede: body.sede,
+        },
+      } : {}),
     };
 
     const orderId = await createOrder(orderData);
@@ -181,6 +191,7 @@ export async function POST(request: Request) {
     // 4. Manejar según método de pago
     if (body.paymentMethod === 'mp') {
       // Crear preferencia de Mercado Pago
+      // IMPORTANTE: Si es un curso presencial, usar la cuenta de MP según la sede
       try {
         const preference = await createPreference({
           items: orderItems.map((item) => ({
@@ -195,6 +206,8 @@ export async function POST(request: Request) {
           },
           orderId,
           customerEmail: body.customer.email,
+          // Pasar la sede para usar la cuenta de MP correcta
+          sede: body.sede || null,
         });
 
         // Actualizar orden con datos de MP

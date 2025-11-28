@@ -9,6 +9,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import AvailabilityModal from "@/components/courses/AvailabilityModal";
+import { usePresentialCourseCheckout } from "@/lib/hooks/usePresentialCourseCheckout";
+import { isPresentialCourse } from "@/lib/utils/productHelpers";
 
 type CourseListSecProps = {
   title: string;
@@ -78,9 +80,22 @@ const filterCoursesByIds = (products: Product[], courseIds: (string | number)[])
   return filtered;
 };
 
+// Función para agregar productos estándar al carrito (NO cursos presenciales)
 const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: any) => {
   e.preventDefault();
   e.stopPropagation();
+
+  // IMPORTANTE: Verificar que NO sea un curso presencial
+  // Los cursos presenciales deben usar handleBuyNowPresentialCourse
+  const { isPresentialCourse } = require('@/lib/utils/productHelpers');
+  if (isPresentialCourse(product)) {
+    toast({
+      variant: 'destructive',
+      title: 'Compra individual',
+      description: 'Los cursos presenciales se compran en forma individual y no se pueden combinar con otros productos.',
+    });
+    return;
+  }
 
   const itemCarrito = {
     id: product.id,
@@ -219,6 +234,9 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
+  // Hook para manejar checkout directo de cursos presenciales
+  const { handleBuyNowPresentialCourse } = usePresentialCourseCheckout();
+  
   const isPresencial = category === 'ciudad-jardin' || category === 'almagro';
 
   useEffect(() => {
@@ -315,54 +333,71 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
     setIsModalOpen(true);
   };
 
+  /**
+   * Maneja la confirmación de disponibilidad para cursos presenciales
+   * En lugar de agregar al carrito, redirige al checkout directo
+   */
   const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
     if (selectedProduct) {
-      // Si se seleccionó fecha y hora, agregar automáticamente al carrito
-      if (selectedDate && selectedTime) {
-        // Usar el precio correcto: basePrice > localPriceNumber > price
-        const productPrice = selectedProduct.basePrice ?? 
-                            selectedProduct.localPriceNumber ?? 
-                            selectedProduct.price;
-
-        const itemCarrito = {
-          id: selectedProduct.id,
-          name: selectedProduct.name,
-          price: productPrice,
-          quantity: 1,
-          totalPrice: productPrice,
-          srcUrl: selectedProduct.srcUrl,
-          image: selectedProduct.images?.[0] || selectedProduct.srcUrl || PLACEHOLDER_IMAGE,
-          discount: { percentage: 0, amount: 0 }, // Sin descuentos para cursos presenciales
-          slug: selectedProduct.name.split(" ").join("-"),
-          productId: selectedProduct.id,
-          selectedDate,
-          selectedTime,
-        };
-
-        const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
-        const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
-
-        if (indice > -1) {
-          carritoLocal[indice].quantity += 1;
-          carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
-          toast({
-            title: "¡Cantidad actualizada!",
-            description: `Se ha actualizado la cantidad de ${selectedProduct.name} en el carrito.`,
-            variant: "cart",
-          });
+      // Verificar si es un curso presencial
+      if (isPresentialCourse(selectedProduct)) {
+        // Para cursos presenciales: ir directo al checkout (no al carrito)
+        if (selectedDate && selectedTime) {
+          handleBuyNowPresentialCourse(selectedProduct, selectedDate, selectedTime);
         } else {
-          carritoLocal.push(itemCarrito);
           toast({
-            title: "¡Producto agregado al carrito!",
-            description: `${selectedProduct.name} ha sido agregado correctamente al carrito con fecha ${selectedDate} a las ${selectedTime}.`,
-            variant: "cart",
+            variant: 'destructive',
+            title: 'Error',
+            description: 'Por favor, selecciona una fecha y hora para continuar.',
           });
         }
+      } else {
+        // Para cursos online: agregar al carrito (lógica original)
+        if (selectedDate && selectedTime) {
+          // Usar el precio correcto: basePrice > localPriceNumber > price
+          const productPrice = selectedProduct.basePrice ?? 
+                              selectedProduct.localPriceNumber ?? 
+                              selectedProduct.price;
 
-        localStorage.setItem("cart", JSON.stringify(carritoLocal));
-        window.dispatchEvent(new Event("cartUpdate"));
+          const itemCarrito = {
+            id: selectedProduct.id,
+            name: selectedProduct.name,
+            price: productPrice,
+            quantity: 1,
+            totalPrice: productPrice,
+            srcUrl: selectedProduct.srcUrl,
+            image: selectedProduct.images?.[0] || selectedProduct.srcUrl || PLACEHOLDER_IMAGE,
+            discount: { percentage: 0, amount: 0 },
+            slug: selectedProduct.name.split(" ").join("-"),
+            productId: selectedProduct.id,
+            selectedDate,
+            selectedTime,
+          };
+
+          const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");
+          const indice = carritoLocal.findIndex((i: any) => i.id === itemCarrito.id);
+
+          if (indice > -1) {
+            carritoLocal[indice].quantity += 1;
+            carritoLocal[indice].totalPrice = carritoLocal[indice].quantity * itemCarrito.price;
+            toast({
+              title: "¡Cantidad actualizada!",
+              description: `Se ha actualizado la cantidad de ${selectedProduct.name} en el carrito.`,
+              variant: "cart",
+            });
+          } else {
+            carritoLocal.push(itemCarrito);
+            toast({
+              title: "¡Producto agregado al carrito!",
+              description: `${selectedProduct.name} ha sido agregado correctamente al carrito con fecha ${selectedDate} a las ${selectedTime}.`,
+              variant: "cart",
+            });
+          }
+
+          localStorage.setItem("cart", JSON.stringify(carritoLocal));
+          window.dispatchEvent(new Event("cartUpdate"));
+        }
       }
-      // Si no se seleccionó fecha/hora, no hacer nada (el usuario puede cerrar el modal)
     }
   };
 

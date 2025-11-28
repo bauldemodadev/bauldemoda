@@ -8,23 +8,56 @@
 import { MercadoPagoConfig, Preference, Payment } from "mercadopago";
 
 /**
- * Obtiene las credenciales de Mercado Pago según el entorno
+ * Obtiene las credenciales de Mercado Pago según el entorno y la sede
+ * 
+ * @param sede - 'almagro' | 'ciudad-jardin' | null - Determina qué cuenta de MP usar
  */
-function getMercadoPagoConfig() {
+function getMercadoPagoConfig(sede?: 'almagro' | 'ciudad-jardin' | null) {
   const environment = process.env.MP_ENVIRONMENT || "sandbox";
   const isProduction = environment === "production";
 
-  const publicKey = isProduction
-    ? process.env.MP_PUBLIC_KEY_PROD
-    : process.env.MP_PUBLIC_KEY_SANDBOX;
+  // Si hay una sede especificada, usar las credenciales específicas de esa sede
+  // Variables de entorno esperadas:
+  // - MP_ACCESS_TOKEN_ALMAGRO_PROD / MP_ACCESS_TOKEN_ALMAGRO_SANDBOX
+  // - MP_ACCESS_TOKEN_CIUDAD_JARDIN_PROD / MP_ACCESS_TOKEN_CIUDAD_JARDIN_SANDBOX
+  // - MP_PUBLIC_KEY_ALMAGRO_PROD / MP_PUBLIC_KEY_ALMAGRO_SANDBOX
+  // - MP_PUBLIC_KEY_CIUDAD_JARDIN_PROD / MP_PUBLIC_KEY_CIUDAD_JARDIN_SANDBOX
+  
+  let accessToken: string | undefined;
+  let publicKey: string | undefined;
 
-  const accessToken = isProduction
-    ? process.env.MP_ACCESS_TOKEN_PROD
-    : process.env.MP_ACCESS_TOKEN_SANDBOX;
+  if (sede === 'almagro') {
+    accessToken = isProduction
+      ? process.env.MP_ACCESS_TOKEN_ALMAGRO_PROD
+      : process.env.MP_ACCESS_TOKEN_ALMAGRO_SANDBOX;
+    publicKey = isProduction
+      ? process.env.MP_PUBLIC_KEY_ALMAGRO_PROD
+      : process.env.MP_PUBLIC_KEY_ALMAGRO_SANDBOX;
+  } else if (sede === 'ciudad-jardin') {
+    accessToken = isProduction
+      ? process.env.MP_ACCESS_TOKEN_CIUDAD_JARDIN_PROD
+      : process.env.MP_ACCESS_TOKEN_CIUDAD_JARDIN_SANDBOX;
+    publicKey = isProduction
+      ? process.env.MP_PUBLIC_KEY_CIUDAD_JARDIN_PROD
+      : process.env.MP_PUBLIC_KEY_CIUDAD_JARDIN_SANDBOX;
+  }
+
+  // Fallback a credenciales generales si no hay credenciales específicas de sede
+  if (!accessToken) {
+    accessToken = isProduction
+      ? process.env.MP_ACCESS_TOKEN_PROD
+      : process.env.MP_ACCESS_TOKEN_SANDBOX;
+  }
+
+  if (!publicKey) {
+    publicKey = isProduction
+      ? process.env.MP_PUBLIC_KEY_PROD
+      : process.env.MP_PUBLIC_KEY_SANDBOX;
+  }
 
   if (!accessToken) {
     throw new Error(
-      `Mercado Pago ${environment} access token no configurado. Verifica las variables de entorno.`
+      `Mercado Pago ${environment} access token no configurado${sede ? ` para sede ${sede}` : ''}. Verifica las variables de entorno.`
     );
   }
 
@@ -38,9 +71,11 @@ function getMercadoPagoConfig() {
 
 /**
  * Inicializa el cliente de Mercado Pago
+ * 
+ * @param sede - 'almagro' | 'ciudad-jardin' | null - Determina qué cuenta de MP usar
  */
-function getMercadoPagoClient() {
-  const config = getMercadoPagoConfig();
+function getMercadoPagoClient(sede?: 'almagro' | 'ciudad-jardin' | null) {
+  const config = getMercadoPagoConfig(sede);
   return new MercadoPagoConfig({
     accessToken: config.accessToken,
   });
@@ -75,6 +110,8 @@ export interface CreatePreferenceParams {
   };
   orderId: string;
   customerEmail: string;
+  // Sede para determinar qué cuenta de MP usar
+  sede?: 'almagro' | 'ciudad-jardin' | null;
 }
 
 /**
@@ -96,8 +133,9 @@ export async function createPreference(
   params: CreatePreferenceParams
 ): Promise<CreatePreferenceResult> {
   try {
-    const mp = getMercadoPagoClient();
-    const config = getMercadoPagoConfig();
+    // Usar la sede del parámetro para obtener las credenciales correctas
+    const mp = getMercadoPagoClient(params.sede);
+    const config = getMercadoPagoConfig(params.sede);
     const baseUrl = getBaseUrl();
 
     const preference = await new Preference(mp).create({

@@ -66,6 +66,17 @@ const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
     e.preventDefault();
     e.stopPropagation();
 
+    // IMPORTANTE: Verificar que NO sea un curso presencial
+    const { isPresentialCourse } = require('@/lib/utils/productHelpers');
+    if (isPresentialCourse(product)) {
+      toast({
+        variant: 'destructive',
+        title: 'Compra individual',
+        description: 'Los cursos presenciales se compran en forma individual y no se pueden combinar con otros productos.',
+      });
+      return;
+    }
+
     const itemCarrito = {
       id: product.id,
       name: product.name,

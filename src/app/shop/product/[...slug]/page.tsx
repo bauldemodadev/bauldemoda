@@ -9,8 +9,23 @@ import { useToast } from "@/components/ui/use-toast";
 import { ArrowRight, ArrowLeftRight } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import AvailabilityModal from "@/components/courses/AvailabilityModal";
+import { usePresentialCourseCheckout } from "@/lib/hooks/usePresentialCourseCheckout";
+import { isPresentialCourse } from "@/lib/utils/productHelpers";
 
+/**
+ * Función para agregar productos estándar al carrito (NO cursos presenciales)
+ * Los cursos presenciales deben usar handleBuyNowPresentialCourse
+ */
 const manejarAgregarAlCarrito = (product: Product, toast: any) => {
+  // IMPORTANTE: Verificar que NO sea un curso presencial
+  if (isPresentialCourse(product)) {
+    toast({
+      variant: 'destructive',
+      title: 'Compra individual',
+      description: 'Los cursos presenciales se compran en forma individual y no se pueden combinar con otros productos. Te vamos a llevar al pago directo de este curso.',
+    });
+    return;
+  }
   const productName = product.name || 'Producto';
   const productPrice = product.price || 0;
   
@@ -57,6 +72,9 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Hook para manejar checkout directo de cursos presenciales
+  const { handleBuyNowPresentialCourse } = usePresentialCourseCheckout();
 
   const [id] = params.slug;
 
@@ -120,16 +138,27 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   const mainImage = productImages[0] || product.srcUrl || PLACEHOLDER_IMAGE;
   const price = product.priceText || `$${product.price?.toLocaleString() || 0}`;
 
-  // Detectar si es un curso presencial
-  const isPresencial = product.category?.toLowerCase().includes('presencial') || 
-                       product.subcategory?.toLowerCase().includes('presencial') ||
-                       product.locationText?.toLowerCase().includes('ciudad jardín') ||
-                       product.locationText?.toLowerCase().includes('almagro');
+  // Detectar si es un curso presencial usando el helper
+  const isPresencial = isPresentialCourse(product);
 
-  // Función para manejar la confirmación del modal de disponibilidad
+  /**
+   * Maneja la confirmación de disponibilidad para cursos presenciales
+   * En lugar de agregar al carrito, redirige al checkout directo
+   */
   const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
-    if (product && selectedDate && selectedTime) {
-      // Usar el precio correcto: basePrice > localPriceNumber > price
+    if (product && isPresencial) {
+      // Para cursos presenciales: ir directo al checkout (no al carrito)
+      if (selectedDate && selectedTime) {
+        handleBuyNowPresentialCourse(product, selectedDate, selectedTime);
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'Por favor, selecciona una fecha y hora para continuar.',
+        });
+      }
+    } else if (product && !isPresencial && selectedDate && selectedTime) {
+      // Para cursos online: agregar al carrito (lógica original)
       const productPrice = product.basePrice ?? 
                           product.localPriceNumber ?? 
                           product.price;
@@ -142,7 +171,7 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
         totalPrice: productPrice,
         srcUrl: product.srcUrl,
         image: product.images?.[0] || product.srcUrl || PLACEHOLDER_IMAGE,
-        discount: { percentage: 0, amount: 0 }, // Sin descuentos para cursos presenciales
+        discount: { percentage: 0, amount: 0 },
         slug: product.name.split(" ").join("-"),
         productId: product.id,
         selectedDate,
