@@ -6,7 +6,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { getOrdersByCustomerId } from '@/lib/firestore/orders';
+import { getOrdersByCustomerIdOrEmail } from '@/lib/firestore/orders';
 import { getCustomerByEmail } from '@/lib/firestore/customers';
 import { Timestamp } from 'firebase-admin/firestore';
 
@@ -51,18 +51,26 @@ export async function GET(request: Request) {
       );
     }
 
-    // Buscar el cliente por email
-    const customer = await getCustomerByEmail(email);
+    // Normalizar email
+    const normalizedEmail = email.toLowerCase().trim();
     
-    if (!customer) {
-      return NextResponse.json(
-        { error: 'Cliente no encontrado' },
-        { status: 404 }
-      );
-    }
-
+    // Buscar el cliente por email
+    const customer = await getCustomerByEmail(normalizedEmail);
+    
     // Obtener todas las órdenes del cliente
-    const orders = await getOrdersByCustomerId(customer.id);
+    // Usar búsqueda combinada: por customerId (si existe) y por email (siempre)
+    // Esto asegura que encontremos órdenes incluso si el cliente no existe en la colección customers
+    const orders = await getOrdersByCustomerIdOrEmail(
+      customer?.id,
+      normalizedEmail
+    );
+    
+    console.log(`📦 Órdenes encontradas para ${normalizedEmail}:`, {
+      customerFound: !!customer,
+      customerId: customer?.id,
+      ordersCount: orders.length,
+      orderIds: orders.map(o => o.id)
+    });
 
     // Serializar las órdenes
     const serializedOrders = orders.map(serializeOrder);

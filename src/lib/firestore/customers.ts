@@ -182,18 +182,38 @@ export async function enrollCustomerInCourse(
 
 /**
  * Obtiene un cliente por email
+ * Normaliza el email (lowercase y trim) para búsquedas consistentes
  */
 export async function getCustomerByEmail(email: string): Promise<Customer | null> {
   try {
     const db = getAdminDb();
+    // Normalizar email: lowercase y trim
+    const normalizedEmail = email.toLowerCase().trim();
+    
     const snapshot = await db
       .collection('customers')
-      .where('email', '==', email)
+      .where('email', '==', normalizedEmail)
       .limit(1)
       .get();
 
     if (snapshot.empty) {
-      return null;
+      // Intentar también con el email original (por si acaso)
+      const snapshotOriginal = await db
+        .collection('customers')
+        .where('email', '==', email)
+        .limit(1)
+        .get();
+      
+      if (snapshotOriginal.empty) {
+        return null;
+      }
+      
+      const doc = snapshotOriginal.docs[0];
+      const data = doc.data() as Omit<Customer, 'id'>;
+      return {
+        id: doc.id,
+        ...data,
+      };
     }
 
     const doc = snapshot.docs[0];

@@ -39,6 +39,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [noTurnosFound, setNoTurnosFound] = useState(false); // Indica si hay detailsHtml pero no se encontraron turnos
 
   useEffect(() => {
     if (isOpen && product) {
@@ -49,18 +50,18 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
       setSelectedTime("");
       setAvailability([]);
       setError(null);
+      setNoTurnosFound(false);
     }
   }, [isOpen, product]);
 
-  // Función para parsear detailsHtml y extraer turnos y horarios
+  // Función para parsear detailsHtml y extraer turnos y horarios REALES
   const parseDetailsHtml = (detailsHtml?: string) => {
     if (!detailsHtml) return null;
 
     // Crear un parser DOM para analizar el HTML
     const parser = new DOMParser();
     const doc = parser.parseFromString(detailsHtml, 'text/html');
-    const textContent = doc.body.textContent || detailsHtml;
-
+    
     // Mapeo de días de la semana en español a números (0 = domingo, 1 = lunes, etc.)
     const dayMap: Record<string, number> = {
       'domingo': 0,
@@ -74,75 +75,160 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
       'sabado': 6
     };
 
-    // Buscar días de la semana mencionados
-    const foundDays: number[] = [];
-    Object.keys(dayMap).forEach(day => {
-      const regex = new RegExp(`\\b${day}\\b`, 'gi');
-      if (regex.test(textContent)) {
-        foundDays.push(dayMap[day]);
+    // Buscar específicamente secciones con "Turnos" o "TURNO"
+    const turnosSections: string[] = [];
+    
+    // Buscar en h3, h4, h5, h6, strong, b que contengan "Turnos" o "TURNO"
+    const headings = doc.querySelectorAll('h3, h4, h5, h6, strong, b');
+    headings.forEach(heading => {
+      const text = heading.textContent || '';
+      if (/turnos?/i.test(text)) {
+        // Obtener el contenido siguiente (puede estar en el mismo elemento, siguiente hermano, o en listas)
+        let nextContent = '';
+        
+        // Buscar en el siguiente elemento hermano
+        let nextSibling = heading.nextElementSibling;
+        if (nextSibling) {
+          nextContent = nextSibling.textContent || '';
+        }
+        
+        // Buscar en listas (ul, ol) que sigan al heading
+        let current = heading.nextElementSibling;
+        while (current) {
+          if (current.tagName === 'UL' || current.tagName === 'OL') {
+            nextContent += ' ' + (current.textContent || '');
+            break;
+          }
+          current = current.nextElementSibling;
+        }
+        
+        // También buscar en el texto del mismo elemento si contiene más información
+        const fullText = (heading.textContent || '') + ' ' + nextContent;
+        if (fullText.trim()) {
+          turnosSections.push(fullText);
+        }
       }
     });
 
-    // Buscar horarios en formato HH:MM o texto como "mañana", "tarde", "noche"
-    const timePatterns = [
-      /\b(\d{1,2}):(\d{2})\b/g, // Formato 10:00, 14:30, etc.
-      /\b(mañana|tarde|noche)\b/gi, // Texto mañana, tarde, noche
-    ];
-
-    const foundTimes: string[] = [];
+    // También buscar en el texto completo del documento por patrones de turnos
+    const fullText = doc.body.textContent || detailsHtml;
     
-    // Buscar horarios en formato HH:MM
-    const timeMatches = textContent.match(/\b(\d{1,2}):(\d{2})\b/g);
-    if (timeMatches) {
-      timeMatches.forEach(match => {
-        const [hours, minutes] = match.split(':').map(Number);
+    // Buscar patrones como "Martes 10hs", "Sábado 15.30hs", "Jueves 18hs", etc.
+    const foundDays: Set<number> = new Set();
+    const foundTimes: Set<string> = new Set();
+    const foundDayTimePairs: Array<{ day: number; time: string }> = [];
+
+    // Buscar en las secciones de turnos encontradas
+    const allTurnosText = turnosSections.join(' ') + ' ' + fullText;
+    
+    // Patrón 1: "Día HHhs" o "Día HH.HHhs" o "Día HH:HHhs"
+    const dayTimeMatches = allTurnosText.matchAll(/\b(lunes|martes|miércoles|miercoles|jueves|viernes|sábado|sabado|domingo)\s+(\d{1,2})(?:\.(\d{1,2}))?(?:hs|:(\d{2})hs?)?/gi);
+    for (const match of dayTimeMatches) {
+      const dayName = match[1].toLowerCase();
+      const dayNum = dayMap[dayName];
+      if (dayNum !== undefined) {
+        const hours = parseInt(match[2], 10);
+        let minutes = 0;
+        
+        // Manejar formato "10.3hs" (10:30) o "10:30hs"
+        if (match[3]) {
+          // Formato decimal: 10.3 = 10:30
+          const decimalPart = parseFloat('0.' + match[3]);
+          minutes = Math.round(decimalPart * 60);
+        } else if (match[4]) {
+          // Formato normal: 10:30
+          minutes = parseInt(match[4], 10);
+        }
+        
         if (hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60) {
-          const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-          if (!foundTimes.includes(formattedTime)) {
-            foundTimes.push(formattedTime);
+          const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+          foundDays.add(dayNum);
+          foundTimes.add(timeStr);
+          foundDayTimePairs.push({ day: dayNum, time: timeStr });
+        }
+      }
+    }
+
+    // Patrón 2: Buscar horarios sueltos en formato "HH.HHhs" o "HH:HHhs" (sin día específico)
+    const timeOnlyMatches = allTurnosText.matchAll(/\b(\d{1,2})(?:\.(\d{1,2})|:(\d{2}))hs?:/gi);
+    for (const match of timeOnlyMatches) {
+      const hours = parseInt(match[1], 10);
+      let minutes = 0;
+      
+      if (match[2]) {
+        // Formato decimal: 14.30 = 14:30
+        const decimalPart = parseFloat('0.' + match[2]);
+        minutes = Math.round(decimalPart * 60);
+      } else if (match[3]) {
+        // Formato normal: 14:30
+        minutes = parseInt(match[3], 10);
+      }
+      
+      if (hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60) {
+        const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        foundTimes.add(timeStr);
+      }
+    }
+
+    // Buscar también en formato separado por comas o pipes: "Martes 10hs, Martes 18hs, Miércoles 10hs"
+    const commaSeparated = allTurnosText.match(/(?:turnos?|TURNO)[:\s]*(.+?)(?:\n|$|<h|<\/)/i);
+    if (commaSeparated && commaSeparated[1]) {
+      const turnosList = commaSeparated[1]
+        .split(/[,|]/)
+        .map(t => t.trim())
+        .filter(t => t.length > 0);
+      
+      turnosList.forEach(turno => {
+        const dayTimeMatch = turno.match(/\b(lunes|martes|miércoles|miercoles|jueves|viernes|sábado|sabado|domingo)\s+(\d{1,2})(?:\.(\d{1,2}))?(?:hs|:(\d{2})hs?)?/i);
+        if (dayTimeMatch) {
+          const dayName = dayTimeMatch[1].toLowerCase();
+          const dayNum = dayMap[dayName];
+          if (dayNum !== undefined) {
+            const hours = parseInt(dayTimeMatch[2], 10);
+            let minutes = 0;
+            
+            if (dayTimeMatch[3]) {
+              const decimalPart = parseFloat('0.' + dayTimeMatch[3]);
+              minutes = Math.round(decimalPart * 60);
+            } else if (dayTimeMatch[4]) {
+              minutes = parseInt(dayTimeMatch[4], 10);
+            }
+            
+            if (hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60) {
+              const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+              foundDays.add(dayNum);
+              foundTimes.add(timeStr);
+              foundDayTimePairs.push({ day: dayNum, time: timeStr });
+            }
           }
         }
       });
     }
 
-    // Buscar referencias a mañana, tarde, noche y convertirlas a horarios
-    if (/\bmañana\b/gi.test(textContent)) {
-      if (!foundTimes.includes('10:00')) foundTimes.push('10:00');
-      if (!foundTimes.includes('11:00')) foundTimes.push('11:00');
-    }
-    if (/\btarde\b/gi.test(textContent)) {
-      if (!foundTimes.includes('14:00')) foundTimes.push('14:00');
-      if (!foundTimes.includes('15:00')) foundTimes.push('15:00');
-    }
-    if (/\bnoche\b/gi.test(textContent)) {
-      if (!foundTimes.includes('18:00')) foundTimes.push('18:00');
-      if (!foundTimes.includes('19:00')) foundTimes.push('19:00');
-    }
+    // Convertir Sets a Arrays y ordenar
+    const daysArray = Array.from(foundDays).sort((a, b) => a - b);
+    const timesArray = Array.from(foundTimes).sort();
 
-    // Si no se encontraron horarios específicos, usar horarios comunes
-    if (foundTimes.length === 0) {
-      foundTimes.push('10:00', '14:00', '18:00');
-    }
-
-    // Si no se encontraron días, usar lunes, miércoles y viernes por defecto
-    if (foundDays.length === 0) {
-      foundDays.push(1, 3, 5); // Lunes, Miércoles, Viernes
+    // NO usar valores por defecto - solo retornar datos reales encontrados
+    if (daysArray.length === 0 && timesArray.length === 0) {
+      return null; // No se encontraron datos reales
     }
 
     return {
-      days: foundDays,
-      times: foundTimes.sort(),
-      raw: textContent
+      days: daysArray,
+      times: timesArray,
+      dayTimePairs: foundDayTimePairs, // Pares día-hora específicos encontrados
+      raw: fullText
     };
   };
 
-  // Función para generar disponibilidad basada en detailsHtml
+  // Función para generar disponibilidad basada en detailsHtml con datos REALES
   const generateAvailabilityFromDetails = (detailsHtml?: string): AvailabilitySlot[] => {
     if (!detailsHtml) return [];
 
     const parsed = parseDetailsHtml(detailsHtml);
-    if (!parsed || parsed.days.length === 0 || parsed.times.length === 0) {
-      return [];
+    if (!parsed) {
+      return []; // No se encontraron datos reales
     }
 
     const slots: AvailabilitySlot[] = [];
@@ -153,41 +239,80 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     const weeksToShow = 8;
     const maxDates = 3; // Máximo de fechas únicas a mostrar
 
-    // Para cada día de la semana encontrado en el HTML
-    parsed.days.forEach(dayOfWeek => {
-      // Encontrar la próxima ocurrencia de este día de la semana
-      const nextDate = new Date(today);
-      const currentDay = nextDate.getDay();
-      
-      // Calcular cuántos días faltan hasta el próximo día de la semana deseado
-      let daysToAdd = (dayOfWeek - currentDay + 7) % 7;
-      
-      // Si hoy es el día deseado, usar el próximo (siguiente semana)
-      if (daysToAdd === 0) {
-        daysToAdd = 7;
-      }
-      
-      nextDate.setDate(today.getDate() + daysToAdd);
-      nextDate.setHours(0, 0, 0, 0);
+    // Si tenemos pares día-hora específicos, usarlos (más preciso)
+    if (parsed.dayTimePairs && parsed.dayTimePairs.length > 0) {
+      // Usar los pares específicos encontrados
+      parsed.dayTimePairs.forEach(({ day: dayOfWeek, time }) => {
+        // Encontrar la próxima ocurrencia de este día de la semana
+        const nextDate = new Date(today);
+        const currentDay = nextDate.getDay();
+        
+        // Calcular cuántos días faltan hasta el próximo día de la semana deseado
+        let daysToAdd = (dayOfWeek - currentDay + 7) % 7;
+        
+        // Si hoy es el día deseado, usar el próximo (siguiente semana)
+        if (daysToAdd === 0) {
+          daysToAdd = 7;
+        }
+        
+        nextDate.setDate(today.getDate() + daysToAdd);
+        nextDate.setHours(0, 0, 0, 0);
 
-      // Generar fechas para las próximas semanas
-      for (let week = 0; week < weeksToShow; week++) {
-        const classDate = new Date(nextDate);
-        classDate.setDate(nextDate.getDate() + (week * 7));
+        // Generar fechas para las próximas semanas
+        for (let week = 0; week < weeksToShow; week++) {
+          const classDate = new Date(nextDate);
+          classDate.setDate(nextDate.getDate() + (week * 7));
 
-        // Solo agregar fechas futuras
-        if (classDate >= today) {
-          // Para cada horario encontrado
-          parsed.times.forEach(time => {
+          // Solo agregar fechas futuras
+          if (classDate >= today) {
             slots.push({
               date: classDate.toISOString().split('T')[0],
               time,
               available: true,
             });
-          });
+          }
         }
-      }
-    });
+      });
+    } else if (parsed.days.length > 0 && parsed.times.length > 0) {
+      // Si no hay pares específicos pero sí días y horarios, combinarlos
+      parsed.days.forEach(dayOfWeek => {
+        // Encontrar la próxima ocurrencia de este día de la semana
+        const nextDate = new Date(today);
+        const currentDay = nextDate.getDay();
+        
+        // Calcular cuántos días faltan hasta el próximo día de la semana deseado
+        let daysToAdd = (dayOfWeek - currentDay + 7) % 7;
+        
+        // Si hoy es el día deseado, usar el próximo (siguiente semana)
+        if (daysToAdd === 0) {
+          daysToAdd = 7;
+        }
+        
+        nextDate.setDate(today.getDate() + daysToAdd);
+        nextDate.setHours(0, 0, 0, 0);
+
+        // Generar fechas para las próximas semanas
+        for (let week = 0; week < weeksToShow; week++) {
+          const classDate = new Date(nextDate);
+          classDate.setDate(nextDate.getDate() + (week * 7));
+
+          // Solo agregar fechas futuras
+          if (classDate >= today) {
+            // Para cada horario encontrado
+            parsed.times.forEach(time => {
+              slots.push({
+                date: classDate.toISOString().split('T')[0],
+                time,
+                available: true,
+              });
+            });
+          }
+        }
+      });
+    } else {
+      // Si no hay datos suficientes, no generar slots
+      return [];
+    }
 
     // Ordenar por fecha y hora
     const sortedSlots = slots.sort((a, b) => {
@@ -202,7 +327,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     const limitedSlots: AvailabilitySlot[] = [];
     
     for (const slot of sortedSlots) {
-      if (uniqueDates.size < 3 && !uniqueDates.has(slot.date)) {
+      if (uniqueDates.size < maxDates && !uniqueDates.has(slot.date)) {
         uniqueDates.add(slot.date);
         limitedSlots.push(slot);
       } else if (uniqueDates.has(slot.date)) {
@@ -224,13 +349,30 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
       // Simular carga
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Generar disponibilidad basada en detailsHtml (turnos y horarios)
+      // Generar disponibilidad basada en detailsHtml (turnos y horarios REALES)
       const generatedAvailability = generateAvailabilityFromDetails(product.detailsHtml);
       
       if (generatedAvailability.length === 0) {
-        setError("No se pudo generar disponibilidad. Por favor, contacta con nosotros.");
+        // Verificar si hay detailsHtml pero no se encontraron turnos
+        if (product.detailsHtml) {
+          const parsed = parseDetailsHtml(product.detailsHtml);
+          if (!parsed) {
+            // Hay detailsHtml pero no se encontraron turnos - permitir continuar sin turno
+            setNoTurnosFound(true);
+            setError(null); // No mostrar error, permitir continuar
+          } else {
+            // Se parseó pero no hay datos válidos
+            setNoTurnosFound(true);
+            setError(null); // No mostrar error, permitir continuar
+          }
+        } else {
+          // No hay detailsHtml - mostrar error
+          setNoTurnosFound(false);
+          setError("No hay información de turnos disponible. Por favor, contacta con nosotros.");
+        }
       } else {
         setAvailability(generatedAvailability);
+        setNoTurnosFound(false);
       }
     } catch (err) {
       console.error("Error al obtener disponibilidad:", err);
@@ -241,8 +383,12 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
   };
 
   const handleConfirm = () => {
-    // Solo confirmar si se seleccionó fecha y hora
-    if (selectedDate && selectedTime) {
+    // Si no se encontraron turnos pero hay detailsHtml, permitir continuar sin fecha/hora
+    if (noTurnosFound) {
+      onConfirm(undefined, undefined);
+      onClose();
+    } else if (selectedDate && selectedTime) {
+      // Confirmar con fecha y hora seleccionadas
       onConfirm(selectedDate, selectedTime);
       onClose();
     }
@@ -307,18 +453,36 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
               const parsed = parseDetailsHtml(product.detailsHtml);
               if (parsed && (parsed.days.length > 0 || parsed.times.length > 0)) {
                 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-                const daysText = parsed.days.map(d => dayNames[d]).join(', ');
-                return (
-                  <div className="flex items-start gap-3">
-                    <Calendar className="w-5 h-5 text-pink-600 mt-0.5" />
-                    <div>
-                      <p className="font-semibold text-gray-900">Turnos disponibles:</p>
-                      <p className="text-gray-700">
-                        {daysText} {parsed.times.length > 0 && `- ${parsed.times.join(', ')}`}
-                      </p>
+                
+                // Si tenemos pares día-hora específicos, mostrarlos de forma más clara
+                if (parsed.dayTimePairs && parsed.dayTimePairs.length > 0) {
+                  const turnosText = parsed.dayTimePairs
+                    .map(({ day, time }) => `${dayNames[day]} ${time}`)
+                    .join(', ');
+                  return (
+                    <div className="flex items-start gap-3">
+                      <Calendar className="w-5 h-5 text-pink-600 mt-0.5" />
+                      <div>
+                        <p className="font-semibold text-gray-900">Turnos disponibles:</p>
+                        <p className="text-gray-700">{turnosText}</p>
+                      </div>
                     </div>
-                  </div>
-                );
+                  );
+                } else {
+                  // Mostrar días y horarios por separado
+                  const daysText = parsed.days.map(d => dayNames[d]).join(', ');
+                  return (
+                    <div className="flex items-start gap-3">
+                      <Calendar className="w-5 h-5 text-pink-600 mt-0.5" />
+                      <div>
+                        <p className="font-semibold text-gray-900">Turnos disponibles:</p>
+                        <p className="text-gray-700">
+                          {daysText} {parsed.times.length > 0 && `- ${parsed.times.join(', ')}`}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                }
               }
               return null;
             })()}
@@ -332,6 +496,15 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
           ) : error ? (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <p className="text-red-800">{error}</p>
+            </div>
+          ) : noTurnosFound ? (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-blue-800 mb-2">
+                <strong>No se encontraron turnos específicos en los detalles del curso.</strong>
+              </p>
+              <p className="text-blue-700 text-sm">
+                Puedes continuar con la compra y coordinaremos el turno contigo después de la inscripción.
+              </p>
             </div>
           ) : availability.length === 0 ? (
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -421,9 +594,13 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
           <Button
             onClick={handleConfirm}
             className="bg-pink-600 hover:bg-pink-700 text-white"
-            disabled={loading || !selectedDate || !selectedTime}
+            disabled={loading || (!noTurnosFound && (!selectedDate || !selectedTime))}
           >
-            {selectedDate && selectedTime ? "Agregar al Carrito" : "Selecciona fecha y horario"}
+            {noTurnosFound 
+              ? "Continuar al Checkout" 
+              : selectedDate && selectedTime 
+                ? "Agregar al Carrito" 
+                : "Selecciona fecha y horario"}
           </Button>
         </DialogFooter>
       </DialogContent>

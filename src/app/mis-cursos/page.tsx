@@ -164,7 +164,7 @@ export default function MisCursosPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F8F5E8" }}>
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 pb-12 md:pb-16">
         {/* Título principal con fondo blanco a todo el ancho */}
         <div
           className="text-center py-12 md:py-16 mb-8"

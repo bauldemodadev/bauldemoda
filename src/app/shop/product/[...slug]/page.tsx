@@ -148,15 +148,8 @@ export default function ProductPage({ params }: { params: { slug: string[] } }) 
   const handleConfirmAvailability = (selectedDate?: string, selectedTime?: string) => {
     if (product && isPresencial) {
       // Para cursos presenciales: ir directo al checkout (no al carrito)
-      if (selectedDate && selectedTime) {
-        handleBuyNowPresentialCourse(product, selectedDate, selectedTime);
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: 'Por favor, selecciona una fecha y hora para continuar.',
-        });
-      }
+      // Si no hay fecha/hora, permitir continuar igual (caso: no se encontraron turnos en detalles)
+      handleBuyNowPresentialCourse(product, selectedDate, selectedTime);
     } else if (product && !isPresencial && selectedDate && selectedTime) {
       // Para cursos online: agregar al carrito (lógica original)
       const productPrice = product.basePrice ?? 

@@ -342,15 +342,8 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
       // Verificar si es un curso presencial
       if (isPresentialCourse(selectedProduct)) {
         // Para cursos presenciales: ir directo al checkout (no al carrito)
-        if (selectedDate && selectedTime) {
-          handleBuyNowPresentialCourse(selectedProduct, selectedDate, selectedTime);
-        } else {
-          toast({
-            variant: 'destructive',
-            title: 'Error',
-            description: 'Por favor, selecciona una fecha y hora para continuar.',
-          });
-        }
+        // Si no hay fecha/hora, permitir continuar igual (caso: no se encontraron turnos en detalles)
+        handleBuyNowPresentialCourse(selectedProduct, selectedDate, selectedTime);
       } else {
         // Para cursos online: agregar al carrito (lógica original)
         if (selectedDate && selectedTime) {

@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server';
 import { getCustomerByEmail } from '@/lib/firestore/customers';
 import { getOnlineCourseByIdFromFirestore } from '@/lib/firestore/onlineCourses';
+import { getOrdersByCustomerIdOrEmail } from '@/lib/firestore/orders';
 import { Timestamp } from 'firebase-admin/firestore';
 import type { OnlineCourse } from '@/types/firestore/onlineCourse';
 
@@ -52,20 +53,18 @@ export async function GET(request: Request) {
       );
     }
 
-    // Buscar el cliente por email
-    const customer = await getCustomerByEmail(email);
+    // Normalizar email
+    const normalizedEmail = email.toLowerCase().trim();
     
-    if (!customer) {
-      return NextResponse.json(
-        { error: 'Cliente no encontrado' },
-        { status: 404 }
-      );
-    }
-
+    // Buscar el cliente por email
+    const customer = await getCustomerByEmail(normalizedEmail);
+    
     // Obtener todos los cursos en los que está inscrito
     const enrolledCourses: OnlineCourse[] = [];
+    const courseIdsSeen = new Set<string>();
     
-    if (customer.enrolledCourses && customer.enrolledCourses.length > 0) {
+    // 1. Obtener cursos desde enrolledCourses del cliente (si existe)
+    if (customer?.enrolledCourses && customer.enrolledCourses.length > 0) {
       // Verificar que cada curso aún tenga acceso válido
       const now = new Date();
       
@@ -86,8 +85,9 @@ export async function GET(request: Request) {
           // Obtener el curso completo
           try {
             const course = await getOnlineCourseByIdFromFirestore(enrollment.courseId);
-            if (course && course.status === 'publish') {
+            if (course && course.status === 'publish' && !courseIdsSeen.has(course.id)) {
               enrolledCourses.push(course);
+              courseIdsSeen.add(course.id);
             }
           } catch (error) {
             console.error(`Error obteniendo curso ${enrollment.courseId}:`, error);
@@ -95,6 +95,48 @@ export async function GET(request: Request) {
           }
         }
       }
+    }
+    
+    // 2. Obtener cursos desde órdenes aprobadas/pagadas (backup)
+    // Esto asegura que encontremos cursos incluso si no están en enrolledCourses
+    try {
+      const orders = await getOrdersByCustomerIdOrEmail(
+        customer?.id,
+        normalizedEmail
+      );
+      
+      // Filtrar solo órdenes aprobadas y pagadas
+      const paidOrders = orders.filter(
+        order => order.status === 'approved' && order.paymentStatus === 'paid'
+      );
+      
+      for (const order of paidOrders) {
+        for (const item of order.items) {
+          // Si es un curso online y no lo hemos agregado ya
+          if (item.type === 'onlineCourse' && item.courseId && !courseIdsSeen.has(item.courseId)) {
+            try {
+              const course = await getOnlineCourseByIdFromFirestore(item.courseId);
+              if (course && course.status === 'publish') {
+                enrolledCourses.push(course);
+                courseIdsSeen.add(course.id);
+              }
+            } catch (error) {
+              console.error(`Error obteniendo curso ${item.courseId} desde orden:`, error);
+            }
+          }
+        }
+      }
+      
+      console.log(`📚 Cursos encontrados para ${normalizedEmail}:`, {
+        customerFound: !!customer,
+        fromEnrolledCourses: customer?.enrolledCourses?.length || 0,
+        fromOrders: paidOrders.length,
+        totalCourses: enrolledCourses.length,
+        courseIds: enrolledCourses.map(c => c.id)
+      });
+    } catch (error) {
+      console.error('Error obteniendo cursos desde órdenes:', error);
+      // Continuar con los cursos encontrados desde enrolledCourses
     }
 
     // Serializar los cursos
