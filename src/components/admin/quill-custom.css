@@ -1,0 +1,298 @@
+/* Estilos personalizados para Quill Editor - UI/UX 2025 Profesional */
+
+/* Toolbar - Diseño limpio y moderno */
+.rich-text-editor .ql-toolbar {
+  border: 1px solid #e5e7eb;
+  border-bottom: none;
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+/* Botones del toolbar - Estilo profesional sin colores rosados */
+.rich-text-editor .ql-toolbar .ql-formats {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 0;
+  padding: 0;
+}
+
+.rich-text-editor .ql-toolbar button,
+.rich-text-editor .ql-toolbar .ql-picker-label,
+.rich-text-editor .ql-toolbar .ql-picker-item {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #374151;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Hover state - Gris suave */
+.rich-text-editor .ql-toolbar button:hover,
+.rich-text-editor .ql-toolbar .ql-picker-label:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* Active state - Gris más oscuro */
+.rich-text-editor .ql-toolbar button.ql-active,
+.rich-text-editor .ql-toolbar .ql-picker-label.ql-active {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* Focus state - Sin colores rosados */
+.rich-text-editor .ql-toolbar button:focus,
+.rich-text-editor .ql-toolbar .ql-picker-label:focus {
+  outline: 2px solid #9ca3af;
+  outline-offset: 2px;
+  background: #f3f4f6;
+}
+
+/* Separadores */
+.rich-text-editor .ql-toolbar .ql-formats:not(:last-child)::after {
+  content: '';
+  width: 1px;
+  height: 20px;
+  background: #e5e7eb;
+  margin: 0 4px;
+}
+
+/* Dropdowns - Estilo moderno */
+.rich-text-editor .ql-toolbar .ql-picker {
+  color: #374151;
+  font-size: 14px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-label {
+  padding: 0 8px;
+  min-width: 100px;
+  border-radius: 6px;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-options {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 4px;
+  margin-top: 4px;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-item {
+  padding: 6px 12px;
+  border-radius: 4px;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-item:hover {
+  background: #f3f4f6;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-item.ql-selected {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* Iconos SVG - Color gris */
+.rich-text-editor .ql-toolbar .ql-stroke {
+  stroke: #374151;
+}
+
+.rich-text-editor .ql-toolbar .ql-fill {
+  fill: #374151;
+}
+
+.rich-text-editor .ql-toolbar button:hover .ql-stroke,
+.rich-text-editor .ql-toolbar .ql-picker-label:hover .ql-stroke {
+  stroke: #111827;
+}
+
+.rich-text-editor .ql-toolbar button:hover .ql-fill,
+.rich-text-editor .ql-toolbar .ql-picker-label:hover .ql-fill {
+  fill: #111827;
+}
+
+.rich-text-editor .ql-toolbar button.ql-active .ql-stroke,
+.rich-text-editor .ql-toolbar .ql-picker-label.ql-active .ql-stroke {
+  stroke: #111827;
+}
+
+.rich-text-editor .ql-toolbar button.ql-active .ql-fill,
+.rich-text-editor .ql-toolbar .ql-picker-label.ql-active .ql-fill {
+  fill: #111827;
+}
+
+/* Container del editor */
+.rich-text-editor .ql-container {
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  background: #ffffff;
+  font-size: 15px;
+  font-family: var(--font-poppins), system-ui, sans-serif;
+  min-height: 250px;
+}
+
+/* Área de edición */
+.rich-text-editor .ql-editor {
+  min-height: 250px;
+  padding: 16px;
+  color: #111827;
+  line-height: 1.6;
+}
+
+.rich-text-editor .ql-editor.ql-blank::before {
+  color: #9ca3af;
+  font-style: normal;
+  font-size: 15px;
+  left: 16px;
+  right: 16px;
+}
+
+/* Placeholder mejorado */
+.rich-text-editor .ql-editor.ql-blank::before {
+  opacity: 0.6;
+}
+
+/* Contenido del editor */
+.rich-text-editor .ql-editor p,
+.rich-text-editor .ql-editor ol,
+.rich-text-editor .ql-editor ul {
+  margin: 0 0 12px 0;
+}
+
+.rich-text-editor .ql-editor h1,
+.rich-text-editor .ql-editor h2,
+.rich-text-editor .ql-editor h3,
+.rich-text-editor .ql-editor h4,
+.rich-text-editor .ql-editor h5,
+.rich-text-editor .ql-editor h6 {
+  margin: 16px 0 8px 0;
+  font-weight: 600;
+}
+
+.rich-text-editor .ql-editor blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 16px;
+  margin: 16px 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.rich-text-editor .ql-editor code,
+.rich-text-editor .ql-editor pre {
+  background: #f3f4f6;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+.rich-text-editor .ql-editor pre {
+  padding: 12px;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+
+/* Links */
+.rich-text-editor .ql-editor a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.rich-text-editor .ql-editor a:hover {
+  color: #1d4ed8;
+}
+
+/* Listas */
+.rich-text-editor .ql-editor ul,
+.rich-text-editor .ql-editor ol {
+  padding-left: 24px;
+  margin: 12px 0;
+}
+
+.rich-text-editor .ql-editor li {
+  margin: 4px 0;
+}
+
+/* Imágenes */
+.rich-text-editor .ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 12px 0;
+}
+
+/* Video */
+.rich-text-editor .ql-editor .ql-video {
+  width: 100%;
+  height: 400px;
+  border-radius: 6px;
+  margin: 12px 0;
+}
+
+/* Scrollbar personalizado para el editor */
+.rich-text-editor .ql-editor::-webkit-scrollbar {
+  width: 8px;
+}
+
+.rich-text-editor .ql-editor::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rich-text-editor .ql-editor::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.rich-text-editor .ql-editor::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Eliminar cualquier color rosado que pueda venir del CSS por defecto */
+.rich-text-editor .ql-toolbar button,
+.rich-text-editor .ql-toolbar .ql-picker-label,
+.rich-text-editor .ql-toolbar .ql-picker-item {
+  color: #374151 !important;
+}
+
+.rich-text-editor .ql-toolbar button:hover,
+.rich-text-editor .ql-toolbar .ql-picker-label:hover {
+  background: #f3f4f6 !important;
+  color: #111827 !important;
+}
+
+.rich-text-editor .ql-toolbar button.ql-active {
+  background: #e5e7eb !important;
+  color: #111827 !important;
+}
+
+/* Asegurar que los SVG no tengan colores rosados */
+.rich-text-editor .ql-toolbar svg {
+  color: #374151 !important;
+}
+
+.rich-text-editor .ql-toolbar button:hover svg,
+.rich-text-editor .ql-toolbar .ql-picker-label:hover svg {
+  color: #111827 !important;
+}
+

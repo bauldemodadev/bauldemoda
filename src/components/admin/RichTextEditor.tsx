@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import dynamic from 'next/dynamic';
+import './quill-custom.css';
 
 // Importar ReactQuill dinámicamente para evitar problemas de SSR
 const ReactQuill = dynamic(() => import('react-quill'), { 
@@ -80,31 +81,6 @@ export default function RichTextEditor({
         placeholder={placeholder}
         className="bg-white"
       />
-      <style jsx global>{`
-        .rich-text-editor .ql-container {
-          min-height: 200px;
-          font-size: 14px;
-        }
-        .rich-text-editor .ql-editor {
-          min-height: 200px;
-        }
-        .rich-text-editor .ql-toolbar {
-          border-top-left-radius: 0.375rem;
-          border-top-right-radius: 0.375rem;
-          border: 1px solid #d1d5db;
-          background-color: #f9fafb;
-        }
-        .rich-text-editor .ql-container {
-          border-bottom-left-radius: 0.375rem;
-          border-bottom-right-radius: 0.375rem;
-          border: 1px solid #d1d5db;
-          border-top: none;
-        }
-        .rich-text-editor .ql-editor.ql-blank::before {
-          color: #9ca3af;
-          font-style: normal;
-        }
-      `}</style>
     </div>
   );
 }

@@ -20,7 +20,6 @@ interface Product {
   detailsHtml?: string;
   category?: string;
   subcategory?: string | null;
-  tipoMadera?: string;
   sede?: string | null;
   status?: 'publish' | 'draft';
   stockStatus?: string;
@@ -253,17 +252,6 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Tipo de Madera
-              </label>
-              <input
-                type="text"
-                value={formData.tipoMadera || ''}
-                onChange={(e) => handleChange('tipoMadera', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
-              />
-            </div>
           </div>
         </section>
 
@@ -361,17 +349,6 @@ export default function ProductEditForm({ product }: ProductEditFormProps) {
                 value={formData.shortDescription || ''}
                 onChange={(e) => handleChange('shortDescription', e.target.value)}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Descripción Completa
-              </label>
-              <textarea
-                value={formData.description || ''}
-                onChange={(e) => handleChange('description', e.target.value)}
-                rows={4}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
               />
             </div>
