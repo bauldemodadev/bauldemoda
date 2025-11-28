@@ -42,6 +42,7 @@ export interface OrderItem {
   quantity: number;
   unitPrice: number;
   total: number;
+  imageUrl?: string;               // URL de la imagen del producto/curso
 }
 
 /**

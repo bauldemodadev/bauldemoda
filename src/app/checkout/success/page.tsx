@@ -18,6 +18,8 @@ import { CheckCircleIcon, HomeIcon, ShoppingBagIcon, Package } from 'lucide-reac
 import { CurrencyDollarIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
 import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
 import { getFormattedPickupLocations } from '@/lib/utils/pickupLocations';
+import Image from 'next/image';
+import { PLACEHOLDER_IMAGE } from '@/lib/constants';
 
 // Tipo serializado para orden (con fechas como strings desde la API)
 interface SerializedOrder {
@@ -40,6 +42,7 @@ interface SerializedOrder {
     quantity: number;
     unitPrice: number;
     total: number;
+    imageUrl?: string;
   }>;
   totalAmount: number;
   currency: 'ARS';
@@ -158,8 +161,23 @@ export default function SuccessPage() {
             {order.items.map((item, index) => (
               <div key={index} className="flex items-center justify-between py-4 border-b border-gray-200 last:border-0">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <Package className="w-8 h-8 text-gray-400" />
+                  <div className="relative w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                    {item.imageUrl ? (
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.name}
+                        fill
+                        className="object-cover"
+                        sizes="80px"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Package className="w-8 h-8 text-gray-400" />
+                      </div>
+                    )}
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">{item.name}</p>
@@ -183,12 +201,12 @@ export default function SuccessPage() {
         {/* Información de retiro */}
         <div className="bg-[#E9ABBD]/10 border border-[#E9ABBD] rounded-lg p-6 mb-6">
           <h3 className="font-semibold text-[#D44D7D] mb-2">Retiro en Sucursal</h3>
-          <p className="text-sm text-[#D44D7D] mb-3">
+          <p className="text-sm text-gray-700 mb-3">
             {order.items.length === 1 && order.metadata?.sede
               ? 'Tu pedido debe retirarse en:'
               : 'Tu pedido debe retirarse en una de nuestras sucursales:'}
           </p>
-          <ul className="text-sm text-[#D44D7D] space-y-1 mb-3">
+          <ul className="text-sm text-gray-700 space-y-1 mb-3">
             {getFormattedPickupLocations(
               order.items.map(item => ({
                 sede: order.metadata?.sede || null,
@@ -199,14 +217,14 @@ export default function SuccessPage() {
             ))}
           </ul>
           {order.paymentMethod === 'cash' && (
-            <p className="text-sm font-medium text-[#D44D7D] flex items-center gap-2">
-              <CurrencyDollarIcon className="w-5 h-5" />
+            <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+              <CurrencyDollarIcon className="w-5 h-5 text-[#D44D7D]" />
               Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
             </p>
           )}
           {order.paymentMethod === 'transfer' && (
-            <p className="text-sm font-medium text-[#D44D7D] flex items-center gap-2">
-              <BuildingLibraryIcon className="w-5 h-5" />
+            <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+              <BuildingLibraryIcon className="w-5 h-5 text-[#D44D7D]" />
               Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
             </p>
           )}

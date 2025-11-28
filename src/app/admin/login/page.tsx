@@ -8,8 +8,17 @@ import { useToast } from '@/components/ui/use-toast';
 import { AlertCircle, Mail, Lock, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
-const ADMIN_EMAIL = 'admin@admin.com';
-const ADMIN_PASSWORD = 'admin2025+!';
+const ADMIN_EMAILS = [
+  'admin@admin.com',
+  'almagro@admin.com',
+  'ciudadjardin@admin.com',
+];
+
+const ADMIN_PASSWORDS: Record<string, string> = {
+  'admin@admin.com': 'admin2025+!',
+  'almagro@admin.com': 'almagro2025+!',
+  'ciudadjardin@admin.com': 'ciudadjardin2025+!',
+};
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -25,7 +34,7 @@ export default function AdminLoginPage() {
     if (!auth) return;
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user && user.email !== ADMIN_EMAIL) {
+      if (user && !ADMIN_EMAILS.includes(user.email || '')) {
         // Hay un usuario logueado pero no es admin
         setHasNonAdminSession(true);
         setNonAdminEmail(user.email);
@@ -65,10 +74,10 @@ export default function AdminLoginPage() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const idToken = await userCredential.user.getIdToken();
 
-      // Verificar que sea el admin
-      if (userCredential.user.email !== ADMIN_EMAIL) {
+      // Verificar que sea uno de los admins permitidos
+      if (!userCredential.user.email || !ADMIN_EMAILS.includes(userCredential.user.email)) {
         await auth.signOut();
-        throw new Error('Este email no tiene permisos de administrador. Solo el administrador autorizado puede acceder.');
+        throw new Error('Este email no tiene permisos de administrador. Solo los administradores autorizados pueden acceder.');
       }
 
       // Guardar token en cookie

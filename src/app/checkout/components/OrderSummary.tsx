@@ -165,9 +165,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                 <h4 className="font-medium">{product.name}</h4>
               </div>
             </div>
-            <div className="text-right">
-              <p className="font-medium">${product.totalPrice}</p>
-            </div>
           </div>
         ))}
 

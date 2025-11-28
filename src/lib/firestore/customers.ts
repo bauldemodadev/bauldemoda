@@ -180,3 +180,31 @@ export async function enrollCustomerInCourse(
   }
 }
 
+/**
+ * Obtiene un cliente por email
+ */
+export async function getCustomerByEmail(email: string): Promise<Customer | null> {
+  try {
+    const db = getAdminDb();
+    const snapshot = await db
+      .collection('customers')
+      .where('email', '==', email)
+      .limit(1)
+      .get();
+
+    if (snapshot.empty) {
+      return null;
+    }
+
+    const doc = snapshot.docs[0];
+    const data = doc.data() as Omit<Customer, 'id'>;
+    return {
+      id: doc.id,
+      ...data,
+    };
+  } catch (error) {
+    console.error(`Error obteniendo cliente por email ${email}:`, error);
+    throw error;
+  }
+}
+

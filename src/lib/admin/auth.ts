@@ -6,8 +6,12 @@ import { getAdminAuth } from '@/lib/firebase/admin';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-// Email del admin principal
-const ADMIN_EMAIL = 'admin@admin.com';
+// Emails de administradores
+const ADMIN_EMAILS = [
+  'admin@admin.com',
+  'almagro@admin.com',
+  'ciudadjardin@admin.com',
+];
 
 /**
  * Verifica si el usuario actual es admin
@@ -15,7 +19,8 @@ const ADMIN_EMAIL = 'admin@admin.com';
  * @returns true si es admin
  */
 export function isAdminEmail(email: string | null | undefined): boolean {
-  return email === ADMIN_EMAIL;
+  if (!email) return false;
+  return ADMIN_EMAILS.includes(email.toLowerCase());
 }
 
 /**
@@ -49,7 +54,7 @@ export async function verifyAdminAuth(): Promise<string | null> {
     const adminAuth = getAdminAuth();
     const decodedToken = await adminAuth.verifyIdToken(token);
     
-    // Verificar que el email sea el admin
+    // Verificar que el email sea uno de los admins permitidos
     if (isAdminEmail(decodedToken.email)) {
       console.log('Admin auth: Authenticated as', decodedToken.email);
       return decodedToken.email || null;

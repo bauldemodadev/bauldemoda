@@ -309,25 +309,25 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
           <h3 className="font-semibold text-[#D44D7D] mb-2">
             Retiro en Sucursal
           </h3>
-          <p className="text-sm text-[#D44D7D] mb-2">
+          <p className="text-sm text-gray-700 mb-2">
             {cart.length === 1 
               ? 'Tu pedido debe retirarse en:'
               : 'Todos los pedidos deben retirarse en nuestras sucursales:'}
           </p>
-          <ul className="mt-2 text-sm text-[#D44D7D] list-disc list-inside space-y-1">
+          <ul className="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1">
             {getFormattedPickupLocations(cart).map((location, index) => (
               <li key={index}>{location}</li>
             ))}
           </ul>
           {selectedPaymentMethod === 'cash' && (
-            <p className="mt-3 text-sm font-medium text-[#D44D7D] flex items-center gap-2">
-              <CurrencyDollarIcon className="w-5 h-5" />
+            <p className="mt-3 text-sm font-medium text-gray-800 flex items-center gap-2">
+              <CurrencyDollarIcon className="w-5 h-5 text-[#D44D7D]" />
               Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
             </p>
           )}
           {selectedPaymentMethod === 'transfer' && (
-            <p className="mt-3 text-sm font-medium text-[#D44D7D] flex items-center gap-2">
-              <BuildingLibraryIcon className="w-5 h-5" />
+            <p className="mt-3 text-sm font-medium text-gray-800 flex items-center gap-2">
+              <BuildingLibraryIcon className="w-5 h-5 text-[#D44D7D]" />
               Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
             </p>
           )}

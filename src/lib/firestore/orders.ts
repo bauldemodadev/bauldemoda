@@ -105,3 +105,30 @@ export async function getOrderByExternalReference(
   }
 }
 
+/**
+ * Obtiene todas las órdenes de un cliente
+ */
+export async function getOrdersByCustomerId(
+  customerId: string
+): Promise<Order[]> {
+  try {
+    const db = getAdminDb();
+    const snapshot = await db
+      .collection('orders')
+      .where('customerId', '==', customerId)
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    return snapshot.docs.map(doc => {
+      const data = doc.data() as Omit<Order, 'id'>;
+      return {
+        id: doc.id,
+        ...data,
+      };
+    });
+  } catch (error) {
+    console.error(`Error obteniendo órdenes del cliente ${customerId}:`, error);
+    throw error;
+  }
+}
+

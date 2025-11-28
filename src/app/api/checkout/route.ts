@@ -70,6 +70,9 @@ async function calculateOrderTotal(
       const unitPrice = getProductPriceByMethod(product, paymentMethod);
       const total = unitPrice * item.quantity;
 
+      // Obtener la URL de la imagen del producto
+      const imageUrl = product.images?.[0] || product.srcUrl || null;
+
       orderItems.push({
         type: 'product',
         productId: item.id,
@@ -77,6 +80,7 @@ async function calculateOrderTotal(
         quantity: item.quantity,
         unitPrice,
         total,
+        imageUrl,
       });
 
       totalAmount += total;
