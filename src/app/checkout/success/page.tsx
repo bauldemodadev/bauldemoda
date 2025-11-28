@@ -207,14 +207,21 @@ export default function SuccessPage() {
               : 'Tu pedido debe retirarse en una de nuestras sucursales:'}
           </p>
           <ul className="text-sm text-gray-700 space-y-1 mb-3">
-            {getFormattedPickupLocations(
-              order.items.map(item => ({
-                sede: order.metadata?.sede || null,
-                locationText: null, // No tenemos locationText en la orden, solo sede
-              }))
-            ).map((location, index) => (
-              <li key={index}>• {location}</li>
-            ))}
+            {/* Usar pickupLocations de metadata si están disponibles, sino usar sede */}
+            {order.metadata?.pickupLocations && order.metadata.pickupLocations.length > 0 ? (
+              order.metadata.pickupLocations.map((location: string, index: number) => (
+                <li key={index}>• {location}</li>
+              ))
+            ) : (
+              getFormattedPickupLocations(
+                order.items.map(item => ({
+                  sede: order.metadata?.sede || null,
+                  locationText: null,
+                }))
+              ).map((location, index) => (
+                <li key={index}>• {location}</li>
+              ))
+            )}
           </ul>
           {order.paymentMethod === 'cash' && (
             <p className="text-sm font-medium text-gray-800 flex items-center gap-2">

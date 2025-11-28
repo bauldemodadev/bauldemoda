@@ -81,10 +81,13 @@ export interface Order {
   totalAmount: number;
   currency: 'ARS';
 
-  // Metadata adicional (para cursos presenciales, etc.)
+  // Metadata adicional (para cursos presenciales, productos con retiro, gifts, etc.)
   metadata?: {
     orderType?: 'curso_presencial';
     sede?: 'almagro' | 'ciudad-jardin';
+    pickupLocations?: string[];        // Lugares de retiro específicos (locationText de productos)
+    hasGifts?: boolean;                // Indica si la orden contiene gift cards
+    hasProductsWithPickup?: boolean;   // Indica si hay productos que requieren retiro
     [key: string]: any;
   };
 

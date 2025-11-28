@@ -167,44 +167,58 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Determinar orderType y sede basándose en los productos REALES del carrito
-    // NO confiar solo en body.orderType y body.sede que pueden venir incorrectos
+    // 3. Determinar orderType, sede y lugar de retiro basándose en los productos REALES del carrito
+    // Considerar: cursos presenciales, productos con locationText, y gifts
     let determinedOrderType: 'curso_presencial' | undefined = undefined;
     let determinedSede: 'almagro' | 'ciudad-jardin' | undefined = undefined;
-    
-    // Verificar cada item para determinar si todos son cursos presenciales
-    const allItemsArePresential = orderItems.every(item => {
-      if (item.type === 'onlineCourse') {
-        return false; // Los cursos online nunca son presenciales
-      }
-      
-      // Para productos, necesitamos obtener el producto completo para verificar su sede
-      // Por ahora, verificamos si hay algún item que sea online
-      return true; // Asumimos que es producto, lo verificaremos después
-    });
+    const pickupSedes = new Set<'almagro' | 'ciudad-jardin'>();
+    const pickupLocationTexts = new Set<string>();
+    let hasGifts = false;
+    let hasPresentialCourses = false;
+    let hasProductsWithPickup = false;
 
     // Si hay items de tipo onlineCourse, definitivamente NO es presencial
     const hasOnlineCourses = orderItems.some(item => item.type === 'onlineCourse');
     
-    if (!hasOnlineCourses && allItemsArePresential) {
-      // Verificar los productos reales para determinar sede
-      const presentialSedes = new Set<'almagro' | 'ciudad-jardin'>();
-      
+    if (!hasOnlineCourses) {
+      // Verificar cada producto para determinar tipo y lugar de retiro
       for (const item of orderItems) {
         if (item.type === 'product' && item.productId) {
           try {
             const product = await getProductByIdFromFirestore(item.productId);
             if (product) {
               const productSede = product.sede;
-              // Solo considerar presencial si la sede es almagro o ciudad-jardin
-              // NO considerar online, mixto o null como presencial
+              const productLocationText = product.locationText;
+              const productName = product.name?.toLowerCase() || '';
+              
+              // Verificar si es un gift
+              if (productName.includes('gift') || productName.includes('gift card') || productName.includes('gift baulera')) {
+                hasGifts = true;
+              }
+              
+              // Verificar si es curso presencial (sede: almagro o ciudad-jardin)
               if (productSede === 'almagro' || productSede === 'ciudad-jardin') {
-                presentialSedes.add(productSede);
-              } else {
-                // Si algún producto NO es presencial, no es una orden presencial
-                determinedOrderType = undefined;
-                determinedSede = undefined;
-                break;
+                hasPresentialCourses = true;
+                pickupSedes.add(productSede);
+                
+                // Si tiene locationText, agregarlo también
+                if (productLocationText && productLocationText.trim()) {
+                  pickupLocationTexts.add(productLocationText.trim());
+                }
+              }
+              
+              // Verificar si tiene locationText (lugar de retiro) aunque no sea presencial
+              if (productLocationText && productLocationText.trim()) {
+                hasProductsWithPickup = true;
+                pickupLocationTexts.add(productLocationText.trim());
+                
+                // Intentar extraer sede del locationText si no tiene sede definida
+                const locationLower = productLocationText.toLowerCase();
+                if (locationLower.includes('almagro')) {
+                  pickupSedes.add('almagro');
+                } else if (locationLower.includes('ciudad jardín') || locationLower.includes('ciudad jardin')) {
+                  pickupSedes.add('ciudad-jardin');
+                }
               }
             }
           } catch (error) {
@@ -213,15 +227,26 @@ export async function POST(request: Request) {
         }
       }
       
-      // Solo establecer como presencial si TODOS los productos son presenciales
-      // y tienen la misma sede (o al menos una sede válida)
-      if (presentialSedes.size > 0 && presentialSedes.size <= 1) {
+      // Determinar orderType y sede
+      // Si hay cursos presenciales, es una orden de curso presencial
+      if (hasPresentialCourses) {
         determinedOrderType = 'curso_presencial';
-        determinedSede = Array.from(presentialSedes)[0];
-      } else if (presentialSedes.size > 1) {
-        // Si hay múltiples sedes, usar la primera o la que vino en el body como fallback
-        determinedOrderType = 'curso_presencial';
-        determinedSede = body.sede || Array.from(presentialSedes)[0];
+        // Si hay una sola sede, usarla; si hay múltiples, usar la primera o la del body
+        if (pickupSedes.size === 1) {
+          determinedSede = Array.from(pickupSedes)[0];
+        } else if (pickupSedes.size > 1) {
+          determinedSede = body.sede || Array.from(pickupSedes)[0];
+        } else if (body.sede) {
+          determinedSede = body.sede;
+        }
+      } else if (hasProductsWithPickup || hasGifts) {
+        // Si hay productos con lugar de retiro o gifts, no es curso presencial
+        // pero sí necesita retiro, así que guardamos las sedes encontradas
+        if (pickupSedes.size === 1) {
+          determinedSede = Array.from(pickupSedes)[0];
+        } else if (pickupSedes.size > 1) {
+          determinedSede = Array.from(pickupSedes)[0]; // Usar la primera encontrada
+        }
       }
     }
 
@@ -239,12 +264,17 @@ export async function POST(request: Request) {
       items: orderItems,
       totalAmount,
       currency: 'ARS',
-      // Guardar información de sede SOLO si realmente es un curso presencial
-      // (determinado por los productos reales, no por el body)
-      ...(determinedOrderType === 'curso_presencial' && determinedSede ? {
+      // Guardar información de retiro en metadata
+      // Incluir: orderType (si es curso presencial), sede, y lugares de retiro
+      ...(determinedOrderType || determinedSede || pickupLocationTexts.size > 0 || hasGifts || hasProductsWithPickup ? {
         metadata: {
-          orderType: 'curso_presencial',
-          sede: determinedSede,
+          ...(determinedOrderType === 'curso_presencial' ? { orderType: 'curso_presencial' } : {}),
+          ...(determinedSede ? { sede: determinedSede } : {}),
+          ...(pickupLocationTexts.size > 0 ? { 
+            pickupLocations: Array.from(pickupLocationTexts),
+          } : {}),
+          ...(hasGifts ? { hasGifts: true } : {}),
+          ...(hasProductsWithPickup ? { hasProductsWithPickup: true } : {}),
         },
       } : {}),
     };

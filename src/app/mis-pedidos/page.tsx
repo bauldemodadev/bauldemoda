@@ -383,15 +383,17 @@ export default function MisPedidosPage() {
                               {order.paymentMethod === 'mp' &&
                                 'Tu pago está siendo procesado. Te notificaremos cuando sea confirmado.'}
                             </p>
-                            {order.metadata?.sede && (
+                            {(order.metadata?.sede || order.metadata?.pickupLocations) && (
                               <p className="text-sm text-gray-700 mt-2">
                                 <strong>Retiro en:</strong>{' '}
-                                {getFormattedPickupLocations([
-                                  {
-                                    sede: order.metadata.sede,
-                                    locationText: null,
-                                  },
-                                ]).join(', ')}
+                                {order.metadata?.pickupLocations && order.metadata.pickupLocations.length > 0
+                                  ? order.metadata.pickupLocations.join(', ')
+                                  : getFormattedPickupLocations([
+                                      {
+                                        sede: order.metadata?.sede || null,
+                                        locationText: null,
+                                      },
+                                    ]).join(', ')}
                               </p>
                             )}
                           </div>
