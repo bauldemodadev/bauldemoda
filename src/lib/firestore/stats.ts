@@ -4,6 +4,7 @@
 
 import { getAdminDb } from '@/lib/firebase/admin';
 import { Timestamp } from 'firebase-admin/firestore';
+import type { Query, CollectionReference } from 'firebase-admin/firestore';
 
 export interface DashboardStats {
   // Ventas
@@ -58,11 +59,11 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     const monthAgoTimestamp = Timestamp.fromDate(monthAgo);
 
     // Query base de órdenes
-    let ordersQuery = db.collection('orders');
+    let ordersQuery: Query | CollectionReference = db.collection('orders');
     
     // Si hay filtro por sede, aplicar filtro
     if (sede) {
-      ordersQuery = ordersQuery.where('metadata.sede', '==', sede);
+      ordersQuery = ordersQuery.where('metadata.sede', '==', sede) as Query;
     }
 
     // Obtener todas las órdenes (o filtradas por sede)
@@ -153,7 +154,7 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     }).length;
 
     // Obtener total de productos
-    let productsQuery = db.collection('products').where('status', '==', 'publish');
+    let productsQuery: Query = db.collection('products').where('status', '==', 'publish');
     if (sede) {
       productsQuery = productsQuery.where('sede', '==', sede);
     }
