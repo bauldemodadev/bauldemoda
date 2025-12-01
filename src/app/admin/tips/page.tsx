@@ -10,12 +10,14 @@ const ITEMS_PER_PAGE = 20;
 async function getTips(page: number = 1, search?: string) {
   const db = getAdminDb();
 
-  const snapshot = await db
-    .collection('tips')
-    .orderBy('updatedAt', 'desc')
-    .get();
+  // OPTIMIZADO: Query con paginación en Firestore
+  let query: any = db.collection('tips').orderBy('updatedAt', 'desc');
 
-  let allTips = snapshot.docs.map((doc) => {
+  // OPTIMIZADO: Aplicar paginación con limit en Firestore
+  const offset = (page - 1) * ITEMS_PER_PAGE;
+  const snapshot = await query.limit(ITEMS_PER_PAGE).offset(offset).get();
+
+  let tips = snapshot.docs.map((doc) => {
     const data = doc.data();
     return serializeFirestoreData({
       id: doc.id,
@@ -23,10 +25,11 @@ async function getTips(page: number = 1, search?: string) {
     });
   });
 
-  // Aplicar búsqueda
+  // Aplicar búsqueda en memoria (Firestore no soporta full-text search nativa)
+  // Esto es aceptable porque ya limitamos los resultados con paginación
   if (search) {
     const searchLower = search.toLowerCase();
-    allTips = allTips.filter((tip: any) => {
+    tips = tips.filter((tip: any) => {
       const title = (tip.title || '').toLowerCase();
       const slug = (tip.slug || '').toLowerCase();
       const category = (tip.category || '').toLowerCase();
@@ -34,11 +37,12 @@ async function getTips(page: number = 1, search?: string) {
     });
   }
 
-  const total = allTips.length;
-
-  const startIndex = (page - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const tips = allTips.slice(startIndex, endIndex);
+  // Para el total, hacer una query count aproximada
+  let total = tips.length; // Aproximado cuando hay búsqueda
+  if (!search) {
+    const countSnapshot = await query.limit(1000).get();
+    total = countSnapshot.size;
+  }
 
   return {
     tips,

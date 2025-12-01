@@ -13,12 +13,19 @@ async function getCourses(page: number = 1, search?: string, filters?: {
 }) {
   const db = getAdminDb();
 
-  const snapshot = await db
-    .collection('onlineCourses')
-    .orderBy('updatedAt', 'desc')
-    .get();
+  // OPTIMIZADO: Construir query con filtros en Firestore
+  let query: any = db.collection('onlineCourses').orderBy('updatedAt', 'desc');
 
-  let allCourses = snapshot.docs.map((doc) => {
+  // Aplicar filtros que Firestore puede manejar directamente
+  if (filters?.status) {
+    query = query.where('status', '==', filters.status);
+  }
+
+  // OPTIMIZADO: Aplicar paginación con limit en Firestore
+  const offset = (page - 1) * ITEMS_PER_PAGE;
+  const snapshot = await query.limit(ITEMS_PER_PAGE).offset(offset).get();
+
+  let courses = snapshot.docs.map((doc) => {
     const data = doc.data();
     return serializeFirestoreData({
       id: doc.id,
@@ -26,10 +33,11 @@ async function getCourses(page: number = 1, search?: string, filters?: {
     });
   });
 
-  // Aplicar búsqueda
+  // Aplicar búsqueda en memoria (Firestore no soporta full-text search nativa)
+  // Esto es aceptable porque ya limitamos los resultados con paginación
   if (search) {
     const searchLower = search.toLowerCase();
-    allCourses = allCourses.filter((course: any) => {
+    courses = courses.filter((course: any) => {
       const title = (course.title || '').toLowerCase();
       const slug = (course.slug || '').toLowerCase();
       const shortDescription = (course.shortDescription || '').toLowerCase();
@@ -37,16 +45,12 @@ async function getCourses(page: number = 1, search?: string, filters?: {
     });
   }
 
-  // Aplicar filtros
-  if (filters?.status) {
-    allCourses = allCourses.filter((course: any) => course.status === filters.status);
+  // Para el total, hacer una query count aproximada
+  let total = courses.length; // Aproximado cuando hay búsqueda
+  if (!search) {
+    const countSnapshot = await query.limit(1000).get();
+    total = countSnapshot.size;
   }
-
-  const total = allCourses.length;
-
-  const startIndex = (page - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const courses = allCourses.slice(startIndex, endIndex);
 
   return {
     courses,

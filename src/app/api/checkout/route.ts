@@ -11,7 +11,7 @@ import { getAdminDb } from '@/lib/firebase/admin';
 import { createOrder, getOrderById, updateOrder } from '@/lib/firestore/orders';
 import { upsertCustomer, updateCustomerStats, enrollCustomerInCourse } from '@/lib/firestore/customers';
 import { createPreference } from '@/lib/payments/mercadopago';
-import { getProductByIdFromFirestore } from '@/lib/firestore/products';
+import { getProductByIdFromFirestore, getProductsByIdsFromFirestore } from '@/lib/firestore/products';
 import { getOnlineCourseByIdFromFirestore } from '@/lib/firestore/onlineCourses';
 import { Timestamp } from 'firebase-admin/firestore';
 import type { Order, OrderItem, PaymentMethod } from '@/types/firestore/order';

@@ -17,13 +17,17 @@ async function getProducts(page: number = 1, search?: string, filters?: {
 }) {
   const db = getAdminDb();
 
-  // Obtener todos los productos
-  const snapshot = await db
+  // OPTIMIZADO: Estrategia diferente según si hay búsqueda o no
+  // Si hay búsqueda, necesitamos leer más documentos para buscar en memoria
+  // Si no hay búsqueda, podemos usar queries filtradas con limit (más eficiente)
+
+  // Para obtener opciones de filtros (categorías, sedes), leer una muestra limitada
+  const metadataSnapshot = await db
     .collection('products')
-    .orderBy('updatedAt', 'desc')
+    .limit(100)
     .get();
 
-  let allProducts = snapshot.docs.map((doc) => {
+  const metadataProducts = metadataSnapshot.docs.map((doc) => {
     const data = doc.data();
     return serializeFirestoreData({
       id: doc.id,
@@ -31,8 +35,34 @@ async function getProducts(page: number = 1, search?: string, filters?: {
     });
   });
 
-  // Aplicar búsqueda
+  // Extraer categorías, subcategorías y sedes únicas para los filtros
+  const categories = Array.from(new Set(metadataProducts.map((p: any) => p.category).filter(Boolean)));
+  const subcategories = filters?.category 
+    ? Array.from(new Set(metadataProducts.filter((p: any) => p.category === filters.category).map((p: any) => p.subcategory).filter(Boolean)))
+    : Array.from(new Set(metadataProducts.map((p: any) => p.subcategory).filter(Boolean)));
+  const sedes = Array.from(new Set(metadataProducts.map((p: any) => p.sede).filter(Boolean)));
+
+  let products: any[] = [];
+  let total = 0;
+
   if (search) {
+    // Si hay búsqueda, leer más documentos (300) para buscar en memoria
+    // Esto es menos eficiente pero necesario porque Firestore no soporta full-text search
+    const searchSnapshot = await db
+      .collection('products')
+      .orderBy('updatedAt', 'desc')
+      .limit(300) // Limitar a 300 para búsqueda
+      .get();
+
+    let allProducts = searchSnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return serializeFirestoreData({
+        id: doc.id,
+        ...data,
+      });
+    });
+
+    // Aplicar búsqueda
     const searchLower = search.toLowerCase();
     allProducts = allProducts.filter((product: any) => {
       const name = (product.name || '').toLowerCase();
@@ -40,40 +70,67 @@ async function getProducts(page: number = 1, search?: string, filters?: {
       const category = (product.category || '').toLowerCase();
       return name.includes(searchLower) || slug.includes(searchLower) || category.includes(searchLower);
     });
+
+    // Aplicar filtros
+    if (filters?.status) {
+      allProducts = allProducts.filter((p: any) => p.status === filters.status);
+    }
+    if (filters?.sede) {
+      allProducts = allProducts.filter((p: any) => p.sede === filters.sede);
+    }
+    if (filters?.category) {
+      allProducts = allProducts.filter((p: any) => p.category === filters.category);
+    }
+    if (filters?.subcategory) {
+      allProducts = allProducts.filter((p: any) => p.subcategory === filters.subcategory);
+    }
+    if (filters?.stockStatus) {
+      allProducts = allProducts.filter((p: any) => p.stockStatus === filters.stockStatus);
+    }
+
+    total = allProducts.length;
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    products = allProducts.slice(startIndex, endIndex);
+  } else {
+    // Si NO hay búsqueda, usar queries filtradas con limit (más eficiente)
+    let query: any = db.collection('products').orderBy('updatedAt', 'desc');
+
+    // Aplicar filtros que Firestore puede manejar directamente
+    if (filters?.status) {
+      query = query.where('status', '==', filters.status);
+    }
+    if (filters?.sede) {
+      query = query.where('sede', '==', filters.sede);
+    }
+    if (filters?.category) {
+      query = query.where('category', '==', filters.category);
+    }
+    if (filters?.subcategory) {
+      query = query.where('subcategory', '==', filters.subcategory);
+    }
+
+    // Aplicar paginación con limit en Firestore
+    const offset = (page - 1) * ITEMS_PER_PAGE;
+    const snapshot = await query.limit(ITEMS_PER_PAGE).offset(offset).get();
+
+    products = snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return serializeFirestoreData({
+        id: doc.id,
+        ...data,
+      });
+    });
+
+    // Aplicar filtros que no se pudieron aplicar en Firestore (stockStatus)
+    if (filters?.stockStatus) {
+      products = products.filter((p: any) => p.stockStatus === filters.stockStatus);
+    }
+
+    // Para el total, hacer una query count limitada
+    const countSnapshot = await query.limit(1000).get();
+    total = countSnapshot.size;
   }
-
-  // Aplicar filtros
-  if (filters) {
-    if (filters.category) {
-      allProducts = allProducts.filter((product: any) => product.category === filters.category);
-    }
-    if (filters.subcategory) {
-      allProducts = allProducts.filter((product: any) => product.subcategory === filters.subcategory);
-    }
-    if (filters.sede) {
-      allProducts = allProducts.filter((product: any) => product.sede === filters.sede);
-    }
-    if (filters.status) {
-      allProducts = allProducts.filter((product: any) => product.status === filters.status);
-    }
-    if (filters.stockStatus) {
-      allProducts = allProducts.filter((product: any) => product.stockStatus === filters.stockStatus);
-    }
-  }
-
-  // Extraer categorías, subcategorías y sedes únicas para los filtros
-  const categories = Array.from(new Set(allProducts.map((p: any) => p.category).filter(Boolean)));
-  const subcategories = filters?.category 
-    ? Array.from(new Set(allProducts.filter((p: any) => p.category === filters.category).map((p: any) => p.subcategory).filter(Boolean)))
-    : Array.from(new Set(allProducts.map((p: any) => p.subcategory).filter(Boolean)));
-  const sedes = Array.from(new Set(allProducts.map((p: any) => p.sede).filter(Boolean)));
-
-  const total = allProducts.length;
-
-  // Paginar en memoria
-  const startIndex = (page - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const products = allProducts.slice(startIndex, endIndex);
 
   return {
     products,

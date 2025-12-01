@@ -35,7 +35,8 @@ export async function GET(request: Request) {
         // OPTIMIZADO: Usar paginación con limit por defecto (50 items)
         if (all === '1' || all === 'true' || (!id && !ids && !codigo && !nombre)) {
           const limit = parseInt(url.searchParams.get('limit') || '50', 10);
-          const cursor = url.searchParams.get('cursor');
+          const cursorParam = url.searchParams.get('cursor');
+          const cursor = cursorParam ?? undefined; // Convertir null a undefined
           
           // Si se solicita explícitamente "all" sin limit, usar función legacy (compatibilidad)
           if (all === '1' && !url.searchParams.has('limit')) {

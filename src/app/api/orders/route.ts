@@ -12,8 +12,8 @@ import type { Order, OrderStatus, PaymentStatus, PaymentMethod } from '@/types/f
 
 const USE_FIRESTORE = process.env.NEXT_PUBLIC_USE_FIRESTORE === 'true';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// OPTIMIZADO: Cache corto (30 segundos) para listados de órdenes en admin
+export const revalidate = 30;
 
 /**
  * Convierte Timestamps a objetos serializables
@@ -77,18 +77,20 @@ export async function GET(request: Request) {
       });
     });
 
-    // Obtener total para paginación (aproximado)
-    // Nota: Firestore Admin SDK no tiene count() directo, hacemos una query separada
-    const totalSnapshot = await query.get();
+    // OPTIMIZADO: Obtener total para paginación (limitado a 1000 para evitar lecturas masivas)
+    // Nota: Firestore Admin SDK no tiene count() directo, limitamos la query de conteo
+    const totalSnapshot = await query.limit(1000).get();
     const total = totalSnapshot.size;
+    // Si hay más de 1000, el total será aproximado (1000+)
+    const hasMoreThanLimit = totalSnapshot.size === 1000;
 
     return NextResponse.json({
       orders,
       pagination: {
-        total,
+        total: hasMoreThanLimit ? 1000 : total, // Total aproximado si hay más de 1000
         limit,
         offset,
-        hasMore: offset + orders.length < total,
+        hasMore: offset + orders.length < (hasMoreThanLimit ? 1000 : total),
       },
     });
   } catch (error) {
