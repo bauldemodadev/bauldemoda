@@ -5,6 +5,7 @@ import CourseFilters from '@/components/admin/CourseFilters';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { serializeFirestoreData } from '@/lib/admin/serialize';
+import type { QueryDocumentSnapshot } from 'firebase-admin/firestore';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -25,7 +26,7 @@ async function getCourses(page: number = 1, search?: string, filters?: {
   const offset = (page - 1) * ITEMS_PER_PAGE;
   const snapshot = await query.limit(ITEMS_PER_PAGE).offset(offset).get();
 
-  let courses = snapshot.docs.map((doc) => {
+  let courses = snapshot.docs.map((doc: QueryDocumentSnapshot) => {
     const data = doc.data();
     return serializeFirestoreData({
       id: doc.id,
