@@ -322,7 +322,6 @@ export default function OnlineCourseDetailPage() {
           font-weight: 600;
           font-size: 11px;
           transition: background-color 0.2s, transform 0.2s;
-          margin: 0.5rem 0.5rem 0.5rem 0;
         }
         
         .info-block-content a:hover {
@@ -524,28 +523,32 @@ export default function OnlineCourseDetailPage() {
             </div>
 
             {/* Panel Derecho - Imagen */}
-            <div className="relative w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden">
-              <Image
-                src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/1150x750-comunidad.jpg"
-                alt="Comunidad Baúl"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+            <div className="flex justify-center items-center">
+              <div className="relative w-full max-w-md h-[200px] md:h-[250px] rounded-lg overflow-hidden">
+                <Image
+                  src="https://bauldemoda.com.ar/wp-content/uploads/2020/04/1150x750-comunidad.jpg"
+                  alt="Comunidad Baúl"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
             </div>
           </div>
 
           {/* Segunda Fila - Imagen y Texto */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Imagen Izquierda */}
-            <div className="relative w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden">
-              <Image
-                src="https://bauldemoda.com.ar/wp-content/uploads/2021/05/1150x750-C.jpg"
-                alt="Grupo de Bauleras"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+            <div className="flex justify-center items-center">
+              <div className="relative w-full max-w-md h-[200px] md:h-[250px] rounded-lg overflow-hidden">
+                <Image
+                  src="https://bauldemoda.com.ar/wp-content/uploads/2021/05/1150x750-C.jpg"
+                  alt="Grupo de Bauleras"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
             </div>
 
             {/* Texto Derecho */}
