@@ -53,32 +53,29 @@ const CourseCard = ({ course, index }: CourseCardProps) => {
       className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col"
     >
       {/* Imagen del curso */}
-      <div className="relative w-full h-48 overflow-hidden">
+      <div className="relative w-full h-64 md:h-72 overflow-hidden bg-white">
         <img
           src={imageUrl}
           alt={course.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           onError={(e) => {
             (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
           }}
         />
       </div>
 
-      {/* Contenido */}
-      <div className="p-6 flex-1 flex flex-col">
-        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+      {/* Título */}
+      <div className="px-4 py-3 bg-white">
+        <h3 className="text-base font-bold text-gray-900 text-center uppercase">
           {course.title}
         </h3>
-        {course.shortDescription && (
-          <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-1">
-            {course.shortDescription}
-          </p>
-        )}
+      </div>
 
-        {/* Botón IR AL CURSO */}
+      {/* Footer rosa con botón */}
+      <div className="mt-auto" style={{ backgroundColor: "#E9ABBD" }}>
         <Link href={`/cursos-online/${course.slug || course.id}`}>
           <button
-            className="w-full text-white text-sm font-medium py-3 transition-colors rounded-md"
+            className="w-full text-white text-sm font-medium py-3 px-4 transition-colors uppercase"
             style={{ backgroundColor: "#E9ABBD" }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
@@ -146,7 +143,7 @@ export default function MisCursosPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen" style={{ backgroundColor: "#F8F5E8" }}>
+      <div className="min-h-screen" style={{ backgroundColor: "#9CDAD3" }}>
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <p className="text-red-600 mb-4">{error}</p>
@@ -163,11 +160,11 @@ export default function MisCursosPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F8F5E8" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: "#9CDAD3" }}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 pb-12 md:pb-16">
         {/* Título principal con fondo blanco a todo el ancho */}
         <div
-          className="text-center py-12 md:py-16 mb-8"
+          className="text-center py-12 md:py-16 mb-8 overflow-hidden"
           style={{
             backgroundColor: "#FFFFFF",
             marginLeft: "calc(50% - 50vw)",

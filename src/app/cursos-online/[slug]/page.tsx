@@ -299,7 +299,6 @@ export default function OnlineCourseDetailPage() {
         }
         
         .info-block-content p {
-          margin-bottom: 1rem;
           line-height: 1.6;
           color: #374151;
         }
