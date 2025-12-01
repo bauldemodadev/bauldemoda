@@ -264,7 +264,7 @@ async function enlazarProductosCursosOnline() {
       }
     }
 
-    for (const [courseId, data] of cursosAActualizar) {
+    for (const [courseId, data] of Array.from(cursosAActualizar.entries())) {
       const courseRef = db.collection('onlineCourses').doc(courseId);
       const updateData: any = {
         updatedAt: Timestamp.now(),

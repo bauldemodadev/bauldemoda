@@ -71,10 +71,40 @@ async function calculateOrderTotal(
         continue;
       }
 
+      // IMPORTANTE: Si el producto tiene relatedCourseId, convertirlo a item de tipo 'onlineCourse'
+      const relatedCourseId = (product as any).relatedCourseId;
+      if (relatedCourseId) {
+        // Obtener el curso online
+        const { getOnlineCourseByIdFromFirestore } = await import('@/lib/firestore/onlineCourses');
+        const course = await getOnlineCourseByIdFromFirestore(relatedCourseId);
+        
+        if (course) {
+          // Convertir a item de tipo 'onlineCourse'
+          const unitPrice = getProductPriceByMethod(product, paymentMethod);
+          const total = unitPrice * item.quantity;
+          const imageUrl = product.images?.[0] || product.srcUrl || undefined;
+
+          orderItems.push({
+            type: 'onlineCourse',
+            courseId: relatedCourseId,
+            productId: item.id, // Mantener referencia al producto original
+            name: course.title,
+            quantity: item.quantity,
+            unitPrice,
+            total,
+            imageUrl,
+          });
+
+          totalAmount += total;
+          continue; // Saltar el procesamiento como producto normal
+        } else {
+          console.warn(`Curso online ${relatedCourseId} no encontrado para producto ${item.id}, procesando como producto normal`);
+        }
+      }
+
+      // Procesar como producto normal si no tiene relatedCourseId o el curso no existe
       const unitPrice = getProductPriceByMethod(product, paymentMethod);
       const total = unitPrice * item.quantity;
-
-      // Obtener la URL de la imagen del producto
       const imageUrl = product.images?.[0] || product.srcUrl || undefined;
 
       orderItems.push({

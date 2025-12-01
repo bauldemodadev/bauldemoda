@@ -1,4 +1,4 @@
-# Revisión: IDs de Productos vs Slugs de Cursos Online
+Si# Revisión: IDs de Productos vs Slugs de Cursos Online
 
 ## 📋 Objetivo
 
