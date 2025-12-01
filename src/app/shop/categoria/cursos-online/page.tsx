@@ -13,7 +13,7 @@ import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 const COURSE_SECTIONS = {
   masterClassGratuita: ["6655", "5015"],
   enPromo: ["1155", "1159", "10483"],
-  paraComenzar: ["666", "10483"],
+  paraComenzar: ["0L5wz3t9FJXLPehXpVUk", "10483"],
   intensivosIndumentaria: ["9556", "1925", "1155", "992", "1217", "2073", "1783"],
   intensivosLenceria: ["2036", "1159", "986", "1794", "3316"],
   intensivosCarteras: ["1256", "1134"],
@@ -122,10 +122,28 @@ const MasterClassCard = ({ product, toast }: { product: Product; toast: any }) =
 
           {/* Badge GRATIS! */}
           {isGratis && (
-            <div className="absolute top-3 right-3 bg-green-500 text-white px-3 py-1 rounded-md text-xs font-bold z-10">
+            <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-md text-xs font-bold z-10">
               GRATIS!
             </div>
           )}
+
+          {/* Botón de agregar al carrito */}
+          <button
+            onClick={(e) => manejarAgregarAlCarrito(e, product, toast)}
+            className="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-lg z-10"
+            style={{ backgroundColor: "#E9ABBD" }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#D44D7D";
+              e.currentTarget.style.transform = "scale(1.1)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "#E9ABBD";
+              e.currentTarget.style.transform = "scale(1)";
+            }}
+            aria-label="Agregar al carrito"
+          >
+            <Plus className="w-5 h-5 text-white" strokeWidth={3} />
+          </button>
         </div>
 
         {/* Contenido del producto */}
@@ -137,6 +155,18 @@ const MasterClassCard = ({ product, toast }: { product: Product; toast: any }) =
             MasterClass Gratuita
           </p>
         </div>
+        
+        {/* Botón MÁS INFO */}
+        <Link href={`/shop/product/${product.id}`}>
+          <button 
+            className="w-full text-white text-sm font-medium py-3 transition-colors" 
+            style={{ backgroundColor: "#E9ABBD" }} 
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
+          >
+            MÁS INFO
+          </button>
+        </Link>
       </div>
     </motion.div>
   );
