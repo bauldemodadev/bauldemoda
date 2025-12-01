@@ -207,7 +207,22 @@ export async function POST(request: Request) {
       coincidenciasPorMetodo: Object.fromEntries(
         Array.from(porMetodo.entries()).map(([metodo, coincidencias]) => [
           metodo,
-          coincidencias.length,
+          {
+            cantidad: coincidencias.length,
+            detalles: coincidencias.map(c => ({
+              producto: {
+                id: c.product.id,
+                name: c.product.name,
+                relatedCourseId: c.product.relatedCourseId || null,
+              },
+              curso: {
+                id: c.course.id,
+                slug: c.course.slug,
+                title: c.course.title,
+              },
+              necesitaActualizacion: c.necesitaActualizacion,
+            })),
+          },
         ])
       ),
       coincidencias: coincidencias.map(c => ({

@@ -191,14 +191,40 @@ export default function EnlazarCursosPage() {
 
               {Object.keys(enlace.coincidenciasPorMetodo).length > 0 && (
                 <div className="bg-gray-50 p-4 rounded">
-                  <div className="font-semibold mb-2">Coincidencias por método:</div>
-                  <ul className="list-disc list-inside">
-                    {Object.entries(enlace.coincidenciasPorMetodo).map(([metodo, count]) => (
-                      <li key={metodo}>
-                        {metodo}: {count as number}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="font-semibold mb-4">Coincidencias por método:</div>
+                  {Object.entries(enlace.coincidenciasPorMetodo).map(([metodo, data]: [string, any]) => {
+                    const detalles = typeof data === 'object' && data.detalles ? data.detalles : [];
+                    const cantidad = typeof data === 'object' && data.cantidad ? data.cantidad : data;
+                    
+                    return (
+                      <div key={metodo} className="mb-4 last:mb-0">
+                        <div className="font-semibold text-lg mb-2">
+                          {metodo}: {cantidad}
+                        </div>
+                        {detalles.length > 0 && (
+                          <div className="ml-4 space-y-2">
+                            {detalles.map((detalle: any, index: number) => (
+                              <div key={index} className="bg-white p-3 rounded border border-gray-200">
+                                <div className="flex items-start gap-2">
+                                  <span className="font-medium text-blue-600">📦 Producto:</span>
+                                  <span>{detalle.producto.name} (ID: {detalle.producto.id})</span>
+                                </div>
+                                <div className="flex items-start gap-2 mt-1">
+                                  <span className="font-medium text-green-600">📚 Curso:</span>
+                                  <span>{detalle.curso.title} (ID: {detalle.curso.id}, Slug: {detalle.curso.slug})</span>
+                                </div>
+                                {detalle.necesitaActualizacion && (
+                                  <div className="text-xs text-yellow-600 mt-1">
+                                    ⚠️ Necesita actualización
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
