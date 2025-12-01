@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
@@ -17,19 +16,21 @@ interface SerializedOnlineCourse {
   title: string;
   shortDescription: string;
   thumbnailMediaId: number | null;
+  thumbnailUrl?: string | null;
   status: 'draft' | 'publish';
   createdAt: string;
   updatedAt: string;
 }
 
 /**
- * Función helper para obtener URL de imagen desde mediaId
+ * Función helper para obtener URL de imagen desde mediaId o URL directa
  */
-const getImageUrl = (mediaId: number | null | undefined): string => {
-  if (!mediaId) return PLACEHOLDER_IMAGE;
+const getImageUrl = (mediaId: number | null | undefined, url?: string | null): string => {
+  // Priorizar URL directa si está disponible
+  if (url) return url;
   
-  // Si es un ID (número), usar el endpoint /api/media/[id]
-  if (typeof mediaId === 'number' && mediaId > 0) {
+  // Si no hay URL, usar mediaId
+  if (mediaId && typeof mediaId === 'number' && mediaId > 0) {
     return `/api/media/${mediaId}`;
   }
   
@@ -42,7 +43,7 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({ course, index }: CourseCardProps) => {
-  const imageUrl = getImageUrl(course.thumbnailMediaId);
+  const imageUrl = getImageUrl(course.thumbnailMediaId, course.thumbnailUrl);
 
   return (
     <motion.div
