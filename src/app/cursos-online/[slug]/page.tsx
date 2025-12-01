@@ -321,6 +321,7 @@ export default function OnlineCourseDetailPage() {
           font-weight: 600;
           font-size: 11px;
           transition: background-color 0.2s, transform 0.2s;
+              margin: 5px 0;
         }
         
         .info-block-content a:hover {
