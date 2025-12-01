@@ -392,7 +392,7 @@ export default function OnlineCourseDetailPage() {
             {/* Columna Izquierda - Texto (30%) */}
             <div className="w-full lg:w-[30%]">
               {/* Logo y Título */}
-              <div className="flex items-start gap-3 mb-4">
+              <div className="flex flex-col gap-3 mb-4">
                 <div className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0">
                   <Image
                     src="https://bauldemoda.com.ar/wp-content/uploads/2021/03/baul.jpg"
@@ -479,25 +479,37 @@ export default function OnlineCourseDetailPage() {
                       {block.title}
                     </h3>
                     
-                    {/* Imagen del bloque (si tiene) */}
-                    {block.imageUrl && (
-                      <div className="mb-4">
-                        <img
-                          src={block.imageUrl}
-                          alt={block.title}
-                          className="w-full h-auto rounded-lg border border-gray-200"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                          }}
+                    {/* Contenedor de imagen y contenido */}
+                    {block.imageUrl ? (
+                      <div className="flex flex-col md:flex-row gap-4 items-start">
+                        {/* Imagen a la izquierda */}
+                        <div className="flex-shrink-0 w-full md:w-1/3">
+                          <img
+                            src={block.imageUrl}
+                            alt={block.title}
+                            className="w-full h-auto rounded-lg border border-gray-200"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        </div>
+                        {/* Contenido a la derecha */}
+                        <div className="flex-1">
+                          <div
+                            className="info-block-content"
+                            dangerouslySetInnerHTML={{ __html: block.contentHtml }}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      /* Contenido centrado cuando no hay imagen */
+                      <div className="flex justify-center">
+                        <div
+                          className="info-block-content"
+                          dangerouslySetInnerHTML={{ __html: block.contentHtml }}
                         />
                       </div>
                     )}
-                    
-                    {/* Contenido HTML */}
-                    <div
-                      className="info-block-content"
-                      dangerouslySetInnerHTML={{ __html: block.contentHtml }}
-                    />
                   </div>
                 ))}
             </div>
