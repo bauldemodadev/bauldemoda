@@ -20,6 +20,7 @@ interface InfoBlock {
   index: number;
   title: string;
   contentHtml: string;
+  imageUrl?: string | null;
 }
 
 interface Course {
@@ -32,6 +33,7 @@ interface Course {
   lessons?: Lesson[];
   infoBlocks?: InfoBlock[];
   thumbnailMediaId?: number | null;
+  thumbnailUrl?: string | null;
   relatedProductId?: string | null;
 }
 
@@ -106,6 +108,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
           index: prev.infoBlocks?.length || 0,
           title: '',
           contentHtml: '',
+          imageUrl: null,
         },
       ],
     }));
@@ -238,6 +241,7 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                 type="number"
                 value={formData.thumbnailMediaId || ''}
                 onChange={(e) => handleChange('thumbnailMediaId', e.target.value ? parseInt(e.target.value) : null)}
+                placeholder="ID de media (número)"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] mb-2"
               />
               {formData.thumbnailMediaId && (
@@ -249,6 +253,30 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                   className="mt-2"
                   showId={true}
                 />
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Imagen Principal (URL)
+              </label>
+              <input
+                type="url"
+                value={formData.thumbnailUrl || ''}
+                onChange={(e) => handleChange('thumbnailUrl', e.target.value || null)}
+                placeholder="https://ejemplo.com/imagen.jpg"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] mb-2"
+              />
+              {formData.thumbnailUrl && (
+                <div className="mt-2">
+                  <img
+                    src={formData.thumbnailUrl}
+                    alt="Vista previa"
+                    className="max-w-[200px] h-auto rounded-md border border-gray-300"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                </div>
               )}
             </div>
           </div>
@@ -379,6 +407,30 @@ export default function CourseEditForm({ course }: CourseEditFormProps) {
                       onChange={(e) => handleInfoBlockChange(index, 'title', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D]"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Imagen (URL)
+                    </label>
+                    <input
+                      type="url"
+                      value={block.imageUrl || ''}
+                      onChange={(e) => handleInfoBlockChange(index, 'imageUrl', e.target.value || null)}
+                      placeholder="https://ejemplo.com/imagen.jpg"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E9ABBD]/20 focus:border-[#D44D7D] mb-2"
+                    />
+                    {block.imageUrl && (
+                      <div className="mt-2">
+                        <img
+                          src={block.imageUrl}
+                          alt="Vista previa"
+                          className="max-w-[200px] h-auto rounded-md border border-gray-300"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">

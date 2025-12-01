@@ -45,6 +45,16 @@ export async function PUT(
         return clean;
       });
     }
+    if (cleanedData.infoBlocks) {
+      cleanedData.infoBlocks = cleanedData.infoBlocks.map((block: any) => {
+        const clean: any = { ...block };
+        if (clean.imageUrl === undefined || clean.imageUrl === '') clean.imageUrl = null;
+        return clean;
+      });
+    }
+    if (cleanedData.thumbnailUrl === undefined || cleanedData.thumbnailUrl === '') {
+      cleanedData.thumbnailUrl = null;
+    }
 
     await db.collection('onlineCourses').doc(courseId).update({
       ...cleanedData,

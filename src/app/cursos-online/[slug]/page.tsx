@@ -23,6 +23,7 @@ interface SerializedOnlineCourseInfoBlock {
   index: number;
   title: string;
   contentHtml: string;
+  imageUrl?: string | null;
 }
 
 interface SerializedOnlineCourse {
@@ -33,6 +34,7 @@ interface SerializedOnlineCourse {
   shortDescription: string;
   seoDescription: string;
   thumbnailMediaId: number | null;
+  thumbnailUrl?: string | null;
   status: 'draft' | 'publish';
   lessons: SerializedOnlineCourseLesson[];
   infoBlocks: SerializedOnlineCourseInfoBlock[];
@@ -41,12 +43,14 @@ interface SerializedOnlineCourse {
 }
 
 /**
- * Función helper para obtener URL de imagen desde mediaId
+ * Función helper para obtener URL de imagen desde mediaId o URL directa
  */
-const getImageUrl = (mediaId: number | null | undefined): string => {
-  if (!mediaId) return PLACEHOLDER_IMAGE;
+const getImageUrl = (mediaId: number | null | undefined, url?: string | null): string => {
+  // Priorizar URL directa si está disponible
+  if (url) return url;
   
-  if (typeof mediaId === 'number' && mediaId > 0) {
+  // Si no hay URL, usar mediaId
+  if (mediaId && typeof mediaId === 'number' && mediaId > 0) {
     return `/api/media/${mediaId}`;
   }
   
@@ -281,7 +285,7 @@ export default function OnlineCourseDetailPage() {
     );
   }
 
-  const heroImageUrl = getImageUrl(course.thumbnailMediaId);
+  const heroImageUrl = getImageUrl(course.thumbnailMediaId, course.thumbnailUrl);
 
   return (
     <div className="min-h-screen bg-white">
@@ -309,15 +313,16 @@ export default function OnlineCourseDetailPage() {
         
         /* Enlaces y botones con color #D44D7D y redondeados */
         .info-block-content a {
-          display: inline-block;
+          display: block;
           background-color: #D44D7D;
           color: white;
           padding: 0.75rem 1.5rem;
-          border-radius: 0.75rem;
+          border-radius: 9999px;
           text-decoration: none;
           font-weight: 600;
+          font-size: 11px;
           transition: background-color 0.2s, transform 0.2s;
-          margin: 0.5rem 0.5rem 0.5rem 0;
+          margin: 0.5rem 0;
         }
         
         .info-block-content a:hover {
@@ -475,6 +480,20 @@ export default function OnlineCourseDetailPage() {
                     <h3 className="font-beauty text-2xl md:text-3xl mb-4 text-gray-900">
                       {block.title}
                     </h3>
+                    
+                    {/* Imagen del bloque (si tiene) */}
+                    {block.imageUrl && (
+                      <div className="mb-4">
+                        <img
+                          src={block.imageUrl}
+                          alt={block.title}
+                          className="w-full h-auto rounded-lg border border-gray-200"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    )}
                     
                     {/* Contenido HTML */}
                     <div

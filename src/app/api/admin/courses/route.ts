@@ -20,6 +20,16 @@ export async function POST(request: NextRequest) {
         return clean;
       });
     }
+    if (cleanedData.infoBlocks) {
+      cleanedData.infoBlocks = cleanedData.infoBlocks.map((block: any) => {
+        const clean: any = { ...block };
+        if (clean.imageUrl === undefined || clean.imageUrl === '') clean.imageUrl = null;
+        return clean;
+      });
+    }
+    if (cleanedData.thumbnailUrl === undefined || cleanedData.thumbnailUrl === '') {
+      cleanedData.thumbnailUrl = null;
+    }
 
     const now = Timestamp.now();
     const newCourse = {

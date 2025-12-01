@@ -23,6 +23,7 @@ export interface OnlineCourseInfoBlock {
   index: number;
   title: string;                  // informacion_util_n_titulo
   contentHtml: string;            // informacion_util_n_contenido (HTML)
+  imageUrl?: string | null;       // URL de imagen del bloque (opcional)
 }
 
 /**
@@ -41,6 +42,7 @@ export interface OnlineCourse {
 
   // Medios
   thumbnailMediaId: number | null; // meta: imagen_principal
+  thumbnailUrl?: string | null;   // URL de imagen principal (opcional, alternativa a thumbnailMediaId)
 
   // Estado
   status: 'draft' | 'publish';
