@@ -4,6 +4,7 @@ import SearchBar from '@/components/admin/SearchBar';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { serializeFirestoreData } from '@/lib/admin/serialize';
+import type { QueryDocumentSnapshot } from 'firebase-admin/firestore';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -17,7 +18,7 @@ async function getTips(page: number = 1, search?: string) {
   const offset = (page - 1) * ITEMS_PER_PAGE;
   const snapshot = await query.limit(ITEMS_PER_PAGE).offset(offset).get();
 
-  let tips = snapshot.docs.map((doc) => {
+  let tips = snapshot.docs.map((doc: QueryDocumentSnapshot) => {
     const data = doc.data();
     return serializeFirestoreData({
       id: doc.id,
