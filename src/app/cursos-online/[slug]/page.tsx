@@ -313,7 +313,7 @@ export default function OnlineCourseDetailPage() {
         
         /* Enlaces y botones con color #D44D7D y redondeados */
         .info-block-content a {
-          display: block;
+          display: inline-block;
           background-color: #D44D7D;
           color: white;
           padding: 0.75rem 1.5rem;
@@ -322,52 +322,14 @@ export default function OnlineCourseDetailPage() {
           font-weight: 600;
           font-size: 11px;
           transition: background-color 0.2s, transform 0.2s;
-          margin: 0.5rem 0;
+          margin: 0.5rem 0.5rem 0.5rem 0;
         }
         
         .info-block-content a:hover {
           background-color: #C03D6D;
           transform: translateY(-2px);
         }
-        
-        /* Si hay enlaces dentro de párrafos (descripciones) */
-        .info-block-content p a {
-          display: inline;
-          background-color: transparent;
-          color: #D44D7D;
-          padding: 0;
-          border-radius: 0.5rem;
-          text-decoration: underline;
-          font-weight: 500;
-          margin: 0;
-        }
-        
-        .info-block-content p a:hover {
-          background-color: transparent;
-          color: #C03D6D;
-          transform: none;
-        }
-        
-        /* Botones dentro del contenido */
-        .info-block-content button,
-        .info-block-content .button {
-          background-color: #D44D7D;
-          color: white;
-          padding: 0.75rem 1.5rem;
-          border-radius: 0.75rem;
-          border: none;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background-color 0.2s, transform 0.2s;
-          margin: 0.5rem 0.5rem 0.5rem 0;
-        }
-        
-        .info-block-content button:hover,
-        .info-block-content .button:hover {
-          background-color: #C03D6D;
-          transform: translateY(-2px);
-        }
-        
+      
         .info-block-content ul,
         .info-block-content ol {
           margin-left: 1.5rem;
@@ -407,7 +369,7 @@ export default function OnlineCourseDetailPage() {
                     {course.title.toUpperCase()}
                   </h1>
                   <div className="flex justify-end mt-1">
-                    <p className="text-4xl md:text-5xl font-beauty" style={{ color: "#E9749B" }}>
+                    <p className="text-4xl md:text-5xl font-beauty mr-0 md:mr-20" style={{ color: "#E9749B" }}>
                       Online
                     </p>
                   </div>
@@ -440,7 +402,7 @@ export default function OnlineCourseDetailPage() {
       </section>
 
       {/* Sección de Clases */}
-      <section className="w-full py-8 md:py-12 px-4 md:px-6" style={{ backgroundColor: "#F8F5E8" }}>
+      <section className="w-full py-8 md:py-12 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="space-y-3">
             {course.lessons
@@ -475,7 +437,7 @@ export default function OnlineCourseDetailPage() {
                     style={{ backgroundColor: "#CDECE9" }}
                   >
                     {/* Título del bloque */}
-                    <h3 className="font-beauty text-2xl md:text-3xl mb-4 text-gray-900">
+                    <h3 className="font-beauty text-2xl md:text-5xl mb-4 text-gray-900 text-center">
                       {block.title}
                     </h3>
                     
