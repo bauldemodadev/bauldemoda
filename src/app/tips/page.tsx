@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { InfiniteScrollList } from "@/components/common/InfiniteScrollList";
 
 // Tipo serializado para el frontend (Timestamps convertidos a strings)
 interface SerializedTip {
@@ -89,24 +90,36 @@ const TipCard = ({ tip }: TipCardProps) => {
 };
 
 export default function TipsPage() {
-  const [tips, setTips] = useState<SerializedTip[]>([]);
+  const [initialTips, setInitialTips] = useState<SerializedTip[]>([]);
+  const [initialCursor, setInitialCursor] = useState<string | undefined>(undefined);
+  const [initialHasMore, setInitialHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Cargar primer batch de tips
   useEffect(() => {
-    const fetchTips = async () => {
+    const fetchInitialTips = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/tips', { 
-          cache: 'no-store' 
+        const response = await fetch('/api/tips?limit=15', { 
+          cache: 'default',
+          next: { revalidate: 300 }
         });
         
         if (!response.ok) {
           throw new Error(`Error al cargar los tips: ${response.status} ${response.statusText}`);
         }
         
-        const fetchedTips = await response.json() as SerializedTip[];
-        setTips(fetchedTips);
+        const data = await response.json();
+        // Compatibilidad: si viene como array (legacy), convertir a formato paginado
+        if (Array.isArray(data)) {
+          setInitialTips(data.slice(0, 15));
+          setInitialHasMore(data.length > 15);
+        } else {
+          setInitialTips(data.items || []);
+          setInitialCursor(data.nextCursor);
+          setInitialHasMore(data.hasMore ?? true);
+        }
         setError(null);
       } catch (err) {
         console.error('❌ Error fetching tips:', err);
@@ -116,8 +129,36 @@ export default function TipsPage() {
       }
     };
 
-    fetchTips();
+    fetchInitialTips();
   }, []);
+
+  // Función para cargar más tips
+  const loadMoreTips = async (cursor?: string) => {
+    const response = await fetch(`/api/tips?limit=15${cursor ? `&cursor=${cursor}` : ''}`, {
+      cache: 'default',
+      next: { revalidate: 300 }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Error al cargar más tips: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    // Compatibilidad: si viene como array (legacy)
+    if (Array.isArray(data)) {
+      return {
+        items: data,
+        nextCursor: undefined,
+        hasMore: false,
+      };
+    }
+    
+    return {
+      items: data.items || [],
+      nextCursor: data.nextCursor,
+      hasMore: data.hasMore ?? false,
+    };
+  };
 
   if (loading) {
     return (
@@ -145,7 +186,7 @@ export default function TipsPage() {
     );
   }
 
-  if (error) {
+  if (error && initialTips.length === 0) {
     return (
       <div className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 py-12">
@@ -196,22 +237,36 @@ export default function TipsPage() {
         </div>
       </div>
 
-      {/* Sección de cards - fondo rosado */}
+      {/* Sección de cards - fondo rosado con scroll infinito */}
       <div 
         className="py-12"
         style={{ backgroundColor: "#F5E6E8" }}
       >
         <div className="max-w-7xl mx-auto px-4">
-          {tips.length === 0 ? (
+          {initialTips.length === 0 && !loading ? (
             <div className="text-center py-12">
               <p className="text-gray-600">No hay tips disponibles en este momento.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {tips.map((tip, index) => (
-                <TipCard key={tip.id} tip={tip} />
-              ))}
-            </div>
+            <InfiniteScrollList
+              initialItems={initialTips}
+              initialCursor={initialCursor}
+              initialHasMore={initialHasMore}
+              loadMore={loadMoreTips}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              itemClassName=""
+              endMessage={
+                <div className="col-span-full text-center text-gray-500 py-8">
+                  Has visto todos los tips disponibles
+                </div>
+              }
+              errorMessage={(error) => (
+                <div className="col-span-full text-center text-red-500 py-8">
+                  Error: {error}
+                </div>
+              )}
+              renderItem={(tip, index) => <TipCard key={tip.id} tip={tip} />}
+            />
           )}
         </div>
       </div>

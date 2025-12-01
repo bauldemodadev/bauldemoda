@@ -19,6 +19,7 @@ type CourseListSecProps = {
   courseNames?: string[]; // Nombres de los cursos a buscar (para cursos online)
   courseIds?: (string | number)[]; // IDs de los cursos en el orden deseado (para cursos presenciales)
   showAllUrl: string; // URL para el botón "Ver todos"
+  products?: Product[]; // OPTIMIZADO: Productos pre-cargados (evita fetch interno)
 };
 
 const normalizeText = (text: string): string => {
@@ -226,10 +227,10 @@ const CourseCard = ({ product, category, toast, onAddToCart }: { product: Produc
   );
 };
 
-const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, showAllUrl }: CourseListSecProps) => {
+const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, showAllUrl, products: productsProp }: CourseListSecProps) => {
   const { toast } = useToast();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>(productsProp || []);
+  const [loading, setLoading] = useState(!productsProp); // Si hay productos prop, no cargar
   const [error, setError] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -239,27 +240,52 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
   
   const isPresencial = category === 'ciudad-jardin' || category === 'almagro';
 
+  // OPTIMIZADO: Solo hacer fetch si no se pasaron productos como props
   useEffect(() => {
+    // Si ya tenemos productos desde props, no hacer fetch (evitar lecturas duplicadas)
+    if (productsProp && productsProp.length > 0) {
+      setProducts(productsProp);
+      setLoading(false);
+      setError(null);
+      return; // IMPORTANTE: Early return para evitar cualquier fetch
+    }
+
+    // Solo hacer fetch si NO hay productos en props
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/products', { 
-          cache: 'no-store' 
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Error al cargar los productos: ${response.status} ${response.statusText}`);
-        }
-        
-        const allProducts = await response.json() as Product[];
-        // Filtrar cursos por IDs (si se proporcionan) o por nombres
-        let filteredCourses: Product[] = [];
+        // OPTIMIZADO: Si hay courseIds, usar batch read en lugar de traer todos
         if (courseIds && courseIds.length > 0) {
-          filteredCourses = filterCoursesByIds(allProducts, courseIds);
-        } else if (courseNames && courseNames.length > 0) {
-          filteredCourses = filterCoursesByName(allProducts, courseNames);
+          const idsStr = courseIds.map(id => String(id)).join(',');
+          const response = await fetch(`/api/products?ids=${idsStr}`, { 
+            cache: 'default',
+            next: { revalidate: 300 }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Error al cargar los productos: ${response.status} ${response.statusText}`);
+          }
+          
+          const fetchedProducts = await response.json() as Product[];
+          const filteredCourses = filterCoursesByIds(fetchedProducts, courseIds);
+          setProducts(filteredCourses);
+        } else {
+          // Fallback: solo si no hay courseIds, buscar por nombres (menos eficiente)
+          const response = await fetch('/api/products?limit=50', { 
+            cache: 'default',
+            next: { revalidate: 300 }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Error al cargar los productos: ${response.status} ${response.statusText}`);
+          }
+          
+          const allProducts = await response.json() as Product[];
+          const filteredCourses = courseNames && courseNames.length > 0
+            ? filterCoursesByName(allProducts, courseNames)
+            : [];
+          setProducts(filteredCourses);
         }
-        setProducts(filteredCourses);
         setError(null);
       } catch (err) {
         console.error('❌ Error fetching courses:', err);
@@ -270,7 +296,7 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
     };
 
     fetchProducts();
-  }, [courseIds?.join(','), courseNames?.join(',')]);
+  }, [courseIds?.join(','), courseNames?.join(','), productsProp]);
 
   if (loading) {
     const skeletonCount = courseIds?.length || courseNames?.length || 4;

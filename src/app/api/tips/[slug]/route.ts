@@ -12,8 +12,8 @@ import type { Tip } from '@/types/firestore/tip';
 
 const USE_FIRESTORE = process.env.NEXT_PUBLIC_USE_FIRESTORE === 'true';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// OPTIMIZADO: Cache con revalidación (tips individuales cambian poco)
+export const revalidate = 300;
 
 /**
  * Convierte Timestamps a objetos serializables

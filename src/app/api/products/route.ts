@@ -5,11 +5,11 @@ import { mapExternalPrecioToProduct, isTiendaActivo } from '@/lib/products/trans
 import {
   getAllProductsFromFirestore,
   getProductsByIdsFromFirestore,
+  getProductsPage,
 } from '@/lib/firestore/products';
 
-// Evita que Next intente prerender estáticamente esta ruta
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// OPTIMIZADO: Cache con revalidación cada 5 minutos
+export const revalidate = 300;
 
 // Flag para usar Firestore o API externa
 const USE_FIRESTORE = process.env.NEXT_PUBLIC_USE_FIRESTORE === 'true';
@@ -32,9 +32,20 @@ export async function GET(request: Request) {
     if (USE_FIRESTORE) {
       try {
         // 1) Listado completo (all=1 o sin params)
+        // OPTIMIZADO: Usar paginación con limit por defecto (50 items)
         if (all === '1' || all === 'true' || (!id && !ids && !codigo && !nombre)) {
-          const products = await getAllProductsFromFirestore();
-          return NextResponse.json(products);
+          const limit = parseInt(url.searchParams.get('limit') || '50', 10);
+          const cursor = url.searchParams.get('cursor');
+          
+          // Si se solicita explícitamente "all" sin limit, usar función legacy (compatibilidad)
+          if (all === '1' && !url.searchParams.has('limit')) {
+            const products = await getAllProductsFromFirestore();
+            return NextResponse.json(products);
+          }
+          
+          // Usar paginación optimizada
+          const result = await getProductsPage({ limit, cursor });
+          return NextResponse.json(result.products);
         }
 
       // 2) Batch por ids

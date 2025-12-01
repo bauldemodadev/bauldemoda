@@ -11,8 +11,8 @@ import { getOnlineCourseByIdFromFirestore } from '@/lib/firestore/onlineCourses'
 import { Timestamp } from 'firebase-admin/firestore';
 import type { OnlineCourse } from '@/types/firestore/onlineCourse';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// OPTIMIZADO: Cache con revalidación (cursos individuales cambian poco)
+export const revalidate = 300;
 
 /**
  * Serializa un curso online para el frontend

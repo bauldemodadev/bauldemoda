@@ -4,8 +4,8 @@ import { Product } from '@/types/product';
 import { mapExternalPrecioToProduct, isTiendaActivo } from '@/lib/products/transform';
 import { getProductByIdFromFirestore } from '@/lib/firestore/products';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// OPTIMIZADO: Cache con revalidación (productos individuales cambian poco)
+export const revalidate = 300;
 
 // Flag para usar Firestore o API externa
 const USE_FIRESTORE = process.env.NEXT_PUBLIC_USE_FIRESTORE === 'true';

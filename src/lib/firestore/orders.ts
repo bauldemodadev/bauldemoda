@@ -190,56 +190,43 @@ export async function getOrdersByEmail(
 }
 
 /**
- * Obtiene todas las órdenes de un cliente (intenta por customerId primero, luego por email)
+ * Obtiene todas las órdenes de un cliente (OPTIMIZADO: una sola query cuando sea posible)
+ * Prioriza customerId si existe y retorna resultados, solo busca por email si no hay resultados
  */
 export async function getOrdersByCustomerIdOrEmail(
   customerId?: string,
   email?: string
 ): Promise<Order[]> {
   try {
-    const orders: Order[] = [];
-    const seenOrderIds = new Set<string>();
-
-    // Primero intentar por customerId si está disponible
+    // Priorizar customerId si existe (más eficiente, índice directo)
     if (customerId) {
       try {
         const ordersById = await getOrdersByCustomerId(customerId);
-        ordersById.forEach(order => {
-          if (!seenOrderIds.has(order.id)) {
-            orders.push(order);
-            seenOrderIds.add(order.id);
-          }
-        });
+        // Si encontramos órdenes por customerId, retornar directamente (una sola query)
+        if (ordersById.length > 0) {
+          return ordersById;
+        }
+        // Si no hay resultados pero tenemos email, continuar con búsqueda por email
       } catch (error) {
         console.warn(`No se pudieron obtener órdenes por customerId ${customerId}:`, error);
+        // Continuar con búsqueda por email si falla
       }
     }
 
-    // Luego buscar por email si está disponible
+    // Solo buscar por email si:
+    // 1. No hay customerId, o
+    // 2. customerId no retornó resultados, o
+    // 3. customerId falló
     if (email) {
       try {
-        const ordersByEmail = await getOrdersByEmail(email);
-        ordersByEmail.forEach(order => {
-          if (!seenOrderIds.has(order.id)) {
-            orders.push(order);
-            seenOrderIds.add(order.id);
-          }
-        });
+        return await getOrdersByEmail(email);
       } catch (error) {
         console.warn(`No se pudieron obtener órdenes por email ${email}:`, error);
       }
     }
 
-    // Ordenar por fecha de creación (más reciente primero)
-    return orders.sort((a, b) => {
-      const dateA = a.createdAt instanceof Timestamp 
-        ? a.createdAt.toMillis() 
-        : new Date(a.createdAt as any).getTime();
-      const dateB = b.createdAt instanceof Timestamp 
-        ? b.createdAt.toMillis() 
-        : new Date(b.createdAt as any).getTime();
-      return dateB - dateA;
-    });
+    // Si no hay customerId ni email, o ambas búsquedas fallaron
+    return [];
   } catch (error) {
     console.error(`Error obteniendo órdenes por customerId o email:`, error);
     throw error;

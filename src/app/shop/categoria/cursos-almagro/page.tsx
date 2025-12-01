@@ -166,8 +166,10 @@ export default function CursosAlmagroPage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/products', { 
-          cache: 'no-store' 
+        // OPTIMIZADO: Usar limit (25 items) - suficiente para mostrar cursos sin paginación
+        const response = await fetch('/api/products?limit=25', { 
+          cache: 'default',
+          next: { revalidate: 300 }
         });
         
         if (!response.ok) {

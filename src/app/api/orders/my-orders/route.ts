@@ -12,8 +12,8 @@ import { Timestamp } from 'firebase-admin/firestore';
 
 const USE_FIRESTORE = process.env.NEXT_PUBLIC_USE_FIRESTORE === 'true';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// OPTIMIZADO: Cache corto (1 minuto) para datos de usuario que pueden cambiar
+export const revalidate = 60;
 
 /**
  * Convierte Timestamps a objetos serializables

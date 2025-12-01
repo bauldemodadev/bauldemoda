@@ -176,8 +176,11 @@ export default function TiendaPage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/products', { 
-          cache: 'no-store' 
+        // OPTIMIZADO: Usar limit (30 items) en lugar de cargar todos los productos
+        // Solo necesitamos 4 productos destacados por categoría = máximo 16 productos
+        const response = await fetch('/api/products?limit=30', { 
+          cache: 'default',
+          next: { revalidate: 300 }
         });
         
         if (!response.ok) {

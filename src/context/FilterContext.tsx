@@ -102,21 +102,28 @@ export const FilterProvider: React.FC<FilterProviderProps> = ({ children, initia
     }
   }, [initialFilters]);
 
-  // Cargar productos desde API externa
+  // OPTIMIZADO: Cargar productos con limit y caché para evitar lecturas masivas
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        // Intento de listado completo
-        let res = await fetch(`/api/products`, { cache: 'no-store' });
+        // OPTIMIZADO: Usar limit por defecto (100 productos) en lugar de todos
+        // Esto reduce significativamente las lecturas de Firestore
+        let res = await fetch(`/api/products?limit=100`, { 
+          cache: 'default', // Permitir caché del navegador
+          next: { revalidate: 300 } // Revalidar cada 5 minutos
+        });
+        
         if (!res.ok) {
-          // Fallback a lista por ids de ejemplo si no hubiera soporte de "all"
+          // Fallback a lista por ids de ejemplo si no hubiera soporte
           const exampleIds = ['4GdzfFreqmEadqPeldFG'];
-          res = await fetch(`/api/products?ids=${exampleIds.join(',')}`, { cache: 'no-store' });
+          res = await fetch(`/api/products?ids=${exampleIds.join(',')}`, { 
+            cache: 'default',
+            next: { revalidate: 300 }
+          });
         }
         const fetchedProducts = (await res.json()) as Product[];
 
-        // console.log('Productos activos cargados:', fetchedProducts.length);
         setProducts(fetchedProducts);
         
         // Establecer rango de precios inicial basado en los productos

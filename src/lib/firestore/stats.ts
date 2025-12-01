@@ -42,7 +42,7 @@ export interface DashboardStats {
 }
 
 /**
- * Obtiene estadísticas del dashboard
+ * Obtiene estadísticas del dashboard (OPTIMIZADO: queries filtradas por fecha)
  * @param sede - 'almagro' | 'ciudad-jardin' | null para filtrar por sede
  */
 export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null = null): Promise<DashboardStats> {
@@ -54,47 +54,90 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     weekAgo.setDate(weekAgo.getDate() - 7);
     const monthAgo = new Date(today);
     monthAgo.setMonth(monthAgo.getMonth() - 1);
+    const dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
     const todayTimestamp = Timestamp.fromDate(today);
     const weekAgoTimestamp = Timestamp.fromDate(weekAgo);
     const monthAgoTimestamp = Timestamp.fromDate(monthAgo);
+    const dayAgoTimestamp = Timestamp.fromDate(dayAgo);
 
-    // Query base de órdenes
-    let ordersQuery: Query | CollectionReference = db.collection('orders');
-    
-    // Si hay filtro por sede, aplicar filtro
-    if (sede) {
-      ordersQuery = ordersQuery.where('metadata.sede', '==', sede) as Query;
-    }
+    // Helper para construir query base con filtros
+    const buildOrdersQuery = (filters: { 
+      dateFrom?: Date; 
+      status?: Order['status'];
+      paymentMethod?: Order['paymentMethod'];
+    } = {}) => {
+      let query: Query | CollectionReference = db.collection('orders');
+      
+      if (sede) {
+        query = query.where('metadata.sede', '==', sede) as Query;
+      }
+      
+      if (filters.dateFrom) {
+        const dateTimestamp = Timestamp.fromDate(filters.dateFrom);
+        query = (query as Query).where('createdAt', '>=', dateTimestamp) as Query;
+      }
+      
+      if (filters.status) {
+        query = (query as Query).where('status', '==', filters.status) as Query;
+      }
+      
+      if (filters.paymentMethod) {
+        query = (query as Query).where('paymentMethod', '==', filters.paymentMethod) as Query;
+      }
+      
+      return query as Query;
+    };
 
-    // Obtener todas las órdenes (o filtradas por sede)
-    const allOrdersSnapshot = await ordersQuery.get();
-    const allOrders: (Order & { id: string })[] = allOrdersSnapshot.docs.map(doc => ({
+    // Queries paralelas para estadísticas por período (filtradas por fecha en Firestore)
+    const [
+      allOrdersSnapshot,
+      todayOrdersSnapshot,
+      weekOrdersSnapshot,
+      monthOrdersSnapshot,
+      recentOrdersSnapshot,
+      pendingOrdersSnapshot,
+      approvedOrdersSnapshot,
+      rejectedOrdersSnapshot,
+      mpOrdersSnapshot,
+      cashOrdersSnapshot,
+      transferOrdersSnapshot,
+      otherOrdersSnapshot,
+    ] = await Promise.all([
+      buildOrdersQuery().get(),
+      buildOrdersQuery({ dateFrom: today }).get(),
+      buildOrdersQuery({ dateFrom: weekAgo }).get(),
+      buildOrdersQuery({ dateFrom: monthAgo }).get(),
+      buildOrdersQuery({ dateFrom: dayAgo }).get(),
+      buildOrdersQuery({ status: 'pending' }).get(),
+      buildOrdersQuery({ status: 'approved' }).get(),
+      buildOrdersQuery({ status: 'rejected' }).get(),
+      buildOrdersQuery({ paymentMethod: 'mp' }).get(),
+      buildOrdersQuery({ paymentMethod: 'cash' }).get(),
+      buildOrdersQuery({ paymentMethod: 'transfer' }).get(),
+      buildOrdersQuery({ paymentMethod: 'other' }).get(),
+    ]);
+
+    // Convertir snapshots a arrays de órdenes
+    const allOrders = allOrdersSnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
     } as Order & { id: string }));
 
-    // Filtrar órdenes por fecha en memoria (ya que Firestore no permite múltiples where en diferentes campos)
-    const todayOrders = allOrders.filter(order => {
-      const createdAt = order.createdAt instanceof Timestamp 
-        ? order.createdAt.toDate() 
-        : new Date(order.createdAt);
-      return createdAt >= today;
-    });
+    const todayOrders = todayOrdersSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    } as Order & { id: string }));
 
-    const weekOrders = allOrders.filter(order => {
-      const createdAt = order.createdAt instanceof Timestamp 
-        ? order.createdAt.toDate() 
-        : new Date(order.createdAt);
-      return createdAt >= weekAgo;
-    });
+    const weekOrders = weekOrdersSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    } as Order & { id: string }));
 
-    const monthOrders = allOrders.filter(order => {
-      const createdAt = order.createdAt instanceof Timestamp 
-        ? order.createdAt.toDate() 
-        : new Date(order.createdAt);
-      return createdAt >= monthAgo;
-    });
+    const monthOrders = monthOrdersSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    } as Order & { id: string }));
 
     // Calcular estadísticas
     const totalSales = allOrders.length;
@@ -103,23 +146,24 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     const weekRevenue = weekOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
     const monthRevenue = monthOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
 
-    const pendingOrders = allOrders.filter(o => o.status === 'pending').length;
-    const approvedOrders = allOrders.filter(o => o.status === 'approved').length;
-    const rejectedOrders = allOrders.filter(o => o.status === 'rejected').length;
+    const pendingOrders = pendingOrdersSnapshot.size;
+    const approvedOrders = approvedOrdersSnapshot.size;
+    const rejectedOrders = rejectedOrdersSnapshot.size;
 
     // Métodos de pago
     const paymentMethods = {
-      mp: allOrders.filter(o => o.paymentMethod === 'mp').length,
-      cash: allOrders.filter(o => o.paymentMethod === 'cash').length,
-      transfer: allOrders.filter(o => o.paymentMethod === 'transfer').length,
-      other: allOrders.filter(o => o.paymentMethod === 'other').length,
+      mp: mpOrdersSnapshot.size,
+      cash: cashOrdersSnapshot.size,
+      transfer: transferOrdersSnapshot.size,
+      other: otherOrdersSnapshot.size,
     };
 
-    // Productos más vendidos
+    // Productos más vendidos (usar todas las órdenes aprobadas, pero limitar a las más recientes)
+    // Para optimizar, podríamos limitar a órdenes del último mes
     const productSales: Record<string, { name: string; quantity: number; revenue: number }> = {};
     
-    allOrders.forEach(order => {
-      if (order.items && Array.isArray(order.items)) {
+    monthOrders.forEach(order => {
+      if (order.status === 'approved' && order.items && Array.isArray(order.items)) {
         order.items.forEach((item: any) => {
           if (item.type === 'product' && item.productId) {
             const productId = item.productId;
@@ -146,15 +190,9 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
       .slice(0, 10);
 
     // Órdenes recientes (últimas 24 horas)
-    const recentOrders = allOrders.filter(order => {
-      const createdAt = order.createdAt instanceof Timestamp 
-        ? order.createdAt.toDate() 
-        : new Date(order.createdAt);
-      const hoursAgo = (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60);
-      return hoursAgo <= 24;
-    }).length;
+    const recentOrders = recentOrdersSnapshot.size;
 
-    // Obtener total de productos
+    // Obtener total de productos (usar count para eficiencia)
     let productsQuery: Query = db.collection('products').where('status', '==', 'publish');
     if (sede) {
       productsQuery = productsQuery.where('sede', '==', sede);

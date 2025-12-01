@@ -25,7 +25,61 @@ function convertTimestampsToISO(data: any): any {
 }
 
 /**
+ * Obtiene tips con paginación (OPTIMIZADO: limit y cursor)
+ * @param limit - Número máximo de tips a retornar (default: 15)
+ * @param cursor - ID del último documento para paginación
+ */
+export async function getTipsPage(options: {
+  limit?: number;
+  cursor?: string;
+} = {}): Promise<{ tips: Tip[]; nextCursor?: string; hasMore: boolean }> {
+  try {
+    const { limit = 15, cursor } = options;
+    const db = getAdminDb();
+    
+    let query = db
+      .collection('tips')
+      .where('status', '==', 'publish')
+      .orderBy('createdAt', 'desc')
+      .limit(limit + 1); // +1 para saber si hay más
+    
+    if (cursor) {
+      const cursorDoc = await db.collection('tips').doc(cursor).get();
+      if (cursorDoc.exists) {
+        query = query.startAfter(cursorDoc) as any;
+      }
+    }
+    
+    const snapshot = await query.get();
+    const docs = snapshot.docs;
+    const hasMore = docs.length > limit;
+    const tipsToReturn = hasMore ? docs.slice(0, limit) : docs;
+    
+    const tips: Tip[] = [];
+    tipsToReturn.forEach((doc) => {
+      try {
+        const data = doc.data() as Tip;
+        const converted = convertTimestampsToISO(data);
+        tips.push({ ...converted, id: doc.id });
+      } catch (error) {
+        console.error(`Error transformando tip ${doc.id}:`, error);
+      }
+    });
+    
+    return {
+      tips,
+      nextCursor: hasMore ? tipsToReturn[tipsToReturn.length - 1].id : undefined,
+      hasMore,
+    };
+  } catch (error) {
+    console.error('Error en getTipsPage:', error);
+    throw error;
+  }
+}
+
+/**
  * Obtiene todos los tips activos (status === 'publish') desde Firestore
+ * ⚠️ DEPRECATED: Usar getTipsPage con limit para evitar lecturas masivas
  */
 export async function getAllTipsFromFirestore(): Promise<Tip[]> {
   try {
@@ -43,7 +97,6 @@ export async function getAllTipsFromFirestore(): Promise<Tip[]> {
         tips.push({ ...converted, id: doc.id });
       } catch (error) {
         console.error(`Error transformando tip ${doc.id}:`, error);
-        // Continuar con el siguiente tip
       }
     });
 

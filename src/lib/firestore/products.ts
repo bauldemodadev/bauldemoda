@@ -1,5 +1,6 @@
 /**
  * Funciones helper para leer productos desde Firestore
+ * OPTIMIZADO: Queries con limit y filtros para evitar lecturas masivas
  */
 
 import { getAdminDb } from '@/lib/firebase/admin';
@@ -8,20 +9,84 @@ import type { Product } from '@/types/product';
 import type { FirestoreProduct } from '@/types/firestore';
 
 /**
+ * Obtiene productos con paginación y filtros
+ * @param limit - Número máximo de productos a retornar (default: 50)
+ * @param cursor - ID del último documento para paginación
+ * @param sede - Filtrar por sede ('almagro' | 'ciudad-jardin' | 'online')
+ * @param category - Filtrar por categoría
+ */
+export async function getProductsPage(options: {
+  limit?: number;
+  cursor?: string;
+  sede?: 'almagro' | 'ciudad-jardin' | 'online';
+  category?: string;
+} = {}): Promise<{ products: Product[]; nextCursor?: string; hasMore: boolean }> {
+  try {
+    const { limit = 50, cursor, sede, category } = options;
+    const db = getAdminDb();
+    
+    let query = db
+      .collection('products')
+      .where('status', '==', 'publish')
+      .orderBy('createdAt', 'desc')
+      .limit(limit + 1); // +1 para saber si hay más
+    
+    if (sede) {
+      query = query.where('sede', '==', sede) as any;
+    }
+    
+    if (cursor) {
+      const cursorDoc = await db.collection('products').doc(cursor).get();
+      if (cursorDoc.exists) {
+        query = query.startAfter(cursorDoc) as any;
+      }
+    }
+    
+    const snapshot = await query.get();
+    const docs = snapshot.docs;
+    const hasMore = docs.length > limit;
+    const productsToReturn = hasMore ? docs.slice(0, limit) : docs;
+    
+    const products: Product[] = [];
+    productsToReturn.forEach((doc) => {
+      try {
+        const data = doc.data() as FirestoreProduct;
+        const product = firestoreProductToProduct({ ...data, id: doc.id });
+        
+        // Filtrar por categoría en memoria si es necesario (Firestore no soporta múltiples where complejos)
+        if (!category || product.category === category) {
+          products.push(product);
+        }
+      } catch (error) {
+        console.error(`❌ Error transformando producto ${doc.id}:`, error);
+      }
+    });
+    
+    return {
+      products,
+      nextCursor: hasMore ? productsToReturn[productsToReturn.length - 1].id : undefined,
+      hasMore,
+    };
+  } catch (error) {
+    console.error('❌ Error en getProductsPage:', error);
+    throw error;
+  }
+}
+
+/**
  * Obtiene todos los productos activos (status === 'publish') desde Firestore
+ * ⚠️ DEPRECATED: Usar getProductsPage con limit para evitar lecturas masivas
+ * Mantenido para compatibilidad, pero debería evitarse en producción
  */
 export async function getAllProductsFromFirestore(): Promise<Product[]> {
   try {
-    console.log('🔍 Iniciando getAllProductsFromFirestore...');
+    console.log('⚠️ getAllProductsFromFirestore: Considerar usar getProductsPage con limit');
     const db = getAdminDb();
-    console.log('✅ Firebase Admin DB obtenido');
     
     const snapshot = await db
       .collection('products')
       .where('status', '==', 'publish')
       .get();
-
-    console.log(`📦 Encontrados ${snapshot.size} productos con status 'publish'`);
 
     const products: Product[] = [];
     snapshot.forEach((doc) => {
@@ -31,15 +96,12 @@ export async function getAllProductsFromFirestore(): Promise<Product[]> {
         products.push(product);
       } catch (error) {
         console.error(`❌ Error transformando producto ${doc.id}:`, error);
-        // Continuar con el siguiente producto
       }
     });
 
-    console.log(`✅ Transformados ${products.length} productos exitosamente`);
     return products;
   } catch (error) {
     console.error('❌ Error en getAllProductsFromFirestore:', error);
-    console.error('Stack:', error instanceof Error ? error.stack : 'No stack');
     throw error;
   }
 }

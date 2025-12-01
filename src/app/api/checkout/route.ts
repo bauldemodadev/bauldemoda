@@ -51,17 +51,21 @@ function getProductPriceByMethod(product: Product, method: PaymentMethod): numbe
 
 /**
  * Calcula el total de la orden según el método de pago
+ * OPTIMIZADO: Batch read de productos para evitar N+1 queries
  */
 async function calculateOrderTotal(
   items: CheckoutRequest['items'],
-  paymentMethod: PaymentMethod
+  paymentMethod: PaymentMethod,
+  productsMap?: Map<string, Product>,
+  coursesMap?: Map<string, any>
 ): Promise<{ items: OrderItem[]; totalAmount: number }> {
   const orderItems: OrderItem[] = [];
   let totalAmount = 0;
 
   for (const item of items) {
     if (item.type === 'product') {
-      const product = await getProductByIdFromFirestore(item.id);
+      // Usar productos del map si están disponibles (batch read)
+      const product = productsMap?.get(item.id) || await getProductByIdFromFirestore(item.id);
       if (!product) {
         console.warn(`Producto ${item.id} no encontrado, saltando...`);
         continue;
@@ -85,7 +89,8 @@ async function calculateOrderTotal(
 
       totalAmount += total;
     } else if (item.type === 'onlineCourse') {
-      const course = await getOnlineCourseByIdFromFirestore(item.id);
+      // Usar cursos del map si están disponibles
+      const course = coursesMap?.get(item.id) || await getOnlineCourseByIdFromFirestore(item.id);
       if (!course) {
         console.warn(`Curso online ${item.id} no encontrado, saltando...`);
         continue;
@@ -154,10 +159,43 @@ export async function POST(request: Request) {
       phone: body.customer.phone,
     });
 
-    // 2. Calcular total según método de pago
+    // 2. OPTIMIZADO: Batch read de todos los productos y cursos necesarios (eliminar N+1)
+    const productIds = body.items
+      .filter(item => item.type === 'product')
+      .map(item => item.id);
+    
+    const courseIds = body.items
+      .filter(item => item.type === 'onlineCourse')
+      .map(item => item.id);
+
+    // Batch read de productos (una sola query)
+    const products = productIds.length > 0 
+      ? await getProductsByIdsFromFirestore(productIds)
+      : [];
+    const productsMap = new Map(products.map(p => [p.id, p]));
+
+    // Batch read de cursos online (si hay)
+    const coursesMap = new Map<any, any>();
+    if (courseIds.length > 0) {
+      const { getOnlineCourseByIdFromFirestore } = await import('@/lib/firestore/onlineCourses');
+      for (const courseId of courseIds) {
+        try {
+          const course = await getOnlineCourseByIdFromFirestore(courseId);
+          if (course) {
+            coursesMap.set(courseId, course);
+          }
+        } catch (error) {
+          console.warn(`Error obteniendo curso ${courseId}:`, error);
+        }
+      }
+    }
+
+    // 3. Calcular total usando productos ya cargados
     const { items: orderItems, totalAmount } = await calculateOrderTotal(
       body.items,
-      body.paymentMethod
+      body.paymentMethod,
+      productsMap,
+      coursesMap
     );
 
     if (orderItems.length === 0) {
@@ -167,8 +205,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Determinar orderType, sede y lugar de retiro basándose en los productos REALES del carrito
-    // Considerar: cursos presenciales, productos con locationText, y gifts
+    // 4. Determinar orderType, sede y lugar de retiro usando productos ya cargados (sin nuevas lecturas)
     let determinedOrderType: 'curso_presencial' | undefined = undefined;
     let determinedSede: 'almagro' | 'ciudad-jardin' | undefined = undefined;
     const pickupSedes = new Set<'almagro' | 'ciudad-jardin'>();
@@ -181,48 +218,44 @@ export async function POST(request: Request) {
     const hasOnlineCourses = orderItems.some(item => item.type === 'onlineCourse');
     
     if (!hasOnlineCourses) {
-      // Verificar cada producto para determinar tipo y lugar de retiro
+      // Verificar cada producto usando el map (sin nuevas lecturas)
       for (const item of orderItems) {
         if (item.type === 'product' && item.productId) {
-          try {
-            const product = await getProductByIdFromFirestore(item.productId);
-            if (product) {
-              const productSede = product.sede;
-              const productLocationText = product.locationText;
-              const productName = product.name?.toLowerCase() || '';
+          const product = productsMap.get(item.productId);
+          if (product) {
+            const productSede = product.sede;
+            const productLocationText = product.locationText;
+            const productName = product.name?.toLowerCase() || '';
+            
+            // Verificar si es un gift
+            if (productName.includes('gift') || productName.includes('gift card') || productName.includes('gift baulera')) {
+              hasGifts = true;
+            }
+            
+            // Verificar si es curso presencial (sede: almagro o ciudad-jardin)
+            if (productSede === 'almagro' || productSede === 'ciudad-jardin') {
+              hasPresentialCourses = true;
+              pickupSedes.add(productSede);
               
-              // Verificar si es un gift
-              if (productName.includes('gift') || productName.includes('gift card') || productName.includes('gift baulera')) {
-                hasGifts = true;
-              }
-              
-              // Verificar si es curso presencial (sede: almagro o ciudad-jardin)
-              if (productSede === 'almagro' || productSede === 'ciudad-jardin') {
-                hasPresentialCourses = true;
-                pickupSedes.add(productSede);
-                
-                // Si tiene locationText, agregarlo también
-                if (productLocationText && productLocationText.trim()) {
-                  pickupLocationTexts.add(productLocationText.trim());
-                }
-              }
-              
-              // Verificar si tiene locationText (lugar de retiro) aunque no sea presencial
+              // Si tiene locationText, agregarlo también
               if (productLocationText && productLocationText.trim()) {
-                hasProductsWithPickup = true;
                 pickupLocationTexts.add(productLocationText.trim());
-                
-                // Intentar extraer sede del locationText si no tiene sede definida
-                const locationLower = productLocationText.toLowerCase();
-                if (locationLower.includes('almagro')) {
-                  pickupSedes.add('almagro');
-                } else if (locationLower.includes('ciudad jardín') || locationLower.includes('ciudad jardin')) {
-                  pickupSedes.add('ciudad-jardin');
-                }
               }
             }
-          } catch (error) {
-            console.warn(`Error obteniendo producto ${item.productId} para verificar sede:`, error);
+            
+            // Verificar si tiene locationText (lugar de retiro) aunque no sea presencial
+            if (productLocationText && productLocationText.trim()) {
+              hasProductsWithPickup = true;
+              pickupLocationTexts.add(productLocationText.trim());
+              
+              // Intentar extraer sede del locationText si no tiene sede definida
+              const locationLower = productLocationText.toLowerCase();
+              if (locationLower.includes('almagro')) {
+                pickupSedes.add('almagro');
+              } else if (locationLower.includes('ciudad jardín') || locationLower.includes('ciudad jardin')) {
+                pickupSedes.add('ciudad-jardin');
+              }
+            }
           }
         }
       }

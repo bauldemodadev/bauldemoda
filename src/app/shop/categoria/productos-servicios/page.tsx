@@ -257,8 +257,10 @@ export default function ProductosYServiciosPage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/products', { 
-          cache: 'no-store' 
+        // OPTIMIZADO: Usar limit (30 items) - suficiente para mostrar productos/servicios sin paginación
+        const response = await fetch('/api/products?limit=30', { 
+          cache: 'default',
+          next: { revalidate: 300 }
         });
         
         if (!response.ok) {
