@@ -10,67 +10,31 @@ import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import AvailabilityModal from "@/components/courses/AvailabilityModal";
 
-// Función para filtrar productos basándose en palabras clave del slug
-const filterProductsBySlug = (products: Product[], slug: string): Product[] => {
-  const keywords: Record<string, string[]> = {
-    'cursos-online': ['curso online', 'cursos online', 'online', 'masterclass', 'intensivo', 'pack', 'gift', 'abc costura'],
-    'cursos-ciudad-jardin': ['ciudad jardín', 'ciudad jardin', 'ciudad jardín', 'intensivo', 'regular', 'baul a puertas abiertas', 'overlock', 'collareta'],
-    'cursos-almagro': ['almagro', 'intensivo', 'regular', 'indumentaria', 'carteras', 'lencería', 'lenceria', 'mallas'],
-    'productos-servicios': ['revista', 'ebook', 'insumo', 'herramienta', 'producto', 'servicio'],
-  };
-
-  const searchTerms = keywords[slug] || [];
-  
-  return products.filter(product => {
-    const nameLower = product.name.toLowerCase();
-    const categoryLower = (product.category || '').toLowerCase();
-    const searchText = `${nameLower} ${categoryLower}`;
-    
-    return searchTerms.some(term => searchText.includes(term));
-  });
+// IDs organizados por sección (actualizados según especificación)
+const COURSE_SECTIONS = {
+  intensivos: ["415", "11751", "8987"],
+  regulares: ["50", "71"],
+  baulPuertasAbiertas: ["5492"],
 };
 
-// Función para segmentar productos por categorías de Ciudad Jardín
-const segmentProducts = (products: Product[]) => {
-  const segments = {
-    intensivos: [] as Product[],
-    regularesLenceria: [] as Product[],
-    regularesIndumentaria: [] as Product[],
-    baulPuertasAbiertas: [] as Product[],
-  };
-
-  products.forEach(product => {
-    const nameLower = product.name.toLowerCase();
-    const categoryLower = (product.category || '').toLowerCase();
-    const searchText = `${nameLower} ${categoryLower}`;
-    
-    // Intensivos
-    if (searchText.includes('abc costura') && !searchText.includes('regular')) {
-      segments.intensivos.push(product);
-    } else if (searchText.includes('abc overlock') || searchText.includes('overlock & collareta') || searchText.includes('overlock y collareta')) {
-      segments.intensivos.push(product);
-    } else if (searchText.includes('intensivo')) {
-      segments.intensivos.push(product);
-    }
-    // Regulares - Lenceria y mallas
-    else if ((searchText.includes('regular') || searchText.includes('regulares')) && (searchText.includes('lenceria') || searchText.includes('lencería') || searchText.includes('malla') || searchText.includes('mallas'))) {
-      segments.regularesLenceria.push(product);
-    }
-    // Regulares - Indumentaria
-    else if ((searchText.includes('regular') || searchText.includes('regulares')) && searchText.includes('indumentaria')) {
-      segments.regularesIndumentaria.push(product);
-    }
-    // Baul a Puertas Abiertas
-    else if ((searchText.includes('baul a puertas abiertas') || searchText.includes('puertas abiertas')) && (searchText.includes('sublimacion') || searchText.includes('sublimación') || searchText.includes('transfer textil') || searchText.includes('dtf'))) {
-      segments.baulPuertasAbiertas.push(product);
-    } else if ((searchText.includes('baul a puertas abiertas') || searchText.includes('puertas abiertas')) && (searchText.includes('calzado') || searchText.includes('zapato'))) {
-      segments.baulPuertasAbiertas.push(product);
-    } else if (searchText.includes('baul a puertas abiertas') || searchText.includes('puertas abiertas')) {
-      segments.baulPuertasAbiertas.push(product);
-    }
+// Obtener todos los IDs únicos
+const getAllIds = (): string[] => {
+  const allIds = new Set<string>();
+  Object.values(COURSE_SECTIONS).forEach(ids => {
+    ids.forEach(id => allIds.add(id));
   });
+  return Array.from(allIds);
+};
 
-  return segments;
+// Función para segmentar productos por IDs
+const segmentProductsByIds = (products: Product[]) => {
+  const productMap = new Map(products.map(p => [p.id, p]));
+  
+  return {
+    intensivos: COURSE_SECTIONS.intensivos.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    regulares: COURSE_SECTIONS.regulares.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    baulPuertasAbiertas: COURSE_SECTIONS.baulPuertasAbiertas.map(id => productMap.get(id)).filter(Boolean) as Product[],
+  };
 };
 
 const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: any) => {
@@ -166,8 +130,10 @@ export default function CursosCiudadJardinPage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        // OPTIMIZADO: Usar limit (25 items) - suficiente para mostrar cursos sin paginación
-        const response = await fetch('/api/products?limit=25', { 
+        // OPTIMIZADO: Buscar solo los productos por IDs específicos
+        const ids = getAllIds();
+        const idsParam = ids.join(',');
+        const response = await fetch(`/api/products?ids=${idsParam}`, { 
           cache: 'default',
           next: { revalidate: 300 }
         });
@@ -176,9 +142,8 @@ export default function CursosCiudadJardinPage() {
           throw new Error(`Error al cargar los productos: ${response.status} ${response.statusText}`);
         }
         
-        const allProducts = await response.json() as Product[];
-        const filteredProducts = filterProductsBySlug(allProducts, 'cursos-ciudad-jardin');
-        setProducts(filteredProducts);
+        const fetchedProducts = await response.json() as Product[];
+        setProducts(fetchedProducts);
         setError(null);
       } catch (err) {
         console.error('❌ Error fetching products:', err);
@@ -227,7 +192,7 @@ export default function CursosCiudadJardinPage() {
     );
   }
 
-  const segments = segmentProducts(products);
+  const segments = segmentProductsByIds(products);
 
   const handleAddToCart = (product: Product) => {
     setSelectedProduct(product);
@@ -370,23 +335,15 @@ export default function CursosCiudadJardinPage() {
           products={segments.intensivos}
         />
         
-        {/* Sección Regulares - Lenceria y mallas */}
+        {/* Sección Regulares */}
         <ProductSection 
           title="Regulares" 
-          products={segments.regularesLenceria}
-          subtitle="Lenceria y mallas"
-        />
-        
-        {/* Sección Regulares - Indumentaria */}
-        <ProductSection 
-          title="Regulares" 
-          products={segments.regularesIndumentaria}
-          subtitle="Indumentaria"
+          products={segments.regulares}
         />
         
         {/* Sección Baul a Puertas Abiertas */}
         <ProductSection 
-          title="Baul a Puertas Abiertas" 
+          title="Baúl a Puertas Abiertas" 
           products={segments.baulPuertasAbiertas}
         />
       </div>

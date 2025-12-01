@@ -9,123 +9,41 @@ import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
-// Función para filtrar productos basándose en palabras clave del slug
-const filterProductsBySlug = (products: Product[], slug: string): Product[] => {
-  const keywords: Record<string, string[]> = {
-    'cursos-online': ['curso online', 'cursos online', 'online', 'masterclass', 'intensivo', 'pack', 'gift', 'abc costura'],
-    'cursos-ciudad-jardin': ['ciudad jardín', 'ciudad jardin', 'ciudad jardín', 'intensivo', 'regular', 'baul a puertas abiertas', 'overlock', 'collareta'],
-    'cursos-almagro': ['almagro', 'intensivo', 'regular', 'indumentaria', 'carteras', 'lencería', 'lenceria', 'mallas'],
-    'productos-servicios': ['revista', 'ebook', 'insumo', 'herramienta', 'producto', 'servicio'],
-  };
-
-  const searchTerms = keywords[slug] || [];
-  
-  return products.filter(product => {
-    const nameLower = product.name.toLowerCase();
-    const categoryLower = (product.category || '').toLowerCase();
-    const searchText = `${nameLower} ${categoryLower}`;
-    
-    return searchTerms.some(term => searchText.includes(term));
-  });
+// IDs organizados por sección (actualizados según especificación)
+const COURSE_SECTIONS = {
+  masterClassGratuita: ["6655", "5015"],
+  enPromo: ["1155", "1159", "10483"],
+  paraComenzar: ["666", "10483"],
+  intensivosIndumentaria: ["9556", "1925", "1155", "992", "1217", "2073", "1783"],
+  intensivosLenceria: ["2036", "1159", "986", "1794", "3316"],
+  intensivosCarteras: ["1256", "1134"],
+  paraAlumnos: ["11567", "1134"],
+  paraRegalar: ["3833", "6361", "6360", "1492"],
 };
 
-// Función para segmentar productos por categorías
-const segmentProducts = (products: Product[]) => {
-  const segments = {
-    masterClassGratuita: [] as Product[],
-    enPromo: [] as Product[],
-    paraComenzar: [] as Product[],
-    intensivosIndumentaria: [] as Product[],
-    intensivosLenceria: [] as Product[],
-    intensivosCarteras: [] as Product[],
-    paraAlumnos: [] as Product[],
-    paraRegalar: [] as Product[],
-  };
-
-  products.forEach(product => {
-    const nameLower = product.name.toLowerCase();
-    const categoryLower = (product.category || '').toLowerCase();
-    const searchText = `${nameLower} ${categoryLower}`;
-    
-    // MasterClass Gratuita
-    if (searchText.includes('masterclass lubricacion') || searchText.includes('masterclass lubricación')) {
-      segments.masterClassGratuita.push(product);
-    } else if (searchText.includes('masterclass') && !searchText.includes('gift')) {
-      segments.masterClassGratuita.push(product);
-    }
-    // En Promo
-    else if (searchText.includes('pack x3 indumentaria') || searchText.includes('pack x 3 indumentaria')) {
-      segments.enPromo.push(product);
-    } else if (searchText.includes('pack x3 lenceria') || searchText.includes('pack x3 lencería') || searchText.includes('pack x 3 lenceria')) {
-      segments.enPromo.push(product);
-    } else if (searchText.includes('abc costura') && searchText.includes('intensivo')) {
-      segments.enPromo.push(product);
-    }
-    // Para Comenzar
-    else if (searchText.includes('abc costura online')) {
-      segments.paraComenzar.push(product);
-    } else if (searchText.includes('abc costura') && searchText.includes('intensivo')) {
-      segments.paraComenzar.push(product);
-    }
-    // Intensivos Indumentaria
-    else if (searchText.includes('arreglos de ropa')) {
-      segments.intensivosIndumentaria.push(product);
-    } else if (searchText.includes('intensivo mi primer jean') || searchText.includes('intensivo mi primer jean')) {
-      segments.intensivosIndumentaria.push(product);
-    } else if (searchText.includes('pack x3 indumentaria') || searchText.includes('pack x 3 indumentaria')) {
-      segments.intensivosIndumentaria.push(product);
-    } else if (searchText.includes('intensivo indumentaria nivel 3') || searchText.includes('intensivo indumentaria nivel iii')) {
-      segments.intensivosIndumentaria.push(product);
-    } else if (searchText.includes('intensivo nivel 1 camisas') || searchText.includes('intensivo nivel i camisas')) {
-      segments.intensivosIndumentaria.push(product);
-    } else if (searchText.includes('intensivo indumentaria nivel 2') || searchText.includes('intensivo indumentaria nivel ii')) {
-      segments.intensivosIndumentaria.push(product);
-    } else if (searchText.includes('intensivo indumentaria nivel i') || searchText.includes('intensivo indumentaria nivel 1')) {
-      segments.intensivosIndumentaria.push(product);
-    } else if (searchText.includes('intensivo') && searchText.includes('indumentaria')) {
-      segments.intensivosIndumentaria.push(product);
-    }
-    // Intensivos Lencería
-    else if (searchText.includes('intensivo mallas')) {
-      segments.intensivosLenceria.push(product);
-    } else if (searchText.includes('pack x3 lenceria') || searchText.includes('pack x3 lencería') || searchText.includes('pack x 3 lenceria')) {
-      segments.intensivosLenceria.push(product);
-    } else if (searchText.includes('intensivo lenceria nivel 2') || searchText.includes('intensivo lenceria nivel ii')) {
-      segments.intensivosLenceria.push(product);
-    } else if (searchText.includes('intensivo lenceria nivel i bombachas') || searchText.includes('intensivo lenceria nivel 1 bombachas')) {
-      segments.intensivosLenceria.push(product);
-    } else if (searchText.includes('intensivo lenceria nivel 3') || searchText.includes('intensivo lenceria nivel iii')) {
-      segments.intensivosLenceria.push(product);
-    } else if (searchText.includes('intensivo') && (searchText.includes('lenceria') || searchText.includes('lencería') || searchText.includes('malla'))) {
-      segments.intensivosLenceria.push(product);
-    }
-    // Intensivos Carteras
-    else if (searchText.includes('intensivo carteras')) {
-      segments.intensivosCarteras.push(product);
-    } else if (searchText.includes('pantuflas')) {
-      segments.intensivosCarteras.push(product);
-    }
-    // Para Alumnos
-    else if (searchText.includes('baul disena') || searchText.includes('baúl diseña')) {
-      segments.paraAlumnos.push(product);
-    } else if (searchText.includes('pantuflas') && !segments.intensivosCarteras.some(p => p.id === product.id)) {
-      segments.paraAlumnos.push(product);
-    }
-    // Para Regalar
-    else if (searchText.includes('gift baulera intensivos')) {
-      segments.paraRegalar.push(product);
-    } else if (searchText.includes('gift baulera abc') && searchText.includes('intensivo')) {
-      segments.paraRegalar.push(product);
-    } else if (searchText.includes('gift baulera pack x 3') || searchText.includes('gift baulera pack x3')) {
-      segments.paraRegalar.push(product);
-    } else if (searchText.includes('gift baulera abc online')) {
-      segments.paraRegalar.push(product);
-    } else if (searchText.includes('gift')) {
-      segments.paraRegalar.push(product);
-    }
+// Obtener todos los IDs únicos
+const getAllIds = (): string[] => {
+  const allIds = new Set<string>();
+  Object.values(COURSE_SECTIONS).forEach(ids => {
+    ids.forEach(id => allIds.add(id));
   });
+  return Array.from(allIds);
+};
 
-  return segments;
+// Función para segmentar productos por IDs
+const segmentProductsByIds = (products: Product[]) => {
+  const productMap = new Map(products.map(p => [p.id, p]));
+  
+  return {
+    masterClassGratuita: COURSE_SECTIONS.masterClassGratuita.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    enPromo: COURSE_SECTIONS.enPromo.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    paraComenzar: COURSE_SECTIONS.paraComenzar.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    intensivosIndumentaria: COURSE_SECTIONS.intensivosIndumentaria.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    intensivosLenceria: COURSE_SECTIONS.intensivosLenceria.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    intensivosCarteras: COURSE_SECTIONS.intensivosCarteras.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    paraAlumnos: COURSE_SECTIONS.paraAlumnos.map(id => productMap.get(id)).filter(Boolean) as Product[],
+    paraRegalar: COURSE_SECTIONS.paraRegalar.map(id => productMap.get(id)).filter(Boolean) as Product[],
+  };
 };
 
 const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: any) => {
@@ -306,8 +224,10 @@ export default function CursosOnlinePage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        // OPTIMIZADO: Usar limit (25 items) - suficiente para mostrar cursos online sin paginación
-        const response = await fetch('/api/products?limit=25', { 
+        // OPTIMIZADO: Buscar solo los productos por IDs específicos
+        const ids = getAllIds();
+        const idsParam = ids.join(',');
+        const response = await fetch(`/api/products?ids=${idsParam}`, { 
           cache: 'default',
           next: { revalidate: 300 }
         });
@@ -316,9 +236,8 @@ export default function CursosOnlinePage() {
           throw new Error(`Error al cargar los productos: ${response.status} ${response.statusText}`);
         }
         
-        const allProducts = await response.json() as Product[];
-        const filteredProducts = filterProductsBySlug(allProducts, 'cursos-online');
-        setProducts(filteredProducts);
+        const fetchedProducts = await response.json() as Product[];
+        setProducts(fetchedProducts);
         setError(null);
       } catch (err) {
         console.error('❌ Error fetching products:', err);
@@ -367,7 +286,7 @@ export default function CursosOnlinePage() {
     );
   }
 
-  const segments = segmentProducts(products);
+  const segments = segmentProductsByIds(products);
   
   // Componente de sección reutilizable
   const ProductSection = ({ 

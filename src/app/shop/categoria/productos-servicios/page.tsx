@@ -9,115 +9,38 @@ import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
-// Función para filtrar productos basándose en palabras clave del slug
-const filterProductsBySlug = (products: Product[], slug: string): Product[] => {
-  const keywords: Record<string, string[]> = {
-    'cursos-online': ['curso online', 'cursos online', 'online', 'masterclass', 'intensivo', 'pack', 'gift', 'abc costura'],
-    'cursos-ciudad-jardin': ['ciudad jardín', 'ciudad jardin', 'ciudad jardín', 'intensivo', 'regular', 'baul a puertas abiertas', 'overlock', 'collareta'],
-    'cursos-almagro': ['almagro', 'intensivo', 'regular', 'indumentaria', 'carteras', 'lencería', 'lenceria', 'mallas'],
-    'productos-servicios': ['revista', 'ebook', 'insumo', 'herramienta', 'producto', 'servicio', 'gift'],
-  };
-
-  const searchTerms = keywords[slug] || [];
-  
-  return products.filter(product => {
-    const nameLower = product.name.toLowerCase();
-    const categoryLower = (product.category || '').toLowerCase();
-    const searchText = `${nameLower} ${categoryLower}`;
-    
-    return searchTerms.some(term => searchText.includes(term));
-  });
+// IDs organizados por sección (actualizados según especificación)
+const PRODUCT_SECTIONS = {
+  revistas: [
+    "5566", "5560", "5198", "5197", "4814", "4358", "4349", "4337", "4343",
+    "4328", "4322", "4316", "4310", "4304", "4297", "4291", "4285", "4280",
+    "4274", "4268", "4262", "4256", "4250", "4244", "4237", "4231", "4225",
+    "4218", "4211", "847"
+  ],
+  giftCards: ["3833", "6361", "6360", "1492"],
 };
 
-// Función para segmentar productos por categorías de Productos y Servicios
-const segmentProducts = (products: Product[]) => {
-  const segments = {
-    revistas: [] as Product[],
-    giftCards: [] as Product[],
-  };
-
-  products.forEach(product => {
-    const nameLower = product.name.toLowerCase();
-    const categoryLower = (product.category || '').toLowerCase();
-    const searchText = `${nameLower} ${categoryLower}`;
-    
-    // Gift Cards
-    if (searchText.includes('gift baulera intensivos')) {
-      segments.giftCards.push(product);
-    } else if (searchText.includes('gift baulera abc') && searchText.includes('intensivo')) {
-      segments.giftCards.push(product);
-    } else if (searchText.includes('gift baulera pack x 3') || searchText.includes('gift baulera pack x3')) {
-      segments.giftCards.push(product);
-    } else if (searchText.includes('gift baulera abc online')) {
-      segments.giftCards.push(product);
-    } else if (searchText.includes('gift')) {
-      segments.giftCards.push(product);
-    }
-    // Revistas
-    else if (searchText.includes('revista especial bebes') || searchText.includes('revista especial bebés') || searchText.includes('especial bebes') || searchText.includes('especial bebés')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista moda oversize') || searchText.includes('moda oversize')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista vida sustentable') || searchText.includes('vida sustentable')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista ropa comoda y casual') || searchText.includes('ropa comoda y casual') || searchText.includes('ropa cómoda y casual')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista vestidos simpleza y color') || searchText.includes('vestidos simpleza y color')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista lenceria i') || searchText.includes('revista lencería i') || searchText.includes('lenceria i') || searchText.includes('lencería i')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista macrame mandalas') || searchText.includes('macramé mandalas') || searchText.includes('macrame mandalas')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista vestidos dama') || searchText.includes('vestidos dama')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista costura express') || searchText.includes('costura express')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista comodo y femenino') || searchText.includes('revista cómodo y femenino') || searchText.includes('cómodo y femenino')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista ropa deportiva') || searchText.includes('ropa deportiva')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista accesorios') || searchText.includes('accesorios')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista vivi la moda') || searchText.includes('vivi la moda')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista mujeres reales') || searchText.includes('mujeres reales')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista especial abrigos') || searchText.includes('especial abrigos')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista especial vestidos') || searchText.includes('especial vestidos')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista especial buzos') || searchText.includes('especial buzos')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista ropa con apliques') || searchText.includes('ropa con apliques')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista ropa de noche') || searchText.includes('ropa de noche')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista lenceria ii') || searchText.includes('revista lencería ii') || searchText.includes('lenceria ii') || searchText.includes('lencería ii')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista mix telas') || searchText.includes('mix telas')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista diseños a medida') || searchText.includes('diseños a medida')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista vestidos nenas') || searchText.includes('vestidos nenas')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista talles reales') || searchText.includes('talles reales')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista bohemia peques') || searchText.includes('bohemia peques')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista pijamas divertidos') || searchText.includes('pijamas divertidos')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista ropa de trabajo') || searchText.includes('ropa de trabajo')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista camisas') || searchText.includes('camisas')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista de mochilas') || searchText.includes('revista mochilas') || searchText.includes('mochilas')) {
-      segments.revistas.push(product);
-    } else if (searchText.includes('revista')) {
-      segments.revistas.push(product);
-    }
+// Obtener todos los IDs únicos
+const getAllIds = (): string[] => {
+  const allIds = new Set<string>();
+  Object.values(PRODUCT_SECTIONS).forEach(ids => {
+    ids.forEach(id => allIds.add(id));
   });
+  return Array.from(allIds);
+};
 
-  return segments;
+// Función para segmentar productos por IDs
+const segmentProductsByIds = (products: Product[]) => {
+  const productMap = new Map(products.map(p => [String(p.id), p]));
+  
+  return {
+    revistas: PRODUCT_SECTIONS.revistas
+      .map(id => productMap.get(id))
+      .filter(Boolean) as Product[],
+    giftCards: PRODUCT_SECTIONS.giftCards
+      .map(id => productMap.get(id))
+      .filter(Boolean) as Product[],
+  };
 };
 
 const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: any) => {
@@ -257,8 +180,10 @@ export default function ProductosYServiciosPage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        // OPTIMIZADO: Usar limit (30 items) - suficiente para mostrar productos/servicios sin paginación
-        const response = await fetch('/api/products?limit=30', { 
+        // OPTIMIZADO: Buscar solo los productos por IDs específicos
+        const ids = getAllIds();
+        const idsParam = ids.join(',');
+        const response = await fetch(`/api/products?ids=${idsParam}`, { 
           cache: 'default',
           next: { revalidate: 300 }
         });
@@ -267,9 +192,8 @@ export default function ProductosYServiciosPage() {
           throw new Error(`Error al cargar los productos: ${response.status} ${response.statusText}`);
         }
         
-        const allProducts = await response.json() as Product[];
-        const filteredProducts = filterProductsBySlug(allProducts, 'productos-servicios');
-        setProducts(filteredProducts);
+        const fetchedProducts = await response.json() as Product[];
+        setProducts(fetchedProducts);
         setError(null);
       } catch (err) {
         console.error('❌ Error fetching products:', err);
@@ -318,7 +242,7 @@ export default function ProductosYServiciosPage() {
     );
   }
 
-  const segments = segmentProducts(products);
+  const segments = segmentProductsByIds(products);
   
   // Componente de sección reutilizable
   const ProductSection = ({ 
