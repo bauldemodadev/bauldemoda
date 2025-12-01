@@ -388,35 +388,33 @@ export default function OnlineCourseDetailPage() {
       {/* Header/Hero Section */}
       <section className="w-full py-8 md:py-12 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Logo */}
-          <div className="mb-6">
-            <div className="relative w-32 h-16 md:w-40 md:h-20">
-              <Image
-                src="https://bauldemoda.com.ar/wp-content/uploads/2021/03/baul.jpg"
-                alt="Baúl de Moda"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 128px, 160px"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Columna Izquierda - Texto */}
-            <div>
-              <div className="flex items-center justify-between mb-4 gap-4">
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 flex-1">
-                  {course.title.toUpperCase()}
-                </h1>
-                <p className="text-4xl md:text-5xl font-beauty flex-shrink-0" style={{ color: "#E9749B" }}>
-                  Online
-                </p>
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+            {/* Columna Izquierda - Texto (30%) */}
+            <div className="w-full lg:w-[30%]">
+              {/* Logo y Título */}
+              <div className="flex items-start gap-3 mb-4">
+                <div className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0">
+                  <Image
+                    src="https://bauldemoda.com.ar/wp-content/uploads/2021/03/baul.jpg"
+                    alt="Baúl de Moda"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 96px, 128px"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                    {course.title.toUpperCase()}
+                  </h1>
+                  <div className="flex justify-end mt-1">
+                    <p className="text-4xl md:text-5xl font-beauty" style={{ color: "#E9749B" }}>
+                      Online
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-4">
-                <p className="text-lg font-bold text-gray-900">
-                  Bienvenida/o a este Curso Online de {course.title}
-                </p>
                 <div
                   className="text-base text-gray-700 leading-relaxed prose prose-sm max-w-none"
                   dangerouslySetInnerHTML={{ __html: course.shortDescription }}
@@ -424,14 +422,14 @@ export default function OnlineCourseDetailPage() {
               </div>
             </div>
 
-            {/* Columna Derecha - Imagen Hero */}
-            <div className="relative w-full h-[400px] md:h-[500px]">
+            {/* Columna Derecha - Imagen Hero (70%) */}
+            <div className="w-full lg:w-[70%] relative h-[400px] md:h-[500px]">
               <Image
                 src={heroImageUrl}
                 alt={course.title}
                 fill
                 className="object-contain"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 70vw"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
                 }}
