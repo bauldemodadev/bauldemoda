@@ -197,6 +197,10 @@ export default function AdminVentaDetailPage() {
     );
   }
 
+  // Verificar si hay productos físicos en la orden
+  const hasPhysicalProducts = order.items.some(item => !isDigitalCartItem(item));
+  const hasDigitalProducts = order.items.some(item => isDigitalCartItem(item));
+
   return (
     <div>
       {/* Header */}
