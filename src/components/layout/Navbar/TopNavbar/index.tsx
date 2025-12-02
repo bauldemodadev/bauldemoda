@@ -24,7 +24,7 @@ const data: NavMenu = [
   },
   {
     id: 2,
-    type: "MenuItem",
+    type: "MenuList",
     label: "TIENDA",
     url: "/shop",
     children: [
