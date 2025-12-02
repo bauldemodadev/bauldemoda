@@ -5,7 +5,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase/admin';
+import { getAdminDb } from '@/lib/firebase/admin';
 
 export async function POST(request: Request) {
   try {
@@ -18,6 +18,8 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const db = getAdminDb();
 
     // Crear orden en Firestore
     const orderData = {
