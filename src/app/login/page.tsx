@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import AuthModal from "@/components/auth/AuthModal";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,15 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectParam = searchParams?.get("redirect") || null;
+
+  const handleClose = () => {
+    // Si hay redirect, ir ahí, sino ir al home
+    if (redirectParam) {
+      router.push(decodeURIComponent(redirectParam));
+    } else {
+      router.push('/');
+    }
+  };
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,8 +41,16 @@ export default function LoginPage() {
     try {
       await signIn(email, password);
       toast.success("Inicio de sesión exitoso");
-      const target = redirectParam ? decodeURIComponent(redirectParam) : "/account";
-      router.push(target);
+      
+      // Redirigir: redirect param > /account > home
+      const target = redirectParam ? decodeURIComponent(redirectParam) : '/';
+      
+      // Pequeño delay para que el toast se vea
+      setTimeout(() => {
+        router.push(target);
+        router.refresh();
+      }, 500);
+      
     } catch (error: any) {
       console.error("Error signing in:", error);
       
@@ -58,8 +75,15 @@ export default function LoginPage() {
     try {
       await signInWithGoogle();
       toast.success("Inicio de sesión con Google exitoso");
-      const target = redirectParam ? decodeURIComponent(redirectParam) : "/account";
-      router.push(target);
+      
+      // Redirigir: redirect param > home
+      const target = redirectParam ? decodeURIComponent(redirectParam) : '/';
+      
+      setTimeout(() => {
+        router.push(target);
+        router.refresh();
+      }, 500);
+      
     } catch (error) {
       console.error("Error signing in with Google:", error);
       toast.error("No se pudo iniciar sesión con Google.");
@@ -69,11 +93,11 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 py-12">
-      <Card className="w-full max-w-md p-8 shadow-2xl">
+    <AuthModal onClose={handleClose}>
+      <div className="p-8">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <Link href="/">
+          <Link href="/" onClick={(e) => { e.preventDefault(); handleClose(); }}>
             <Image 
               src="/logo.svg" 
               alt="Baúl de Moda" 
@@ -84,7 +108,7 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Bienvenido</h1>
           <p className="text-gray-600">
             Accede a tu cuenta de Baúl de Moda
@@ -214,7 +238,7 @@ export default function LoginPage() {
             Regístrate gratis
           </Link>
         </p>
-      </Card>
-    </main>
+      </div>
+    </AuthModal>
   );
 } 

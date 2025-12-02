@@ -153,8 +153,8 @@ async function main() {
   
   // Calcular emails únicos combinados
   const combinedUniqueEmails = new Set<string>();
-  almagroStats.uniqueEmails.forEach(email => combinedUniqueEmails.add(email));
-  ciudadJardinStats.uniqueEmails.forEach(email => combinedUniqueEmails.add(email));
+  Array.from(almagroStats.uniqueEmails).forEach(email => combinedUniqueEmails.add(email));
+  Array.from(ciudadJardinStats.uniqueEmails).forEach(email => combinedUniqueEmails.add(email));
   console.log(`   Emails únicos totales: ${combinedUniqueEmails.size}\n`);
 
   // Mostrar algunos ejemplos de cambios

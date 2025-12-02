@@ -2,18 +2,24 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, Mail, CheckCircle2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import AuthModal from "@/components/auth/AuthModal";
 
 export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const { resetPassword } = useAuth();
+  const router = useRouter();
+
+  const handleClose = () => {
+    router.push('/');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,11 +56,11 @@ export default function ForgotPasswordPage() {
 
   if (emailSent) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 py-12">
-        <Card className="w-full max-w-md p-8 shadow-2xl">
+      <AuthModal onClose={handleClose}>
+        <div className="p-8">
           {/* Logo */}
           <div className="flex justify-center mb-6">
-            <Link href="/">
+            <Link href="/" onClick={(e) => { e.preventDefault(); handleClose(); }}>
               <Image 
                 src="/logo.svg" 
                 alt="Baúl de Moda" 
@@ -110,17 +116,17 @@ export default function ForgotPasswordPage() {
               </Button>
             </Link>
           </div>
-        </Card>
-      </main>
+        </div>
+      </AuthModal>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 py-12">
-      <Card className="w-full max-w-md p-8 shadow-2xl">
+    <AuthModal onClose={handleClose}>
+      <div className="p-8">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <Link href="/">
+          <Link href="/" onClick={(e) => { e.preventDefault(); handleClose(); }}>
             <Image 
               src="/logo.svg" 
               alt="Baúl de Moda" 
@@ -204,8 +210,8 @@ export default function ForgotPasswordPage() {
             Regístrate
           </Link>
         </p>
-      </Card>
-    </main>
+      </div>
+    </AuthModal>
   );
 }
 

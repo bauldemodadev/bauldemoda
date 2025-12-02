@@ -25,27 +25,72 @@ export async function POST(request: NextRequest) {
     // Normalizar email (Firebase Auth lo guarda en minúsculas)
     const normalizedEmail = email.toLowerCase().trim();
 
-    // IMPORTANTE: Usar UID como ID del documento (no crear nuevos)
+    // 1. Verificar si YA existe un customer con este UID
     const customerRef = db.collection('customers').doc(uid);
     const customerDoc = await customerRef.get();
 
     if (customerDoc.exists) {
-      // Ya existe, no hacer nada (evitar actualizaciones innecesarias)
       console.log(`Perfil ya existe para UID: ${uid}, no se crea duplicado`);
       
       return NextResponse.json({
         success: true,
         message: 'Perfil ya existe',
         isNew: false,
-        action: 'skipped' // Indica que no se hizo nada
+        action: 'skipped'
       });
     }
 
-    // SOLO crear si NO existe
+    // 2. Buscar si existe un customer ANTIGUO con este email (puede tener ID = email)
+    const existingCustomerSnapshot = await db.collection('customers')
+      .where('email', '==', normalizedEmail)
+      .limit(1)
+      .get();
+
+    if (!existingCustomerSnapshot.empty) {
+      // Ya existe un customer con este email (usuario antiguo)
+      // Copiar sus datos al nuevo UID y eliminar el viejo
+      const oldCustomerDoc = existingCustomerSnapshot.docs[0];
+      const oldCustomerData = oldCustomerDoc.data();
+      
+      console.log(`Migrando perfil existente ${oldCustomerDoc.id} → ${uid}`);
+      
+      // Crear nuevo documento con UID correcto, preservando datos antiguos
+      await customerRef.set({
+        email: normalizedEmail,
+        name: oldCustomerData.name || name || '',
+        phone: oldCustomerData.phone || '',
+        dni: oldCustomerData.dni || '',
+        address: oldCustomerData.address || {
+          street: '',
+          city: '',
+          state: '',
+          zipCode: '',
+          country: 'AR',
+        },
+        enrolledCourses: oldCustomerData.enrolledCourses || [],
+        createdAt: oldCustomerData.createdAt || Timestamp.now(),
+        updatedAt: Timestamp.now(),
+        migratedFrom: oldCustomerDoc.id, // Registro de auditoría
+      });
+      
+      // Eliminar el documento viejo
+      await oldCustomerDoc.ref.delete();
+      
+      return NextResponse.json({
+        success: true,
+        message: 'Perfil migrado desde cuenta antigua',
+        isNew: false,
+        action: 'migrated',
+        oldId: oldCustomerDoc.id,
+        newId: uid
+      });
+    }
+
+    // 3. SOLO si NO existe ningún customer, crear uno nuevo
     console.log(`Creando nuevo perfil para UID: ${uid}, email: ${normalizedEmail}`);
     
     await customerRef.set({
-      email: normalizedEmail, // Guardar email normalizado
+      email: normalizedEmail,
       name: name || '',
       phone: '',
       dni: '',
