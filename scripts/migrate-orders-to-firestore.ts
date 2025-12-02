@@ -174,7 +174,7 @@ async function migrateOrders(orders: OrderJSON[], stats: MigrationStats): Promis
     try {
       // 1. Validar estructura
       if (!validateOrder(order)) {
-        console.error(`${progress} ❌ Orden inválida: ${order.id || 'sin ID'}`);
+        console.error(`${progress} ❌ Orden inválida: ${(order as any)?.id || 'sin ID'}`);
         stats.errors++;
         continue;
       }
