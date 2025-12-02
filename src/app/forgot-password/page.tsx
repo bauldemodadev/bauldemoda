@@ -146,13 +146,6 @@ export default function ForgotPasswordPage() {
           </p>
         </div>
 
-        {/* Info para usuarios antiguos */}
-        <div className="bg-[#E9ABBD]/10 border border-[#E9ABBD]/30 rounded-lg p-4 mb-6">
-          <p className="text-sm text-gray-700">
-            <strong>¿Compraste antes de diciembre 2024?</strong><br />
-            Si eres un cliente antiguo, usa tu email para recuperar tu cuenta y acceder a tu historial de compras.
-          </p>
-        </div>
 
         {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-4">

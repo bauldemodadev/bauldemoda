@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-12-02T20:41:49.518Z",
+  "summary": {
+    "totalOrders": 594,
+    "totalOnlineCourseItems": 296,
+    "itemsWithProductIdOnly": 0,
+    "itemsWithCourseIdOnly": 272,
+    "itemsWithBothIds": 0,
+    "itemsWithNoIds": 24,
+    "uniqueProductIds": [],
+    "uniqueCourseIds": [
+      "9556",
+      "1925",
+      "6655",
+      "0L5wz3t9FJXLPehXpVUk",
+      "5015",
+      "1783",
+      "2036",
+      "1134",
+      "1794",
+      "2073",
+      "3316"
+    ]
+  },
+  "itemsNeedingCorrection": []
+}

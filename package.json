@@ -11,6 +11,8 @@
     "preview": "vercel",
     "extract-catalog": "tsx scripts/extract-product-catalog.ts",
     "normalize-emails": "tsx scripts/normalize-order-emails.ts",
+    "audit-course-ids": "tsx scripts/audit-course-ids.ts",
+    "fix-course-ids": "tsx scripts/fix-missing-course-ids.ts",
     "migrate:dry-run": "tsx scripts/migrate-orders-to-firestore.ts --dry-run",
     "migrate:orders": "tsx scripts/migrate-orders-to-firestore.ts"
   },
