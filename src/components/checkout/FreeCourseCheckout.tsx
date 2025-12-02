@@ -2,17 +2,19 @@
  * Componente: Checkout para Cursos Gratuitos
  * 
  * Permite a los usuarios registrarse para cursos gratuitos
- * sin necesidad de realizar un pago
+ * sin necesidad de realizar un pago. Carga automáticamente
+ * los datos del usuario desde Firestore.
  */
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { CheckCircle, Gift, User, Mail, Phone } from 'lucide-react';
+import { CheckCircle, Gift, User, Mail, Phone, Loader2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { useObtenerPerfilCliente } from '@/lib/hooks/useGetClientProfile';
 
 interface FreeCourseCheckoutProps {
   courseId: string;
@@ -24,6 +26,7 @@ export default function FreeCourseCheckout({ courseId, courseName, onCancel }: F
   const { user } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const { perfil, cargando: loadingProfile } = useObtenerPerfilCliente();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -32,6 +35,17 @@ export default function FreeCourseCheckout({ courseId, courseName, onCancel }: F
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Cargar datos del usuario desde Firestore
+  useEffect(() => {
+    if (perfil) {
+      setFormData({
+        name: perfil.nombre || '',
+        email: perfil.email || user?.email || '',
+        phone: perfil.telefono || '',
+      });
+    }
+  }, [perfil, user?.email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,15 +122,33 @@ export default function FreeCourseCheckout({ courseId, courseName, onCancel }: F
     );
   }
 
+  // Mostrar loading mientras se carga el perfil
+  if (loadingProfile) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-lg shadow-lg p-12 text-center">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-[#E9ABBD]" />
+          <p className="text-gray-600">Cargando tus datos...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Verificar si el usuario tiene todos los datos necesarios
+  const hasCompleteData = formData.name && formData.email;
+
   return (
     <div className="max-w-2xl mx-auto">
       <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
         <div className="flex items-center gap-3 mb-2">
           <Gift className="w-6 h-6 text-green-600" />
-          <h2 className="text-xl font-bold text-green-900">Curso Gratuito</h2>
+          <h2 className="text-xl font-bold text-green-900">¡Curso Gratuito!</h2>
         </div>
         <p className="text-green-700">
-          Este curso es completamente <strong>GRATIS</strong>. Solo necesitamos algunos datos para enviarte el acceso.
+          Este curso es completamente <strong>GRATIS</strong>. 
+          {hasCompleteData 
+            ? ' Solo confirma tus datos y obtendrás acceso inmediato.'
+            : ' Completa tus datos para obtener acceso.'}
         </p>
       </div>
 
@@ -124,6 +156,14 @@ export default function FreeCourseCheckout({ courseId, courseName, onCancel }: F
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           {courseName}
         </h3>
+
+        {perfil && hasCompleteData && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <p className="text-sm text-blue-800">
+              ✓ Tus datos ya están guardados en tu perfil. Puedes modificarlos si lo deseas.
+            </p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -151,8 +191,9 @@ export default function FreeCourseCheckout({ courseId, courseName, onCancel }: F
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-gray-50"
               placeholder="tu@email.com"
+              readOnly={!!perfil?.email}
             />
           </div>
 
@@ -184,9 +225,16 @@ export default function FreeCourseCheckout({ courseId, courseName, onCancel }: F
             <button
               type="submit"
               disabled={isProcessing}
-              className="flex-1 px-6 py-3 bg-[#E9ABBD] text-white rounded-lg hover:bg-[#D44D7D] transition-colors disabled:opacity-50"
+              className="flex-1 px-6 py-3 bg-[#E9ABBD] text-white rounded-lg hover:bg-[#D44D7D] transition-colors disabled:opacity-50 font-semibold"
             >
-              {isProcessing ? 'Procesando...' : 'Obtener Acceso Gratis'}
+              {isProcessing ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Procesando...
+                </span>
+              ) : (
+                '🎉 Obtener Acceso Gratis'
+              )}
             </button>
           </div>
         </form>
