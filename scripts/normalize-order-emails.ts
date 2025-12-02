@@ -150,7 +150,12 @@ async function main() {
   console.log('📊 TOTAL GENERAL:');
   console.log(`   Órdenes procesadas: ${almagroStats.totalOrders + ciudadJardinStats.totalOrders}`);
   console.log(`   Emails normalizados: ${almagroStats.normalizedEmails + ciudadJardinStats.normalizedEmails}`);
-  console.log(`   Emails únicos totales: ${new Set([...almagroStats.uniqueEmails, ...ciudadJardinStats.uniqueEmails]).size}\n`);
+  
+  // Calcular emails únicos combinados
+  const combinedUniqueEmails = new Set<string>();
+  almagroStats.uniqueEmails.forEach(email => combinedUniqueEmails.add(email));
+  ciudadJardinStats.uniqueEmails.forEach(email => combinedUniqueEmails.add(email));
+  console.log(`   Emails únicos totales: ${combinedUniqueEmails.size}\n`);
 
   // Mostrar algunos ejemplos de cambios
   if (almagroStats.emailChanges.length > 0 || ciudadJardinStats.emailChanges.length > 0) {
