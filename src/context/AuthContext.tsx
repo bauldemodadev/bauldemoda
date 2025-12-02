@@ -39,13 +39,29 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Track processed UIDs para evitar procesar múltiples veces
+  const [processedUsers, setProcessedUsers] = useState<Set<string>>(() => {
+    // Cargar desde localStorage
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('processedUsers');
+      return stored ? new Set(JSON.parse(stored)) : new Set();
+    }
+    return new Set();
+  });
 
   const signIn = async (email: string, password: string) => {
     if (!auth) throw new Error('Firebase Auth no está inicializado. Revisa tus variables de entorno.');
     const cred = await signInWithEmailAndPassword(auth, email, password);
     
-    // Vincular órdenes antiguas automáticamente
-    await linkLegacyOrders(cred.user.uid, email);
+    // Solo procesar si no lo hemos hecho antes
+    if (!processedUsers.has(cred.user.uid)) {
+      // Vincular órdenes antiguas automáticamente (solo primera vez)
+      await linkLegacyOrders(cred.user.uid, email);
+      
+      // Marcar como procesado
+      setProcessedUsers(prev => new Set(prev).add(cred.user.uid));
+    }
     
     setUser({ 
       uid: cred.user.uid, 
@@ -67,11 +83,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Enviar email de verificación
     await sendEmailVerification(cred.user);
     
+    // Crear perfil en Firestore (esto usa UID como ID, no duplica)
+    await createUserProfile(cred.user.uid, email, name);
+    
     // Vincular órdenes antiguas automáticamente
     await linkLegacyOrders(cred.user.uid, email);
     
-    // Crear perfil en Firestore
-    await createUserProfile(cred.user.uid, email, name);
+    // Marcar como procesado
+    setProcessedUsers(prev => new Set(prev).add(cred.user.uid));
     
     setUser({ 
       uid: cred.user.uid, 
@@ -87,11 +106,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     provider.setCustomParameters({ prompt: 'select_account' });
     const cred = await signInWithPopup(auth, provider);
     
-    // Vincular órdenes antiguas automáticamente
-    await linkLegacyOrders(cred.user.uid, cred.user.email || '');
-    
-    // Crear/actualizar perfil en Firestore si no existe
-    await createUserProfile(cred.user.uid, cred.user.email || '', cred.user.displayName || '');
+    // Solo procesar si no lo hemos hecho antes
+    if (!processedUsers.has(cred.user.uid)) {
+      // Primero crear/verificar perfil (usa UID como ID, no duplica)
+      await createUserProfile(cred.user.uid, cred.user.email || '', cred.user.displayName || '');
+      
+      // Luego vincular órdenes antiguas (solo primera vez)
+      await linkLegacyOrders(cred.user.uid, cred.user.email || '');
+      
+      // Marcar como procesado
+      setProcessedUsers(prev => new Set(prev).add(cred.user.uid));
+    }
     
     setUser({ 
       uid: cred.user.uid, 
@@ -108,6 +133,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     await fbSignOut(auth);
     setUser(null);
+    
+    // Limpiar cache de usuarios procesados (opcional - permite reprocesar al volver a loguear)
+    // Si quieres que se vuelva a vincular al re-loguear, descomenta las siguientes líneas:
+    // setProcessedUsers(new Set());
+    // localStorage.removeItem('processedUsers');
   }
 
   const resetPassword = async (email: string) => {
@@ -153,6 +183,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // No lanzar error para no bloquear el login
     }
   }
+
+  // Guardar processedUsers en localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('processedUsers', JSON.stringify(Array.from(processedUsers)));
+    }
+  }, [processedUsers]);
 
   useEffect(() => {
     if (!auth) {

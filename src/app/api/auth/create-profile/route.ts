@@ -22,37 +22,25 @@ export async function POST(request: NextRequest) {
 
     const db = getAdminDb();
 
-    // Verificar si ya existe un perfil para este UID
+    // IMPORTANTE: Usar UID como ID del documento (no crear nuevos)
     const customerRef = db.collection('customers').doc(uid);
     const customerDoc = await customerRef.get();
 
     if (customerDoc.exists) {
-      // Actualizar perfil existente solo si es necesario
-      const existingData = customerDoc.data();
-      const updates: any = {
-        updatedAt: Timestamp.now(),
-      };
-
-      // Solo actualizar campos si están vacíos o cambiaron
-      if (name && !existingData?.name) {
-        updates.name = name;
-      }
-      if (email && existingData?.email !== email) {
-        updates.email = email;
-      }
-
-      if (Object.keys(updates).length > 1) { // Más que solo updatedAt
-        await customerRef.update(updates);
-      }
-
+      // Ya existe, no hacer nada (evitar actualizaciones innecesarias)
+      console.log(`Perfil ya existe para UID: ${uid}, no se crea duplicado`);
+      
       return NextResponse.json({
         success: true,
-        message: 'Perfil actualizado',
-        isNew: false
+        message: 'Perfil ya existe',
+        isNew: false,
+        action: 'skipped' // Indica que no se hizo nada
       });
     }
 
-    // Crear nuevo perfil
+    // SOLO crear si NO existe
+    console.log(`Creando nuevo perfil para UID: ${uid}, email: ${email}`);
+    
     await customerRef.set({
       email,
       name: name || '',
@@ -73,11 +61,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: 'Perfil creado exitosamente',
-      isNew: true
+      isNew: true,
+      action: 'created'
     });
 
   } catch (error) {
-    console.error('Error creando perfil:', error);
+    console.error('Error en create-profile:', error);
     return NextResponse.json(
       { 
         success: false,
