@@ -1,0 +1,4405 @@
+[
+  {
+    "id": "almagro-11748",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "temisgautier@gmail.com",
+    "customerSnapshot": {
+      "name": "TEMIS GAUTIER",
+      "email": "temisgautier@gmail.com",
+      "phone": "1126401813"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 10hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11748",
+    "createdAt": "2025-11-03T14:14:00Z",
+    "updatedAt": "2025-11-03T14:14:00Z"
+  },
+  {
+    "id": "almagro-11746",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "regodenis@gmail.com",
+    "customerSnapshot": {
+      "name": "Denís Rego",
+      "email": "regodenis@gmail.com",
+      "phone": "1166370023"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11746",
+    "createdAt": "2025-10-29T18:15:00Z",
+    "updatedAt": "2025-10-29T18:15:00Z"
+  },
+  {
+    "id": "almagro-11745",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "andreaparma38@gmail.com",
+    "customerSnapshot": {
+      "name": "Andrea Parma",
+      "email": "andreaparma38@gmail.com",
+      "phone": "1154795351"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11745",
+    "createdAt": "2025-10-29T16:03:00Z",
+    "updatedAt": "2025-10-29T16:03:00Z"
+  },
+  {
+    "id": "almagro-11744",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "florenciaacciardi321@gmail.com",
+    "customerSnapshot": {
+      "name": "Norma elizabeth Abrigato",
+      "email": "florenciaacciardi321@gmail.com",
+      "phone": "1140827024"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11744",
+    "createdAt": "2025-10-29T00:36:00Z",
+    "updatedAt": "2025-10-29T00:36:00Z"
+  },
+  {
+    "id": "almagro-11743",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "herreramariabelen@gmail.com",
+    "customerSnapshot": {
+      "name": "Belén Herrera",
+      "email": "herreramariabelen@gmail.com",
+      "phone": "1159233676"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11743",
+    "createdAt": "2025-10-28T17:18:00Z",
+    "updatedAt": "2025-10-28T17:18:00Z"
+  },
+  {
+    "id": "almagro-11742",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "diegoacciardi@hotmail.com",
+    "customerSnapshot": {
+      "name": "Norma elizabeth Abrigato",
+      "email": "diegoacciardi@hotmail.com",
+      "phone": "1140827024"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11742",
+    "createdAt": "2025-10-28T16:47:00Z",
+    "updatedAt": "2025-10-28T16:47:00Z"
+  },
+  {
+    "id": "almagro-11741",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "zuritasoledad53@gmail.com",
+    "customerSnapshot": {
+      "name": "Daiana soledad Zurita",
+      "email": "zuritasoledad53@gmail.com",
+      "phone": "1171648080"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11741",
+    "createdAt": "2025-10-28T16:30:00Z",
+    "updatedAt": "2025-10-28T16:30:00Z"
+  },
+  {
+    "id": "almagro-11739",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "sandrafiorino@gmx.de",
+    "customerSnapshot": {
+      "name": "Sandra Fiorino",
+      "email": "sandrafiorino@gmx.de",
+      "phone": "1157331180"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11739",
+    "createdAt": "2025-10-28T15:23:00Z",
+    "updatedAt": "2025-10-28T15:23:00Z"
+  },
+  {
+    "id": "almagro-11737",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "gaby_as73@hotmail.com",
+    "customerSnapshot": {
+      "name": "Gabriela Julia Aguirre Spinosa",
+      "email": "gaby_as73@hotmail.com",
+      "phone": "11 5756 4353"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 25/10",
+        "quantity": 1,
+        "unitPrice": 65000.0,
+        "total": 65000.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 65000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11737",
+    "createdAt": "2025-10-24T19:22:00Z",
+    "updatedAt": "2025-10-24T19:22:00Z"
+  },
+  {
+    "id": "almagro-11736",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "nelidablanca.68@gmail.com",
+    "customerSnapshot": {
+      "name": "Nélida Blanca Aranda",
+      "email": "nelidablanca.68@gmail.com",
+      "phone": "11-6864-8769"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Nivel 1 Camisas",
+        "quantity": 1,
+        "unitPrice": 42500.0,
+        "total": 42500.0,
+        "productId": "1217"
+      }
+    ],
+    "totalAmount": 42500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11736",
+    "createdAt": "2025-10-24T16:21:00Z",
+    "updatedAt": "2025-10-24T16:21:00Z"
+  },
+  {
+    "id": "almagro-11731",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "other",
+    "customerId": "vanifusca@gmail.com",
+    "customerSnapshot": {
+      "name": "Vanina Fusca",
+      "email": "vanifusca@gmail.com",
+      "phone": "1138194773"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Carteras",
+        "quantity": 1,
+        "unitPrice": 0.0,
+        "total": 0.0,
+        "productId": "1256"
+      }
+    ],
+    "totalAmount": 0.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": true,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11731",
+    "createdAt": "2025-10-15T08:33:00Z",
+    "updatedAt": "2025-10-15T08:33:00Z"
+  },
+  {
+    "id": "almagro-11728",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "vanifusca@gmail.com",
+    "customerSnapshot": {
+      "name": "Vanina Fusca",
+      "email": "vanifusca@gmail.com",
+      "phone": "1138194773"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 63750.0,
+        "total": 63750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 63750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11728",
+    "createdAt": "2025-10-13T22:24:00Z",
+    "updatedAt": "2025-10-13T22:24:00Z"
+  },
+  {
+    "id": "almagro-11727",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "jbminatti@hotmail.com",
+    "customerSnapshot": {
+      "name": "Julieta Minatti",
+      "email": "jbminatti@hotmail.com",
+      "phone": "1140926493"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 25/10",
+        "quantity": 1,
+        "unitPrice": 65000.0,
+        "total": 65000.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 65000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11727",
+    "createdAt": "2025-10-09T12:06:00Z",
+    "updatedAt": "2025-10-09T12:06:00Z"
+  },
+  {
+    "id": "almagro-11725",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "natibrondo@hotmail.com",
+    "customerSnapshot": {
+      "name": "Natalia Brondo",
+      "email": "natibrondo@hotmail.com",
+      "phone": "+541136037295"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 25/10",
+        "quantity": 1,
+        "unitPrice": 65000.0,
+        "total": 65000.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 65000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11725",
+    "createdAt": "2025-10-07T14:25:00Z",
+    "updatedAt": "2025-10-07T14:25:00Z"
+  },
+  {
+    "id": "almagro-11724",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "andreaparma38@gmail.com",
+    "customerSnapshot": {
+      "name": "Andrea Parma",
+      "email": "andreaparma38@gmail.com",
+      "phone": "1154795351"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 25/10",
+        "quantity": 1,
+        "unitPrice": 65000.0,
+        "total": 65000.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 65000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11724",
+    "createdAt": "2025-10-05T22:18:00Z",
+    "updatedAt": "2025-10-05T22:18:00Z"
+  },
+  {
+    "id": "almagro-11722",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "maritacornes@hotmail.com",
+    "customerSnapshot": {
+      "name": "Maria Cornes",
+      "email": "maritacornes@hotmail.com",
+      "phone": "1167477793"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11722",
+    "createdAt": "2025-10-01T16:12:00Z",
+    "updatedAt": "2025-10-01T16:12:00Z"
+  },
+  {
+    "id": "almagro-11721",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "ornellalandini@gmail.com",
+    "customerSnapshot": {
+      "name": "Ornella Landini",
+      "email": "ornellalandini@gmail.com",
+      "phone": "15-3175-2374"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11721",
+    "createdAt": "2025-10-01T09:16:00Z",
+    "updatedAt": "2025-10-01T09:16:00Z"
+  },
+  {
+    "id": "almagro-11720",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "verokahoffer@gmail.com",
+    "customerSnapshot": {
+      "name": "veonica hoffer",
+      "email": "verokahoffer@gmail.com",
+      "phone": "1140416137"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11720",
+    "createdAt": "2025-10-01T00:29:00Z",
+    "updatedAt": "2025-10-01T00:29:00Z"
+  },
+  {
+    "id": "almagro-11719",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "Carlabertini2000@yahoo.com",
+    "customerSnapshot": {
+      "name": "Carla Bertini",
+      "email": "Carlabertini2000@yahoo.com",
+      "phone": "1153166984"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11719",
+    "createdAt": "2025-09-30T11:43:00Z",
+    "updatedAt": "2025-09-30T11:43:00Z"
+  },
+  {
+    "id": "almagro-11717",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "adrianadiamantti@gmail.com",
+    "customerSnapshot": {
+      "name": "Adriana Diamantti",
+      "email": "adrianadiamantti@gmail.com",
+      "phone": "1164913636"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 25/10",
+        "quantity": 1,
+        "unitPrice": 65000.0,
+        "total": 65000.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 65000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11717",
+    "createdAt": "2025-09-29T20:04:00Z",
+    "updatedAt": "2025-09-29T20:04:00Z"
+  },
+  {
+    "id": "almagro-11716",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "vervill@gmail.com",
+    "customerSnapshot": {
+      "name": "Veronica Villanueva",
+      "email": "vervill@gmail.com",
+      "phone": "1156413614"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11716",
+    "createdAt": "2025-09-29T17:55:00Z",
+    "updatedAt": "2025-09-29T17:55:00Z"
+  },
+  {
+    "id": "almagro-11715",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "gaby_as73@hotmail.com",
+    "customerSnapshot": {
+      "name": "Gabriela Julia Aguirre Spinosa",
+      "email": "gaby_as73@hotmail.com",
+      "phone": "11 5756 4353"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 94300.0,
+        "total": 94300.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 94300.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11715",
+    "createdAt": "2025-09-29T15:11:00Z",
+    "updatedAt": "2025-09-29T15:11:00Z"
+  },
+  {
+    "id": "almagro-11714",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "ornellanapoletano@hotmail.com",
+    "customerSnapshot": {
+      "name": "ornella Napoletano",
+      "email": "ornellanapoletano@hotmail.com",
+      "phone": "1154616545"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 25/10",
+        "quantity": 1,
+        "unitPrice": 65000.0,
+        "total": 65000.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 65000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11714",
+    "createdAt": "2025-09-29T15:04:00Z",
+    "updatedAt": "2025-09-29T15:04:00Z"
+  },
+  {
+    "id": "almagro-11713",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "lucidilena@yahoo.com.ar",
+    "customerSnapshot": {
+      "name": "Luciana Di Lena",
+      "email": "lucidilena@yahoo.com.ar",
+      "phone": "1165585826"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 89250.0,
+        "total": 89250.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 89250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11713",
+    "createdAt": "2025-09-26T17:42:00Z",
+    "updatedAt": "2025-09-26T17:42:00Z"
+  },
+  {
+    "id": "almagro-11712",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "lucidilena@yahoo.com.ar",
+    "customerSnapshot": {
+      "name": "Luciana Di Lena",
+      "email": "lucidilena@yahoo.com.ar",
+      "phone": "1165585826"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 89250.0,
+        "total": 89250.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 89250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11712",
+    "createdAt": "2025-09-26T08:55:00Z",
+    "updatedAt": "2025-09-26T08:55:00Z"
+  },
+  {
+    "id": "almagro-11711",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "baranipa@gmail.com",
+    "customerSnapshot": {
+      "name": "Patricia Beatriz Barani",
+      "email": "baranipa@gmail.com",
+      "phone": "01132872663"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Indumentaria",
+        "quantity": 1,
+        "unitPrice": 89250.0,
+        "total": 89250.0,
+        "productId": "1155"
+      }
+    ],
+    "totalAmount": 89250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11711",
+    "createdAt": "2025-09-24T12:41:00Z",
+    "updatedAt": "2025-09-24T12:41:00Z"
+  },
+  {
+    "id": "almagro-11708",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "gomezileana541@gmail.com",
+    "customerSnapshot": {
+      "name": "Ileana Gomez",
+      "email": "gomezileana541@gmail.com",
+      "phone": "1566880004"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 108900.0,
+        "total": 108900.0
+      }
+    ],
+    "totalAmount": 108900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11708",
+    "createdAt": "2025-09-16T10:17:00Z",
+    "updatedAt": "2025-09-16T10:17:00Z"
+  },
+  {
+    "id": "almagro-11706",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "ddeborajerez@gmail.com",
+    "customerSnapshot": {
+      "name": "Debora Jerez",
+      "email": "ddeborajerez@gmail.com",
+      "phone": "2964529585"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 89250.0,
+        "total": 89250.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 89250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11706",
+    "createdAt": "2025-09-12T13:33:00Z",
+    "updatedAt": "2025-09-12T13:33:00Z"
+  },
+  {
+    "id": "almagro-11700",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "miliortizz99@gmail.com",
+    "customerSnapshot": {
+      "name": "Milagros Ortiz",
+      "email": "miliortizz99@gmail.com",
+      "phone": "1553199903"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Indumentaria",
+        "quantity": 1,
+        "unitPrice": 89250.0,
+        "total": 89250.0,
+        "productId": "1155"
+      }
+    ],
+    "totalAmount": 89250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11700",
+    "createdAt": "2025-09-05T13:38:00Z",
+    "updatedAt": "2025-09-05T13:38:00Z"
+  },
+  {
+    "id": "almagro-11698",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "miliortizz99@gmail.com",
+    "customerSnapshot": {
+      "name": "Milagros Ortiz",
+      "email": "miliortizz99@gmail.com",
+      "phone": "1553199903"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 89250.0,
+        "total": 89250.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 89250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11698",
+    "createdAt": "2025-09-01T19:51:00Z",
+    "updatedAt": "2025-09-01T19:51:00Z"
+  },
+  {
+    "id": "almagro-11696",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "maicasadei@hotmail.com",
+    "customerSnapshot": {
+      "name": "Mailin Casadei",
+      "email": "maicasadei@hotmail.com",
+      "phone": "3462663273"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Nivel 1 Camisas",
+        "quantity": 1,
+        "unitPrice": 32500.0,
+        "total": 32500.0,
+        "productId": "1217"
+      }
+    ],
+    "totalAmount": 32500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11696",
+    "createdAt": "2025-08-27T08:59:00Z",
+    "updatedAt": "2025-08-27T08:59:00Z"
+  },
+  {
+    "id": "almagro-11695",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "gomezileana541@gmail.com",
+    "customerSnapshot": {
+      "name": "Ileana Valeria Gomez",
+      "email": "gomezileana541@gmail.com",
+      "phone": "1566880004"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 108900.0,
+        "total": 108900.0
+      }
+    ],
+    "totalAmount": 108900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11695",
+    "createdAt": "2025-08-25T19:36:00Z",
+    "updatedAt": "2025-08-25T19:36:00Z"
+  },
+  {
+    "id": "almagro-11694",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "lupegiribaldi@gmail.com",
+    "customerSnapshot": {
+      "name": "Nayla Albite",
+      "email": "lupegiribaldi@gmail.com",
+      "phone": "+5491132807354"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Carteras",
+        "quantity": 1,
+        "unitPrice": 32500.0,
+        "total": 32500.0,
+        "productId": "1256"
+      }
+    ],
+    "totalAmount": 32500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11694",
+    "createdAt": "2025-08-25T18:33:00Z",
+    "updatedAt": "2025-08-25T18:33:00Z"
+  },
+  {
+    "id": "almagro-11691",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "gomezileana@gmail.com",
+    "customerSnapshot": {
+      "name": "Ileana Valeria Gomez",
+      "email": "gomezileana@gmail.com",
+      "phone": "1566880004"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 108900.0,
+        "total": 108900.0
+      }
+    ],
+    "totalAmount": 108900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11691",
+    "createdAt": "2025-08-25T11:52:00Z",
+    "updatedAt": "2025-08-25T11:52:00Z"
+  },
+  {
+    "id": "almagro-11690",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "oriananahiralfonso@gmail.com",
+    "customerSnapshot": {
+      "name": "Oriana Alfonso",
+      "email": "oriananahiralfonso@gmail.com",
+      "phone": "1136579803"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Nivel 1 Camisas",
+        "quantity": 1,
+        "unitPrice": 32500.0,
+        "total": 32500.0,
+        "productId": "1217"
+      }
+    ],
+    "totalAmount": 32500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11690",
+    "createdAt": "2025-08-19T15:43:00Z",
+    "updatedAt": "2025-08-19T15:43:00Z"
+  },
+  {
+    "id": "almagro-11689",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "other",
+    "customerId": "pityrod1980@gmail.com",
+    "customerSnapshot": {
+      "name": "Maria Luisa Rodríguez",
+      "email": "pityrod1980@gmail.com",
+      "phone": "3814474324"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Nivel 1 Camisas",
+        "quantity": 1,
+        "unitPrice": 0.0,
+        "total": 0.0,
+        "productId": "1217"
+      }
+    ],
+    "totalAmount": 0.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": true,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11689",
+    "createdAt": "2025-08-19T13:10:00Z",
+    "updatedAt": "2025-08-19T13:10:00Z"
+  },
+  {
+    "id": "almagro-11686",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "pityrod1980@gmail.com",
+    "customerSnapshot": {
+      "name": "Maria Luisa Rodríguez",
+      "email": "pityrod1980@gmail.com",
+      "phone": "3814474324"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11686",
+    "createdAt": "2025-08-17T21:17:00Z",
+    "updatedAt": "2025-08-17T21:17:00Z"
+  },
+  {
+    "id": "almagro-11683",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "oriananahiralfonso@gmail.com",
+    "customerSnapshot": {
+      "name": "Oriana Alfonso",
+      "email": "oriananahiralfonso@gmail.com",
+      "phone": "+541136579803"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 68250.0,
+        "total": 68250.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 68250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11683",
+    "createdAt": "2025-08-15T20:17:00Z",
+    "updatedAt": "2025-08-15T20:17:00Z"
+  },
+  {
+    "id": "almagro-11682",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "adrianadiamantti@gmail.com",
+    "customerSnapshot": {
+      "name": "Adriana Diamantti",
+      "email": "adrianadiamantti@gmail.com",
+      "phone": "1164913636"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 108900.0,
+        "total": 108900.0
+      }
+    ],
+    "totalAmount": 108900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11682",
+    "createdAt": "2025-08-14T14:10:00Z",
+    "updatedAt": "2025-08-14T14:10:00Z"
+  },
+  {
+    "id": "almagro-11678",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "ange.savytska@gmail.com",
+    "customerSnapshot": {
+      "name": "Angelina Savytska",
+      "email": "ange.savytska@gmail.com",
+      "phone": "+34611310037"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Martes 10hs",
+        "quantity": 1,
+        "unitPrice": 89540.0,
+        "total": 89540.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 89540.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11678",
+    "createdAt": "2025-08-07T13:53:00Z",
+    "updatedAt": "2025-08-07T13:53:00Z"
+  },
+  {
+    "id": "almagro-11677",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "camilanoguerol@hotmail.com",
+    "customerSnapshot": {
+      "name": "Camila Noguerol",
+      "email": "camilanoguerol@hotmail.com",
+      "phone": "1141616319"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Indumentaria",
+        "quantity": 1,
+        "unitPrice": 68250.0,
+        "total": 68250.0,
+        "productId": "1155"
+      }
+    ],
+    "totalAmount": 68250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11677",
+    "createdAt": "2025-08-07T13:29:00Z",
+    "updatedAt": "2025-08-07T13:29:00Z"
+  },
+  {
+    "id": "almagro-11672",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "lagormazclaudia@gmail.com",
+    "customerSnapshot": {
+      "name": "Claudia Gormaz",
+      "email": "lagormazclaudia@gmail.com",
+      "phone": "1168461771"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 108900.0,
+        "total": 108900.0
+      }
+    ],
+    "totalAmount": 108900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11672",
+    "createdAt": "2025-08-01T14:53:00Z",
+    "updatedAt": "2025-08-01T14:53:00Z"
+  },
+  {
+    "id": "almagro-11671",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "gabrielaalonso142@gmail.com",
+    "customerSnapshot": {
+      "name": "Irina gabriela Alonso diaz",
+      "email": "gabrielaalonso142@gmail.com",
+      "phone": "1144030418"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 108900.0,
+        "total": 108900.0
+      }
+    ],
+    "totalAmount": 108900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11671",
+    "createdAt": "2025-08-01T14:36:00Z",
+    "updatedAt": "2025-08-01T14:36:00Z"
+  },
+  {
+    "id": "almagro-11670",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "luisahernandez1920@gmail.com",
+    "customerSnapshot": {
+      "name": "Luisa Hernandez Santaella",
+      "email": "luisahernandez1920@gmail.com",
+      "phone": "1162720041"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 108900.0,
+        "total": 108900.0
+      }
+    ],
+    "totalAmount": 108900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11670",
+    "createdAt": "2025-08-01T14:32:00Z",
+    "updatedAt": "2025-08-01T14:32:00Z"
+  },
+  {
+    "id": "almagro-11666",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "camiijardonn06@gmail.com",
+    "customerSnapshot": {
+      "name": "camila jardon",
+      "email": "camiijardonn06@gmail.com",
+      "phone": "3516131913"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11666",
+    "createdAt": "2025-07-30T22:53:00Z",
+    "updatedAt": "2025-07-30T22:53:00Z"
+  },
+  {
+    "id": "almagro-11663",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "ange.savytsk@gmail.com",
+    "customerSnapshot": {
+      "name": "Angelina Savytska",
+      "email": "ange.savytsk@gmail.com",
+      "phone": "+5491130233879"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Jueves 10hs",
+        "quantity": 1,
+        "unitPrice": 89540.0,
+        "total": 89540.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 89540.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11663",
+    "createdAt": "2025-07-29T18:33:00Z",
+    "updatedAt": "2025-07-29T18:33:00Z"
+  },
+  {
+    "id": "almagro-11646",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "marialascano@gmail.com",
+    "customerSnapshot": {
+      "name": "María Lascano",
+      "email": "marialascano@gmail.com",
+      "phone": "541155088074"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 19/7",
+        "quantity": 1,
+        "unitPrice": 56500.0,
+        "total": 56500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 56500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11646",
+    "createdAt": "2025-07-20T11:28:00Z",
+    "updatedAt": "2025-07-20T11:28:00Z"
+  },
+  {
+    "id": "almagro-11643",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "solgarciaazcarate@gmail.com",
+    "customerSnapshot": {
+      "name": "Sol García Azcárate",
+      "email": "solgarciaazcarate@gmail.com",
+      "phone": "541130110908"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 19/7",
+        "quantity": 1,
+        "unitPrice": 56500.0,
+        "total": 56500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 56500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11643",
+    "createdAt": "2025-07-10T18:53:00Z",
+    "updatedAt": "2025-07-10T18:53:00Z"
+  },
+  {
+    "id": "almagro-11642",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "mlaborde2012@gmail.com",
+    "customerSnapshot": {
+      "name": "Maite Laborde",
+      "email": "mlaborde2012@gmail.com",
+      "phone": "1122623113"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 19/7",
+        "quantity": 1,
+        "unitPrice": 56500.0,
+        "total": 56500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 56500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11642",
+    "createdAt": "2025-07-10T15:48:00Z",
+    "updatedAt": "2025-07-10T15:48:00Z"
+  },
+  {
+    "id": "almagro-11640",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "violeta_alegre@hotmail.com",
+    "customerSnapshot": {
+      "name": "Violeta Alegre cerna.",
+      "email": "violeta_alegre@hotmail.com",
+      "phone": "1532844191"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 19/7",
+        "quantity": 1,
+        "unitPrice": 56500.0,
+        "total": 56500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 56500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11640",
+    "createdAt": "2025-07-10T13:47:00Z",
+    "updatedAt": "2025-07-10T13:47:00Z"
+  },
+  {
+    "id": "almagro-11638",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "lagormazclaudia@gmail.com",
+    "customerSnapshot": {
+      "name": "Claudia Gormaz",
+      "email": "lagormazclaudia@gmail.com",
+      "phone": "1168461771"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 19/7",
+        "quantity": 1,
+        "unitPrice": 56500.0,
+        "total": 56500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 56500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11638",
+    "createdAt": "2025-07-10T13:39:00Z",
+    "updatedAt": "2025-07-10T13:39:00Z"
+  },
+  {
+    "id": "almagro-11634",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "sandrachamorro81@hotmail.com",
+    "customerSnapshot": {
+      "name": "Sandra Chamorro",
+      "email": "sandrachamorro81@hotmail.com",
+      "phone": "+541126559342"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Indumentaria",
+        "quantity": 1,
+        "unitPrice": 68250.0,
+        "total": 68250.0,
+        "productId": "1155"
+      }
+    ],
+    "totalAmount": 68250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11634",
+    "createdAt": "2025-07-02T09:08:00Z",
+    "updatedAt": "2025-07-02T09:08:00Z"
+  },
+  {
+    "id": "almagro-11631",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "julietarios183@gmail.com",
+    "customerSnapshot": {
+      "name": "Julieta Rios",
+      "email": "julietarios183@gmail.com",
+      "phone": "+541128469445"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 68250.0,
+        "total": 68250.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 68250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11631",
+    "createdAt": "2025-07-01T17:48:00Z",
+    "updatedAt": "2025-07-01T17:48:00Z"
+  },
+  {
+    "id": "almagro-11628",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "matiasmartinvalente@gmail.com",
+    "customerSnapshot": {
+      "name": "Abigail Moreno",
+      "email": "matiasmartinvalente@gmail.com",
+      "phone": "1163671670"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11628",
+    "createdAt": "2025-06-30T17:33:00Z",
+    "updatedAt": "2025-06-30T17:33:00Z"
+  },
+  {
+    "id": "almagro-11627",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "julisanvitale@gmail.com",
+    "customerSnapshot": {
+      "name": "Julia Sanvitale",
+      "email": "julisanvitale@gmail.com",
+      "phone": "1127774080"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Indumentaria",
+        "quantity": 1,
+        "unitPrice": 68250.0,
+        "total": 68250.0,
+        "productId": "1155"
+      }
+    ],
+    "totalAmount": 68250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11627",
+    "createdAt": "2025-06-30T17:28:00Z",
+    "updatedAt": "2025-06-30T17:28:00Z"
+  },
+  {
+    "id": "almagro-11623",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "angienicolemita@gmail.com",
+    "customerSnapshot": {
+      "name": "Angie Nicole Mita Morales",
+      "email": "angienicolemita@gmail.com",
+      "phone": "1171040597"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11623",
+    "createdAt": "2025-06-30T16:08:00Z",
+    "updatedAt": "2025-06-30T16:08:00Z"
+  },
+  {
+    "id": "almagro-11615",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "maraelisilva@gmail.com",
+    "customerSnapshot": {
+      "name": "MARA SILVA",
+      "email": "maraelisilva@gmail.com",
+      "phone": "1131251862"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11615",
+    "createdAt": "2025-06-29T14:37:00Z",
+    "updatedAt": "2025-06-29T14:37:00Z"
+  },
+  {
+    "id": "almagro-11614",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "luisahernandez1920@gmail.com",
+    "customerSnapshot": {
+      "name": "Luisa Hernandez Santaella",
+      "email": "luisahernandez1920@gmail.com",
+      "phone": "1162720041"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11614",
+    "createdAt": "2025-06-28T06:33:00Z",
+    "updatedAt": "2025-06-28T06:33:00Z"
+  },
+  {
+    "id": "almagro-11609",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "carballo.marial@hotmail.com",
+    "customerSnapshot": {
+      "name": "Maria Laura Carballo",
+      "email": "carballo.marial@hotmail.com",
+      "phone": "+542215451966"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 68250.0,
+        "total": 68250.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 68250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11609",
+    "createdAt": "2025-06-25T14:01:00Z",
+    "updatedAt": "2025-06-25T14:01:00Z"
+  },
+  {
+    "id": "almagro-11608",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "mariaeugenia.buceta@gmail.com",
+    "customerSnapshot": {
+      "name": "María Eugenia Buceta",
+      "email": "mariaeugenia.buceta@gmail.com",
+      "phone": "1155073121"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11608",
+    "createdAt": "2025-06-24T21:24:00Z",
+    "updatedAt": "2025-06-24T21:24:00Z"
+  },
+  {
+    "id": "almagro-11607",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "gabrielaalonso142@gmail.com",
+    "customerSnapshot": {
+      "name": "Irina gabriela Alonso diaz",
+      "email": "gabrielaalonso142@gmail.com",
+      "phone": "1144030418"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11607",
+    "createdAt": "2025-06-24T15:54:00Z",
+    "updatedAt": "2025-06-24T15:54:00Z"
+  },
+  {
+    "id": "almagro-11606",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "sandrat1707@yahoo.com.ar",
+    "customerSnapshot": {
+      "name": "Sandra Barrionuevo",
+      "email": "sandrat1707@yahoo.com.ar",
+      "phone": "1169520607"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11606",
+    "createdAt": "2025-06-24T15:01:00Z",
+    "updatedAt": "2025-06-24T15:01:00Z"
+  },
+  {
+    "id": "almagro-11605",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "lagormazclaudia@gmail.com",
+    "customerSnapshot": {
+      "name": "Claudia Gormaz",
+      "email": "lagormazclaudia@gmail.com",
+      "phone": "1168461771"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11605",
+    "createdAt": "2025-06-24T13:50:00Z",
+    "updatedAt": "2025-06-24T13:50:00Z"
+  },
+  {
+    "id": "almagro-11601",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "daniela.dari@hotmail.com",
+    "customerSnapshot": {
+      "name": "Daniela Dari",
+      "email": "daniela.dari@hotmail.com",
+      "phone": "1166879612"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11601",
+    "createdAt": "2025-06-20T13:15:00Z",
+    "updatedAt": "2025-06-20T13:15:00Z"
+  },
+  {
+    "id": "almagro-11599",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "josefinapavon@hotmail.com",
+    "customerSnapshot": {
+      "name": "Josefina Pavon",
+      "email": "josefinapavon@hotmail.com",
+      "phone": "1564612365"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Jueves 10hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11599",
+    "createdAt": "2025-06-19T14:51:00Z",
+    "updatedAt": "2025-06-19T14:51:00Z"
+  },
+  {
+    "id": "almagro-11596",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "vickyvictoriagomez2805@gmail.com",
+    "customerSnapshot": {
+      "name": "Vicky Gòmez",
+      "email": "vickyvictoriagomez2805@gmail.com",
+      "phone": "1159232340"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Baul Disena",
+        "quantity": 1,
+        "unitPrice": 15000.0,
+        "total": 15000.0,
+        "productId": "11567"
+      }
+    ],
+    "totalAmount": 15000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11596",
+    "createdAt": "2025-06-16T19:36:00Z",
+    "updatedAt": "2025-06-16T19:36:00Z"
+  },
+  {
+    "id": "almagro-11594",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "other",
+    "customerId": "joscelynorianarodriguez@gmail.com",
+    "customerSnapshot": {
+      "name": "Joscelyn Rodriguez",
+      "email": "joscelynorianarodriguez@gmail.com",
+      "phone": "1121773466"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Carteras",
+        "quantity": 1,
+        "unitPrice": 0.0,
+        "total": 0.0,
+        "productId": "1256"
+      }
+    ],
+    "totalAmount": 0.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": true,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11594",
+    "createdAt": "2025-06-11T18:49:00Z",
+    "updatedAt": "2025-06-11T18:49:00Z"
+  },
+  {
+    "id": "almagro-11593",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "joscelynorianarodriguez@gmail.com",
+    "customerSnapshot": {
+      "name": "Joscelyn Rodriguez",
+      "email": "joscelynorianarodriguez@gmail.com",
+      "phone": "1121773466"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11593",
+    "createdAt": "2025-06-10T15:52:00Z",
+    "updatedAt": "2025-06-10T15:52:00Z"
+  },
+  {
+    "id": "almagro-11584",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "adrianadiamantti@gmail.com",
+    "customerSnapshot": {
+      "name": "Adriana Diamantti",
+      "email": "adrianadiamantti@gmail.com",
+      "phone": "1164913636"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 82900.0,
+        "total": 82900.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 82900.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11584",
+    "createdAt": "2025-06-02T17:54:00Z",
+    "updatedAt": "2025-06-02T17:54:00Z"
+  },
+  {
+    "id": "almagro-11583",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "pamepostigo33@gmail.com",
+    "customerSnapshot": {
+      "name": "pamela postigo",
+      "email": "pamepostigo33@gmail.com",
+      "phone": "2804180821"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11583",
+    "createdAt": "2025-06-02T16:39:00Z",
+    "updatedAt": "2025-06-02T16:39:00Z"
+  },
+  {
+    "id": "almagro-11577",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "gabrielasaso@yahoo.com.ar",
+    "customerSnapshot": {
+      "name": "Gabriela Saso",
+      "email": "gabrielasaso@yahoo.com.ar",
+      "phone": "1568928174"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Baul Disena",
+        "quantity": 1,
+        "unitPrice": 15000.0,
+        "total": 15000.0,
+        "productId": "11567"
+      }
+    ],
+    "totalAmount": 15000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11577",
+    "createdAt": "2025-05-26T11:05:00Z",
+    "updatedAt": "2025-05-26T11:05:00Z"
+  },
+  {
+    "id": "almagro-11576",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "Romina.durante@gmail.com",
+    "customerSnapshot": {
+      "name": "Romina Durante",
+      "email": "Romina.durante@gmail.com",
+      "phone": "1132051111"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Baul Disena",
+        "quantity": 1,
+        "unitPrice": 15000.0,
+        "total": 15000.0,
+        "productId": "11567"
+      }
+    ],
+    "totalAmount": 15000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11576",
+    "createdAt": "2025-05-25T14:41:00Z",
+    "updatedAt": "2025-05-25T14:41:00Z"
+  },
+  {
+    "id": "almagro-11575",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "lorenacristaldo84@gmail.com",
+    "customerSnapshot": {
+      "name": "Lorena Orue",
+      "email": "lorenacristaldo84@gmail.com",
+      "phone": "1153759577"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Baul Disena",
+        "quantity": 1,
+        "unitPrice": 20000.0,
+        "total": 20000.0,
+        "productId": "11567"
+      }
+    ],
+    "totalAmount": 20000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11575",
+    "createdAt": "2025-05-23T12:30:00Z",
+    "updatedAt": "2025-05-23T12:30:00Z"
+  },
+  {
+    "id": "almagro-11574",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "tiamecha@hotmail.com",
+    "customerSnapshot": {
+      "name": "Maria de las Mercedes Merens",
+      "email": "tiamecha@hotmail.com",
+      "phone": "1133800041"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Baul Disena",
+        "quantity": 1,
+        "unitPrice": 20000.0,
+        "total": 20000.0,
+        "productId": "11567"
+      }
+    ],
+    "totalAmount": 20000.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11574",
+    "createdAt": "2025-05-23T10:46:00Z",
+    "updatedAt": "2025-05-23T10:46:00Z"
+  },
+  {
+    "id": "almagro-11563",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "tamaralucianab@gmail.com",
+    "customerSnapshot": {
+      "name": "Tamara Luciana Bustamante",
+      "email": "tamaralucianab@gmail.com",
+      "phone": "01156352333"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11563",
+    "createdAt": "2025-05-16T09:38:00Z",
+    "updatedAt": "2025-05-16T09:38:00Z"
+  },
+  {
+    "id": "almagro-11561",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "violeta_alegre@hotmail.com",
+    "customerSnapshot": {
+      "name": "Violeta Alegre cerna.",
+      "email": "violeta_alegre@hotmail.com",
+      "phone": "1532844191"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11561",
+    "createdAt": "2025-05-13T13:45:00Z",
+    "updatedAt": "2025-05-13T13:45:00Z"
+  },
+  {
+    "id": "almagro-11560",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "alebedognidrago@gmail.com",
+    "customerSnapshot": {
+      "name": "Alejandra Bedogni Drago",
+      "email": "alebedognidrago@gmail.com",
+      "phone": "2944206954"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Indumentaria Nivel 3",
+        "quantity": 1,
+        "unitPrice": 32500.0,
+        "total": 32500.0,
+        "productId": "992"
+      }
+    ],
+    "totalAmount": 32500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11560",
+    "createdAt": "2025-05-13T12:33:00Z",
+    "updatedAt": "2025-05-13T12:33:00Z"
+  },
+  {
+    "id": "almagro-11552",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "beluguardiadg@gmail.com",
+    "customerSnapshot": {
+      "name": "Belu Guardia",
+      "email": "beluguardiadg@gmail.com",
+      "phone": "1134161309"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11552",
+    "createdAt": "2025-05-07T19:08:00Z",
+    "updatedAt": "2025-05-07T19:08:00Z"
+  },
+  {
+    "id": "almagro-11548",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "melina.senorans@gmail.com",
+    "customerSnapshot": {
+      "name": "Melina Señoráns Pérez",
+      "email": "melina.senorans@gmail.com",
+      "phone": "1127204753"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Indumentaria",
+        "quantity": 1,
+        "unitPrice": 68250.0,
+        "total": 68250.0,
+        "productId": "1155"
+      }
+    ],
+    "totalAmount": 68250.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11548",
+    "createdAt": "2025-05-06T08:50:00Z",
+    "updatedAt": "2025-05-06T08:50:00Z"
+  },
+  {
+    "id": "almagro-11544",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "adrianadiamantri@gmail.com",
+    "customerSnapshot": {
+      "name": "Adriana Diamantti",
+      "email": "adrianadiamantri@gmail.com",
+      "phone": "1164913636"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11544",
+    "createdAt": "2025-05-02T13:10:00Z",
+    "updatedAt": "2025-05-02T13:10:00Z"
+  },
+  {
+    "id": "almagro-11543",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "doritaedd@gmail.com",
+    "customerSnapshot": {
+      "name": "Dora Elena Lerzo",
+      "email": "doritaedd@gmail.com",
+      "phone": "1555723144"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11543",
+    "createdAt": "2025-05-02T10:56:00Z",
+    "updatedAt": "2025-05-02T10:56:00Z"
+  },
+  {
+    "id": "almagro-11533",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "ratitacappelletti@gmail.com",
+    "customerSnapshot": {
+      "name": "Daniela Cappelletti",
+      "email": "ratitacappelletti@gmail.com",
+      "phone": "15555081776"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11533",
+    "createdAt": "2025-04-28T21:14:00Z",
+    "updatedAt": "2025-04-28T21:14:00Z"
+  },
+  {
+    "id": "almagro-11524",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "other",
+    "customerId": "mjsagardia@yahoo.com.ar",
+    "customerSnapshot": {
+      "name": "Julieta Sagardia",
+      "email": "mjsagardia@yahoo.com.ar",
+      "phone": "01134693583"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo lenceria nivel 2",
+        "quantity": 1,
+        "unitPrice": 0.0,
+        "total": 0.0,
+        "productId": "986"
+      }
+    ],
+    "totalAmount": 0.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": true,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11524",
+    "createdAt": "2025-04-25T11:05:00Z",
+    "updatedAt": "2025-04-25T11:05:00Z"
+  },
+  {
+    "id": "almagro-11522",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "cintiarojas2010@gmail.com",
+    "customerSnapshot": {
+      "name": "Cintia Ingrid Rojas",
+      "email": "cintiarojas2010@gmail.com",
+      "phone": "3756451738"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11522",
+    "createdAt": "2025-04-16T07:39:00Z",
+    "updatedAt": "2025-04-16T07:39:00Z"
+  },
+  {
+    "id": "almagro-11519",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "other",
+    "customerId": "micaelacandeloro@gmail.com",
+    "customerSnapshot": {
+      "name": "micaela candeloro",
+      "email": "micaelacandeloro@gmail.com",
+      "phone": "2257537431"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Carteras",
+        "quantity": 1,
+        "unitPrice": 0.0,
+        "total": 0.0,
+        "productId": "1256"
+      }
+    ],
+    "totalAmount": 0.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": true,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11519",
+    "createdAt": "2025-04-09T20:18:00Z",
+    "updatedAt": "2025-04-09T20:18:00Z"
+  },
+  {
+    "id": "almagro-11517",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "micaelacandeloro@gmail.com",
+    "customerSnapshot": {
+      "name": "micaela candeloro",
+      "email": "micaelacandeloro@gmail.com",
+      "phone": "2257537431"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 48750.0,
+        "total": 48750.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 48750.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11517",
+    "createdAt": "2025-04-09T12:10:00Z",
+    "updatedAt": "2025-04-09T12:10:00Z"
+  },
+  {
+    "id": "almagro-11508",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "raedraed1965@hotmail.com",
+    "customerSnapshot": {
+      "name": "Alejandra Raed",
+      "email": "raedraed1965@hotmail.com",
+      "phone": "01151625391"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11508",
+    "createdAt": "2025-03-28T22:14:00Z",
+    "updatedAt": "2025-03-28T22:14:00Z"
+  },
+  {
+    "id": "almagro-11507",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "marianabejaranocolpal@gmail.com",
+    "customerSnapshot": {
+      "name": "Mariana Bejarano",
+      "email": "marianabejaranocolpal@gmail.com",
+      "phone": "1121575130"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11507",
+    "createdAt": "2025-03-28T10:47:00Z",
+    "updatedAt": "2025-03-28T10:47:00Z"
+  },
+  {
+    "id": "almagro-11506",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "biriduarte@hotmail.com.ar",
+    "customerSnapshot": {
+      "name": "Birina Duarte Aguero",
+      "email": "biriduarte@hotmail.com.ar",
+      "phone": "1168550262"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa - Sábado 26/4",
+        "quantity": 1,
+        "unitPrice": 49500.0,
+        "total": 49500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 49500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11506",
+    "createdAt": "2025-03-27T15:45:00Z",
+    "updatedAt": "2025-03-27T15:45:00Z"
+  },
+  {
+    "id": "almagro-11505",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "pirrecoazul0@gmail.com",
+    "customerSnapshot": {
+      "name": "Azul Pirreco",
+      "email": "pirrecoazul0@gmail.com",
+      "phone": "1130867419"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11505",
+    "createdAt": "2025-03-27T08:26:00Z",
+    "updatedAt": "2025-03-27T08:26:00Z"
+  },
+  {
+    "id": "almagro-11504",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "mlaborde2012@gmail.com",
+    "customerSnapshot": {
+      "name": "Maite Laborde",
+      "email": "mlaborde2012@gmail.com",
+      "phone": "1122623113"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11504",
+    "createdAt": "2025-03-26T21:34:00Z",
+    "updatedAt": "2025-03-26T21:34:00Z"
+  },
+  {
+    "id": "almagro-11503",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "analiaesquerre@yahoo.com.ar",
+    "customerSnapshot": {
+      "name": "Analía Esquerré",
+      "email": "analiaesquerre@yahoo.com.ar",
+      "phone": "1568390839"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11503",
+    "createdAt": "2025-03-26T20:28:00Z",
+    "updatedAt": "2025-03-26T20:28:00Z"
+  },
+  {
+    "id": "almagro-11501",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "zyraxdark@gmail.com",
+    "customerSnapshot": {
+      "name": "Zaira Paz",
+      "email": "zyraxdark@gmail.com",
+      "phone": "1165550964"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11501",
+    "createdAt": "2025-03-26T15:21:00Z",
+    "updatedAt": "2025-03-26T15:21:00Z"
+  },
+  {
+    "id": "almagro-11497",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "marceayalaa.22@gmail.com",
+    "customerSnapshot": {
+      "name": "Marcela Ayala",
+      "email": "marceayalaa.22@gmail.com",
+      "phone": "3413206004"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 51450.0,
+        "total": 51450.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 51450.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11497",
+    "createdAt": "2025-03-25T09:13:00Z",
+    "updatedAt": "2025-03-25T09:13:00Z"
+  },
+  {
+    "id": "almagro-11495",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "rivas-jesica@hotmail.com",
+    "customerSnapshot": {
+      "name": "JESICA RIVAS",
+      "email": "rivas-jesica@hotmail.com",
+      "phone": "1157662754"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa",
+        "quantity": 1,
+        "unitPrice": 49500.0,
+        "total": 49500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 49500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11495",
+    "createdAt": "2025-03-21T07:01:00Z",
+    "updatedAt": "2025-03-21T07:01:00Z"
+  },
+  {
+    "id": "almagro-11491",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "other",
+    "customerId": "karenr3457@gmail.com",
+    "customerSnapshot": {
+      "name": "Karen Rodríguez",
+      "email": "karenr3457@gmail.com",
+      "phone": "1123590042"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo lenceria nivel 2",
+        "quantity": 1,
+        "unitPrice": 0.0,
+        "total": 0.0,
+        "productId": "986"
+      }
+    ],
+    "totalAmount": 0.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": true,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11491",
+    "createdAt": "2025-03-14T11:29:00Z",
+    "updatedAt": "2025-03-14T11:29:00Z"
+  },
+  {
+    "id": "almagro-11490",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "avalosvirginia56@gmail.com",
+    "customerSnapshot": {
+      "name": "Virginia Avalos",
+      "email": "avalosvirginia56@gmail.com",
+      "phone": "1140232472"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa",
+        "quantity": 1,
+        "unitPrice": 49500.0,
+        "total": 49500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 49500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11490",
+    "createdAt": "2025-03-13T14:26:00Z",
+    "updatedAt": "2025-03-13T14:26:00Z"
+  },
+  {
+    "id": "almagro-11489",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "pereznorabeatrz@gmsil.co.com",
+    "customerSnapshot": {
+      "name": "Nora beatriz Perez",
+      "email": "pereznorabeatrz@gmsil.co.com",
+      "phone": "1562033179"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 78650.0,
+        "total": 78650.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 78650.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11489",
+    "createdAt": "2025-03-12T16:13:00Z",
+    "updatedAt": "2025-03-12T16:13:00Z"
+  },
+  {
+    "id": "almagro-11488",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "velizgmz@gmail.com",
+    "customerSnapshot": {
+      "name": "Viviana Gomez",
+      "email": "velizgmz@gmail.com",
+      "phone": "1140543492"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa",
+        "quantity": 1,
+        "unitPrice": 49500.0,
+        "total": 49500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 49500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11488",
+    "createdAt": "2025-03-12T13:31:00Z",
+    "updatedAt": "2025-03-12T13:31:00Z"
+  },
+  {
+    "id": "almagro-11487",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "trinidad@briceno.com.ar",
+    "customerSnapshot": {
+      "name": "trinidad briceño",
+      "email": "trinidad@briceno.com.ar",
+      "phone": "1135048404"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 37125.0,
+        "total": 37125.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 37125.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11487",
+    "createdAt": "2025-03-11T20:24:00Z",
+    "updatedAt": "2025-03-11T20:24:00Z"
+  },
+  {
+    "id": "almagro-11480",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "grace.sausto.marzullo@gmail.com",
+    "customerSnapshot": {
+      "name": "Graciela Monica MARZULLO",
+      "email": "grace.sausto.marzullo@gmail.com",
+      "phone": "0111556911700"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa",
+        "quantity": 1,
+        "unitPrice": 49500.0,
+        "total": 49500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 49500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11480",
+    "createdAt": "2025-02-28T11:51:00Z",
+    "updatedAt": "2025-02-28T11:51:00Z"
+  },
+  {
+    "id": "almagro-11476",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "juliruggiero96@hotmail.com",
+    "customerSnapshot": {
+      "name": "Julieta Ruggiero",
+      "email": "juliruggiero96@hotmail.com",
+      "phone": "2995225222"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 10hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11476",
+    "createdAt": "2025-02-28T11:21:00Z",
+    "updatedAt": "2025-02-28T11:21:00Z"
+  },
+  {
+    "id": "almagro-11451",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "analiavsabate@gmail.com",
+    "customerSnapshot": {
+      "name": "Analia Sabate",
+      "email": "analiavsabate@gmail.com",
+      "phone": "11-2335-5075"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 37125.0,
+        "total": 37125.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 37125.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11451",
+    "createdAt": "2025-02-25T17:00:00Z",
+    "updatedAt": "2025-02-25T17:00:00Z"
+  },
+  {
+    "id": "almagro-11450",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "teff.pixie@gmail.com",
+    "customerSnapshot": {
+      "name": "Estefania Lanata",
+      "email": "teff.pixie@gmail.com",
+      "phone": "1569837074"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 37125.0,
+        "total": 37125.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 37125.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11450",
+    "createdAt": "2025-02-24T13:19:00Z",
+    "updatedAt": "2025-02-24T13:19:00Z"
+  },
+  {
+    "id": "almagro-11446",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "isabelaerrico@gmail.com",
+    "customerSnapshot": {
+      "name": "ISABELA VERONICA ERRICO",
+      "email": "isabelaerrico@gmail.com",
+      "phone": "1121750320"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Sábado 10hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11446",
+    "createdAt": "2025-02-21T14:32:00Z",
+    "updatedAt": "2025-02-21T14:32:00Z"
+  },
+  {
+    "id": "almagro-11445",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "julitatg00@gmail.com",
+    "customerSnapshot": {
+      "name": "Julia Thomas",
+      "email": "julitatg00@gmail.com",
+      "phone": "1135680748"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Sábado 10hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11445",
+    "createdAt": "2025-02-21T14:27:00Z",
+    "updatedAt": "2025-02-21T14:27:00Z"
+  },
+  {
+    "id": "almagro-11438",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "msaggioro209@gmail.com",
+    "customerSnapshot": {
+      "name": "marcela alejandra saggioro",
+      "email": "msaggioro209@gmail.com",
+      "phone": "1136262712"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Arreglos de Ropa",
+        "quantity": 1,
+        "unitPrice": 49500.0,
+        "total": 49500.0,
+        "productId": "11240"
+      }
+    ],
+    "totalAmount": 49500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11438",
+    "createdAt": "2025-02-20T14:46:00Z",
+    "updatedAt": "2025-02-20T14:46:00Z"
+  },
+  {
+    "id": "almagro-11437",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "ambarmantega@gmail.com",
+    "customerSnapshot": {
+      "name": "Ambar Mantega Fain",
+      "email": "ambarmantega@gmail.com",
+      "phone": "1125568685"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11437",
+    "createdAt": "2025-02-20T13:56:00Z",
+    "updatedAt": "2025-02-20T13:56:00Z"
+  },
+  {
+    "id": "almagro-11436",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "paulinafain@gmail.com",
+    "customerSnapshot": {
+      "name": "Paulina Fain",
+      "email": "paulinafain@gmail.com",
+      "phone": "01151513994"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11436",
+    "createdAt": "2025-02-20T13:54:00Z",
+    "updatedAt": "2025-02-20T13:54:00Z"
+  },
+  {
+    "id": "almagro-11435",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "micaeladiaz92@hotmail.com",
+    "customerSnapshot": {
+      "name": "micaela diaz",
+      "email": "micaeladiaz92@hotmail.com",
+      "phone": "1160071744"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11435",
+    "createdAt": "2025-02-20T13:46:00Z",
+    "updatedAt": "2025-02-20T13:46:00Z"
+  },
+  {
+    "id": "almagro-11431",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "daianneburton777@gmail.com",
+    "customerSnapshot": {
+      "name": "Daiana Carrasco",
+      "email": "daianneburton777@gmail.com",
+      "phone": "1137039243"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11431",
+    "createdAt": "2025-02-11T18:26:00Z",
+    "updatedAt": "2025-02-11T18:26:00Z"
+  },
+  {
+    "id": "almagro-11428",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "yesilore01@hotmail.com",
+    "customerSnapshot": {
+      "name": "yesica aveggio",
+      "email": "yesilore01@hotmail.com",
+      "phone": "+541124538840"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Carteras",
+        "quantity": 1,
+        "unitPrice": 24500.0,
+        "total": 24500.0,
+        "productId": "1256"
+      }
+    ],
+    "totalAmount": 24500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11428",
+    "createdAt": "2025-02-10T15:45:00Z",
+    "updatedAt": "2025-02-10T15:45:00Z"
+  },
+  {
+    "id": "almagro-11426",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "lafillealb@gmail.com",
+    "customerSnapshot": {
+      "name": "Alicia Lo Balbo",
+      "email": "lafillealb@gmail.com",
+      "phone": "1151234427"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11426",
+    "createdAt": "2025-02-05T18:03:00Z",
+    "updatedAt": "2025-02-05T18:03:00Z"
+  },
+  {
+    "id": "almagro-11425",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "juliasantos94189@gmail.com",
+    "customerSnapshot": {
+      "name": "Isabel julia santos",
+      "email": "juliasantos94189@gmail.com",
+      "phone": "01158372049"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11425",
+    "createdAt": "2025-02-05T16:49:00Z",
+    "updatedAt": "2025-02-05T16:49:00Z"
+  },
+  {
+    "id": "almagro-11424",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "solgarciaazcarate@gmail.com",
+    "customerSnapshot": {
+      "name": "Sol García Azcárate",
+      "email": "solgarciaazcarate@gmail.com",
+      "phone": "541130110908"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11424",
+    "createdAt": "2025-02-05T14:02:00Z",
+    "updatedAt": "2025-02-05T14:02:00Z"
+  },
+  {
+    "id": "almagro-11423",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "lulitafrydman@gmail.com",
+    "customerSnapshot": {
+      "name": "Lucia Frydman",
+      "email": "lulitafrydman@gmail.com",
+      "phone": "54116904-0021"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11423",
+    "createdAt": "2025-02-05T14:01:00Z",
+    "updatedAt": "2025-02-05T14:01:00Z"
+  },
+  {
+    "id": "almagro-11422",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "rominaschmukler@gmail.com",
+    "customerSnapshot": {
+      "name": "Romina Schmukler",
+      "email": "rominaschmukler@gmail.com",
+      "phone": "01140262694"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 18hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11422",
+    "createdAt": "2025-02-05T13:54:00Z",
+    "updatedAt": "2025-02-05T13:54:00Z"
+  },
+  {
+    "id": "almagro-11420",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "claudiaalejandraalvarez@hotmail.com",
+    "customerSnapshot": {
+      "name": "Claudia Alejandra Alvarez",
+      "email": "claudiaalejandraalvarez@hotmail.com",
+      "phone": "1157632713"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11420",
+    "createdAt": "2025-02-05T12:48:00Z",
+    "updatedAt": "2025-02-05T12:48:00Z"
+  },
+  {
+    "id": "almagro-11418",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "cash",
+    "customerId": "abrudarkito@gmail.com",
+    "customerSnapshot": {
+      "name": "Abril Gala García",
+      "email": "abrudarkito@gmail.com",
+      "phone": "1138820523"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Abc Costura - Miércoles 15hs",
+        "quantity": 1,
+        "unitPrice": 70200.0,
+        "total": 70200.0,
+        "productId": "139"
+      }
+    ],
+    "totalAmount": 70200.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11418",
+    "createdAt": "2025-02-05T12:36:00Z",
+    "updatedAt": "2025-02-05T12:36:00Z"
+  },
+  {
+    "id": "almagro-11414",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "alejandravillegas1508@gmail.com",
+    "customerSnapshot": {
+      "name": "Carolina Martinez",
+      "email": "alejandravillegas1508@gmail.com",
+      "phone": "1140501687"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 37125.0,
+        "total": 37125.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 37125.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11414",
+    "createdAt": "2025-02-01T15:18:00Z",
+    "updatedAt": "2025-02-01T15:18:00Z"
+  },
+  {
+    "id": "almagro-11411",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "transfer",
+    "customerId": "nayadetsantana@gmail.com",
+    "customerSnapshot": {
+      "name": "Nayadet Hormazabal",
+      "email": "nayadetsantana@gmail.com",
+      "phone": "1130054877"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 51450.0,
+        "total": 51450.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 51450.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11411",
+    "createdAt": "2025-01-25T16:57:00Z",
+    "updatedAt": "2025-01-25T16:57:00Z"
+  },
+  {
+    "id": "almagro-11409",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "flomora2211@gmail.com",
+    "customerSnapshot": {
+      "name": "Florencia Noelia Morales",
+      "email": "flomora2211@gmail.com",
+      "phone": "3496522866"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Carteras",
+        "quantity": 1,
+        "unitPrice": 24500.0,
+        "total": 24500.0,
+        "productId": "1256"
+      }
+    ],
+    "totalAmount": 24500.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11409",
+    "createdAt": "2025-01-20T06:26:00Z",
+    "updatedAt": "2025-01-20T06:26:00Z"
+  },
+  {
+    "id": "almagro-11408",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "nunezfloppy@gmail.com",
+    "customerSnapshot": {
+      "name": "florencia nuñez",
+      "email": "nunezfloppy@gmail.com",
+      "phone": "1166756536"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 37125.0,
+        "total": 37125.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 37125.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11408",
+    "createdAt": "2025-01-19T17:05:00Z",
+    "updatedAt": "2025-01-19T17:05:00Z"
+  },
+  {
+    "id": "almagro-11405",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "other",
+    "customerId": "damicomariaveronica@gmail.com",
+    "customerSnapshot": {
+      "name": "María Verónica D'Amico",
+      "email": "damicomariaveronica@gmail.com",
+      "phone": "1167052152"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Intensivo Carteras",
+        "quantity": 1,
+        "unitPrice": 0.0,
+        "total": 0.0,
+        "productId": "1256"
+      }
+    ],
+    "totalAmount": 0.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": true,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11405",
+    "createdAt": "2025-01-18T15:31:00Z",
+    "updatedAt": "2025-01-18T15:31:00Z"
+  },
+  {
+    "id": "almagro-11401",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "carolina.roldan@hotmail.com",
+    "customerSnapshot": {
+      "name": "Carolina Luciana Roldán",
+      "email": "carolina.roldan@hotmail.com",
+      "phone": "1549745567"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "Pack x3 Lenceria",
+        "quantity": 1,
+        "unitPrice": 51450.0,
+        "total": 51450.0,
+        "productId": "1159"
+      }
+    ],
+    "totalAmount": 51450.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11401",
+    "createdAt": "2025-01-14T23:21:00Z",
+    "updatedAt": "2025-01-14T23:21:00Z"
+  },
+  {
+    "id": "almagro-11398",
+    "status": "approved",
+    "paymentStatus": "paid",
+    "paymentMethod": "mp",
+    "customerId": "damicomariaveronica@gmail.com",
+    "customerSnapshot": {
+      "name": "María Verónica D'Amico",
+      "email": "damicomariaveronica@gmail.com",
+      "phone": "1167052152"
+    },
+    "items": [
+      {
+        "type": "product",
+        "name": "abc costura + un Intensivo",
+        "quantity": 1,
+        "unitPrice": 37125.0,
+        "total": 37125.0,
+        "productId": "10483"
+      }
+    ],
+    "totalAmount": 37125.0,
+    "currency": "ARS",
+    "metadata": {
+      "sede": "almagro",
+      "registrationSource": "legacy-web",
+      "hasGifts": false,
+      "hasProductsWithPickup": false,
+      "isFree": false,
+      "orderType": "curso_presencial"
+    },
+    "externalReference": "11398",
+    "createdAt": "2025-01-10T17:51:00Z",
+    "updatedAt": "2025-01-10T17:51:00Z"
+  }
+]

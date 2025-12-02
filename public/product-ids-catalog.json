@@ -1,0 +1,355 @@
+{
+  "cursosOnline": {
+    "masterClassGratuita": [
+      {
+        "id": "6655",
+        "name": "Curso Online - MasterClass Gratuita 1"
+      },
+      {
+        "id": "5015",
+        "name": "Curso Online - MasterClass Gratuita 2"
+      }
+    ],
+    "enPromo": [
+      {
+        "id": "1155",
+        "name": "Curso Online - En Promo 1"
+      },
+      {
+        "id": "1159",
+        "name": "Curso Online - En Promo 2"
+      },
+      {
+        "id": "10483",
+        "name": "Curso Online - En Promo 3"
+      }
+    ],
+    "paraComenzar": [
+      {
+        "id": "0L5wz3t9FJXLPehXpVUk",
+        "name": "Curso Online - Para Comenzar 1"
+      },
+      {
+        "id": "10483",
+        "name": "Curso Online - Para Comenzar 2"
+      }
+    ],
+    "intensivosIndumentaria": [
+      {
+        "id": "9556",
+        "name": "Curso Online - Intensivo Indumentaria 1"
+      },
+      {
+        "id": "1925",
+        "name": "Curso Online - Intensivo Indumentaria 2"
+      },
+      {
+        "id": "1155",
+        "name": "Curso Online - Intensivo Indumentaria 3"
+      },
+      {
+        "id": "992",
+        "name": "Curso Online - Intensivo Indumentaria 4"
+      },
+      {
+        "id": "1217",
+        "name": "Curso Online - Intensivo Indumentaria 5"
+      },
+      {
+        "id": "2073",
+        "name": "Curso Online - Intensivo Indumentaria 6"
+      },
+      {
+        "id": "1783",
+        "name": "Curso Online - Intensivo Indumentaria 7"
+      }
+    ],
+    "intensivosLenceria": [
+      {
+        "id": "2036",
+        "name": "Curso Online - Intensivo Lencería 1"
+      },
+      {
+        "id": "1159",
+        "name": "Curso Online - Intensivo Lencería 2"
+      },
+      {
+        "id": "986",
+        "name": "Curso Online - Intensivo Lencería 3"
+      },
+      {
+        "id": "1794",
+        "name": "Curso Online - Intensivo Lencería 4"
+      },
+      {
+        "id": "3316",
+        "name": "Curso Online - Intensivo Lencería 5"
+      }
+    ],
+    "intensivosCarteras": [
+      {
+        "id": "1256",
+        "name": "Curso Online - Intensivo Carteras 1"
+      },
+      {
+        "id": "1134",
+        "name": "Curso Online - Intensivo Carteras 2"
+      }
+    ],
+    "paraAlumnos": [
+      {
+        "id": "11567",
+        "name": "Curso Online - Para Alumnos 1"
+      },
+      {
+        "id": "1134",
+        "name": "Curso Online - Para Alumnos 2"
+      }
+    ],
+    "paraRegalar": [
+      {
+        "id": "3833",
+        "name": "Curso Online - Para Regalar 1"
+      },
+      {
+        "id": "6361",
+        "name": "Curso Online - Para Regalar 2"
+      },
+      {
+        "id": "6360",
+        "name": "Curso Online - Para Regalar 3"
+      },
+      {
+        "id": "1492",
+        "name": "Curso Online - Para Regalar 4"
+      }
+    ]
+  },
+  "cursosPresencialesCiudadJardin": {
+    "intensivos": [
+      {
+        "id": "415",
+        "name": "Curso Presencial CJ - Intensivo 1",
+        "sede": "ciudad-jardin"
+      },
+      {
+        "id": "11751",
+        "name": "Curso Presencial CJ - Intensivo 2",
+        "sede": "ciudad-jardin"
+      },
+      {
+        "id": "8987",
+        "name": "Curso Presencial CJ - Intensivo 3",
+        "sede": "ciudad-jardin"
+      }
+    ],
+    "regulares": [
+      {
+        "id": "50",
+        "name": "Curso Presencial CJ - Regular 1",
+        "sede": "ciudad-jardin"
+      },
+      {
+        "id": "71",
+        "name": "Curso Presencial CJ - Regular 2",
+        "sede": "ciudad-jardin"
+      }
+    ],
+    "baulPuertasAbiertas": [
+      {
+        "id": "5492",
+        "name": "Curso Presencial CJ - Baúl Puertas Abiertas",
+        "sede": "ciudad-jardin"
+      }
+    ]
+  },
+  "cursosPresencialesAlmagro": {
+    "intensivos": [
+      {
+        "id": "11240",
+        "name": "Curso Presencial Almagro - Intensivo 1",
+        "sede": "almagro"
+      },
+      {
+        "id": "11751",
+        "name": "Curso Presencial Almagro - Intensivo 2",
+        "sede": "almagro"
+      },
+      {
+        "id": "139",
+        "name": "Curso Presencial Almagro - Intensivo 3",
+        "sede": "almagro"
+      }
+    ],
+    "regulares": [
+      {
+        "id": "144",
+        "name": "Curso Presencial Almagro - Regular 1",
+        "sede": "almagro"
+      },
+      {
+        "id": "150",
+        "name": "Curso Presencial Almagro - Regular 2",
+        "sede": "almagro"
+      },
+      {
+        "id": "148",
+        "name": "Curso Presencial Almagro - Regular 3",
+        "sede": "almagro"
+      }
+    ]
+  },
+  "productosYServicios": {
+    "revistas": [
+      {
+        "id": "5566",
+        "name": "Revista 1"
+      },
+      {
+        "id": "5560",
+        "name": "Revista 2"
+      },
+      {
+        "id": "5198",
+        "name": "Revista 3"
+      },
+      {
+        "id": "5197",
+        "name": "Revista 4"
+      },
+      {
+        "id": "4814",
+        "name": "Revista 5"
+      },
+      {
+        "id": "4358",
+        "name": "Revista 6"
+      },
+      {
+        "id": "4349",
+        "name": "Revista 7"
+      },
+      {
+        "id": "4337",
+        "name": "Revista 8"
+      },
+      {
+        "id": "4343",
+        "name": "Revista 9"
+      },
+      {
+        "id": "4328",
+        "name": "Revista 10"
+      },
+      {
+        "id": "4322",
+        "name": "Revista 11"
+      },
+      {
+        "id": "4316",
+        "name": "Revista 12"
+      },
+      {
+        "id": "4310",
+        "name": "Revista 13"
+      },
+      {
+        "id": "4304",
+        "name": "Revista 14"
+      },
+      {
+        "id": "4297",
+        "name": "Revista 15"
+      },
+      {
+        "id": "4291",
+        "name": "Revista 16"
+      },
+      {
+        "id": "4285",
+        "name": "Revista 17"
+      },
+      {
+        "id": "4280",
+        "name": "Revista 18"
+      },
+      {
+        "id": "4274",
+        "name": "Revista 19"
+      },
+      {
+        "id": "4268",
+        "name": "Revista 20"
+      },
+      {
+        "id": "4262",
+        "name": "Revista 21"
+      },
+      {
+        "id": "4256",
+        "name": "Revista 22"
+      },
+      {
+        "id": "4250",
+        "name": "Revista 23"
+      },
+      {
+        "id": "4244",
+        "name": "Revista 24"
+      },
+      {
+        "id": "4237",
+        "name": "Revista 25"
+      },
+      {
+        "id": "4231",
+        "name": "Revista 26"
+      },
+      {
+        "id": "4225",
+        "name": "Revista 27"
+      },
+      {
+        "id": "4218",
+        "name": "Revista 28"
+      },
+      {
+        "id": "4211",
+        "name": "Revista 29"
+      },
+      {
+        "id": "847",
+        "name": "Revista 30"
+      }
+    ],
+    "giftCards": [
+      {
+        "id": "3833",
+        "name": "Gift Card 1"
+      },
+      {
+        "id": "6361",
+        "name": "Gift Card 2"
+      },
+      {
+        "id": "6360",
+        "name": "Gift Card 3"
+      },
+      {
+        "id": "1492",
+        "name": "Gift Card 4"
+      }
+    ]
+  },
+  "_metadata": {
+    "totalProducts": 94,
+    "totalCursosOnline": 29,
+    "totalCursosPresencialesCJ": 6,
+    "totalCursosPresencialesAlmagro": 6,
+    "totalProductosServicios": 34,
+    "freeCourseIds": ["6655", "5015"],
+    "extractedAt": "2024-12-02",
+    "note": "Los nombres son placeholders. Ejecuta 'npm run extract-catalog' para obtener los nombres reales desde Firestore."
+  }
+}
+

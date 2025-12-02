@@ -1,0 +1,405 @@
+{
+  "cursosOnline": {
+    "masterClassGratuita": [
+      {
+        "id": "6655",
+        "name": "MasterClass Lubricacion",
+        "price": 0
+      },
+      {
+        "id": "5015",
+        "name": "MasterClass",
+        "price": 0
+      }
+    ],
+    "enPromo": [
+      {
+        "id": "1155",
+        "name": "Pack x3 Indumentaria",
+        "price": 89250
+      },
+      {
+        "id": "1159",
+        "name": "Pack x3 Lenceria",
+        "price": 89250
+      },
+      {
+        "id": "10483",
+        "name": "abc costura + un Intensivo",
+        "price": 85000
+      }
+    ],
+    "paraComenzar": [
+      {
+        "id": "0L5wz3t9FJXLPehXpVUk",
+        "name": "Abc Costura Online",
+        "price": 42500
+      },
+      {
+        "id": "10483",
+        "name": "abc costura + un Intensivo",
+        "price": 85000
+      }
+    ],
+    "intensivosIndumentaria": [
+      {
+        "id": "9556",
+        "name": "Arreglos de Ropa",
+        "price": 50700
+      },
+      {
+        "id": "1925",
+        "name": "Intensivo Mi primer jean",
+        "price": 50700
+      },
+      {
+        "id": "1155",
+        "name": "Pack x3 Indumentaria",
+        "price": 89250
+      },
+      {
+        "id": "992",
+        "name": "Intensivo Indumentaria Nivel 3",
+        "price": 42500
+      },
+      {
+        "id": "1217",
+        "name": "Intensivo Nivel 1 Camisas",
+        "price": 42500
+      },
+      {
+        "id": "2073",
+        "name": "Intensivo Indumentaria Nivel 2",
+        "price": 42500
+      },
+      {
+        "id": "1783",
+        "name": "Intensivo Indumentaria Nivel I",
+        "price": 42500
+      }
+    ],
+    "intensivosLenceria": [
+      {
+        "id": "2036",
+        "name": "Intensivo Mallas",
+        "price": 42500
+      },
+      {
+        "id": "1159",
+        "name": "Pack x3 Lenceria",
+        "price": 89250
+      },
+      {
+        "id": "986",
+        "name": "Intensivo lenceria nivel 2",
+        "price": 42500
+      },
+      {
+        "id": "1794",
+        "name": "Intensivo Lenceria Nivel I Bombachas",
+        "price": 42500
+      },
+      {
+        "id": "3316",
+        "name": "Intensivo Lenceria Nivel 3",
+        "price": 42500
+      }
+    ],
+    "intensivosCarteras": [
+      {
+        "id": "1256",
+        "name": "Intensivo Carteras",
+        "price": 42500
+      },
+      {
+        "id": "1134",
+        "name": "Pantuflas",
+        "price": 19500
+      }
+    ],
+    "paraAlumnos": [
+      {
+        "id": "11567",
+        "name": "Baul Disena",
+        "price": 26000
+      },
+      {
+        "id": "1134",
+        "name": "Pantuflas",
+        "price": 19500
+      }
+    ],
+    "paraRegalar": [
+      {
+        "id": "3833",
+        "name": "Gift Baulera Intensivos",
+        "price": 42500
+      },
+      {
+        "id": "6361",
+        "name": "Gift Baulera Abc + Intensivo",
+        "price": 63750
+      },
+      {
+        "id": "6360",
+        "name": "Gift Baulera Pack x 3",
+        "price": 89250
+      },
+      {
+        "id": "1492",
+        "name": "Gift Baulera Abc Online",
+        "price": 42500
+      }
+    ]
+  },
+  "cursosPresencialesCiudadJardin": {
+    "intensivos": [
+      {
+        "id": "415",
+        "name": "abc Costura",
+        "price": 78
+      },
+      {
+        "id": "11751",
+        "name": "Munecos \"especial navidad\"",
+        "price": 70000
+      },
+      {
+        "id": "8987",
+        "name": "Abc Overlock & Collareta",
+        "price": 94380
+      }
+    ],
+    "regulares": [
+      {
+        "id": "50",
+        "name": "Lenceria y mallas",
+        "price": 180
+      },
+      {
+        "id": "71",
+        "name": "Indumentaria",
+        "price": 70180
+      }
+    ],
+    "baulPuertasAbiertas": [
+      {
+        "id": "5492",
+        "name": "Taller de Calzado",
+        "price": 0
+      }
+    ]
+  },
+  "cursosPresencialesAlmagro": {
+    "intensivos": [
+      {
+        "id": "11240",
+        "name": "Arreglos de Ropa",
+        "price": 65000
+      },
+      {
+        "id": "11751",
+        "name": "Munecos \"especial navidad\"",
+        "price": 70000
+      },
+      {
+        "id": "139",
+        "name": "Abc Costura",
+        "price": 94380
+      }
+    ],
+    "regulares": [
+      {
+        "id": "144",
+        "name": "Indumentaria",
+        "price": 70180
+      },
+      {
+        "id": "150",
+        "name": "Carteras",
+        "price": 70180
+      },
+      {
+        "id": "148",
+        "name": "Lencería y Mallas",
+        "price": 70180
+      }
+    ]
+  },
+  "productosYServicios": {
+    "revistas": [
+      {
+        "id": "5566",
+        "name": "Especial Bebés",
+        "price": 5000
+      },
+      {
+        "id": "5560",
+        "name": "Moda Oversize",
+        "price": 5000
+      },
+      {
+        "id": "5198",
+        "name": "Vida Sustentable",
+        "price": 5000
+      },
+      {
+        "id": "5197",
+        "name": "Ropa Cómoda Y Casual",
+        "price": 5000
+      },
+      {
+        "id": "4814",
+        "name": "Vestidos Simpleza Y Color",
+        "price": 5000
+      },
+      {
+        "id": "4358",
+        "name": "Revista Lenceria I",
+        "price": 5000
+      },
+      {
+        "id": "4349",
+        "name": "Revista Macrame Mandalas",
+        "price": 5000
+      },
+      {
+        "id": "4337",
+        "name": "Revista Costura Express",
+        "price": 5000
+      },
+      {
+        "id": "4343",
+        "name": "Revista Vestidos Dama",
+        "price": 5000
+      },
+      {
+        "id": "4328",
+        "name": "Revista Comodo y Femenino",
+        "price": 5000
+      },
+      {
+        "id": "4322",
+        "name": "Revista Ropa Deportiva",
+        "price": 5000
+      },
+      {
+        "id": "4316",
+        "name": "Revista Accesorios",
+        "price": 5000
+      },
+      {
+        "id": "4310",
+        "name": "Revista Vivi la Moda",
+        "price": 5000
+      },
+      {
+        "id": "4304",
+        "name": "Revista Mujeres Reales",
+        "price": 5000
+      },
+      {
+        "id": "4297",
+        "name": "Revista especial Abrigos",
+        "price": 5000
+      },
+      {
+        "id": "4291",
+        "name": "Revista especial Vestidos",
+        "price": 5000
+      },
+      {
+        "id": "4285",
+        "name": "Revista especial Buzos",
+        "price": 5000
+      },
+      {
+        "id": "4280",
+        "name": "Revista Ropa con Apliques",
+        "price": 5000
+      },
+      {
+        "id": "4274",
+        "name": "Revista Ropa de Noche",
+        "price": 5000
+      },
+      {
+        "id": "4268",
+        "name": "Revista Lenceria II",
+        "price": 5000
+      },
+      {
+        "id": "4262",
+        "name": "Revista Mix Telas",
+        "price": 5000
+      },
+      {
+        "id": "4256",
+        "name": "Revista Diseños a medida",
+        "price": 5000
+      },
+      {
+        "id": "4250",
+        "name": "Revista Costura Express",
+        "price": 5000
+      },
+      {
+        "id": "4244",
+        "name": "Revista Vestidos Nenas",
+        "price": 5000
+      },
+      {
+        "id": "4237",
+        "name": "Revista Talles Reales",
+        "price": 5000
+      },
+      {
+        "id": "4231",
+        "name": "Revista bohemia peques",
+        "price": 2100
+      },
+      {
+        "id": "4225",
+        "name": "Revista Pijamas Divertidos",
+        "price": 5000
+      },
+      {
+        "id": "4218",
+        "name": "Revista Ropa de Trabajo",
+        "price": 5000
+      },
+      {
+        "id": "4211",
+        "name": "Revista Camisas",
+        "price": 5000
+      },
+      {
+        "id": "847",
+        "name": "Revista de Mochilas",
+        "price": 5000
+      }
+    ],
+    "giftCards": [
+      {
+        "id": "3833",
+        "name": "Gift Baulera Intensivos",
+        "price": 42500
+      },
+      {
+        "id": "6361",
+        "name": "Gift Baulera Abc + Intensivo",
+        "price": 63750
+      },
+      {
+        "id": "6360",
+        "name": "Gift Baulera Pack x 3",
+        "price": 89250
+      },
+      {
+        "id": "1492",
+        "name": "Gift Baulera Abc Online",
+        "price": 42500
+      }
+    ]
+  }
+}
