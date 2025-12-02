@@ -21,11 +21,11 @@ export default function LoginPage() {
   const redirectParam = searchParams?.get("redirect") || null;
 
   const handleClose = () => {
-    // Si hay redirect, ir ahí, sino ir al home
+    // Si hay redirect, ir ahí, sino volver atrás
     if (redirectParam) {
-      router.push(decodeURIComponent(redirectParam));
+      router.replace(decodeURIComponent(redirectParam));
     } else {
-      router.push('/');
+      router.replace('/');
     }
   };
 
@@ -42,13 +42,12 @@ export default function LoginPage() {
       await signIn(email, password);
       toast.success("Inicio de sesión exitoso");
       
-      // Redirigir: redirect param > /account > home
+      // Redirigir: redirect param > home
       const target = redirectParam ? decodeURIComponent(redirectParam) : '/';
       
-      // Pequeño delay para que el toast se vea
+      // Usar replace para evitar volver atrás al login
       setTimeout(() => {
-        router.push(target);
-        router.refresh();
+        router.replace(target);
       }, 500);
       
     } catch (error: any) {
@@ -80,8 +79,7 @@ export default function LoginPage() {
       const target = redirectParam ? decodeURIComponent(redirectParam) : '/';
       
       setTimeout(() => {
-        router.push(target);
-        router.refresh();
+        router.replace(target);
       }, 500);
       
     } catch (error) {

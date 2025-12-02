@@ -17,33 +17,42 @@ export default function AuthModal({ children, onClose }: AuthModalProps) {
     };
   }, []);
 
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    // Solo cerrar si se hace click en el overlay, no en el contenido
+    if (e.target === e.currentTarget && onClose) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-      {/* Overlay opaco */}
+    <>
+      {/* Overlay opaco que cubre todo */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
+        className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm"
+        onClick={handleOverlayClick}
       />
       
-      {/* Contenido del modal */}
-      <div className="relative z-10 w-full max-w-md">
-        {/* Botón cerrar (si se proporciona onClose) */}
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
-            aria-label="Cerrar"
-          >
-            <X className="w-8 h-8" />
-          </button>
-        )}
-        
-        {/* Card del formulario */}
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
-          {children}
+      {/* Modal centrado */}
+      <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 pointer-events-none">
+        <div className="relative w-full max-w-md pointer-events-auto">
+          {/* Botón cerrar */}
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors bg-black/30 hover:bg-black/50 rounded-full p-2"
+              aria-label="Cerrar"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          )}
+          
+          {/* Card del formulario */}
+          <div className="bg-white rounded-2xl shadow-2xl max-h-[85vh] overflow-y-auto">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

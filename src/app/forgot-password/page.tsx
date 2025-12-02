@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
   const router = useRouter();
 
   const handleClose = () => {
-    router.push('/');
+    router.replace('/');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

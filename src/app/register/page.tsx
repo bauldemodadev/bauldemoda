@@ -22,9 +22,9 @@ export default function RegisterPage() {
   const handleClose = () => {
     // Si hay redirect, ir ahí, sino ir al home
     if (redirectParam) {
-      router.push(decodeURIComponent(redirectParam));
+      router.replace(decodeURIComponent(redirectParam));
     } else {
-      router.push('/');
+      router.replace('/');
     }
   };
 
@@ -104,8 +104,7 @@ export default function RegisterPage() {
       const target = redirectParam ? decodeURIComponent(redirectParam) : '/';
       
       setTimeout(() => {
-        router.push(target);
-        router.refresh();
+        router.replace(target);
       }, 500);
       
     } catch (error: any) {
@@ -136,8 +135,7 @@ export default function RegisterPage() {
       const target = redirectParam ? decodeURIComponent(redirectParam) : '/';
       
       setTimeout(() => {
-        router.push(target);
-        router.refresh();
+        router.replace(target);
       }, 500);
       
     } catch (error) {
