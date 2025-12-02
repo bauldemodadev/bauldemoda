@@ -26,7 +26,7 @@ export default function FreeCourseCheckout({ courseId, courseName, onCancel }: F
   const { toast } = useToast();
   
   const [formData, setFormData] = useState({
-    name: user?.name || '',
+    name: '',
     email: user?.email || '',
     phone: '',
   });
