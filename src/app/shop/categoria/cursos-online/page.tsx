@@ -61,6 +61,10 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
     discount: product.discount || { percentage: 0, amount: 0 },
     slug: product.name.split(" ").join("-"),
     productId: product.id,
+    // Información para identificar como producto digital/online
+    sede: 'online' as const,
+    category: product.category || 'cursos-online',
+    type: 'onlineCourse' as const,
   };
 
   const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");

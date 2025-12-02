@@ -40,6 +40,10 @@ const manejarAgregarAlCarrito = (product: Product, toast: any) => {
     discount: product.discount || { percentage: 0, amount: 0 },
     slug: productName.split(" ").join("-"),
     productId: product.id,
+    // Información para identificar tipo de producto
+    sede: product.sede || null,
+    category: product.category,
+    type: product.sede === 'online' ? 'onlineCourse' as const : 'product' as const,
   };
 
   const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");

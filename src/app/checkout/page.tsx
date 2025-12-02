@@ -9,6 +9,7 @@ import { useAuth } from '@/context/AuthContext';
 import BreadcrumbCheckout from "@/components/cart-page/BreadcrumbCheckout";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo"; // Ahora será el selector de método de pago
+import FreeCourseCheckout from "@/components/checkout/FreeCourseCheckout";
 import { Button } from "@/components/ui/button";
 import ProgressBar from "./components/ProgressBar";
 import OrderSummary from "./components/OrderSummary";
@@ -31,6 +32,7 @@ import { useCart } from "@/lib/hooks/useCart";
 import Link from "next/link";
 import { Product } from "./components/OrderSummary"
 import { PLACEHOLDER_IMAGE } from '@/lib/constants'
+import { isAllFreeCourses } from "@/lib/utils/productHelpers";
 
 const checkoutSteps = [
   {
@@ -100,6 +102,9 @@ export default function CheckoutPage() {
       methodsStepOne.setValue("email", user.email);
     }
   }, [user, methodsStepOne]);
+
+  // Detectar si todos los productos son cursos gratuitos
+  const isFreeCourseCheckout = checkoutCart.length > 0 && isAllFreeCourses(checkoutCart);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -214,6 +219,26 @@ export default function CheckoutPage() {
   }
 
   if (isAuthenticated) {
+    // Si todos los productos son cursos gratuitos, mostrar checkout especial
+    if (isFreeCourseCheckout) {
+      return (
+        <main className="pb-20">
+          <div className="max-w-frame mx-auto px-4 xl:px-0">
+            <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
+            <BreadcrumbCheckout />
+            
+            <div className="mt-8">
+              <FreeCourseCheckout
+                courseId={checkoutCart[0].id}
+                courseName={checkoutCart.map(item => item.name).join(', ')}
+                onCancel={() => router.push('/cart')}
+              />
+            </div>
+          </div>
+        </main>
+      );
+    }
+
     return (
       <main className="pb-20">
         <div className="max-w-frame mx-auto px-4 xl:px-0">

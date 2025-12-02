@@ -173,3 +173,24 @@ export function hasPhysicalProducts(cartItems: any[]): boolean {
   return cartItems.some(item => !isDigitalCartItem(item));
 }
 
+/**
+ * Lista de IDs de cursos gratuitos
+ */
+export const FREE_COURSE_IDS = ['6655', '5015'];
+
+/**
+ * Verifica si un producto es un curso gratuito
+ */
+export function isFreeCourse(productOrId: Product | any | string): boolean {
+  const id = typeof productOrId === 'string' ? productOrId : (productOrId?.id || productOrId?.productId);
+  return FREE_COURSE_IDS.includes(id);
+}
+
+/**
+ * Verifica si el carrito contiene solo cursos gratuitos
+ */
+export function isAllFreeCourses(cartItems: any[]): boolean {
+  if (!cartItems || cartItems.length === 0) return false;
+  return cartItems.every(item => isFreeCourse(item.id || item.productId));
+}
+

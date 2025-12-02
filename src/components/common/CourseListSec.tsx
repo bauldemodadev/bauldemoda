@@ -109,6 +109,10 @@ const manejarAgregarAlCarrito = (e: React.MouseEvent, product: Product, toast: a
     discount: product.discount || { percentage: 0, amount: 0 },
     slug: product.name.split(" ").join("-"),
     productId: product.id,
+    // Información para identificar tipo de producto
+    sede: product.sede || null,
+    category: product.category,
+    type: product.sede === 'online' ? 'onlineCourse' as const : 'product' as const,
   };
 
   // Agregar al carrito local
@@ -391,6 +395,10 @@ const CourseListSec = ({ title, subtitle, category, courseNames, courseIds, show
           productId: selectedProduct.id,
           selectedDate,
           selectedTime,
+          // Información para identificar tipo de producto
+          sede: selectedProduct.sede || 'online',
+          category: selectedProduct.category,
+          type: selectedProduct.sede === 'online' ? 'onlineCourse' as const : 'product' as const,
         };
 
         const carritoLocal = JSON.parse(localStorage.getItem("cart") || "[]");

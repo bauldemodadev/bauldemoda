@@ -88,6 +88,10 @@ const ProductListSec = ({ title, productIds, data }: ProductListSecProps) => {
       discount: product.discount || { percentage: 0, amount: 0 },
       slug: product.name.split(" ").join("-"),
       productId: product.id,
+      // Información para identificar tipo de producto
+      sede: product.sede || null,
+      category: product.category,
+      type: product.sede === 'online' ? 'onlineCourse' as const : 'product' as const,
     };
 
     // Agregar al carrito local
