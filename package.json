@@ -12,7 +12,10 @@
     "extract-catalog": "tsx scripts/extract-product-catalog.ts",
     "normalize-emails": "tsx scripts/normalize-order-emails.ts",
     "audit-course-ids": "tsx scripts/audit-course-ids.ts",
-    "fix-course-ids": "tsx scripts/fix-missing-course-ids.ts",
+    "audit-firestore-courses": "tsx scripts/audit-online-courses-firestore.ts",
+    "fix-all-course-ids": "tsx scripts/comprehensive-course-audit.ts",
+    "count-course-orders": "tsx scripts/count-online-course-orders.ts",
+    "list-sold-courses": "tsx scripts/list-sold-courses.ts",
     "migrate:dry-run": "tsx scripts/migrate-orders-to-firestore.ts --dry-run",
     "migrate:orders": "tsx scripts/migrate-orders-to-firestore.ts"
   },

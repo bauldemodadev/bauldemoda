@@ -218,10 +218,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           </div>
         )}
         {/* Nota sobre retiro en sucursal según FASE 7 */}
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Retiro en sucursal</span>
-          <span className="text-green-600 font-medium">Gratis</span>
-        </div>
+        
         <div className="flex justify-between text-base font-semibold border-t border-gray-200 pt-3">
           <span className="text-gray-900">Total</span>
           <span className="text-gray-900">${formatCurrency(total)}</span>

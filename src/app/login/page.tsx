@@ -113,6 +113,14 @@ export default function LoginPage() {
           </p>
         </div>
 
+        {/* Info para usuarios antiguos */}
+        <div className="bg-[#E9ABBD]/10 border border-[#E9ABBD]/30 rounded-lg p-4 mb-6">
+          <p className="text-sm text-gray-700">
+            <strong>¿Compraste antes de diciembre 2024?</strong><br />
+            Tus compras antiguas se vincularán automáticamente al iniciar sesión.
+          </p>
+        </div>
+
         {/* Formulario de email/password */}
         <form onSubmit={handleEmailLogin} className="space-y-4">
           <div>
