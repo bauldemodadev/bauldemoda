@@ -238,9 +238,10 @@ async function main() {
   console.log(`   - Crear customers: ${CONFIG.CREATE_CUSTOMERS ? '✅' : '❌'}`);
   console.log('');
 
-  // Rutas de archivos
-  const almagroPath = path.join(__dirname, '../public/firebase_orders_2025_almagro_v2.json');
-  const ciudadJardinPath = path.join(__dirname, '../public/firebase_orders_2025_ciudad_jardin_v2.json');
+  // Rutas de archivos NORMALIZADOS
+  // IMPORTANTE: Usar archivos con emails normalizados para evitar problemas de case-sensitivity
+  const almagroPath = path.join(__dirname, '../public/firebase_orders_2025_almagro_v2_normalized.json');
+  const ciudadJardinPath = path.join(__dirname, '../public/firebase_orders_2025_ciudad_jardin_v2_normalized.json');
 
   // Verificar archivos
   if (!fs.existsSync(almagroPath)) {

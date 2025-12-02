@@ -21,17 +21,40 @@ export async function POST(request: NextRequest) {
     }
 
     const db = getAdminDb();
+    
+    // Normalizar email a minúsculas (Firebase Auth lo hace automáticamente)
+    const normalizedEmail = email.toLowerCase().trim();
 
-    // Buscar órdenes que tengan el email del usuario pero customerId diferente
-    // Estas son órdenes antiguas migradas que usaban el email como customerId
+    // IMPORTANTE: Buscar órdenes comparando emails en minúsculas
+    // Firestore no tiene búsqueda case-insensitive nativa, así que:
+    // 1. Buscamos con el email normalizado
+    // 2. También buscamos variaciones comunes
     const ordersSnapshot = await db.collection('orders')
-      .where('customerSnapshot.email', '==', email)
+      .where('customerSnapshot.email', '==', normalizedEmail)
       .get();
+    
+    // También buscar con la primera letra en mayúscula (caso común)
+    const capitalizedEmail = normalizedEmail.charAt(0).toUpperCase() + normalizedEmail.slice(1);
+    const ordersSnapshotCapitalized = await db.collection('orders')
+      .where('customerSnapshot.email', '==', capitalizedEmail)
+      .get();
+    
+    // Combinar resultados
+    const allOrders = [...ordersSnapshot.docs, ...ordersSnapshotCapitalized.docs];
 
     let linkedCount = 0;
     const batch = db.batch();
+    
+    // Usar Set para evitar duplicados (si una orden aparece en ambas búsquedas)
+    const processedOrderIds = new Set<string>();
 
-    ordersSnapshot.forEach((doc) => {
+    allOrders.forEach((doc) => {
+      // Evitar procesar la misma orden dos veces
+      if (processedOrderIds.has(doc.id)) {
+        return;
+      }
+      processedOrderIds.add(doc.id);
+      
       const orderData = doc.data();
       
       // Solo actualizar si el customerId es diferente al nuevo UID
@@ -53,6 +76,8 @@ export async function POST(request: NextRequest) {
     if (linkedCount > 0) {
       await batch.commit();
     }
+    
+    console.log(`Vinculación completada para ${normalizedEmail}: ${linkedCount} órdenes vinculadas`);
 
     return NextResponse.json({
       success: true,

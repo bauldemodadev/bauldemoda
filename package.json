@@ -10,6 +10,7 @@
     "deploy": "vercel --prod",
     "preview": "vercel",
     "extract-catalog": "tsx scripts/extract-product-catalog.ts",
+    "normalize-emails": "tsx scripts/normalize-order-emails.ts",
     "migrate:dry-run": "tsx scripts/migrate-orders-to-firestore.ts --dry-run",
     "migrate:orders": "tsx scripts/migrate-orders-to-firestore.ts"
   },

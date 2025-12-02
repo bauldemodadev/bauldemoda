@@ -118,9 +118,10 @@ export async function POST(request: NextRequest) {
 
     const db = getAdminDb();
     
-    // Leer archivos JSON desde public/
-    const almagroPath = path.join(process.cwd(), 'public', 'firebase_orders_2025_almagro_v2.json');
-    const ciudadJardinPath = path.join(process.cwd(), 'public', 'firebase_orders_2025_ciudad_jardin_v2.json');
+    // Leer archivos JSON NORMALIZADOS desde public/
+    // IMPORTANTE: Usar archivos con emails normalizados para evitar problemas de case-sensitivity
+    const almagroPath = path.join(process.cwd(), 'public', 'firebase_orders_2025_almagro_v2_normalized.json');
+    const ciudadJardinPath = path.join(process.cwd(), 'public', 'firebase_orders_2025_ciudad_jardin_v2_normalized.json');
     
     // Seleccionar órdenes a migrar
     let ordersToMigrate: OrderJSON[] = [];

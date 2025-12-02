@@ -21,6 +21,9 @@ export async function POST(request: NextRequest) {
     }
 
     const db = getAdminDb();
+    
+    // Normalizar email (Firebase Auth lo guarda en minúsculas)
+    const normalizedEmail = email.toLowerCase().trim();
 
     // IMPORTANTE: Usar UID como ID del documento (no crear nuevos)
     const customerRef = db.collection('customers').doc(uid);
@@ -39,10 +42,10 @@ export async function POST(request: NextRequest) {
     }
 
     // SOLO crear si NO existe
-    console.log(`Creando nuevo perfil para UID: ${uid}, email: ${email}`);
+    console.log(`Creando nuevo perfil para UID: ${uid}, email: ${normalizedEmail}`);
     
     await customerRef.set({
-      email,
+      email: normalizedEmail, // Guardar email normalizado
       name: name || '',
       phone: '',
       dni: '',
