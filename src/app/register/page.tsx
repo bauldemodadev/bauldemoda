@@ -87,7 +87,7 @@ export default function RegisterPage() {
       await signUp(formData.email, formData.password, formData.name);
       
       toast.success(
-        "¡Cuenta creada exitosamente! Te hemos enviado un email de verificación.",
+        "¡Cuenta creada exitosamente! Tus compras antiguas se han vinculado automáticamente.",
         { duration: 5000 }
       );
 

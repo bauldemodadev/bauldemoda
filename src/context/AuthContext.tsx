@@ -80,13 +80,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Actualizar perfil con nombre
     await updateProfile(cred.user, { displayName: name });
     
-    // Enviar email de verificación
-    await sendEmailVerification(cred.user);
+    // 🔕 EMAIL DE VERIFICACIÓN DESHABILITADO TEMPORALMENTE
+    // Para habilitar, descomenta la siguiente línea:
+    // await sendEmailVerification(cred.user);
     
     // Crear perfil en Firestore (esto usa UID como ID, no duplica)
     await createUserProfile(cred.user.uid, email, name);
     
-    // Vincular órdenes antiguas automáticamente
+    // Vincular órdenes antiguas automáticamente 🎯
     await linkLegacyOrders(cred.user.uid, email);
     
     // Marcar como procesado
