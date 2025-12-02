@@ -8,8 +8,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAdminDb } from '@/lib/firebase/admin';
 import { Timestamp } from 'firebase-admin/firestore';
-import almagroOrders from '@/public/firebase_orders_2025_almagro_v2.json';
-import ciudadJardinOrders from '@/public/firebase_orders_2025_ciudad_jardin_v2.json';
+import * as fs from 'fs';
+import * as path from 'path';
 
 interface OrderItem {
   type: 'product' | 'onlineCourse';
@@ -118,13 +118,23 @@ export async function POST(request: NextRequest) {
 
     const db = getAdminDb();
     
+    // Leer archivos JSON desde public/
+    const almagroPath = path.join(process.cwd(), 'public', 'firebase_orders_2025_almagro_v2.json');
+    const ciudadJardinPath = path.join(process.cwd(), 'public', 'firebase_orders_2025_ciudad_jardin_v2.json');
+    
     // Seleccionar órdenes a migrar
     let ordersToMigrate: OrderJSON[] = [];
     if (source === 'almagro' || source === 'both') {
-      ordersToMigrate.push(...(almagroOrders as OrderJSON[]));
+      if (fs.existsSync(almagroPath)) {
+        const almagroOrders = JSON.parse(fs.readFileSync(almagroPath, 'utf-8'));
+        ordersToMigrate.push(...(almagroOrders as OrderJSON[]));
+      }
     }
     if (source === 'ciudad-jardin' || source === 'both') {
-      ordersToMigrate.push(...(ciudadJardinOrders as OrderJSON[]));
+      if (fs.existsSync(ciudadJardinPath)) {
+        const ciudadJardinOrders = JSON.parse(fs.readFileSync(ciudadJardinPath, 'utf-8'));
+        ordersToMigrate.push(...(ciudadJardinOrders as OrderJSON[]));
+      }
     }
 
     const stats = {
