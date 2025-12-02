@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+import { isDigitalCartItem } from '@/lib/utils/productHelpers';
 
 // Tipo para orden serializada (con fechas como strings)
 interface SerializedOrder {
@@ -370,13 +371,28 @@ export default function AdminVentaDetailPage() {
             </div>
           )}
 
-          {/* Información de Retiro */}
-          <div className="bg-blue-50 rounded-lg shadow p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">Retiro en Sucursal</h2>
-            <p className="text-sm text-gray-700">
-              Todos los pedidos deben retirarse en nuestras sucursales. El cliente recibirá instrucciones por email.
-            </p>
-          </div>
+          {/* Información de Retiro - Solo para productos físicos */}
+          {hasPhysicalProducts && (
+            <div className="bg-blue-50 rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">Retiro en Sucursal</h2>
+              <p className="text-sm text-gray-700">
+                {hasDigitalProducts 
+                  ? 'Los productos físicos deben retirarse en nuestras sucursales. El cliente recibirá instrucciones por email.'
+                  : 'Todos los pedidos deben retirarse en nuestras sucursales. El cliente recibirá instrucciones por email.'
+                }
+              </p>
+            </div>
+          )}
+          
+          {/* Información de Productos Digitales */}
+          {hasDigitalProducts && (
+            <div className="bg-green-50 rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">Productos Digitales</h2>
+              <p className="text-sm text-gray-700">
+                Esta orden contiene productos digitales o cursos online. El acceso se enviará automáticamente por email al cliente.
+              </p>
+            </div>
+          )}
 
           {/* Fechas */}
           <div className="bg-white rounded-lg shadow p-6">

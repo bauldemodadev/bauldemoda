@@ -20,6 +20,7 @@ import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestor
 import { getFormattedPickupLocations } from '@/lib/utils/pickupLocations';
 import Image from 'next/image';
 import { PLACEHOLDER_IMAGE } from '@/lib/constants';
+import { isDigitalCartItem } from '@/lib/utils/productHelpers';
 
 // Tipo serializado para orden (con fechas como strings desde la API)
 interface SerializedOrder {
@@ -64,6 +65,10 @@ export default function SuccessPage() {
   const [order, setOrder] = useState<SerializedOrder | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Verificar si hay productos físicos en la orden
+  const hasPhysicalProducts = order ? order.items.some(item => !isDigitalCartItem(item)) : false;
+  const hasDigitalProducts = order ? order.items.some(item => isDigitalCartItem(item)) : false;
 
   useEffect(() => {
     const orderId = searchParams.get('orderId') || searchParams.get('external_reference');
@@ -147,7 +152,10 @@ export default function SuccessPage() {
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-3">¡Pago exitoso!</h1>
           <p className="text-lg text-gray-600 mb-4">
-            Gracias por tu compra. Tu pedido ha sido procesado correctamente.
+            {hasDigitalProducts && !hasPhysicalProducts
+              ? 'Gracias por tu compra. Recibirás el acceso a tus productos digitales por email.'
+              : 'Gracias por tu compra. Tu pedido ha sido procesado correctamente.'
+            }
           </p>
           <div className="text-sm text-gray-500">
             <p>ID de orden: {order.id}</p>
@@ -201,44 +209,59 @@ export default function SuccessPage() {
           </div>
         </div>
 
-        {/* Información de retiro */}
-        <div className="bg-[#E9ABBD]/10 border border-[#E9ABBD] rounded-lg p-6 mb-6">
-          <h3 className="font-semibold text-[#D44D7D] mb-2">Retiro en Sucursal</h3>
-          <p className="text-sm text-gray-700 mb-3">
-            {order.items.length === 1 && order.metadata?.sede
-              ? 'Tu pedido debe retirarse en:'
-              : 'Tu pedido debe retirarse en una de nuestras sucursales:'}
-          </p>
-          <ul className="text-sm text-gray-700 space-y-1 mb-3">
-            {/* Usar pickupLocations de metadata si están disponibles, sino usar sede */}
-            {order.metadata?.pickupLocations && order.metadata.pickupLocations.length > 0 ? (
-              order.metadata.pickupLocations.map((location: string, index: number) => (
-                <li key={index}>• {location}</li>
-              ))
-            ) : (
-              getFormattedPickupLocations(
-                order.items.map(item => ({
-                  sede: order.metadata?.sede || null,
-                  locationText: null,
-                }))
-              ).map((location, index) => (
-                <li key={index}>• {location}</li>
-              ))
+        {/* Información de retiro - Solo para productos físicos */}
+        {hasPhysicalProducts && (
+          <div className="bg-[#E9ABBD]/10 border border-[#E9ABBD] rounded-lg p-6 mb-6">
+            <h3 className="font-semibold text-[#D44D7D] mb-2">Retiro en Sucursal</h3>
+            <p className="text-sm text-gray-700 mb-3">
+              {order.items.filter(item => !isDigitalCartItem(item)).length === 1 && order.metadata?.sede
+                ? 'Tu pedido debe retirarse en:'
+                : 'Los productos físicos deben retirarse en una de nuestras sucursales:'}
+            </p>
+            <ul className="text-sm text-gray-700 space-y-1 mb-3">
+              {/* Usar pickupLocations de metadata si están disponibles, sino usar sede */}
+              {order.metadata?.pickupLocations && order.metadata.pickupLocations.length > 0 ? (
+                order.metadata.pickupLocations.map((location: string, index: number) => (
+                  <li key={index}>• {location}</li>
+                ))
+              ) : (
+                getFormattedPickupLocations(
+                  order.items.filter(item => !isDigitalCartItem(item)).map(item => ({
+                    sede: order.metadata?.sede || null,
+                    locationText: null,
+                  }))
+                ).map((location, index) => (
+                  <li key={index}>• {location}</li>
+                ))
+              )}
+            </ul>
+            {order.paymentMethod === 'cash' && (
+              <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+                <CurrencyDollarIcon className="w-5 h-5 text-[#D44D7D]" />
+                Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
+              </p>
             )}
-          </ul>
-          {order.paymentMethod === 'cash' && (
-            <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
-              <CurrencyDollarIcon className="w-5 h-5 text-[#D44D7D]" />
-              Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
+            {order.paymentMethod === 'transfer' && (
+              <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+                <BuildingLibraryIcon className="w-5 h-5 text-[#D44D7D]" />
+                Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
+              </p>
+            )}
+          </div>
+        )}
+        
+        {/* Información para productos digitales */}
+        {hasDigitalProducts && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
+            <h3 className="font-semibold text-green-800 mb-2">Productos Digitales</h3>
+            <p className="text-sm text-gray-700 mb-2">
+              Recibirás un email con las instrucciones de acceso a tus productos digitales y cursos online.
             </p>
-          )}
-          {order.paymentMethod === 'transfer' && (
-            <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
-              <BuildingLibraryIcon className="w-5 h-5 text-[#D44D7D]" />
-              Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
+            <p className="text-sm text-gray-600">
+              Si tienes algún problema, contacta a soporte con tu número de orden: <strong>{order.id}</strong>
             </p>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Acciones */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

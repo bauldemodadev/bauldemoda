@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { CurrencyDollarIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
 import type { OrderStatus, PaymentStatus, PaymentMethod } from '@/types/firestore/order';
+import { isDigitalCartItem } from '@/lib/utils/productHelpers';
 import { PLACEHOLDER_IMAGE } from '@/lib/constants';
 import { getFormattedPickupLocations } from '@/lib/utils/pickupLocations';
 
@@ -272,6 +273,10 @@ export default function OrderDetailPage() {
   const statusConfig = getStatusConfig(order.status, order.paymentStatus);
   const StatusIcon = statusConfig.icon;
   const PaymentIcon = getPaymentMethodIcon(order.paymentMethod);
+  
+  // Verificar si hay productos físicos en la orden
+  const hasPhysicalProducts = order.items.some(item => !isDigitalCartItem(item));
+  const hasDigitalProducts = order.items.some(item => isDigitalCartItem(item));
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -392,48 +397,67 @@ export default function OrderDetailPage() {
           </div>
         </motion.div>
 
-        {/* Información de retiro */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-[#E9ABBD]/10 border border-[#E9ABBD] rounded-lg p-6 mb-6"
-        >
-          <h3 className="font-semibold text-[#D44D7D] mb-2">Retiro en Sucursal</h3>
-          <p className="text-sm text-gray-700 mb-3">
-            {order.items.length === 1 && order.metadata?.sede
-              ? 'Tu pedido debe retirarse en:'
-              : 'Tu pedido debe retirarse en una de nuestras sucursales:'}
-          </p>
-          <ul className="text-sm text-gray-700 space-y-1 mb-3">
-            {/* Usar pickupLocations de metadata si están disponibles, sino usar sede */}
-            {order.metadata?.pickupLocations && order.metadata.pickupLocations.length > 0 ? (
-              order.metadata.pickupLocations.map((location: string, index: number) => (
-                <li key={index}>• {location}</li>
-              ))
-            ) : (
-              getFormattedPickupLocations(
-                order.items.map(item => ({
-                  sede: order.metadata?.sede || null,
-                  locationText: null,
-                }))
-              ).map((location, index) => (
-                <li key={index}>• {location}</li>
-              ))
+        {/* Información de retiro - Solo para productos físicos */}
+        {hasPhysicalProducts && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-[#E9ABBD]/10 border border-[#E9ABBD] rounded-lg p-6 mb-6"
+          >
+            <h3 className="font-semibold text-[#D44D7D] mb-2">Retiro en Sucursal</h3>
+            <p className="text-sm text-gray-700 mb-3">
+              {order.items.filter(item => !isDigitalCartItem(item)).length === 1 && order.metadata?.sede
+                ? 'Tu pedido debe retirarse en:'
+                : 'Los productos físicos deben retirarse en una de nuestras sucursales:'}
+            </p>
+            <ul className="text-sm text-gray-700 space-y-1 mb-3">
+              {/* Usar pickupLocations de metadata si están disponibles, sino usar sede */}
+              {order.metadata?.pickupLocations && order.metadata.pickupLocations.length > 0 ? (
+                order.metadata.pickupLocations.map((location: string, index: number) => (
+                  <li key={index}>• {location}</li>
+                ))
+              ) : (
+                getFormattedPickupLocations(
+                  order.items.filter(item => !isDigitalCartItem(item)).map(item => ({
+                    sede: order.metadata?.sede || null,
+                    locationText: null,
+                  }))
+                ).map((location, index) => (
+                  <li key={index}>• {location}</li>
+                ))
+              )}
+            </ul>
+            {order.paymentMethod === 'cash' && (
+              <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+                <CurrencyDollarIcon className="w-5 h-5 text-[#D44D7D]" />
+                Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
+              </p>
             )}
-          </ul>
-          {order.paymentMethod === 'cash' && (
-            <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
-              <CurrencyDollarIcon className="w-5 h-5 text-[#D44D7D]" />
-              Pagarás en efectivo al momento del retiro. La orden quedará reservada por 48 horas.
+            {order.paymentMethod === 'transfer' && (
+              <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
+                <BuildingLibraryIcon className="w-5 h-5 text-[#D44D7D]" />
+                Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
+              </p>
+            )}
+          </motion.div>
+        )}
+
+        {/* Información para productos digitales */}
+        {hasDigitalProducts && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6"
+          >
+            <h3 className="font-semibold text-green-800 mb-2">Productos Digitales</h3>
+            <p className="text-sm text-gray-700 mb-2">
+              Revisa tu email para acceder a tus productos digitales y cursos online.
             </p>
-          )}
-          {order.paymentMethod === 'transfer' && (
-            <p className="text-sm font-medium text-gray-800 flex items-center gap-2">
-              <BuildingLibraryIcon className="w-5 h-5 text-[#D44D7D]" />
-              Debes realizar la transferencia y luego retirar en la sucursal. La orden quedará reservada por 48 horas.
+            <p className="text-sm text-gray-600">
+              Si tienes algún problema, contacta a soporte con tu número de orden: <strong>{order.id}</strong>
             </p>
-          )}
-        </motion.div>
+          </motion.div>
+        )}
 
         {/* Información del cliente */}
         <motion.div

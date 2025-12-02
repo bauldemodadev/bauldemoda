@@ -92,3 +92,84 @@ export function cartHasPresentialCourse(cartItems: any[]): boolean {
   });
 }
 
+/**
+ * Determina si un producto es digital/servicio (no requiere retiro físico)
+ * Incluye: cursos online, gift cards, servicios digitales, etc.
+ */
+export function isDigitalProduct(product: Product | any): boolean {
+  if (!product) return false;
+  
+  // 1. Verificar por sede "online"
+  if (product.sede === 'online') {
+    return true;
+  }
+  
+  // 2. Verificar por categoría/subcategoría
+  const category = product.category?.toLowerCase() || '';
+  const subcategory = product.subcategory?.toLowerCase() || '';
+  const name = product.name?.toLowerCase() || product.title?.toLowerCase() || '';
+  
+  // Keywords que indican producto digital
+  const digitalKeywords = [
+    'online',
+    'virtual',
+    'digital',
+    'gift card',
+    'giftcard',
+    'tarjeta de regalo',
+    'curso online',
+    'taller online',
+    'servicio',
+    'asesoría',
+    'consultoría'
+  ];
+  
+  const isDigital = digitalKeywords.some(keyword => 
+    category.includes(keyword) || 
+    subcategory.includes(keyword) || 
+    name.includes(keyword)
+  );
+  
+  return isDigital;
+}
+
+/**
+ * Determina si un item del carrito es digital
+ */
+export function isDigitalCartItem(item: any): boolean {
+  // Verificar si es un curso online por tipo
+  if (item.type === 'onlineCourse') {
+    return true;
+  }
+  
+  // Verificar por sede
+  if (item.sede === 'online') {
+    return true;
+  }
+  
+  // Verificar por categoría/nombre
+  return isDigitalProduct(item);
+}
+
+/**
+ * Verifica si todo el carrito contiene solo productos digitales
+ */
+export function isAllDigitalCart(cartItems: any[]): boolean {
+  if (!cartItems || cartItems.length === 0) return false;
+  return cartItems.every(item => isDigitalCartItem(item));
+}
+
+/**
+ * Verifica si el carrito tiene al menos un producto digital
+ */
+export function hasDigitalProducts(cartItems: any[]): boolean {
+  return cartItems.some(item => isDigitalCartItem(item));
+}
+
+/**
+ * Verifica si el carrito tiene productos que requieren retiro físico
+ */
+export function hasPhysicalProducts(cartItems: any[]): boolean {
+  return cartItems.some(item => !isDigitalCartItem(item));
+}
+

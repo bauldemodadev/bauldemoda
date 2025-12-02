@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import { futura } from "@/styles/fonts";
 import { useToast } from "@/components/ui/use-toast";
 import { getFormattedPickupLocations } from "@/lib/utils/pickupLocations";
+import { isDigitalCartItem, hasDigitalProducts, hasPhysicalProducts } from "@/lib/utils/productHelpers";
 
 type Product = {
   id: string;
@@ -97,6 +98,19 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const selectedPaymentMethod = watch('paymentMethod');
+  
+  // Verificar si hay productos digitales en el carrito
+  const hasDigital = hasDigitalProducts(cart);
+  const hasPhysical = hasPhysicalProducts(cart);
+  
+  // Filtrar métodos de pago según tipo de productos
+  const availablePaymentMethods = paymentMethods.filter(method => {
+    // Si hay productos digitales, excluir efectivo y transferencia
+    if (hasDigital && (method.id === 'cash' || method.id === 'transfer')) {
+      return false;
+    }
+    return true;
+  });
 
   // Validar en tiempo real
   useEffect(() => {
@@ -209,7 +223,12 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
           Método de Pago
         </h2>
         <p className="text-gray-600">
-          Selecciona cómo deseas pagar. Todos los pedidos se retiran en sucursal.
+          {hasDigital && !hasPhysical
+            ? 'Selecciona cómo deseas pagar. Los productos digitales se envían automáticamente por email.'
+            : hasDigital && hasPhysical
+            ? 'Selecciona cómo deseas pagar. Los productos físicos se retiran en sucursal.'
+            : 'Selecciona cómo deseas pagar. Todos los pedidos se retiran en sucursal.'
+          }
         </p>
       </div>
 
@@ -235,7 +254,7 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
           }}
         >
           <div className="space-y-3">
-            {paymentMethods.map((method) => {
+            {availablePaymentMethods.map((method) => {
               const Icon = method.icon;
               const isSelected = selectedPaymentMethod === method.id;
 
@@ -297,10 +316,23 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
             {errors.paymentMethod.message}
           </p>
         )}
+        
+        {/* Mensaje informativo para productos digitales */}
+        {hasDigital && (
+          <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-start gap-2">
+            <ExclamationCircleIcon className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-blue-800">
+              {hasPhysical 
+                ? 'Tu carrito contiene productos digitales y físicos. El pago debe realizarse por Mercado Pago.'
+                : 'Los productos digitales y cursos online solo se pueden pagar con Mercado Pago. Recibirás el acceso inmediatamente después del pago.'
+              }
+            </p>
+          </div>
+        )}
       </div>
 
-      {/* Información de retiro en sucursal */}
-      {selectedPaymentMethod && (
+      {/* Información de retiro en sucursal - Solo para productos físicos */}
+      {selectedPaymentMethod && hasPhysical && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -310,12 +342,12 @@ export default function StepTwo({ step1Data, cart, setStep }: StepTwoProps) {
             Retiro en Sucursal
           </h3>
           <p className="text-sm text-gray-700 mb-2">
-            {cart.length === 1 
+            {cart.filter(item => !isDigitalCartItem(item)).length === 1 
               ? 'Tu pedido debe retirarse en:'
-              : 'Todos los pedidos deben retirarse en nuestras sucursales:'}
+              : 'Los productos físicos deben retirarse en nuestras sucursales:'}
           </p>
           <ul className="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1">
-            {getFormattedPickupLocations(cart).map((location, index) => (
+            {getFormattedPickupLocations(cart.filter(item => !isDigitalCartItem(item))).map((location, index) => (
               <li key={index}>{location}</li>
             ))}
           </ul>
