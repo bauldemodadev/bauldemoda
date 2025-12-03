@@ -61,8 +61,14 @@ export async function GET(request: Request) {
     let customers: Customer[] = [];
     snapshot.forEach((doc) => {
       const data = doc.data() as Omit<Customer, 'id'>;
+      
+      // Asegurar que las estadísticas tengan valores por defecto para evitar NaN
       const customer = {
         id: doc.id,
+        totalOrders: data.totalOrders || 0,
+        totalSpent: data.totalSpent || 0,
+        enrolledCourses: data.enrolledCourses || [],
+        tags: data.tags || [],
         ...data,
       };
 

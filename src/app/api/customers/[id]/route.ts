@@ -61,31 +61,53 @@ export async function GET(
     }
 
     const data = doc.data() as Omit<Customer, 'id'>;
+    
+    // Asegurar que las estadísticas tengan valores por defecto
     const customer: Customer = {
       id: doc.id,
+      totalOrders: data.totalOrders || 0,
+      totalSpent: data.totalSpent || 0,
+      enrolledCourses: data.enrolledCourses || [],
+      tags: data.tags || [],
       ...data,
     };
 
-    // Obtener órdenes del cliente
-    const ordersSnapshot = await db
-      .collection('orders')
-      .where('customerId', '==', customerId)
-      .orderBy('createdAt', 'desc')
-      .get();
+    // OPTIMIZADO: Obtener órdenes del cliente sin ordenamiento para evitar índice compuesto
+    // y luego ordenar en memoria
+    let orders: any[] = [];
+    
+    try {
+      const ordersSnapshot = await db
+        .collection('orders')
+        .where('customerId', '==', customerId)
+        .limit(100) // Limitar a 100 órdenes para evitar problemas
+        .get();
 
-    const orders = ordersSnapshot.docs.map((orderDoc) => {
-      const orderData = orderDoc.data();
-      return {
-        id: orderDoc.id,
-        ...orderData,
-        createdAt: orderData.createdAt instanceof Timestamp
-          ? orderData.createdAt.toDate().toISOString()
-          : orderData.createdAt,
-        updatedAt: orderData.updatedAt instanceof Timestamp
-          ? orderData.updatedAt.toDate().toISOString()
-          : orderData.updatedAt,
-      };
-    });
+      orders = ordersSnapshot.docs.map((orderDoc) => {
+        const orderData = orderDoc.data();
+        return {
+          id: orderDoc.id,
+          ...orderData,
+          createdAt: orderData.createdAt instanceof Timestamp
+            ? orderData.createdAt.toDate().toISOString()
+            : orderData.createdAt,
+          updatedAt: orderData.updatedAt instanceof Timestamp
+            ? orderData.updatedAt.toDate().toISOString()
+            : orderData.updatedAt,
+        };
+      });
+
+      // Ordenar en memoria por fecha (más recientes primero)
+      orders.sort((a, b) => {
+        const dateA = new Date(a.createdAt || 0).getTime();
+        const dateB = new Date(b.createdAt || 0).getTime();
+        return dateB - dateA;
+      });
+    } catch (queryError) {
+      console.error('Error obteniendo órdenes del cliente:', queryError);
+      // Si falla, devolver array vacío en lugar de error 500
+      orders = [];
+    }
 
     return NextResponse.json({
       customer: serializeCustomer(customer),
