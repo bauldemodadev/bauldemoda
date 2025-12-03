@@ -62,38 +62,91 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     const dayAgoTimestamp = Timestamp.fromDate(dayAgo);
 
     // OPTIMIZADO: Para evitar errores de índices compuestos en Firestore,
-    // hacemos una query simple filtrando solo por sede (si existe) y luego filtramos en memoria
-    let baseQuery: Query | CollectionReference = db.collection('orders');
+    // hacemos una query simple y luego filtramos en memoria
+    console.log('Obteniendo órdenes para estadísticas, sede:', sede || 'global');
     
-    if (sede) {
-      baseQuery = baseQuery.where('metadata.sede', '==', sede) as Query;
+    let allOrdersSnapshot;
+    
+    try {
+      if (sede) {
+        // Con filtro de sede, ordenar por createdAt
+        const sedeQuery = db.collection('orders')
+          .where('metadata.sede', '==', sede)
+          .orderBy('createdAt', 'desc')
+          .limit(2000);
+        allOrdersSnapshot = await sedeQuery.get();
+      } else {
+        // Sin filtro de sede (global), solo ordenar por createdAt
+        // Esto requiere un índice simple en createdAt (que debería existir por defecto)
+        const globalQuery = db.collection('orders')
+          .orderBy('createdAt', 'desc')
+          .limit(2000);
+        allOrdersSnapshot = await globalQuery.get();
+      }
+    } catch (queryError) {
+      console.error('Error en query de órdenes, intentando sin ordenamiento:', queryError);
+      // Fallback: sin ordenamiento, solo con límite
+      let fallbackQuery: Query | CollectionReference = db.collection('orders');
+      if (sede) {
+        fallbackQuery = fallbackQuery.where('metadata.sede', '==', sede) as Query;
+      }
+      allOrdersSnapshot = await (fallbackQuery as Query).limit(2000).get();
     }
     
-    // Obtener todas las órdenes una sola vez y filtrar en memoria
-    const allOrdersSnapshot = await baseQuery.get();
-    const allOrders = allOrdersSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    } as Order & { id: string }));
+    console.log('Órdenes obtenidas:', allOrdersSnapshot.size);
+    const allOrders = allOrdersSnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+      } as Order & { id: string };
+    });
+
+    // Helper para convertir createdAt a Date de forma segura
+    const getOrderDate = (order: any): Date => {
+      try {
+        if (!order.createdAt) return new Date(0);
+        
+        // Si es un Timestamp de Firestore, usar toDate()
+        if (typeof order.createdAt.toDate === 'function') {
+          return order.createdAt.toDate();
+        }
+        
+        // Si es una fecha en formato string
+        if (typeof order.createdAt === 'string') {
+          return new Date(order.createdAt);
+        }
+        
+        // Si tiene _seconds (formato Timestamp serializado)
+        if (order.createdAt._seconds) {
+          return new Date(order.createdAt._seconds * 1000);
+        }
+        
+        return new Date(0);
+      } catch (error) {
+        console.error('Error convirtiendo fecha de orden:', order.id, error);
+        return new Date(0);
+      }
+    };
 
     // Filtrar en memoria por diferentes criterios
     const todayOrders = allOrders.filter(order => {
-      const orderDate = order.createdAt?.toDate() || new Date(0);
+      const orderDate = getOrderDate(order);
       return orderDate >= today;
     });
 
     const weekOrders = allOrders.filter(order => {
-      const orderDate = order.createdAt?.toDate() || new Date(0);
+      const orderDate = getOrderDate(order);
       return orderDate >= weekAgo;
     });
 
     const monthOrders = allOrders.filter(order => {
-      const orderDate = order.createdAt?.toDate() || new Date(0);
+      const orderDate = getOrderDate(order);
       return orderDate >= monthAgo;
     });
 
     const recentOrders = allOrders.filter(order => {
-      const orderDate = order.createdAt?.toDate() || new Date(0);
+      const orderDate = getOrderDate(order);
       return orderDate >= dayAgo;
     });
 
@@ -176,6 +229,14 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     };
   } catch (error) {
     console.error('Error obteniendo estadísticas:', error);
+    console.error('Sede solicitada:', sede);
+    
+    // Proporcionar más detalles del error
+    if (error instanceof Error) {
+      console.error('Mensaje de error:', error.message);
+      console.error('Stack trace:', error.stack);
+    }
+    
     throw error;
   }
 }
