@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifyAdminAuth } from '@/lib/admin/auth';
+import { getAdminSede } from '@/lib/firestore/stats';
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,7 +39,8 @@ export async function GET() {
     const email = await verifyAdminAuth();
     
     if (email) {
-      return NextResponse.json({ authenticated: true, email });
+      const sede = getAdminSede(email);
+      return NextResponse.json({ authenticated: true, email, sede });
     }
     
     return NextResponse.json({ authenticated: false }, { status: 401 });

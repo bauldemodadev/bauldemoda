@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { serializeFirestoreData } from '@/lib/admin/serialize';
 import type { QueryDocumentSnapshot } from 'firebase-admin/firestore';
+import { verifyAdminAuth } from '@/lib/admin/auth';
+import { getAdminSede } from '@/lib/firestore/stats';
+import { redirect } from 'next/navigation';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -157,11 +160,27 @@ export default async function AdminProductsPage({
     stockStatus?: string;
   };
 }) {
+  // Obtener el email del admin autenticado
+  const adminEmail = await verifyAdminAuth();
+  
+  // Determinar la sede del admin
+  const adminSede = getAdminSede(adminEmail);
+  
+  // Si el admin tiene una sede específica y no se especificó un filtro de sede, 
+  // aplicar filtro automático por su sede
+  let sedeFilter = searchParams.sede;
+  if (!sedeFilter && adminSede) {
+    // Redirigir con el filtro de sede aplicado
+    const params = new URLSearchParams(searchParams as any);
+    params.set('sede', adminSede);
+    redirect(`/admin/productos?${params.toString()}`);
+  }
+  
   const page = parseInt(searchParams.page || '1', 10);
   const data = await getProducts(page, searchParams.search, {
     category: searchParams.category,
     subcategory: searchParams.subcategory,
-    sede: searchParams.sede,
+    sede: sedeFilter,
     status: searchParams.status,
     stockStatus: searchParams.stockStatus,
   });

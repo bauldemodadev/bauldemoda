@@ -377,15 +377,15 @@ export default function AdminVentaDetailPage() {
 
           {/* Información de Retiro - Solo para productos físicos */}
           {hasPhysicalProducts && (
-            <div className="bg-blue-50 rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">Retiro en Sucursal</h2>
-              <p className="text-sm text-gray-700">
+          <div className="bg-blue-50 rounded-lg shadow p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Retiro en Sucursal</h2>
+            <p className="text-sm text-gray-700">
                 {hasDigitalProducts 
                   ? 'Los productos físicos deben retirarse en nuestras sucursales. El cliente recibirá instrucciones por email.'
                   : 'Todos los pedidos deben retirarse en nuestras sucursales. El cliente recibirá instrucciones por email.'
                 }
-              </p>
-            </div>
+            </p>
+          </div>
           )}
           
           {/* Información de Productos Digitales */}

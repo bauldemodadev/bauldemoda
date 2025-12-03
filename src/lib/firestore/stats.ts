@@ -61,83 +61,50 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     const monthAgoTimestamp = Timestamp.fromDate(monthAgo);
     const dayAgoTimestamp = Timestamp.fromDate(dayAgo);
 
-    // Helper para construir query base con filtros
-    const buildOrdersQuery = (filters: { 
-      dateFrom?: Date; 
-      status?: Order['status'];
-      paymentMethod?: Order['paymentMethod'];
-    } = {}) => {
-      let query: Query | CollectionReference = db.collection('orders');
-      
-      if (sede) {
-        query = query.where('metadata.sede', '==', sede) as Query;
-      }
-      
-      if (filters.dateFrom) {
-        const dateTimestamp = Timestamp.fromDate(filters.dateFrom);
-        query = (query as Query).where('createdAt', '>=', dateTimestamp) as Query;
-      }
-      
-      if (filters.status) {
-        query = (query as Query).where('status', '==', filters.status) as Query;
-      }
-      
-      if (filters.paymentMethod) {
-        query = (query as Query).where('paymentMethod', '==', filters.paymentMethod) as Query;
-      }
-      
-      return query as Query;
-    };
-
-    // Queries paralelas para estadísticas por período (filtradas por fecha en Firestore)
-    const [
-      allOrdersSnapshot,
-      todayOrdersSnapshot,
-      weekOrdersSnapshot,
-      monthOrdersSnapshot,
-      recentOrdersSnapshot,
-      pendingOrdersSnapshot,
-      approvedOrdersSnapshot,
-      rejectedOrdersSnapshot,
-      mpOrdersSnapshot,
-      cashOrdersSnapshot,
-      transferOrdersSnapshot,
-      otherOrdersSnapshot,
-    ] = await Promise.all([
-      buildOrdersQuery().get(),
-      buildOrdersQuery({ dateFrom: today }).get(),
-      buildOrdersQuery({ dateFrom: weekAgo }).get(),
-      buildOrdersQuery({ dateFrom: monthAgo }).get(),
-      buildOrdersQuery({ dateFrom: dayAgo }).get(),
-      buildOrdersQuery({ status: 'pending' }).get(),
-      buildOrdersQuery({ status: 'approved' }).get(),
-      buildOrdersQuery({ status: 'rejected' }).get(),
-      buildOrdersQuery({ paymentMethod: 'mp' }).get(),
-      buildOrdersQuery({ paymentMethod: 'cash' }).get(),
-      buildOrdersQuery({ paymentMethod: 'transfer' }).get(),
-      buildOrdersQuery({ paymentMethod: 'other' }).get(),
-    ]);
-
-    // Convertir snapshots a arrays de órdenes
+    // OPTIMIZADO: Para evitar errores de índices compuestos en Firestore,
+    // hacemos una query simple filtrando solo por sede (si existe) y luego filtramos en memoria
+    let baseQuery: Query | CollectionReference = db.collection('orders');
+    
+    if (sede) {
+      baseQuery = baseQuery.where('metadata.sede', '==', sede) as Query;
+    }
+    
+    // Obtener todas las órdenes una sola vez y filtrar en memoria
+    const allOrdersSnapshot = await baseQuery.get();
     const allOrders = allOrdersSnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
     } as Order & { id: string }));
 
-    const todayOrders = todayOrdersSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    } as Order & { id: string }));
+    // Filtrar en memoria por diferentes criterios
+    const todayOrders = allOrders.filter(order => {
+      const orderDate = order.createdAt?.toDate() || new Date(0);
+      return orderDate >= today;
+    });
 
-    const weekOrders = weekOrdersSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    } as Order & { id: string }));
+    const weekOrders = allOrders.filter(order => {
+      const orderDate = order.createdAt?.toDate() || new Date(0);
+      return orderDate >= weekAgo;
+    });
 
-    const monthOrders = monthOrdersSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    } as Order & { id: string }));
+    const monthOrders = allOrders.filter(order => {
+      const orderDate = order.createdAt?.toDate() || new Date(0);
+      return orderDate >= monthAgo;
+    });
+
+    const recentOrders = allOrders.filter(order => {
+      const orderDate = order.createdAt?.toDate() || new Date(0);
+      return orderDate >= dayAgo;
+    });
+
+    const pendingOrders = allOrders.filter(order => order.status === 'pending');
+    const approvedOrders = allOrders.filter(order => order.status === 'approved');
+    const rejectedOrders = allOrders.filter(order => order.status === 'rejected');
+
+    const mpOrders = allOrders.filter(order => order.paymentMethod === 'mp');
+    const cashOrders = allOrders.filter(order => order.paymentMethod === 'cash');
+    const transferOrders = allOrders.filter(order => order.paymentMethod === 'transfer');
+    const otherOrders = allOrders.filter(order => order.paymentMethod === 'other');
 
     // Calcular estadísticas
     const totalSales = allOrders.length;
@@ -146,16 +113,12 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     const weekRevenue = weekOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
     const monthRevenue = monthOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
 
-    const pendingOrders = pendingOrdersSnapshot.size;
-    const approvedOrders = approvedOrdersSnapshot.size;
-    const rejectedOrders = rejectedOrdersSnapshot.size;
-
     // Métodos de pago
     const paymentMethods = {
-      mp: mpOrdersSnapshot.size,
-      cash: cashOrdersSnapshot.size,
-      transfer: transferOrdersSnapshot.size,
-      other: otherOrdersSnapshot.size,
+      mp: mpOrders.length,
+      cash: cashOrders.length,
+      transfer: transferOrders.length,
+      other: otherOrders.length,
     };
 
     // Productos más vendidos (usar todas las órdenes aprobadas, pero limitar a las más recientes)
@@ -189,9 +152,6 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
       .sort((a, b) => b.quantity - a.quantity)
       .slice(0, 10);
 
-    // Órdenes recientes (últimas 24 horas)
-    const recentOrders = recentOrdersSnapshot.size;
-
     // Obtener total de productos (usar count para eficiencia)
     let productsQuery: Query = db.collection('products').where('status', '==', 'publish');
     if (sede) {
@@ -203,12 +163,12 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
     return {
       totalSales,
       totalRevenue,
-      pendingOrders,
-      approvedOrders,
-      rejectedOrders,
+      pendingOrders: pendingOrders.length,
+      approvedOrders: approvedOrders.length,
+      rejectedOrders: rejectedOrders.length,
       totalProducts,
       topProducts,
-      recentOrders,
+      recentOrders: recentOrders.length,
       paymentMethods,
       todayRevenue,
       weekRevenue,

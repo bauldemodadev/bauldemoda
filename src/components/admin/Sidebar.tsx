@@ -9,7 +9,10 @@ import {
   BookOpen, 
   Lightbulb, 
   Users, 
-  ShoppingCart 
+  ShoppingCart,
+  Image,
+  MessageCircle,
+  Store
 } from 'lucide-react';
 
 const menuItems = [
@@ -19,6 +22,9 @@ const menuItems = [
   { href: '/admin/tips', label: 'Tips', icon: Lightbulb },
   { href: '/admin/clientes', label: 'Clientes', icon: Users },
   { href: '/admin/ventas', label: 'Ventas', icon: ShoppingCart },
+  { href: '/admin/banners', label: 'Banners', icon: Image },
+  { href: '/admin/comunidad', label: 'Comunidad', icon: MessageCircle },
+  { href: '/admin/baulera', label: 'Baulera', icon: Store },
 ];
 
 interface AdminSidebarProps {

@@ -45,6 +45,7 @@ export async function GET(request: Request) {
     const paymentStatus = url.searchParams.get('paymentStatus') as PaymentStatus | null;
     const paymentMethod = url.searchParams.get('paymentMethod') as PaymentMethod | null;
     const customerId = url.searchParams.get('customerId');
+    const sede = url.searchParams.get('sede'); // Nuevo filtro por sede
     const limit = parseInt(url.searchParams.get('limit') || '50', 10);
     const offset = parseInt(url.searchParams.get('offset') || '0', 10);
 
@@ -63,6 +64,9 @@ export async function GET(request: Request) {
     }
     if (customerId) {
       query = query.where('customerId', '==', customerId);
+    }
+    if (sede) {
+      query = query.where('metadata.sede', '==', sede);
     }
 
     // Paginación

@@ -115,8 +115,8 @@ export default function ProductFilters({
       </div>
 
       <div className="space-y-4">
-        {/* Categorías */}
-        {categories.length > 0 && (
+        {/* Categorías - OCULTO TEMPORALMENTE */}
+        {/* {categories.length > 0 && (
           <Disclosure defaultOpen>
             {({ open }) => (
               <div className="border border-gray-100 rounded-lg">
@@ -142,10 +142,10 @@ export default function ProductFilters({
               </div>
             )}
           </Disclosure>
-        )}
+        )} */}
 
-        {/* Subcategorías */}
-        {selectedCategory && subcategories.length > 0 && (
+        {/* Subcategorías - OCULTO TEMPORALMENTE */}
+        {/* {selectedCategory && subcategories.length > 0 && (
           <Disclosure defaultOpen>
             {({ open }) => (
               <div className="border border-gray-100 rounded-lg">
@@ -171,7 +171,7 @@ export default function ProductFilters({
               </div>
             )}
           </Disclosure>
-        )}
+        )} */}
 
         {/* Sedes */}
         {sedes.length > 0 && (

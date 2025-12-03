@@ -78,16 +78,47 @@ export default function AdminVentasPage() {
   const [orders, setOrders] = useState<SerializedOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0, hasMore: false });
+  const [adminSede, setAdminSede] = useState<'almagro' | 'ciudad-jardin' | null>(null);
+  const [initialized, setInitialized] = useState(false);
   
   // Filtros
   const [statusFilter, setStatusFilter] = useState<OrderStatus | ''>('');
   const [paymentStatusFilter, setPaymentStatusFilter] = useState<PaymentStatus | ''>('');
   const [paymentMethodFilter, setPaymentMethodFilter] = useState<PaymentMethod | ''>('');
+  const [sedeFilter, setSedeFilter] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Obtener la sede del admin al cargar
   useEffect(() => {
-    loadOrders();
-  }, [statusFilter, paymentStatusFilter, paymentMethodFilter, searchParams]);
+    const fetchAdminInfo = async () => {
+      try {
+        const response = await fetch('/api/admin/auth');
+        if (response.ok) {
+          const data = await response.json();
+          setAdminSede(data.sede);
+          
+          // Si el admin tiene una sede específica y no hay filtro de sede, aplicarlo
+          if (data.sede && !searchParams.get('sede')) {
+            setSedeFilter(data.sede);
+          } else if (searchParams.get('sede')) {
+            setSedeFilter(searchParams.get('sede') || '');
+          }
+          setInitialized(true);
+        }
+      } catch (error) {
+        console.error('Error obteniendo info del admin:', error);
+        setInitialized(true);
+      }
+    };
+    
+    fetchAdminInfo();
+  }, []);
+
+  useEffect(() => {
+    if (initialized) {
+      loadOrders();
+    }
+  }, [statusFilter, paymentStatusFilter, paymentMethodFilter, sedeFilter, searchParams, initialized]);
 
   const loadOrders = async () => {
     setLoading(true);
@@ -96,6 +127,7 @@ export default function AdminVentasPage() {
       if (statusFilter) params.set('status', statusFilter);
       if (paymentStatusFilter) params.set('paymentStatus', paymentStatusFilter);
       if (paymentMethodFilter) params.set('paymentMethod', paymentMethodFilter);
+      if (sedeFilter) params.set('sede', sedeFilter);
       params.set('limit', '50');
       params.set('offset', searchParams.get('offset') || '0');
 
