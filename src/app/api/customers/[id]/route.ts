@@ -65,11 +65,12 @@ export async function GET(
     // Asegurar que las estadísticas tengan valores por defecto
     const customer: Customer = {
       id: doc.id,
-      totalOrders: data.totalOrders || 0,
-      totalSpent: data.totalSpent || 0,
-      enrolledCourses: data.enrolledCourses || [],
-      tags: data.tags || [],
       ...data,
+      // Sobrescribir solo si son undefined/null para evitar NaN
+      totalOrders: data.totalOrders ?? 0,
+      totalSpent: data.totalSpent ?? 0,
+      enrolledCourses: data.enrolledCourses ?? [],
+      tags: data.tags ?? [],
     };
 
     // OPTIMIZADO: Obtener órdenes del cliente sin ordenamiento para evitar índice compuesto
