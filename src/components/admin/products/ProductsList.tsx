@@ -105,7 +105,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                 Slug
               </th>
               <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Categoría / Sede
+                Sede
               </th>
               <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Estado
@@ -143,8 +143,7 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                     <div className="text-sm text-gray-500 font-mono">{product.slug || 'N/A'}</div>
                   </td>
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{product.category || 'N/A'}</div>
-                    <div className="text-xs text-gray-500 mt-0.5">{product.sede || 'N/A'}</div>
+                    <div className="text-sm font-medium text-gray-900 capitalize">{product.sede || 'N/A'}</div>
                   </td>
                   <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
                     <span
@@ -212,11 +211,8 @@ export default function ProductsList({ products, totalPages, currentPage }: Prod
                     {product.name || 'Sin nombre'}
                   </h3>
                   <p className="text-xs text-gray-500 mt-1 truncate font-mono">{product.slug || 'N/A'}</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <span className="text-xs font-medium text-gray-700">{product.category || 'N/A'}</span>
-                    {product.sede && (
-                      <span className="text-xs text-gray-500">• {product.sede}</span>
-                    )}
+                  <div className="mt-2">
+                    <span className="text-xs font-medium text-gray-700 capitalize">{product.sede || 'N/A'}</span>
                   </div>
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     <span
