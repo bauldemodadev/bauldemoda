@@ -21,6 +21,9 @@ import {
   Banknote,
   RefreshCw,
   BarChart3,
+  Calendar,
+  CalendarDays,
+  CalendarClock,
 } from 'lucide-react';
 
 interface DashboardStats {
@@ -68,6 +71,8 @@ const formatCurrency = (amount: number) => {
   });
 };
 
+type DatePeriod = 'today' | 'week' | 'month' | 'custom';
+
 export default function DashboardStats() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -75,10 +80,16 @@ export default function DashboardStats() {
   const [sedeFilter, setSedeFilter] = useState<'almagro' | 'ciudad-jardin' | 'global'>('global');
   const [adminSede, setAdminSede] = useState<'almagro' | 'ciudad-jardin' | null>(null);
   const [initialized, setInitialized] = useState(false);
+  
+  // Filtros de fecha
+  const [datePeriod, setDatePeriod] = useState<DatePeriod>('month');
+  const [customDateFrom, setCustomDateFrom] = useState('');
+  const [customDateTo, setCustomDateTo] = useState('');
+  const [showCustomDates, setShowCustomDates] = useState(false);
 
   useEffect(() => {
     loadStats();
-  }, [sedeFilter]);
+  }, [sedeFilter, datePeriod, customDateFrom, customDateTo]);
 
   const loadStats = async () => {
     setLoading(true);
@@ -86,7 +97,18 @@ export default function DashboardStats() {
 
     try {
       const sedeParam = sedeFilter === 'global' ? 'global' : sedeFilter;
-      const response = await fetch(`/api/admin/stats?sede=${sedeParam}`);
+      
+      // Construir URL con parámetros de fecha
+      const params = new URLSearchParams();
+      params.set('sede', sedeParam);
+      params.set('period', datePeriod);
+      
+      if (datePeriod === 'custom' && customDateFrom && customDateTo) {
+        params.set('dateFrom', customDateFrom);
+        params.set('dateTo', customDateTo);
+      }
+      
+      const response = await fetch(`/api/admin/stats?${params.toString()}`);
       
       if (!response.ok) {
         throw new Error('Error al cargar estadísticas');
@@ -111,6 +133,35 @@ export default function DashboardStats() {
       setError('No se pudieron cargar las estadísticas');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handlePeriodChange = (period: DatePeriod) => {
+    setDatePeriod(period);
+    if (period === 'custom') {
+      setShowCustomDates(true);
+    } else {
+      setShowCustomDates(false);
+      setCustomDateFrom('');
+      setCustomDateTo('');
+    }
+  };
+
+  const getPeriodLabel = () => {
+    switch (datePeriod) {
+      case 'today':
+        return 'Hoy';
+      case 'week':
+        return 'Esta Semana';
+      case 'month':
+        return 'Este Mes';
+      case 'custom':
+        if (customDateFrom && customDateTo) {
+          return `${new Date(customDateFrom).toLocaleDateString('es-AR')} - ${new Date(customDateTo).toLocaleDateString('es-AR')}`;
+        }
+        return 'Personalizado';
+      default:
+        return 'Este Mes';
     }
   };
 
@@ -203,52 +254,149 @@ export default function DashboardStats() {
   return (
     <div className="w-full space-y-6">
       {/* Header con Switch */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: 'var(--font-poppins)' }}>
-            Dashboard
-          </h1>
-          <p className="text-sm text-gray-500 mt-1.5" style={{ fontFamily: 'var(--font-poppins)' }}>
-            {sedeFilter === 'global' 
-              ? 'Resumen general del sistema'
-              : sedeFilter === 'almagro'
-              ? 'Estadísticas de Almagro'
-              : 'Estadísticas de Ciudad Jardín'}
-          </p>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: 'var(--font-poppins)' }}>
+              Dashboard
+            </h1>
+            <p className="text-sm text-gray-500 mt-1.5" style={{ fontFamily: 'var(--font-poppins)' }}>
+              {sedeFilter === 'global' 
+                ? 'Resumen general del sistema'
+                : sedeFilter === 'almagro'
+                ? 'Estadísticas de Almagro'
+                : 'Estadísticas de Ciudad Jardín'}
+              {' • '}
+              <span className="font-medium text-[#D44D7D]">{getPeriodLabel()}</span>
+            </p>
+          </div>
+
+          {/* Switch de Filtrado por Sede */}
+          {showSwitch && (
+            <div className="flex items-center gap-3 bg-white rounded-lg border border-gray-200 p-2">
+              <span className="text-sm font-medium text-gray-700" style={{ fontFamily: 'var(--font-poppins)' }}>
+                Vista:
+              </span>
+              <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
+                <button
+                  onClick={() => handleSedeChange(adminSede!)}
+                  className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
+                    sedeFilter === adminSede
+                      ? 'bg-[#E9ABBD] text-white shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                  style={{ fontFamily: 'var(--font-poppins)' }}
+                >
+                  {adminSede === 'almagro' ? 'Almagro' : 'Ciudad Jardín'}
+                </button>
+                <button
+                  onClick={() => handleSedeChange('global')}
+                  className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
+                    sedeFilter === 'global'
+                      ? 'bg-[#E9ABBD] text-white shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                  style={{ fontFamily: 'var(--font-poppins)' }}
+                >
+                  Global
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Switch de Filtrado por Sede */}
-        {showSwitch && (
-          <div className="flex items-center gap-3 bg-white rounded-lg border border-gray-200 p-2">
-            <span className="text-sm font-medium text-gray-700" style={{ fontFamily: 'var(--font-poppins)' }}>
-              Vista:
-            </span>
-            <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
+        {/* Filtros de Fecha */}
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-[#D44D7D]" />
+              <span className="text-sm font-medium text-gray-700" style={{ fontFamily: 'var(--font-poppins)' }}>
+                Período:
+              </span>
+            </div>
+            
+            <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => handleSedeChange(adminSede!)}
-                className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
-                  sedeFilter === adminSede
+                onClick={() => handlePeriodChange('today')}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                  datePeriod === 'today'
                     ? 'bg-[#E9ABBD] text-white shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 style={{ fontFamily: 'var(--font-poppins)' }}
               >
-                {adminSede === 'almagro' ? 'Almagro' : 'Ciudad Jardín'}
+                <CalendarClock className="w-4 h-4" />
+                Hoy
               </button>
               <button
-                onClick={() => handleSedeChange('global')}
-                className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
-                  sedeFilter === 'global'
+                onClick={() => handlePeriodChange('week')}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                  datePeriod === 'week'
                     ? 'bg-[#E9ABBD] text-white shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
                 style={{ fontFamily: 'var(--font-poppins)' }}
               >
-                Global
+                <CalendarDays className="w-4 h-4" />
+                Esta Semana
+              </button>
+              <button
+                onClick={() => handlePeriodChange('month')}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                  datePeriod === 'month'
+                    ? 'bg-[#E9ABBD] text-white shadow-sm'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+                style={{ fontFamily: 'var(--font-poppins)' }}
+              >
+                <Calendar className="w-4 h-4" />
+                Este Mes
+              </button>
+              <button
+                onClick={() => handlePeriodChange('custom')}
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                  datePeriod === 'custom'
+                    ? 'bg-[#E9ABBD] text-white shadow-sm'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+                style={{ fontFamily: 'var(--font-poppins)' }}
+              >
+                <Calendar className="w-4 h-4" />
+                Personalizado
               </button>
             </div>
+
+            {/* Selectores de fecha personalizados */}
+            {showCustomDates && (
+              <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-gray-600" style={{ fontFamily: 'var(--font-poppins)' }}>
+                    Desde:
+                  </label>
+                  <input
+                    type="date"
+                    value={customDateFrom}
+                    onChange={(e) => setCustomDateFrom(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#E9ABBD] focus:border-transparent"
+                    style={{ fontFamily: 'var(--font-poppins)' }}
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium text-gray-600" style={{ fontFamily: 'var(--font-poppins)' }}>
+                    Hasta:
+                  </label>
+                  <input
+                    type="date"
+                    value={customDateTo}
+                    onChange={(e) => setCustomDateTo(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#E9ABBD] focus:border-transparent"
+                    style={{ fontFamily: 'var(--font-poppins)' }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Cards de Estadísticas */}

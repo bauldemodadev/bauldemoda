@@ -44,11 +44,35 @@ export interface DashboardStats {
 /**
  * Obtiene estadísticas del dashboard (OPTIMIZADO: queries filtradas por fecha)
  * @param sede - 'almagro' | 'ciudad-jardin' | null para filtrar por sede
+ * @param dateFrom - Fecha desde (opcional, por defecto inicio del mes)
+ * @param dateTo - Fecha hasta (opcional, por defecto ahora)
  */
-export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null = null): Promise<DashboardStats> {
+export async function getDashboardStats(
+  sede: 'almagro' | 'ciudad-jardin' | null = null,
+  dateFrom?: Date,
+  dateTo?: Date
+): Promise<DashboardStats> {
   try {
     const db = getAdminDb();
     const now = new Date();
+    
+    // Si no se proporciona dateFrom, usar inicio del mes actual
+    if (!dateFrom) {
+      dateFrom = new Date(now.getFullYear(), now.getMonth(), 1);
+      dateFrom.setHours(0, 0, 0, 0);
+    }
+    
+    // Si no se proporciona dateTo, usar ahora
+    if (!dateTo) {
+      dateTo = now;
+    }
+    
+    console.log('getDashboardStats - Rango de fechas:', {
+      dateFrom: dateFrom.toISOString(),
+      dateTo: dateTo.toISOString(),
+      sede,
+    });
+    
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const weekAgo = new Date(today);
     weekAgo.setDate(weekAgo.getDate() - 7);
@@ -129,39 +153,47 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
       }
     };
 
-    // Filtrar en memoria por diferentes criterios
-    const todayOrders = allOrders.filter(order => {
+    // Filtrar órdenes por el rango de fechas especificado
+    const filteredOrders = allOrders.filter(order => {
+      const orderDate = getOrderDate(order);
+      return orderDate >= dateFrom! && orderDate <= dateTo!;
+    });
+
+    console.log('Órdenes en el rango de fechas:', filteredOrders.length);
+
+    // Filtrar por sub-períodos para los widgets de "Hoy", "Semana", "Mes"
+    const todayOrders = filteredOrders.filter(order => {
       const orderDate = getOrderDate(order);
       return orderDate >= today;
     });
 
-    const weekOrders = allOrders.filter(order => {
+    const weekOrders = filteredOrders.filter(order => {
       const orderDate = getOrderDate(order);
       return orderDate >= weekAgo;
     });
 
-    const monthOrders = allOrders.filter(order => {
+    const monthOrders = filteredOrders.filter(order => {
       const orderDate = getOrderDate(order);
       return orderDate >= monthAgo;
     });
 
-    const recentOrders = allOrders.filter(order => {
+    const recentOrders = filteredOrders.filter(order => {
       const orderDate = getOrderDate(order);
       return orderDate >= dayAgo;
     });
 
-    const pendingOrders = allOrders.filter(order => order.status === 'pending');
-    const approvedOrders = allOrders.filter(order => order.status === 'approved');
-    const rejectedOrders = allOrders.filter(order => order.status === 'rejected');
+    const pendingOrders = filteredOrders.filter(order => order.status === 'pending');
+    const approvedOrders = filteredOrders.filter(order => order.status === 'approved');
+    const rejectedOrders = filteredOrders.filter(order => order.status === 'rejected');
 
-    const mpOrders = allOrders.filter(order => order.paymentMethod === 'mp');
-    const cashOrders = allOrders.filter(order => order.paymentMethod === 'cash');
-    const transferOrders = allOrders.filter(order => order.paymentMethod === 'transfer');
-    const otherOrders = allOrders.filter(order => order.paymentMethod === 'other');
+    const mpOrders = filteredOrders.filter(order => order.paymentMethod === 'mp');
+    const cashOrders = filteredOrders.filter(order => order.paymentMethod === 'cash');
+    const transferOrders = filteredOrders.filter(order => order.paymentMethod === 'transfer');
+    const otherOrders = filteredOrders.filter(order => order.paymentMethod === 'other');
 
-    // Calcular estadísticas
-    const totalSales = allOrders.length;
-    const totalRevenue = allOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+    // Calcular estadísticas basadas en las órdenes filtradas por fecha
+    const totalSales = filteredOrders.length;
+    const totalRevenue = filteredOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
     const todayRevenue = todayOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
     const weekRevenue = weekOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
     const monthRevenue = monthOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
@@ -174,11 +206,10 @@ export async function getDashboardStats(sede: 'almagro' | 'ciudad-jardin' | null
       other: otherOrders.length,
     };
 
-    // Productos más vendidos (usar todas las órdenes aprobadas, pero limitar a las más recientes)
-    // Para optimizar, podríamos limitar a órdenes del último mes
+    // Productos más vendidos (usar órdenes aprobadas del período filtrado)
     const productSales: Record<string, { name: string; quantity: number; revenue: number }> = {};
     
-    monthOrders.forEach(order => {
+    filteredOrders.forEach(order => {
       if (order.status === 'approved' && order.items && Array.isArray(order.items)) {
         order.items.forEach((item: any) => {
           if (item.type === 'product' && item.productId) {

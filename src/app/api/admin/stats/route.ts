@@ -33,9 +33,12 @@ export async function GET(request: Request) {
       );
     }
 
-    // Obtener parámetro de sede del query string
+    // Obtener parámetros del query string
     const { searchParams } = new URL(request.url);
     const sedeParam = searchParams.get('sede');
+    const period = searchParams.get('period') || 'month';
+    const customDateFrom = searchParams.get('dateFrom');
+    const customDateTo = searchParams.get('dateTo');
     
     // Determinar la sede del admin
     const adminSede = getAdminSede(email);
@@ -58,14 +61,41 @@ export async function GET(request: Request) {
       sede = null;
     }
 
-    // Obtener estadísticas
-    const stats = await getDashboardStats(sede);
+    // Calcular rango de fechas basado en el período
+    let dateFrom: Date;
+    let dateTo: Date = new Date(); // Hasta ahora
+
+    if (period === 'custom' && customDateFrom && customDateTo) {
+      dateFrom = new Date(customDateFrom);
+      dateTo = new Date(customDateTo);
+      // Ajustar dateTo al final del día
+      dateTo.setHours(23, 59, 59, 999);
+    } else if (period === 'today') {
+      dateFrom = new Date();
+      dateFrom.setHours(0, 0, 0, 0);
+    } else if (period === 'week') {
+      dateFrom = new Date();
+      dateFrom.setDate(dateFrom.getDate() - 7);
+      dateFrom.setHours(0, 0, 0, 0);
+    } else { // 'month' por defecto
+      dateFrom = new Date();
+      dateFrom.setDate(1); // Primer día del mes
+      dateFrom.setHours(0, 0, 0, 0);
+    }
+
+    console.log('Stats API - Período:', period, 'Desde:', dateFrom, 'Hasta:', dateTo);
+
+    // Obtener estadísticas con rango de fechas
+    const stats = await getDashboardStats(sede, dateFrom, dateTo);
 
     return NextResponse.json({
       stats,
       sede,
       adminSede,
       isGlobal: sede === null,
+      period,
+      dateFrom: dateFrom.toISOString(),
+      dateTo: dateTo.toISOString(),
     });
   } catch (error) {
     console.error('Error obteniendo estadísticas:', error);
