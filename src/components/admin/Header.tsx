@@ -16,6 +16,41 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
   const router = useRouter();
   const { toast } = useToast();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [email, setEmail] = useState<string>('');
+
+  // Obtener email del usuario autenticado
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch('/api/admin/auth');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.email) {
+            setEmail(data.email);
+          }
+        }
+      } catch (error) {
+        console.error('Error obteniendo info del usuario:', error);
+      }
+    };
+
+    // También intentar obtener del auth de Firebase
+    if (auth && auth.currentUser) {
+      setEmail(auth.currentUser.email || '');
+    } else {
+      fetchUserInfo();
+    }
+
+    // Escuchar cambios en el estado de autenticación
+    if (auth) {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user && user.email) {
+          setEmail(user.email);
+        }
+      });
+      return unsubscribe;
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -106,7 +141,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
             <div className="w-8 h-8 rounded-full bg-[#E9ABBD] flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
-            <span className="hidden md:inline font-medium">admin@admin.com</span>
+            <span className="hidden md:inline font-medium">{email}</span>
           </div>
           {/* Botón de cerrar sesión - versión responsive */}
           <div className="relative user-menu-container">
@@ -121,7 +156,7 @@ export default function AdminHeader({ onMenuToggle, isMenuOpen }: AdminHeaderPro
             {showUserMenu && (
               <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-200/80 py-2 z-[60] animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="px-4 py-3 text-sm font-medium text-gray-900 border-b border-gray-100">
-                  admin@admin.com
+                  {email}
                 </div>
                 <button
                   onClick={handleLogout}
