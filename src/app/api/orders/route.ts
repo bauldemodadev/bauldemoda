@@ -45,60 +45,109 @@ export async function GET(request: Request) {
     const paymentStatus = url.searchParams.get('paymentStatus') as PaymentStatus | null;
     const paymentMethod = url.searchParams.get('paymentMethod') as PaymentMethod | null;
     const customerId = url.searchParams.get('customerId');
-    const sede = url.searchParams.get('sede'); // Nuevo filtro por sede
+    const sede = url.searchParams.get('sede'); // Filtro por sede
     const limit = parseInt(url.searchParams.get('limit') || '50', 10);
     const offset = parseInt(url.searchParams.get('offset') || '0', 10);
 
-    const db = getAdminDb();
-    let query = db.collection('orders').orderBy('createdAt', 'desc');
+    console.log('Orders API - Parámetros:', { status, paymentStatus, paymentMethod, customerId, sede, limit, offset });
 
-    // Aplicar filtros
+    const db = getAdminDb();
+    
+    // OPTIMIZADO: Para evitar problemas con índices compuestos,
+    // hacemos una estrategia de filtrado en dos pasos:
+    // 1. Query simple en Firestore (solo filtros básicos)
+    // 2. Filtrado adicional en memoria
+    
+    let allOrders: any[] = [];
+    
+    try {
+      if (sede) {
+        // Si hay filtro de sede, obtener órdenes filtradas por sede
+        // y luego ordenar en memoria
+        console.log('Filtrando por sede:', sede);
+        const sedeQuery = db.collection('orders')
+          .where('metadata.sede', '==', sede)
+          .limit(500); // Limitar a 500 para evitar problemas de memoria
+        
+        const sedeSnapshot = await sedeQuery.get();
+        console.log('Órdenes encontradas con sede:', sedeSnapshot.size);
+        
+        allOrders = sedeSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+      } else {
+        // Sin filtro de sede, obtener órdenes ordenadas
+        const baseQuery = db.collection('orders')
+          .orderBy('createdAt', 'desc')
+          .limit(500);
+        
+        const baseSnapshot = await baseQuery.get();
+        console.log('Órdenes encontradas sin filtro de sede:', baseSnapshot.size);
+        
+        allOrders = baseSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+      }
+    } catch (queryError) {
+      console.error('Error en query principal, intentando fallback:', queryError);
+      // Fallback: query simple sin filtros
+      const fallbackQuery = db.collection('orders').limit(500);
+      const fallbackSnapshot = await fallbackQuery.get();
+      allOrders = fallbackSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+    }
+
+    // Aplicar filtros adicionales en memoria
+    let filteredOrders = allOrders;
+
     if (status) {
-      query = query.where('status', '==', status);
+      filteredOrders = filteredOrders.filter(order => order.status === status);
     }
     if (paymentStatus) {
-      query = query.where('paymentStatus', '==', paymentStatus);
+      filteredOrders = filteredOrders.filter(order => order.paymentStatus === paymentStatus);
     }
     if (paymentMethod) {
-      query = query.where('paymentMethod', '==', paymentMethod);
+      filteredOrders = filteredOrders.filter(order => order.paymentMethod === paymentMethod);
     }
     if (customerId) {
-      query = query.where('customerId', '==', customerId);
-    }
-    if (sede) {
-      query = query.where('metadata.sede', '==', sede);
+      filteredOrders = filteredOrders.filter(order => order.customerId === customerId);
     }
 
-    // Paginación
-    const snapshot = await query.limit(limit).offset(offset).get();
-
-    const orders: Order[] = [];
-    snapshot.forEach((doc) => {
-      const data = doc.data() as Omit<Order, 'id'>;
-      orders.push({
-        id: doc.id,
-        ...serializeOrder(data),
-      });
+    // Ordenar por fecha en memoria (más recientes primero)
+    filteredOrders.sort((a, b) => {
+      const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt || 0);
+      const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt || 0);
+      return dateB.getTime() - dateA.getTime();
     });
 
-    // OPTIMIZADO: Obtener total para paginación (limitado a 1000 para evitar lecturas masivas)
-    // Nota: Firestore Admin SDK no tiene count() directo, limitamos la query de conteo
-    const totalSnapshot = await query.limit(1000).get();
-    const total = totalSnapshot.size;
-    // Si hay más de 1000, el total será aproximado (1000+)
-    const hasMoreThanLimit = totalSnapshot.size === 1000;
+    // Aplicar paginación en memoria
+    const total = filteredOrders.length;
+    const paginatedOrders = filteredOrders.slice(offset, offset + limit);
+
+    // Serializar órdenes
+    const orders: Order[] = paginatedOrders.map(order => ({
+      id: order.id,
+      ...serializeOrder(order),
+    }));
+
+    console.log('Órdenes después de filtros y paginación:', orders.length);
 
     return NextResponse.json({
       orders,
       pagination: {
-        total: hasMoreThanLimit ? 1000 : total, // Total aproximado si hay más de 1000
+        total,
         limit,
         offset,
-        hasMore: offset + orders.length < (hasMoreThanLimit ? 1000 : total),
+        hasMore: offset + orders.length < total,
       },
     });
   } catch (error) {
     console.error('Error obteniendo órdenes:', error);
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
     return NextResponse.json(
       {
         error: 'Error al obtener órdenes',

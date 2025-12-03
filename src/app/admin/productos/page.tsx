@@ -160,30 +160,25 @@ export default async function AdminProductsPage({
     stockStatus?: string;
   };
 }) {
-  // Obtener el email del admin autenticado
-  const adminEmail = await verifyAdminAuth();
-  
-  // Determinar la sede del admin
-  const adminSede = getAdminSede(adminEmail);
-  
-  // Si el admin tiene una sede específica y no se especificó un filtro de sede, 
-  // aplicar filtro automático por su sede
-  let sedeFilter = searchParams.sede;
-  if (!sedeFilter && adminSede) {
-    // Redirigir con el filtro de sede aplicado
-    const params = new URLSearchParams(searchParams as any);
-    params.set('sede', adminSede);
-    redirect(`/admin/productos?${params.toString()}`);
-  }
-  
-  const page = parseInt(searchParams.page || '1', 10);
-  const data = await getProducts(page, searchParams.search, {
-    category: searchParams.category,
-    subcategory: searchParams.subcategory,
-    sede: sedeFilter,
-    status: searchParams.status,
-    stockStatus: searchParams.stockStatus,
-  });
+  try {
+    // Obtener el email del admin autenticado
+    const adminEmail = await verifyAdminAuth();
+    
+    // Determinar la sede del admin
+    const adminSede = getAdminSede(adminEmail);
+    
+    // Si el admin tiene una sede específica y no se especificó un filtro de sede, 
+    // aplicar filtro automático por su sede (sin redirect, solo aplicar)
+    const sedeFilter = searchParams.sede || (adminSede || undefined);
+    
+    const page = parseInt(searchParams.page || '1', 10);
+    const data = await getProducts(page, searchParams.search, {
+      category: searchParams.category,
+      subcategory: searchParams.subcategory,
+      sede: sedeFilter,
+      status: searchParams.status,
+      stockStatus: searchParams.stockStatus,
+    });
 
   return (
     <div className="w-full space-y-6">
@@ -235,5 +230,23 @@ export default async function AdminProductsPage({
       </div>
     </div>
   );
+  } catch (error) {
+    console.error('Error en página de productos:', error);
+    // En caso de error, mostrar una página de error
+    return (
+      <div className="w-full space-y-6">
+        <div className="bg-white rounded-xl border border-red-200/80 shadow-sm p-8 text-center">
+          <div className="max-w-md mx-auto">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              Error al cargar productos
+            </h2>
+            <p className="text-gray-500">
+              {error instanceof Error ? error.message : 'Ha ocurrido un error inesperado'}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
