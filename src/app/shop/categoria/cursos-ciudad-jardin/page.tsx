@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import AvailabilityModal from "@/components/courses/AvailabilityModal";
+import { formatPrice } from "@/lib/utils";
 
 // IDs organizados por sección (actualizados según especificación)
 const COURSE_SECTIONS = {
@@ -102,7 +103,7 @@ const ProductCard = ({ product, toast, subtitle = "Cursos Presenciales", onAddTo
           </p>
         </div>
         
-        {/* Botón MÁS INFO */}
+        {/* Botón con precio */}
         <Link href={`/shop/product/${product.id}`}>
           <button 
             className="w-full text-white text-sm font-medium py-3 transition-colors" 
@@ -110,7 +111,7 @@ const ProductCard = ({ product, toast, subtitle = "Cursos Presenciales", onAddTo
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
           >
-            MÁS INFO
+            {formatPrice(product.price)}
           </button>
         </Link>
       </div>

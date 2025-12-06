@@ -11,6 +11,7 @@ import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import AvailabilityModal from "@/components/courses/AvailabilityModal";
 import { usePresentialCourseCheckout } from "@/lib/hooks/usePresentialCourseCheckout";
 import { isPresentialCourse } from "@/lib/utils/productHelpers";
+import { formatPrice } from "@/lib/utils";
 
 type CourseListSecProps = {
   title: string;
@@ -215,7 +216,7 @@ const CourseCard = ({ product, category, toast, onAddToCart }: { product: Produc
           </p>
         </div>
         
-        {/* Botón MÁS INFO - Siempre va a la página del producto */}
+        {/* Botón con precio - Siempre va a la página del producto */}
         <Link href={`/shop/product/${product.id}`}>
           <button 
             className="w-full text-white text-sm font-medium py-3 transition-colors" 
@@ -223,7 +224,7 @@ const CourseCard = ({ product, category, toast, onAddToCart }: { product: Produc
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
           >
-            MÁS INFO
+            {formatPrice(product.price)}
           </button>
         </Link>
       </div>

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
+import { formatPrice } from "@/lib/utils";
 
 // IDs organizados por sección (actualizados según especificación)
 const COURSE_SECTIONS = {
@@ -126,7 +127,7 @@ const MasterClassCard = ({ product, toast }: { product: Product; toast: any }) =
 
           {/* Badge GRATIS! */}
           {isGratis && (
-            <div className="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-md text-xs font-bold z-10">
+            <div className="absolute top-3 left-3 bg-yellow-500 text-white px-3 py-1 rounded-md text-xs font-bold z-10">
               GRATIS!
             </div>
           )}
@@ -160,7 +161,7 @@ const MasterClassCard = ({ product, toast }: { product: Product; toast: any }) =
           </p>
         </div>
         
-        {/* Botón MÁS INFO */}
+        {/* Botón con precio */}
         <Link href={`/shop/product/${product.id}`}>
           <button 
             className="w-full text-white text-sm font-medium py-3 transition-colors" 
@@ -168,7 +169,7 @@ const MasterClassCard = ({ product, toast }: { product: Product; toast: any }) =
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
           >
-            MÁS INFO
+            {formatPrice(product.price)}
           </button>
         </Link>
       </div>
@@ -232,7 +233,7 @@ const ProductCard = ({ product, toast, subtitle = "Cursos Online" }: { product: 
           </p>
         </div>
         
-        {/* Botón MÁS INFO */}
+        {/* Botón con precio */}
         <Link href={`/shop/product/${product.id}`}>
           <button 
             className="w-full text-white text-sm font-medium py-3 transition-colors" 
@@ -240,7 +241,7 @@ const ProductCard = ({ product, toast, subtitle = "Cursos Online" }: { product: 
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D44D7D"} 
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#E9ABBD"}
           >
-            MÁS INFO
+            {formatPrice(product.price)}
           </button>
         </Link>
       </div>
